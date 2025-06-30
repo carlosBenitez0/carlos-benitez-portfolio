@@ -2,7 +2,7 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="h-screen w-screen overflow-hidden bg-cbpgray-900 text-white font-poppins"></div>
+    <div className="bg-cbpgray-900 font-poppins relative h-screen w-screen overflow-hidden"></div>
   );
 }
 
