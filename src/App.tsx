@@ -2,10 +2,7 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="">
-      <h1>Carlos Benitez</h1>
-      <p>Full Stack Developer</p>
-    </div>
+    <div className="h-screen w-screen overflow-hidden bg-cbpgray-900 text-white font-poppins"></div>
   );
 }
 

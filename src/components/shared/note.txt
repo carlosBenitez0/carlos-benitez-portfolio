@@ -1,0 +1,4 @@
+No es necesario el shared ya que solo se utilizan una vez los 
+componentes header, footer y navbar, pero si se van a reutilizar se puede usar el shared.
+Pero me parece que es una buena práctica usar el shared para que el código y 
+la estructura del proyecto sea más mantenible y que sea más fácil de leer.
