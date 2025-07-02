@@ -109,7 +109,7 @@ export const MyPicture = () => {
           ease: "power1.inOut",
           delay: index * 0.01, // Espaciado entre dots
         },
-        "<0.5", // Comienza 0.5s después del inicio de la timeline
+        "<0.2", // Comienza 0.5s después del inicio de la timeline
       );
     });
 
