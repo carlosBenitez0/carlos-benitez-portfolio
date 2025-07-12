@@ -64,7 +64,7 @@ export const MyPicture = () => {
       },
       "<0.2",
     );
-    tl.to(
+    /* tl.to(
       picture,
       {
         translateY: "-5px",
@@ -86,7 +86,7 @@ export const MyPicture = () => {
         ease: "power1.inOut",
       },
       "<",
-    );
+    ); */
     // Posiciones iniciales aleatorias fuera de pantalla
     dots.forEach((dot, index) => {
       const startX =
@@ -196,9 +196,9 @@ export const MyPicture = () => {
         </div>
       </div>
       <div className="picture-bubble absolute shadow-[inset_8px_8px_16px_rgba(54,26,111,0.5),inset_-8px_-8px_16px_rgba(175,55,239,0.4)]  rounded-full p-8 bg-gradient-to-b from-cbpviolet-500/30 to-cbpviolet-900/50 left-[50px]  h-[400px] w-[400px]"></div>
-      <figure className="my-picture absolute w-[300px] top-[-290px] object-cover">
+      <figure className="my-picture absolute w-[300px] top-[-250px] object-cover">
         <img
-          src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751292857/Carlos_Benitez_r0kvuk.png"
+          src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751572816/carlos-benitez-foto_mamqno.png"
           alt="Carlos Benitez"
           className="mask-radial-from-50% mask-radial-to-70% mask-radial-at-center"
         />

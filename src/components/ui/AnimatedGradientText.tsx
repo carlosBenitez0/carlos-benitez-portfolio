@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 interface AnimatedGradientTextProps {
   children: ReactNode;
-  className?: string;
+  classNames?: string[];
   colors?: string[];
   animationSpeed?: number;
   showBorder?: boolean;
@@ -10,7 +10,7 @@ interface AnimatedGradientTextProps {
 
 export default function AnimatedGradientText({
   children,
-  className = "",
+  classNames = [],
   colors = ["#ffaa40", "#9c40ff", "#ffaa40"],
   animationSpeed = 8,
   showBorder = false,
@@ -22,7 +22,7 @@ export default function AnimatedGradientText({
 
   return (
     <div
-      className={`relative inline mx-auto flex max-w-fit flex-row items-center justify-center rounded-[1.25rem] font-medium backdrop-blur transition-shadow duration-500 overflow-hidden ${className}`}
+      className={`relative inline  max-w-fit  backdrop-blur transition-shadow duration-500 overflow-hidden ${classNames.join(" ")}`}
     >
       {showBorder && (
         <div

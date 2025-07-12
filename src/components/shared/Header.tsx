@@ -86,7 +86,7 @@ export const Header = () => {
               className="custom-class"
             />
           </h2>
-          <p className="appear-text text-balance text-gray-200 font-poppins text-lg leading-relaxed z-10">
+          <div className="appear-text text-balance text-cbpgray-200 font-poppins text-lg leading-relaxed z-10">
             Construyo{" "}
             <HighlightText shadowOpacity={1}>
               {" "}
@@ -149,7 +149,7 @@ export const Header = () => {
               />
             </HighlightText>
             .
-          </p>
+          </div>
         </div>
         <div className="col-span-1 ">
           <MyPicture />

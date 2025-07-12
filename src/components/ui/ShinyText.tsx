@@ -5,6 +5,7 @@ interface ShinyTextProps {
   disabled?: boolean;
   speed?: number;
   className?: string;
+  color?: string;
 }
 
 const ShinyText: React.FC<ShinyTextProps> = ({
@@ -12,12 +13,13 @@ const ShinyText: React.FC<ShinyTextProps> = ({
   disabled = false,
   speed = 5,
   className = "",
+  color,
 }) => {
   const animationDuration = `${speed}s`;
 
   return (
     <div
-      className={`text-[#b5b5b5a4] bg-clip-text inline-block
+      className={`bg-clip-text inline-block
         text-shadow-[0_0_10px_0_rgba(255,255,255,0.5),0_0_20px_0_rgba(255,255,255,0.5),0_0_30px_0_rgba(255,255,255,0.5),0_0_40px_0_rgba(255,255,255,0.5)] ${disabled ? "" : "shiny-text "} ${className}`}
       style={{
         backgroundImage:
@@ -25,6 +27,7 @@ const ShinyText: React.FC<ShinyTextProps> = ({
         backgroundSize: "200% 100%",
         WebkitBackgroundClip: "text",
         animationDuration: animationDuration,
+        color: color ? color : "#b5b5b5a4",
       }}
     >
       {text}

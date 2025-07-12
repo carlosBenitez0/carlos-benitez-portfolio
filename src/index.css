@@ -3,16 +3,21 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-p {
-    @apply text-gray-200;
-}
-
 @theme {
     /*font*/
     --font-poppins: "Poppins", sans-serif;
 
     /*bg*/
     --color-cbpbg-900: rgba(5, 0, 16, 1);
+    --color-cbpbg-800: rgb(11, 0, 24);
+    --color-cbpbg-700: rgb(17, 0, 32);
+    --color-cbpbg-600: rgb(23, 0, 40);
+    --color-cbpbg-500: rgb(29, 0, 48);
+    --color-cbpbg-400: rgb(35, 0, 56);
+    --color-cbpbg-300: rgb(41, 0, 64);
+    --color-cbpbg-200: rgb(47, 0, 72);
+    --color-cbpbg-100: rgb(53, 0, 80);
+    --color-cbpbg-50: rgb(59, 0, 88);
 
     /* Violet Palette */
     --color-cbpviolet-900: #10002bff;
@@ -78,6 +83,25 @@ p {
     }
 }
 
+.anim-fade-in,
+.animate-section {
+    animation: fade-in linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 30%;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(1000px) scale(0.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 .shiny-text {
     animation: shine 5s linear infinite;
     background: linear-gradient(90deg,
@@ -105,4 +129,22 @@ p {
 /* Clase para aplicar la animación */
 .animate-gradient {
     animation: gradient 8s linear infinite;
+}
+
+@keyframes rgb-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animate-gradient-rgb {
+    animation: rgb-gradient 5s linear infinite;
 }

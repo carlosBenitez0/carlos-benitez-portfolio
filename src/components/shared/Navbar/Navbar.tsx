@@ -123,7 +123,7 @@ export const Navbar = () => {
         {
           autoAlpha: 1,
           width: "auto",
-          background: "rgba(10, 14, 26, 0.3)",
+          background: "rgba(10, 14, 26, 0.7)",
           height: "60px",
           paddingTop: 16,
           paddingBottom: 16,
@@ -146,7 +146,7 @@ export const Navbar = () => {
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.4,
+          duration: 0.25,
           filter: "blur(0px)",
           ease: "power1.inOut",
         },
@@ -211,14 +211,14 @@ export const Navbar = () => {
       >
         <a
           href="#"
-          className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[24px] transition-colors transition-transform duration-300 hover:-translate-y-1"
+          className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[24px] transition-transform duration-300 hover:-translate-y-1"
           aria-label="Linkedin"
         >
           <CiLinkedin />
         </a>
         <a
           href="#"
-          className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] transition-colors transition-transform duration-300 hover:-translate-y-1"
+          className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] transition-transform duration-300 hover:-translate-y-1"
         >
           <FaGithub />
         </a>
