@@ -9,7 +9,6 @@ import { IoCodeWorkingOutline } from "react-icons/io5";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { IoCodeSlashOutline } from "react-icons/io5";
 import { MdOutlineConnectWithoutContact } from "react-icons/md";
-import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);

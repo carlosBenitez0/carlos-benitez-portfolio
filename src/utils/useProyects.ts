@@ -33,6 +33,17 @@ export const useProyects = () => {
       gitHub: "https://github.com/carlosBenitez0/pok-dex",
     },
     {
+      name: "Portafolio Académico",
+      image:
+        "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752342229/porfatolio-catedra_whfj1g.webp",
+      description:
+        "Proyecto desarrollado como trabajo de cátedra universitaria que sintetiza 11 semanas de contenido sobre la administración estratégica de recursos empresariales y tecnológicos.",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      state: "Terminado",
+      url: "https://rad-conkies-95b333.netlify.app/",
+      gitHub: "",
+    },
+    {
       name: "To-Do con Firebase",
       image:
         "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751730507/to-do-firebase_o2u85j.webp",
