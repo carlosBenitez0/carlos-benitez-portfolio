@@ -49,10 +49,11 @@ export const TechnologiesContainer = ({
     <div
       ref={techContainerRef}
       className={`${title === "tools" ? "col-span-2" : title === "learning" || title === "backend" ? "col-span-1" : "col-span-2"} ${title === "frontend" ? "col-span-2" : ""}  p-4
-       backdrop-blur-2xl border-4 border-white/5 technologies-container
+       backdrop-blur-2xl border-4 border-white/5 
        before:content-[''] before:absolute before:inset-0  before:opacity-0 before:transition-opacity before:duration-300
          hover:before:opacity-[1] before:z-[-1] before:pointer-events-none
-         before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.15)_0%,transparent_20%)]`}
+         before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.15)_0%,transparent_20%)]
+         ${title === "tools" || title === "backend" ? "technologies-container-right" : "technologies-container-left"}`}
     >
       {title === "frontend" ? (
         <BsBorderStyle className="w-8 h-8 text-cbpviolet-200" />

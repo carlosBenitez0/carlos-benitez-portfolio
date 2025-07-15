@@ -277,7 +277,7 @@ function App() {
               <BgDotGradient
                 size="2xl"
                 colors={["accent", "violet"]}
-                blur="4xl"
+                blur="6xl"
                 position={{ left: 100, top: 100 }}
               />
             </div>
@@ -285,7 +285,7 @@ function App() {
               <BgDotGradient
                 size="3xl"
                 colors={["black", "pink"]}
-                blur="5xl"
+                blur="6xl"
                 position={{ left: 600, top: 200 }}
               />
             </div>
@@ -293,8 +293,16 @@ function App() {
               <BgDotGradient
                 size="5xl"
                 colors={["accent", "blue"]}
-                blur="3xl"
+                blur="6xl"
                 position={{ left: 300, top: 400 }}
+              />
+            </div>
+            <div className="dot-technologies absolute flex items-center justify-center">
+              <BgDotGradient
+                size="xl"
+                colors={["yellow", "green"]}
+                blur="6xl"
+                position={{ left: 100, top: 450 }}
               />
             </div>
 
