@@ -195,7 +195,7 @@ export const MyPicture = () => {
           />
         </div>
       </div>
-      <div className="picture-bubble absolute shadow-[inset_8px_8px_16px_rgba(54,26,111,0.5),inset_-8px_-8px_16px_rgba(175,55,239,0.4)]  rounded-full p-8 bg-gradient-to-b from-cbpviolet-500/30 to-cbpviolet-900/50 left-[50px]  h-[400px] w-[400px]"></div>
+      <div className="picture-bubble absolute shadow-[inset_8px_8px_16px_rgba(54,26,111,0.5),inset_-8px_-8px_16px_rgba(175,55,239,0.4),0px_0px_5px_rgba(140,55,200,0.3),0px_0px_25px_rgba(140,55,200,0.3),0px_0px_50px_rgba(140,55,200,0.3),0px_0px_100px_rgba(140,55,200,0.3)]  rounded-full p-8 bg-gradient-to-b from-cbpviolet-500/30 to-cbpviolet-900/50 left-[50px]  h-[400px] w-[400px]"></div>
       <figure className="my-picture absolute w-[300px] top-[-250px] object-cover">
         <img
           src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751572816/carlos-benitez-foto_mamqno.png"

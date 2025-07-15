@@ -65,8 +65,8 @@ export const ProyectCard = ({
   return (
     <div
       // ref={proyectCardRef}
-      className="proyectCard h-full relative grid grid-rows-[150px_1fr] grid-areas-[image_text] rounded-2xl 
-        text-center rounded-t-2xl bg-cbpbg-700 border-4 border-cbpbg-400 anim-fade-in
+      className="proyect-card-anim h-full relative grid grid-rows-[150px_1fr] grid-areas-[image_text] rounded-2xl 
+        text-center rounded-t-2xl bg-cbpbg-700 border-4 border-cbpbg-400
         "
     >
       {/* after:content-[''] after:absolute after:-inset-2

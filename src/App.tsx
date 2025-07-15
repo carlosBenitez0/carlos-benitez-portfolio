@@ -9,38 +9,85 @@ import { IoCodeWorkingOutline } from "react-icons/io5";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { IoCodeSlashOutline } from "react-icons/io5";
 import { MdOutlineConnectWithoutContact } from "react-icons/md";
+import { FaCheck } from "react-icons/fa6";
+import ShinyText from "./components/ui/ShinyText";
+import { TechnologyLabel } from "./components/ui/proyects/TechnologyLabel";
+import { useTechnologies } from "./utils/useTechnologies";
+/* import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
+import { ScrollTrigger } from "gsap/ScrollTrigger"; */
 
 function App() {
-  /*useEffect(() => {
-    // Animación para las cards
-     gsap.utils.toArray(".proyectCard").forEach((card: any) => {
-      gsap.from(card, {
-        y: 100,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 80%", // Inicia cuando el top del card está al 80% del viewport
-          end: "bottom 20%",
-          toggleActions: "play none none none", // Solo se reproduce una vez
-        },
-      });
-    });
+  const proyects = useProyects();
+  const technologies = useTechnologies();
+  /* const aboutSectionRef = useRef<HTMLDivElement>(null);
+  const textElementsRef = useRef<HTMLDivElement[]>([]);
 
-    // Animación para los títulos (sin ScrollTrigger para probar)
-    gsap.from(".section-title", {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.2,
-    });
+  const addToRefs = (el: HTMLParagraphElement | null, index: number) => {
+    if (el && !textElementsRef.current.includes(el)) {
+      textElementsRef.current[index] = el;
+    }
+  };
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Contexto GSAP para mejor manejo de limpieza
+    const ctx = gsap.context(() => {
+      if (!aboutSectionRef.current) return;
+
+      // Configuración común para ScrollTrigger
+      const scrollConfig = {
+        trigger: aboutSectionRef.current,
+        start: "top 70%",
+        end: "bottom 30%",
+        toggleActions: "play none none none",
+        markers: false, // Cambiar a true para debug
+        invalidateOnRefresh: true,
+      };
+
+      textElementsRef.current.forEach((element) => {
+        if (!element) return;
+
+        gsap.fromTo(
+          element,
+          { opacity: 0, y: 50, filter: "blur(5px)" },
+          {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: scrollConfig,
+          },
+        );
+      });
+
+      // Forzar recálculo después de que todo esté cargado
+      const handleLoad = () => ScrollTrigger.refresh();
+      window.addEventListener("load", handleLoad);
+
+      // Manejo del resize con debounce
+      let resizeTimeout: number;
+      const handleResize = () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = window.setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 100);
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("load", handleLoad);
+        window.removeEventListener("resize", handleResize);
+        clearTimeout(resizeTimeout);
+      };
+    }, aboutSectionRef); // Scope del contexto
+
+    return () => ctx.revert(); // Limpieza completa
   }, []); */
 
-  const proyects = useProyects();
   return (
     <div className="font-poppins bg-cbpbg-900 relative z-40 h-screen w-screen overflow-x-hidden">
       <div
@@ -52,7 +99,7 @@ function App() {
 
         <Header />
         <main>
-          <section className="mb-16">
+          <section className="mb-20 mt-30">
             <SectionTitle title="Proyectos" icon={<IoCodeWorkingOutline />} />
             <div className="cardsContainer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
               {proyects.map((proyect, index) => (
@@ -70,18 +117,121 @@ function App() {
               ))}
             </div>
           </section>
-          <section className="mb-16">
+          <section /* ref={aboutSectionRef} */ className="mb-20 mt-30">
             <SectionTitle
               title="Sobre mí"
               icon={<IoIosInformationCircleOutline />}
             />
-            <div></div>
+
+            <div className="flex flex-col items-center gap-8 md:flex-row justify-between">
+              <div className="[&>p]:mb-4 text-balance">
+                <p
+                  /* ref={(el) => addToRefs(el, 0)} */ className="anim-about-text"
+                >
+                  ¡Hola de nuevo! 👋 Soy Carlos Benítez,{" "}
+                  <ShinyText text="Desarrollador web" /> con formación en{" "}
+                  <ShinyText text="Ingeniería de Sistemas y Computación." />{" "}
+                  Especializado en crear{" "}
+                  <ShinyText text="aplicaciones web modernas" /> que combinen{" "}
+                  <ShinyText text="diseño atractivo" /> con{" "}
+                  <ShinyText text="arquitecturas sólidas." />
+                </p>
+                <p
+                  /* ref={(el) => addToRefs(el, 1)} */ className="anim-about-text"
+                >
+                  Mi expertise abarca desde el desarrollo de{" "}
+                  <ShinyText
+                    text="interfaces
+                  dinámicas"
+                  />{" "}
+                  con{" "}
+                  <TechnologyLabel
+                    name={technologies[0].name}
+                    icon={technologies[0].icon}
+                    color={technologies[0].color}
+                    url={technologies[0].url}
+                    fitContent={true}
+                  />{" "}
+                  /{" "}
+                  <TechnologyLabel
+                    name={technologies[1].name}
+                    icon={technologies[1].icon}
+                    color={technologies[1].color}
+                    url={technologies[1].url}
+                    fitContent={true}
+                  />{" "}
+                  hasta la construcción de APIs eficientes con{" "}
+                  <TechnologyLabel
+                    name={technologies[10].name}
+                    icon={technologies[10].icon}
+                    color={technologies[10].color}
+                    url={technologies[10].url}
+                    fitContent={true}
+                  />{" "}
+                  /{" "}
+                  <TechnologyLabel
+                    name={technologies[11].name}
+                    icon={technologies[11].icon}
+                    color={technologies[11].color}
+                    url={technologies[11].url}
+                    fitContent={true}
+                  />
+                  . Disfruto especialmente optimizando la interacción entre{" "}
+                  <ShinyText text="frontend" /> y <ShinyText text="backend" />{" "}
+                  para crear experiencias fluidas.
+                </p>
+                <div className="space-y-3 anim-about-text">
+                  <p className="font-medium">
+                    Entre mis logros destacados están:
+                  </p>
+                  <ul className="list-none space-y-2">
+                    <li className="flex items-start anim-achievement-text">
+                      <FaCheck className="text-cbpviolet-500 mr-2" />
+                      <span>
+                        Desarrollo de soluciones full-stack para{" "}
+                        <ShinyText text="automatización" /> de procesos
+                      </span>
+                    </li>
+                    <li className="flex items-start anim-achievement-text">
+                      <FaCheck className="text-cbpviolet-500 mr-2" />
+                      <span>
+                        Implementación de interfaces modernas con{" "}
+                        <ShinyText text="React" /> y{" "}
+                        <ShinyText text="Next.js" />
+                      </span>
+                    </li>
+                    <li className="flex items-start anim-achievement-text">
+                      <FaCheck className="text-cbpviolet-500 mr-2" />
+                      <span>
+                        Creación de APIs eficientes con{" "}
+                        <ShinyText text="Python" /> y{" "}
+                        <ShinyText text="FastAPI" />
+                      </span>
+                    </li>
+
+                    <li className="flex items-start anim-achievement-text">
+                      <FaCheck className="text-cbpviolet-500 mr-2" />
+                      <span>
+                        Transferencia de conocimiento técnico mediante{" "}
+                        <ShinyText text="mentorías" />
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <img
+                src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1752513118/320_1x_shots_so_sf9nou.png"
+                alt=""
+                className="object-cover w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-72 aspect-square rounded-2xl proyect-card-anim"
+              />
+            </div>
           </section>
-          <section className="mb-16">
+          <section className="mb-20 mt-30">
             <SectionTitle title="Tecnologías" icon={<IoCodeSlashOutline />} />
             <div></div>
           </section>
-          <section className="mb-16">
+          <section className="mb-20 mt-30">
             <SectionTitle
               title="Contáctame"
               icon={<MdOutlineConnectWithoutContact />}

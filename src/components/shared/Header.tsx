@@ -5,10 +5,8 @@ import gsap from "gsap";
 import ShinyText from "../ui/ShinyText";
 import AnimatedGradientText from "../ui/AnimatedGradientText";
 import HighlightText from "../ui/HighlightText";
-import SplitText from "gsap/SplitText";
 
 export const Header = () => {
-  gsap.registerPlugin(SplitText);
   const arrowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

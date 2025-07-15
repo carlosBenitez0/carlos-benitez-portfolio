@@ -6,6 +6,7 @@ import { IoCodeSlashOutline } from "react-icons/io5";
 import { MdOutlineConnectWithoutContact } from "react-icons/md";
 import { CiLinkedin } from "react-icons/ci";
 import { FaGithub } from "react-icons/fa";
+import { PiReadCvLogoLight } from "react-icons/pi";
 import { NavbarLink } from "./NavbarLink";
 import gsap from "gsap";
 
@@ -221,6 +222,12 @@ export const Navbar = () => {
           className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] transition-transform duration-300 hover:-translate-y-1"
         >
           <FaGithub />
+        </a>
+        <a
+          href="#"
+          className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] transition-transform duration-300 hover:-translate-y-1"
+        >
+          <PiReadCvLogoLight />
         </a>
       </div>
     </div>
