@@ -13,6 +13,12 @@ import { FaCheck } from "react-icons/fa6";
 import ShinyText from "./components/ui/ShinyText";
 import { TechnologyLabel } from "./components/ui/proyects/TechnologyLabel";
 import { useTechnologies } from "./utils/useTechnologies";
+import { technologies as technologiesSectionData } from "./utils/technologies";
+import { TechnologiesContainer } from "./components/ui/Technologies/TechnologiesContainer";
+import { BgDotGradient } from "./components/ui/BgDotGradient";
+import { useEffect } from "react";
+import gsap from "gsap";
+
 /* import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger"; */
@@ -88,6 +94,45 @@ function App() {
     return () => ctx.revert(); // Limpieza completa
   }, []); */
 
+  useEffect(() => {
+    const dots_technologies = document.querySelectorAll(".dot-technologies");
+    const technologiesSection = document.querySelector("section.relative"); // Seleccionamos la sección de tecnologías
+
+    if (!technologiesSection) return;
+
+    const tl = gsap.timeline();
+
+    // Función para generar movimiento aleatorio dentro del contenedor
+    const generateRandomMovement = () => {
+      return {
+        x: Math.random() * 200,
+        y: Math.random() * 100,
+      };
+    };
+
+    // Animación de movimiento continuo
+    dots_technologies.forEach((dot) => {
+      const moveDot = () => {
+        const newPos = generateRandomMovement();
+        gsap.to(dot, {
+          x: newPos.x,
+          y: newPos.y,
+          scale: 0.8 + Math.random() * 0.5, // Variación de tamaño
+          duration: 1 + Math.random() * 5, // Duración variable
+          ease: "power1.inOut",
+          onComplete: moveDot, // Vuelve a llamar la función para movimiento continuo
+        });
+      };
+
+      moveDot(); // Iniciar el movimiento
+    });
+
+    return () => {
+      // Limpiar todas las animaciones al desmontar
+      tl.kill();
+      gsap.killTweensOf(dots_technologies);
+    };
+  }, []);
   return (
     <div className="font-poppins bg-cbpbg-900 relative z-40 h-screen w-screen overflow-x-hidden">
       <div
@@ -99,7 +144,7 @@ function App() {
 
         <Header />
         <main>
-          <section className="mb-20 mt-30">
+          <section className="mb-20 mt-30 ">
             <SectionTitle title="Proyectos" icon={<IoCodeWorkingOutline />} />
             <div className="cardsContainer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
               {proyects.map((proyect, index) => (
@@ -227,9 +272,44 @@ function App() {
               />
             </div>
           </section>
-          <section className="mb-20 mt-30">
+          <section className="relative mb-20 mt-30">
+            <div className="dot-technologies absolute flex items-center justify-center">
+              <BgDotGradient
+                size="2xl"
+                colors={["accent", "violet"]}
+                blur="4xl"
+                position={{ left: 100, top: 100 }}
+              />
+            </div>
+            <div className="dot-technologies absolute flex items-center justify-center">
+              <BgDotGradient
+                size="3xl"
+                colors={["black", "pink"]}
+                blur="5xl"
+                position={{ left: 600, top: 200 }}
+              />
+            </div>
+            <div className="dot-technologies absolute flex items-center justify-center">
+              <BgDotGradient
+                size="5xl"
+                colors={["accent", "blue"]}
+                blur="3xl"
+                position={{ left: 300, top: 400 }}
+              />
+            </div>
+
             <SectionTitle title="Tecnologías" icon={<IoCodeSlashOutline />} />
-            <div></div>
+            <div className="grid grid-cols-3 grid-rows-2 gap-4 w-full">
+              {Object.entries(technologiesSectionData).map(([key, value]) => {
+                return (
+                  <TechnologiesContainer
+                    key={key}
+                    title={key}
+                    technologies={value}
+                  />
+                );
+              })}
+            </div>
           </section>
           <section className="mb-20 mt-30">
             <SectionTitle
