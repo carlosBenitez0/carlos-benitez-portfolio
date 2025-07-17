@@ -16,6 +16,7 @@ import { useTechnologies } from "./utils/useTechnologies";
 import { technologies as technologiesSectionData } from "./utils/technologies";
 import { TechnologiesContainer } from "./components/ui/Technologies/TechnologiesContainer";
 import { BgDotGradient } from "./components/ui/BgDotGradient";
+import { ContactContainer } from "./components/ui/contact/ContactContainer";
 import { useEffect } from "react";
 import gsap from "gsap";
 
@@ -324,7 +325,7 @@ function App() {
               title="Contáctame"
               icon={<MdOutlineConnectWithoutContact />}
             />
-            <div></div>
+            <ContactContainer />
           </section>
         </main>
         <Footer />
