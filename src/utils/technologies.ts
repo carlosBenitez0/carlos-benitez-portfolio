@@ -50,6 +50,16 @@ export const technologies = {
       logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595379/gsap-removebg-preview_rhmi8f.webp",
       url: "https://greensock.com/",
     },
+    {
+      name: "React Icons",
+      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752767595/react-icons_mkuggt.webp",
+      url: "https://react-icons.github.io/react-icons/",
+    },
+    {
+      name: "React Bits",
+      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752767658/Screenshot_2025-07-17_094603-removebg-preview_hpmkce.webp",
+      url: "https://reactbits.dev/",
+    },
   ],
   backend: [
     {

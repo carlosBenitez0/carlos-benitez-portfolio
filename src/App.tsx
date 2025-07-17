@@ -1,5 +1,5 @@
 import "./App.css";
-import { Footer } from "./components/shared/Footer";
+import { Footer } from "./components/shared/Footer/Footer";
 import { Header } from "./components/shared/Header";
 import { Navbar } from "./components/shared/Navbar/Navbar";
 import { ProyectCard } from "./components/ui/proyects/ProyectCard";
