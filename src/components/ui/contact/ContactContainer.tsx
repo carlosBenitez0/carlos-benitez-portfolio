@@ -3,7 +3,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { MdOutlineSubject } from "react-icons/md";
 import { IoMdSend } from "react-icons/io";
 import { FaCheckCircle } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { BgDotGradient } from "../BgDotGradient";
 import { Spinner } from "./Spinner";
@@ -11,6 +11,8 @@ import { ErrorComponent } from "./ErrorComponent";
 import { IoLocationOutline } from "react-icons/io5";
 import { CiLinkedin } from "react-icons/ci";
 import ShinyText from "../ShinyText";
+import emailjs from "@emailjs/browser";
+import { SendedComponent } from "./SendedComponent";
 
 interface UserData {
   name: string;
@@ -20,12 +22,13 @@ interface UserData {
 }
 
 export const ContactContainer = () => {
+  const form = useRef<string | HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     name: "",
-    error: "El nombre debe tener al menos 3 caracteres",
+    error: "",
   });
-  const [sended, setSended] = useState(false);
+  const [sended, setSended] = useState<boolean>(false);
   const [userData, setUserData] = useState<UserData>({
     name: "",
     email: "",
@@ -44,6 +47,7 @@ export const ContactContainer = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSended(false);
     setError({ name: "", error: "" });
 
     // Validaciones
@@ -101,11 +105,30 @@ export const ContactContainer = () => {
     // Si pasa todas las validaciones
     setLoading(true);
 
-    // Simulación de envío
-    setTimeout(() => {
+    // Enviar el formulario
+    /* setTimeout(() => {
       setLoading(false);
-      setSended(true);
-      console.log(userData);
+      emailjs
+        .sendForm(
+          "service_3wblnba",
+          "template_vx2h6qt",
+          form.current as HTMLFormElement,
+          {
+            publicKey: "p1-mlOCmCgRp2jNnJ",
+          },
+        )
+        .then(
+          () => {
+            setSended(true);
+          },
+          () => {
+            setError({
+              name: "formError",
+              error: "No se pudo enviar el mensaje",
+            });
+          },
+        );
+
       setUserData({
         name: "",
         email: "",
@@ -117,7 +140,58 @@ export const ContactContainer = () => {
       setTimeout(() => {
         setSended(false);
       }, 3000);
-    }, 3000);
+    }, 3000); */
+
+    emailjs
+      .sendForm(
+        "service_3wblnba",
+        "template_vx2h6qt",
+        form.current as HTMLFormElement,
+        {
+          publicKey: "p1-mlOCmCgRp2jNnJ",
+        },
+      )
+      .then(
+        () => {
+          setLoading(false);
+          setSended(true);
+        },
+        () => {
+          setLoading(false);
+          setError({
+            name: "formError",
+            error: "No se pudo enviar el mensaje",
+          });
+        },
+      );
+
+    emailjs
+      .sendForm(
+        "service_3wblnba",
+        "template_32ukwf4",
+        form.current as HTMLFormElement,
+        {
+          publicKey: "p1-mlOCmCgRp2jNnJ",
+        },
+      )
+      .then(
+        () => {
+          setSended(true);
+        },
+        () => {
+          console.log("No se pudo enviar el mensaje");
+        },
+      );
+
+    setTimeout(() => {
+      setSended(false);
+    }, 10000);
+    setUserData({
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    });
   };
 
   useEffect(() => {
@@ -231,6 +305,7 @@ export const ContactContainer = () => {
       </div>
 
       <form
+        ref={form}
         onSubmit={handleSubmit}
         className={`z-50 grid grid-cols-2 gap-6 rounded-xl p-8
         [&>div]:flex [&>div]:items-center [&>div]:w-full [&>div]:pl-2 [&>div,&>span>textarea]:border [&>div,&>span>textarea]:border-white/15 [&>div,&>span>textarea]:rounded-lg
@@ -308,6 +383,9 @@ export const ContactContainer = () => {
               error={error.error}
             />
           )}
+          {sended && (
+            <SendedComponent message="Revisa tu correo, te dejé un mensaje 😁✌️" />
+          )}
         </span>
         <button
           type="submit"
@@ -319,7 +397,7 @@ export const ContactContainer = () => {
           {/* <Spinner /> */}
           {sended ? (
             <>
-              Enviado
+              Enviado correctamente
               <FaCheckCircle />
             </>
           ) : loading ? (
@@ -357,20 +435,25 @@ export const ContactContainer = () => {
             </div>
             <div className="flex items-center gap-2">
               <a
-                href="#"
+                href="https://www.linkedin.com/in/carlos-ben%C3%ADtez-profile/"
                 className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[24px]"
+                target="_blank"
                 aria-label="Linkedin"
               >
                 <CiLinkedin />
               </a>
               <a
-                href="#"
+                href="https://github.com/carlosBenitez0"
+                target="_blank"
                 className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px]"
+                aria-label="Github"
               >
                 <FaGithub />
               </a>
+
               <a
-                href="#"
+                href="./downloads/Carlos-Francisco-Benítez-Quintanilla-CV.pdf"
+                download
                 className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] 
                 flex items-center gap-2 py-1 px-3 rounded-full border border-cbpgray-300/70 hover:border-cbpgray-300"
               >

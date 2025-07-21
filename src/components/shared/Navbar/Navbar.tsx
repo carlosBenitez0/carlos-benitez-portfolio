@@ -11,37 +11,37 @@ import { NavbarLink } from "./NavbarLink";
 import gsap from "gsap";
 
 export const Navbar = () => {
-  const [optionSelected, setOptionSelected] = useState("home");
+  const [optionSelected, setOptionSelected] = useState("start");
   const menuRef = useRef<HTMLUListElement>(null);
   const socialMenuRef = useRef<HTMLDivElement>(null);
   const links = [
     {
-      label: "home",
-      href: "#",
+      label: "start",
+      href: "#start",
       icon: <RiHomeLine />,
       text: "Inicio",
     },
     {
       label: "projects",
-      href: "#",
+      href: "#projects",
       icon: <IoCodeWorkingOutline />,
       text: "Proyectos",
     },
     {
       label: "about",
-      href: "#",
+      href: "#about",
       icon: <IoIosInformationCircleOutline />,
       text: "Sobre mí",
     },
     {
       label: "technologies",
-      href: "#",
+      href: "#technologies",
       icon: <IoCodeSlashOutline />,
       text: "Tecnologías",
     },
     {
       label: "contact",
-      href: "#",
+      href: "#contact",
       icon: <MdOutlineConnectWithoutContact />,
       text: "Contáctame",
     },
@@ -179,7 +179,7 @@ export const Navbar = () => {
         <img
           src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751309549/cb-logo2_kowmru.png"
           alt=""
-          className="cb-logo w-14"
+          className="cb-logo min-w-14 w-14"
         />
       </figure>
       <nav className="nav-padding">
@@ -211,21 +211,26 @@ export const Navbar = () => {
   before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]"
       >
         <a
-          href="#"
+          href="https://www.linkedin.com/in/carlos-ben%C3%ADtez-profile/"
           className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[24px] transition-transform duration-300 hover:-translate-y-1"
+          target="_blank"
           aria-label="Linkedin"
         >
           <CiLinkedin />
         </a>
         <a
-          href="#"
+          href="https://github.com/carlosBenitez0"
+          target="_blank"
           className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] transition-transform duration-300 hover:-translate-y-1"
+          aria-label="Github"
         >
           <FaGithub />
         </a>
         <a
-          href="#"
+          href="./downloads/Carlos-Francisco-Benítez-Quintanilla-CV.pdf"
+          download
           className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] transition-transform duration-300 hover:-translate-y-1"
+          aria-label="Curriculum vitae"
         >
           <PiReadCvLogoLight />
         </a>

@@ -20,80 +20,9 @@ import { ContactContainer } from "./components/ui/contact/ContactContainer";
 import { useEffect } from "react";
 import gsap from "gsap";
 
-/* import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger"; */
-
 function App() {
   const proyects = useProyects();
   const technologies = useTechnologies();
-  /* const aboutSectionRef = useRef<HTMLDivElement>(null);
-  const textElementsRef = useRef<HTMLDivElement[]>([]);
-
-  const addToRefs = (el: HTMLParagraphElement | null, index: number) => {
-    if (el && !textElementsRef.current.includes(el)) {
-      textElementsRef.current[index] = el;
-    }
-  };
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Contexto GSAP para mejor manejo de limpieza
-    const ctx = gsap.context(() => {
-      if (!aboutSectionRef.current) return;
-
-      // Configuración común para ScrollTrigger
-      const scrollConfig = {
-        trigger: aboutSectionRef.current,
-        start: "top 70%",
-        end: "bottom 30%",
-        toggleActions: "play none none none",
-        markers: false, // Cambiar a true para debug
-        invalidateOnRefresh: true,
-      };
-
-      textElementsRef.current.forEach((element) => {
-        if (!element) return;
-
-        gsap.fromTo(
-          element,
-          { opacity: 0, y: 50, filter: "blur(5px)" },
-          {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: scrollConfig,
-          },
-        );
-      });
-
-      // Forzar recálculo después de que todo esté cargado
-      const handleLoad = () => ScrollTrigger.refresh();
-      window.addEventListener("load", handleLoad);
-
-      // Manejo del resize con debounce
-      let resizeTimeout: number;
-      const handleResize = () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = window.setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 100);
-      };
-
-      window.addEventListener("resize", handleResize);
-
-      return () => {
-        window.removeEventListener("load", handleLoad);
-        window.removeEventListener("resize", handleResize);
-        clearTimeout(resizeTimeout);
-      };
-    }, aboutSectionRef); // Scope del contexto
-
-    return () => ctx.revert(); // Limpieza completa
-  }, []); */
 
   useEffect(() => {
     const dots_technologies = document.querySelectorAll(".dot-technologies");
@@ -140,12 +69,12 @@ function App() {
         className="absolute top-0 h-[70vh] w-full rounded-b-full mx-auto
         bg-gradient-to-b from-cbpviolet-500/20 to-cbpviolet-900/10 blur-3xl"
       ></div>
-      <div className="mx-auto h-full w-full text-white max-w-5xl">
+      <div id="start" className="mx-auto h-full w-full text-white max-w-5xl">
         <Navbar />
 
         <Header />
         <main>
-          <section className="mb-20 mt-30 ">
+          <section id="projects" className="mb-20 mt-30 ">
             <SectionTitle title="Proyectos" icon={<IoCodeWorkingOutline />} />
             <div className="cardsContainer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
               {proyects.map((proyect, index) => (
@@ -163,7 +92,7 @@ function App() {
               ))}
             </div>
           </section>
-          <section /* ref={aboutSectionRef} */ className="mb-20 mt-30">
+          <section id="about" className="mb-20 mt-30">
             <SectionTitle
               title="Sobre mí"
               icon={<IoIosInformationCircleOutline />}
@@ -273,7 +202,7 @@ function App() {
               />
             </div>
           </section>
-          <section className="relative mb-20 mt-30">
+          <section id="technologies" className="relative mb-20 mt-30">
             <div className="dot-technologies absolute flex items-center justify-center">
               <BgDotGradient
                 size="2xl"
@@ -320,7 +249,7 @@ function App() {
               })}
             </div>
           </section>
-          <section className="mb-20 mt-30">
+          <section id="contact" className="mb-20 mt-30">
             <SectionTitle
               title="Contáctame"
               icon={<MdOutlineConnectWithoutContact />}
