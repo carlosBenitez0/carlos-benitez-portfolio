@@ -5,6 +5,7 @@ import ShinyText from "../ShinyText";
 import { TechnologyLabel } from "./TechnologyLabel";
 import type { Technology } from "../../../utils/useTechnologies";
 import { FaGithub } from "react-icons/fa";
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
 interface ProyectCardProps {
   name: string;
@@ -28,6 +29,7 @@ export const ProyectCard = ({
   const technologiesList = useTechnologies();
   const cardTextRef = useRef<HTMLDivElement>(null);
   // const proyectCardRef = useRef<HTMLDivElement>(null);
+  const { isMobile } = useIsMobile();
 
   // Memoizar las tecnologías filtradas para evitar re-renderizados innecesarios
   const technologiesFiltered = useMemo(() => {
@@ -65,9 +67,9 @@ export const ProyectCard = ({
   return (
     <div
       // ref={proyectCardRef}
-      className="proyect-card-anim h-full relative grid grid-rows-[150px_1fr] grid-areas-[image_text] rounded-2xl 
+      className={`proyect-card-anim h-full relative grid ${isMobile ? "grid-rows-[180px_1fr]" : "grid-rows-[150px_1fr]"} grid-areas-[image_text] rounded-2xl 
         text-center rounded-t-2xl bg-cbpbg-700 border-4 border-cbpbg-400
-        "
+        `}
     >
       {/* after:content-[''] after:absolute after:-inset-2
      after:rounded-2xl after:z-[-1] after:blur-xs after:animate-gradient-rgb after:bg-cbpviolet-300/10 after:bg-[linear-gradient(45deg,#ff0000_0%,#00ff00_17%,#0000ff_33%,#ff00ff_50%,#00ffff_67%,#ffff00_83%,#ff0000_100%)] */}

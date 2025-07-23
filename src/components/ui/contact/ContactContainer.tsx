@@ -22,7 +22,7 @@ interface UserData {
 }
 
 export const ContactContainer = () => {
-  const form = useRef<string | HTMLFormElement>(null);
+  const form = useRef<HTMLFormElement | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     name: "",

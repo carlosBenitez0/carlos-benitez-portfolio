@@ -9,11 +9,13 @@ import { FaGithub } from "react-icons/fa";
 import { PiReadCvLogoLight } from "react-icons/pi";
 import { NavbarLink } from "./NavbarLink";
 import gsap from "gsap";
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
 export const Navbar = () => {
   const [optionSelected, setOptionSelected] = useState("start");
   const menuRef = useRef<HTMLUListElement>(null);
   const socialMenuRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   const links = [
     {
       label: "start",
@@ -125,9 +127,9 @@ export const Navbar = () => {
           autoAlpha: 1,
           width: "auto",
           background: "rgba(10, 14, 26, 0.7)",
-          height: "60px",
-          paddingTop: 16,
-          paddingBottom: 16,
+          height: isMobile ? "40px" : "60px",
+          paddingTop: isMobile ? 6 : 16,
+          paddingBottom: isMobile ? 6 : 16,
           duration: 1.5,
           ease: "power3.out",
         },
@@ -136,7 +138,7 @@ export const Navbar = () => {
 
     tl.fromTo(
       nav,
-      { padding: 100 },
+      { padding: isMobile ? 50 : 100 },
       { padding: 20, duration: 1.5, ease: "power3.out" },
     );
 
@@ -167,10 +169,12 @@ export const Navbar = () => {
         },
       );
     });
-  }, []);
+  }, [isMobile]);
 
   return (
-    <div className="z-40 flex items-center justify-between  fixed top-0 mx-auto w-full lg:max-w-5xl">
+    <div
+      className={`z-40 flex items-center fixed top-0 mx-auto w-full lg:max-w-5xl ${isMobile ? "justify-between p-4 " : "justify-between"}`}
+    >
       {/* <div className="from-cbpviolet-400 via-cbpviolet-600 to-cbpviolet-500 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
         CarlosBenítez
       </div> */}
@@ -179,16 +183,14 @@ export const Navbar = () => {
         <img
           src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751309549/cb-logo2_kowmru.png"
           alt=""
-          className="cb-logo min-w-14 w-14"
+          className={`cb-logo  ${isMobile ? "w-10 max-w-10" : "min-w-14 w-14"}`}
         />
       </figure>
       <nav className="nav-padding">
         <ul
           ref={menuRef}
-          className="fade-in-menu relative border-white/7 flex items-center gap-5 rounded-full border px-6 py-4 backdrop-blur-sm 
-         before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300
-         hover:before:opacity-[1] before:z-[-1] before:pointer-events-none
-         before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]"
+          className={`fade-in-menu relative border-white/7 flex items-center justify-center rounded-full border backdrop-blur-sm ${isMobile ? "px-3 py-0 gap-2" : "gap-5 px-6 py-4"}
+         ${!isMobile ? "before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-[1] before:z-[-1] before:pointer-events-none before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]" : ""}`}
         >
           {links.map((link) => (
             <NavbarLink
@@ -205,14 +207,12 @@ export const Navbar = () => {
       </nav>
       <div
         ref={socialMenuRef}
-        className="fade-in-menu relative border-white/7 flex items-center gap-5 rounded-full border px-6 py-4 backdrop-blur-sm
-  before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300
-  hover:before:opacity-100 before:z-[-1] before:pointer-events-none
-  before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]"
+        className={`fade-in-menu relative border-white/7 flex items-center rounded-full border  backdrop-blur-sm ${isMobile ? "justify-center gap-2 px-3" : "gap-5 px-6 py-4"}
+     ${!isMobile ? "before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 before:z-[-1] before:pointer-events-none before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]" : ""}`}
       >
         <a
           href="https://www.linkedin.com/in/carlos-ben%C3%ADtez-profile/"
-          className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[24px] transition-transform duration-300 hover:-translate-y-1"
+          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[22px]" : "text-[24px]"}`}
           target="_blank"
           aria-label="Linkedin"
         >
@@ -221,7 +221,7 @@ export const Navbar = () => {
         <a
           href="https://github.com/carlosBenitez0"
           target="_blank"
-          className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] transition-transform duration-300 hover:-translate-y-1"
+          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[18px]" : "text-[21px]"}`}
           aria-label="Github"
         >
           <FaGithub />
@@ -229,7 +229,7 @@ export const Navbar = () => {
         <a
           href="./downloads/Carlos-Francisco-Benítez-Quintanilla-CV.pdf"
           download
-          className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] transition-transform duration-300 hover:-translate-y-1"
+          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[20px]" : "text-[24px]"}`}
           aria-label="Curriculum vitae"
         >
           <PiReadCvLogoLight />

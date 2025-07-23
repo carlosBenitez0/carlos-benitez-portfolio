@@ -1,3 +1,5 @@
+import { useIsMobile } from "../../../hooks/useIsMobile";
+
 interface TechnologyProps {
   name: string;
   logo: string;
@@ -11,18 +13,19 @@ export const Technology = ({
   url,
   classNames,
 }: TechnologyProps) => {
+  const { isMobile } = useIsMobile();
   return (
     <a
       href={url}
       target="_blank"
-      className={`flex flex-col items-center gap-2 ${classNames}`}
+      className={`flex flex-col items-center gap-2 ${isMobile ? "w-[28px]" : ""} ${classNames}`}
     >
       <img
         src={logo}
         alt={name}
         className="w-10 h-auto aspect-square object-contain "
       />
-      <p>{name}</p>
+      <p className={isMobile ? "text-[12px]" : ""}>{name}</p>
     </a>
   );
 };
