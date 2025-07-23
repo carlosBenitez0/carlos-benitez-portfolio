@@ -5,9 +5,11 @@ import gsap from "gsap";
 import ShinyText from "../ui/ShinyText";
 import AnimatedGradientText from "../ui/AnimatedGradientText";
 import HighlightText from "../ui/HighlightText";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const Header = () => {
   const arrowRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const appearText = document.querySelectorAll(".appear-text");
@@ -60,10 +62,18 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="relative min-h-screen mt-24">
-      <div className="mx-auto grid h-[calc(100vh-80px)] w-full grid-cols-2 gap-4 text-white lg:max-w-5xl">
-        <div className="col-span-1 flex flex-col justify-center">
-          <h1 className="appear-text text-5xl mb-2">
+    <header
+      className={`relative min-h-screen  ${isMobile ? "mt-0 flex flex-col items-center justify-center" : "mt-24"}`}
+    >
+      <div
+        className={`mx-auto grid  w-full  gap-6 text-white lg:max-w-5xl ${isMobile ? "grid-cols-1 grid-rows-2 text-center h-[calc(20vh)] relative top-15 " : "grid-cols-2 grid-rows-1 h-[calc(100vh-80px)]"}`}
+      >
+        <div
+          className={`col-span-1 flex flex-col justify-center ${isMobile ? "row-start-2 row-end-3" : ""}`}
+        >
+          <h1
+            className={`relative appear-text text-5xl mb-2 ${isMobile ? "text-[36px] " : ""}`}
+          >
             Hola,{" "}
             <AnimatedGradientText
               colors={["#b388ff", "#7c4dff", "#651fff", "#9c64ff", "#d500f9"]}
@@ -76,7 +86,7 @@ export const Header = () => {
               />
             </AnimatedGradientText>
           </h1>
-          <h2 className="appear-text text-[16px] mb-8 text-balance">
+          <h2 className={`relative appear-text text-[16px] mb-8 text-balance `}>
             <ShinyText
               text="Egresado de Ingeniería en Sistemas y Computación | Desarrollador Web"
               disabled={false}
@@ -84,70 +94,72 @@ export const Header = () => {
               className="custom-class"
             />
           </h2>
-          <div className="appear-text text-balance text-cbpgray-200 font-poppins text-lg leading-relaxed z-10">
-            Construyo{" "}
-            <HighlightText shadowOpacity={1}>
-              {" "}
-              <ShinyText
-                text="soluciones web"
-                disabled={false}
-                speed={3}
-                className="custom-class"
-              />{" "}
-            </HighlightText>{" "}
-            robustas, fusionando{" "}
-            <HighlightText shadowOpacity={1}>
-              {" "}
-              <ShinyText
-                text="código eficiente"
-                disabled={false}
-                speed={3}
-                className="custom-class"
-              />{" "}
-            </HighlightText>{" "}
-            con
-            <HighlightText shadowOpacity={1}>
-              {" "}
-              <ShinyText
-                text="diseño intuitivo"
-                disabled={false}
-                speed={3}
-                className="custom-class"
-              />{" "}
-            </HighlightText>{" "}
-            y{" "}
-            <HighlightText shadowOpacity={1}>
-              {" "}
-              <ShinyText
-                text="creativo"
-                disabled={false}
-                speed={3}
-                className="custom-class"
-              />
-            </HighlightText>
-            . Creo que la programación va más allá de la lógica: es un espacio
-            para{" "}
-            <HighlightText shadowOpacity={1}>
-              {" "}
-              <ShinyText
-                text="innovar"
-                disabled={false}
-                speed={3}
-                className="custom-class"
-              />{" "}
-            </HighlightText>{" "}
-            y resolver problemas con
-            <HighlightText shadowOpacity={1}>
-              {" "}
-              <ShinyText
-                text="soluciones ingeniosas"
-                disabled={false}
-                speed={3}
-                className="custom-class"
-              />
-            </HighlightText>
-            .
-          </div>
+          {!isMobile && (
+            <div className="appear-text text-balance text-cbpgray-200 font-poppins text-lg leading-relaxed z-10">
+              Construyo{" "}
+              <HighlightText shadowOpacity={1}>
+                {" "}
+                <ShinyText
+                  text="soluciones web"
+                  disabled={false}
+                  speed={3}
+                  className="custom-class"
+                />{" "}
+              </HighlightText>{" "}
+              robustas, fusionando{" "}
+              <HighlightText shadowOpacity={1}>
+                {" "}
+                <ShinyText
+                  text="código eficiente"
+                  disabled={false}
+                  speed={3}
+                  className="custom-class"
+                />{" "}
+              </HighlightText>{" "}
+              con
+              <HighlightText shadowOpacity={1}>
+                {" "}
+                <ShinyText
+                  text="diseño intuitivo"
+                  disabled={false}
+                  speed={3}
+                  className="custom-class"
+                />{" "}
+              </HighlightText>{" "}
+              y{" "}
+              <HighlightText shadowOpacity={1}>
+                {" "}
+                <ShinyText
+                  text="creativo"
+                  disabled={false}
+                  speed={3}
+                  className="custom-class"
+                />
+              </HighlightText>
+              . Creo que la programación va más allá de la lógica: es un espacio
+              para{" "}
+              <HighlightText shadowOpacity={1}>
+                {" "}
+                <ShinyText
+                  text="innovar"
+                  disabled={false}
+                  speed={3}
+                  className="custom-class"
+                />{" "}
+              </HighlightText>{" "}
+              y resolver problemas con
+              <HighlightText shadowOpacity={1}>
+                {" "}
+                <ShinyText
+                  text="soluciones ingeniosas"
+                  disabled={false}
+                  speed={3}
+                  className="custom-class"
+                />
+              </HighlightText>
+              .
+            </div>
+          )}
         </div>
         <div className="col-span-1 ">
           <MyPicture />
@@ -156,7 +168,7 @@ export const Header = () => {
 
       <div
         ref={arrowRef}
-        className="absolute bottom-22 left-1/2 -translate-x-1/2"
+        className={`absolute left-1/2 -translate-x-1/2 ${isMobile ? "bottom-16" : "bottom-22"}`}
       >
         <IoIosArrowDown className="h-8 w-8 text-cbpviolet-400" />
       </div>

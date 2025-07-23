@@ -19,10 +19,13 @@ import { BgDotGradient } from "./components/ui/BgDotGradient";
 import { ContactContainer } from "./components/ui/contact/ContactContainer";
 import { useEffect } from "react";
 import gsap from "gsap";
+import { useIsMobile } from "./hooks/useIsMobile";
 
 function App() {
   const proyects = useProyects();
   const technologies = useTechnologies();
+  const { isMobile, viewSize } = useIsMobile();
+  const maxW = "max-w-[" + (viewSize - 40) + "px]";
 
   useEffect(() => {
     const dots_technologies = document.querySelectorAll(".dot-technologies");
@@ -63,18 +66,24 @@ function App() {
       gsap.killTweensOf(dots_technologies);
     };
   }, []);
+
   return (
-    <div className="font-poppins bg-cbpbg-900 relative z-40 h-screen w-screen overflow-x-hidden">
+    <div
+      className={`font-poppins bg-cbpbg-900 relative z-40 h-screen w-screen overflow-x-hidden ${isMobile ? maxW : "max-w-5xl"}`}
+    >
       <div
         className="absolute top-0 h-[70vh] w-full rounded-b-full mx-auto
         bg-gradient-to-b from-cbpviolet-500/20 to-cbpviolet-900/10 blur-3xl"
       ></div>
-      <div id="start" className="mx-auto h-full w-full text-white max-w-5xl">
+      <div
+        id="start"
+        className={`mx-auto h-full w-full text-white  ${isMobile ? maxW : "max-w-5xl"}`}
+      >
         <Navbar />
 
         <Header />
         <main>
-          <section id="projects" className="mb-20 mt-30 ">
+          <section id="projects" className="mb-20 mt-30 p-4">
             <SectionTitle title="Proyectos" icon={<IoCodeWorkingOutline />} />
             <div className="cardsContainer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
               {proyects.map((proyect, index) => (
@@ -92,17 +101,22 @@ function App() {
               ))}
             </div>
           </section>
-          <section id="about" className="mb-20 mt-30">
+          <section
+            id="about"
+            className={`mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
+          >
             <SectionTitle
               title="Sobre mí"
               icon={<IoIosInformationCircleOutline />}
             />
 
-            <div className="flex flex-col items-center gap-8 md:flex-row justify-between">
-              <div className="[&>p]:mb-4 text-balance">
-                <p
-                  /* ref={(el) => addToRefs(el, 0)} */ className="anim-about-text"
-                >
+            <div
+              className={`flex flex-col items-center gap-8 md:flex-row justify-between`}
+            >
+              <div
+                className={`[&>p]:mb-4 text-balance ${isMobile ? "order-2" : ""}`}
+              >
+                <p className="anim-about-text">
                   ¡Hola de nuevo! 👋 Soy Carlos Benítez,{" "}
                   <ShinyText text="Desarrollador web" /> con formación en{" "}
                   <ShinyText text="Ingeniería de Sistemas y Computación." />{" "}
@@ -111,9 +125,7 @@ function App() {
                   <ShinyText text="diseño atractivo" /> con{" "}
                   <ShinyText text="arquitecturas sólidas." />
                 </p>
-                <p
-                  /* ref={(el) => addToRefs(el, 1)} */ className="anim-about-text"
-                >
+                <p className="anim-about-text ">
                   Mi expertise abarca desde el desarrollo de{" "}
                   <ShinyText
                     text="interfaces
@@ -198,11 +210,14 @@ function App() {
               <img
                 src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1752513118/320_1x_shots_so_sf9nou.png"
                 alt=""
-                className="object-cover w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-72 aspect-square rounded-2xl proyect-card-anim"
+                className={`object-cover w-64 h-full p-1 rotate-3 lg:p-2 lg:w-72 aspect-square rounded-2xl proyect-card-anim ${isMobile ? "order-1 w-3xl" : ""}`}
               />
             </div>
           </section>
-          <section id="technologies" className="relative mb-20 mt-30">
+          <section
+            id="technologies"
+            className={`relative mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
+          >
             <div className="dot-technologies absolute flex items-center justify-center">
               <BgDotGradient
                 size="2xl"
@@ -237,7 +252,9 @@ function App() {
             </div>
 
             <SectionTitle title="Tecnologías" icon={<IoCodeSlashOutline />} />
-            <div className="grid grid-cols-3 grid-rows-2 gap-4 w-full">
+            <div
+              className={`grid ${isMobile ? "" : "grid-cols-3 grid-rows-2"} gap-4 w-full`}
+            >
               {Object.entries(technologiesSectionData).map(([key, value]) => {
                 return (
                   <TechnologiesContainer

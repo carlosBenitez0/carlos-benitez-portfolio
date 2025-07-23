@@ -5,6 +5,7 @@ import { BsBorderStyle } from "react-icons/bs"; //front
 import { LuSquareDashedBottomCode } from "react-icons/lu"; //back
 import { PiStudent } from "react-icons/pi"; //study
 import { VscTools } from "react-icons/vsc"; //tools
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
 interface TechnologiesContainerProps {
   title: string;
@@ -16,6 +17,7 @@ export const TechnologiesContainer = ({
   technologies,
 }: TechnologiesContainerProps) => {
   const techContainerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   // Efecto de iluminación con mouse
   const handleMouseMove = useCallback((e: MouseEvent, target: HTMLElement) => {
@@ -48,9 +50,9 @@ export const TechnologiesContainer = ({
   return (
     <div
       ref={techContainerRef}
-      className={`${title === "tools" ? "col-span-2" : title === "learning" || title === "backend" ? "col-span-1" : "col-span-2"} ${title === "frontend" ? "col-span-2" : ""}  p-4
+      className={`${!isMobile ? (title === "tools" ? "col-span-2" : title === "learning" || title === "backend" ? "col-span-1" : "col-span-2") : ""} ${title === "frontend" && !isMobile ? "col-span-2" : ""}  p-4
        backdrop-blur-2xl border-4 border-white/5 
-       before:content-[''] before:absolute before:inset-0  before:opacity-0 before:transition-opacity before:duration-300
+       before:content-[''] before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-300
          hover:before:opacity-[1] before:z-[-1] before:pointer-events-none
          before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.15)_0%,transparent_20%)]
          ${title === "tools" || title === "backend" ? "technologies-container-right" : "technologies-container-left"}`}
@@ -74,7 +76,9 @@ export const TechnologiesContainer = ({
         </h2>
       </div>
 
-      <div className="flex flex-wrap gap-8 justify-center">
+      <div
+        className={`flex flex-wrap gap-8 ${isMobile ? "justify-around" : "justify-center"}`}
+      >
         {technologies.map((technology) => {
           return (
             <Technology
