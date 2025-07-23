@@ -29,17 +29,14 @@ export const NavbarLink = ({
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setOptionSelected(label);
-
-    // Get the target element ID from href
+    
+    // Let the browser handle the scrolling with the CSS smooth behavior
     const targetId = href.startsWith("#") ? href.substring(1) : href;
     const targetElement = document.getElementById(targetId);
-
+    
     if (targetElement) {
-      // Scroll to the target element with smooth behavior
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      // This will use the CSS smooth scrolling with our 100px offset
+      targetElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
 

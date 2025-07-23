@@ -1,0 +1,18 @@
+/* Smooth scroll behavior for the entire document */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Add scroll margin to all section elements */
+section {
+  scroll-margin-top: 100px; /* This creates the 100px offset for all sections */
+}
+
+/* Target specific sections by ID for more control if needed */
+#start,
+#projects,
+#about,
+#technologies,
+#contact {
+  scroll-margin-top: 100px;
+}
