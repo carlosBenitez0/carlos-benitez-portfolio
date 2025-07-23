@@ -31,7 +31,7 @@ export const NavbarLink = ({
     setOptionSelected(label);
   };
 
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   return (
     /*======================================

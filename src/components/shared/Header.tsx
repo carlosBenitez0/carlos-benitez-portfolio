@@ -9,7 +9,7 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const Header = () => {
   const arrowRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   useEffect(() => {
     const appearText = document.querySelectorAll(".appear-text");

@@ -69,7 +69,7 @@ function App() {
 
   return (
     <div
-      className={`font-poppins bg-cbpbg-900 relative z-40 h-screen w-screen overflow-x-hidden ${isMobile ? maxW : "max-w-5xl"}`}
+      className={`font-poppins bg-cbpbg-900 relative z-40 h-screen  overflow-x-hidden ${isMobile ? maxW : "w-full"}`}
     >
       <div
         className="absolute top-0 h-[70vh] w-full rounded-b-full mx-auto

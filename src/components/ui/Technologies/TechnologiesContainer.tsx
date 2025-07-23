@@ -17,7 +17,7 @@ export const TechnologiesContainer = ({
   technologies,
 }: TechnologiesContainerProps) => {
   const techContainerRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   // Efecto de iluminación con mouse
   const handleMouseMove = useCallback((e: MouseEvent, target: HTMLElement) => {

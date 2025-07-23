@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const MyPicture = () => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   useEffect(() => {
     const picture = document.querySelector(".my-picture");
     const dots = document.querySelectorAll(".dot");

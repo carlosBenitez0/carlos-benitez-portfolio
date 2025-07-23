@@ -15,7 +15,7 @@ export const Navbar = () => {
   const [optionSelected, setOptionSelected] = useState("start");
   const menuRef = useRef<HTMLUListElement>(null);
   const socialMenuRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
   const links = [
     {
       label: "start",
