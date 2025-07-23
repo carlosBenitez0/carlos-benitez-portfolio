@@ -77,7 +77,7 @@ function App() {
       ></div>
       <div
         id="start"
-        className={`mx-auto h-full w-full text-white  ${isMobile ? maxW : "max-w-5xl"}`}
+        className={`mx-auto h-full w-full text-white ${isMobile ? maxW : "max-w-5xl"}`}
       >
         <Navbar />
 
@@ -266,7 +266,7 @@ function App() {
               })}
             </div>
           </section>
-          <section id="contact" className="mb-20 mt-30">
+          <section id="contact" className="mb-20 mt-30 p-4">
             <SectionTitle
               title="Contáctame"
               icon={<MdOutlineConnectWithoutContact />}

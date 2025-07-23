@@ -13,6 +13,7 @@ import { CiLinkedin } from "react-icons/ci";
 import ShinyText from "../ShinyText";
 import emailjs from "@emailjs/browser";
 import { SendedComponent } from "./SendedComponent";
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
 interface UserData {
   name: string;
@@ -22,6 +23,7 @@ interface UserData {
 }
 
 export const ContactContainer = () => {
+  const { isMobile } = useIsMobile();
   const form = useRef<HTMLFormElement | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
@@ -216,7 +218,10 @@ export const ContactContainer = () => {
   }, []);
 
   return (
-    <div className="anim-about-text relative overflow-hidden grid gap-8 grid-cols-2 bg-transparent filter-blur-3xl rounded-xl border-2 border-white/5">
+    <div
+      className={`anim-about-text grid relative overflow-hidden gap-8 bg-transparent filter-blur-3xl rounded-xl border-2 border-white/5
+    ${isMobile ? "grid-cols-1 grid-rows-2" : " grid-cols-2"}`}
+    >
       <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -285,7 +290,9 @@ export const ContactContainer = () => {
           </use>
         </g>
       </svg>
-      <div className="ring-component absolute -top-15 -left-15 w-64 h-64 border-[15px] border-cbpviolet-500/50 blur-md rounded-full -z-1"></div>
+      <div
+        className={`ring-component absolute ${isMobile ? "-top-35 -left-35 blur-xl w-100 h-100" : "-top-15 -left-15 blur-md w-64 h-64"}  border-[15px] border-cbpviolet-500/50 rounded-full -z-1`}
+      ></div>
 
       <div className="dot-contact absolute flex items-center justify-center">
         <BgDotGradient
@@ -307,7 +314,7 @@ export const ContactContainer = () => {
       <form
         ref={form}
         onSubmit={handleSubmit}
-        className={`z-50 grid grid-cols-2 gap-6 rounded-xl p-8
+        className={`z-50 grid grid-cols-2 gap-6 rounded-xl ${isMobile ? "pb-5 px-5" : "p-8"}
         [&>div]:flex [&>div]:items-center [&>div]:w-full [&>div]:pl-2 [&>div,&>span>textarea]:border [&>div,&>span>textarea]:border-white/15 [&>div,&>span>textarea]:rounded-lg
         [&>div>input,&>span>textarea]:outline-none [&>div>input]:p-3 [&>div>input,&>span>textarea]:w-full 
         [&>div>input,&>span>textarea]:placeholder:text-white/50 [&>div>input,&>span>textarea]:bg-transparent [&>div,&>span>textarea]:shadow-[inset_0px_0px_20px_rgba(255,255,255,0.1)]
@@ -322,9 +329,9 @@ export const ContactContainer = () => {
         ${userData.email !== "" ? "[&>div:nth-child(2)]:border-white/25" : ""}
         ${userData.subject !== "" ? "[&>div:nth-child(3)]:border-white/25" : ""}
         ${userData.message !== "" ? "[&>span>textarea]:border-white/25" : ""}
-        `}
+        ${isMobile ? "row-start-2 row-end-3" : ""}`}
       >
-        <div className="text-red-50">
+        <div className={` ${isMobile ? "col-span-2" : ""}`}>
           <FaRegUser className={`form-icon min-w-4 min-h-4 `} />
           <input
             type="text"
@@ -336,7 +343,7 @@ export const ContactContainer = () => {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className={` ${isMobile ? "col-span-2" : ""}`}>
           <MdOutlineEmail className="form-icon min-w-4 min-h-4" />
           <input
             type="text"
@@ -414,10 +421,16 @@ export const ContactContainer = () => {
         </button>
       </form>
 
-      <div>
-        <div className="relative h-full">
-          <div className="absolute inset-0 flex items-center justify-center flex-col">
-            <div className="flex flex-col items-center gap-2">
+      <div className={isMobile ? "row-start-1 row-end-2 p-5 " : ""}>
+        <div
+          className={`relative h-full ${isMobile ? "flex items-center justify-center" : ""}`}
+        >
+          <div
+            className={`${isMobile ? "relative top-15" : "absolute"} inset-0 flex items-center justify-center flex-col`}
+          >
+            <div
+              className={`flex flex-col items-center ${isMobile ? "gap-4" : "gap-2"}`}
+            >
               <div className="flex items-center gap-2 text-2xl">
                 <IoLocationOutline className="text-cbpviolet-500" />
                 <p className="bg-gradient-to-l from-cbpviolet-200 to-cbpviolet-500 bg-clip-text text-transparent">
@@ -430,13 +443,13 @@ export const ContactContainer = () => {
               <img
                 src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1752763407/el-salvador_s5asqk.png"
                 alt="El Salvador"
-                className="w-20 h-20 drop-shadow-[0px_0px_5px_#7b2cbfff]"
+                className="w-20 h-20 drop-shadow-[0px_0px_5px_#7b2cbfff] mb-2"
               />
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <a
                 href="https://www.linkedin.com/in/carlos-ben%C3%ADtez-profile/"
-                className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[24px]"
+                className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[34px]"
                 target="_blank"
                 aria-label="Linkedin"
               >
@@ -445,7 +458,7 @@ export const ContactContainer = () => {
               <a
                 href="https://github.com/carlosBenitez0"
                 target="_blank"
-                className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px]"
+                className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[28px]"
                 aria-label="Github"
               >
                 <FaGithub />
@@ -455,7 +468,7 @@ export const ContactContainer = () => {
                 href="./downloads/Carlos-Francisco-Benítez-Quintanilla-CV.pdf"
                 download
                 className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] 
-                flex items-center gap-2 py-1 px-3 rounded-full border border-cbpgray-300/70 hover:border-cbpgray-300"
+                flex items-center gap-2 py-[2px] px-3 rounded-full border border-cbpgray-300/70 hover:border-cbpgray-300"
               >
                 <span className="text-[16px]">Descargar CV</span>
               </a>
@@ -463,8 +476,8 @@ export const ContactContainer = () => {
           </div>
           <div className="absolute bottom-0 left-0 w-10 h-26"></div>
           <div
-            className="absolute top-8 right-8 w-26 h-26 bg-gradient-to-bl from-cbpviolet-700 to-cbpbg-900 rounded-full
-          shadow-[inset_0px_5px_10px_rgba(255,255,255,0.1),0px_0px_10px_rgba(255,255,255,0.1),0px_0px_20px_rgba(255,255,255,0.1),0px_0px_30px_rgba(255,255,255,0.1)]"
+            className={`${isMobile ? "absolute top-0 right-0 w-24 h-24" : "absolute top-8 right-8 w-26 h-26"}  bg-gradient-to-bl from-cbpviolet-700 to-cbpbg-900 rounded-full
+          shadow-[inset_0px_5px_10px_rgba(255,255,255,0.1),0px_0px_10px_rgba(255,255,255,0.1),0px_0px_20px_rgba(255,255,255,0.1),0px_0px_30px_rgba(255,255,255,0.1)]`}
           ></div>
         </div>
       </div>
