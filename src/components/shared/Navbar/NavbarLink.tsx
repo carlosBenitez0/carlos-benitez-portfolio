@@ -26,9 +26,21 @@ export const NavbarLink = ({
     });
   }; */
 
-  const clickHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setOptionSelected(label);
+
+    // Get the target element ID from href
+    const targetId = href.startsWith("#") ? href.substring(1) : href;
+    const targetElement = document.getElementById(targetId);
+
+    if (targetElement) {
+      // Scroll to the target element with smooth behavior
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   };
 
   const { isMobile } = useIsMobile();
@@ -47,7 +59,7 @@ export const NavbarLink = ({
         ${isMobile ? "after:hidden gap-1 pr-0 text-[18px]" : "pr-3 "}`}
       title={text}
       aria-label={text}
-      onClick={clickHandler}
+      onClick={handleClick}
     >
       {icon}
       {isMobile ? "" : text}
