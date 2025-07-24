@@ -11,7 +11,6 @@ type TerminalCommand = {
 export const AITerminal = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
-  const [copied, setCopied] = useState(false);
   const terminalRef = useRef<HTMLDivElement>(null);
 
   const commands: TerminalCommand[] = [
@@ -60,16 +59,10 @@ Como desarrollador web, ¿cómo puedo aprovechar la IA en mi flujo de trabajo ac
     },
   ];
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   useEffect(() => {
-    // Auto-scroll to bottom when content changes
+    // Reset scroll position to top when changing tabs
     if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+      terminalRef.current.scrollTop = 0;
     }
   }, [activeTab]);
 
@@ -130,9 +123,12 @@ Como desarrollador web, ¿cómo puedo aprovechar la IA en mi flujo de trabajo ac
               {/* Input */}
               <div className="mb-4">
                 <div className="flex items-start">
-                  <span className="mr-2 text-cbpviolet-400">$</span>
-                  <div className="flex-1">
-                    <div className="text-cbpgray-200">
+                  <div className="mt-2">
+                    <div className="mb-1 text-xs font-medium text-cbpgray-400">
+                      <span className="mr-2 text-cbpviolet-400">$</span>Ejemplo
+                      de prompt profesional:
+                    </div>
+                    <div className="rounded bg-cbpgray-800/50 p-4 font-mono text-sm text-cbpgray-300">
                       {activeCommand.prompt}
                     </div>
                   </div>
@@ -140,20 +136,11 @@ Como desarrollador web, ¿cómo puedo aprovechar la IA en mi flujo de trabajo ac
               </div>
 
               {/* Output */}
-              <div className="relative">
-                <div className="absolute right-0 top-0">
-                  <button
-                    onClick={() =>
-                      copyToClipboard(
-                        activeCommand.response.replace(/```[\s\S]*?```/g, ""),
-                      )
-                    }
-                    className="rounded bg-cbpgray-700/50 px-2 py-1 text-xs text-cbpgray-300 hover:bg-cbpgray-700 hover:text-cbpviolet-300"
-                  >
-                    {copied ? "Copied!" : "Copy"}
-                  </button>
+              <div className="relative mt-6">
+                <div className="mb-2 text-xs font-medium text-cbpgray-400">
+                  Ejemplo de respuesta de IA:
                 </div>
-                <pre className="mt-6 overflow-x-auto rounded bg-cbpgray-900/50 p-4 text-cbpgray-100">
+                <pre className="mt-2 overflow-x-auto rounded bg-cbpgray-900/50 p-4 text-cbpgray-100">
                   <code>
                     {activeCommand.response
                       .replace(/```[\w]*\n?|```$/g, "")
@@ -164,7 +151,9 @@ Como desarrollador web, ¿cómo puedo aprovechar la IA en mi flujo de trabajo ac
 
               <div className="mt-4 flex items-center text-xs text-cbpgray-400">
                 <FaChevronRight className="mr-1.5 inline-block h-3 w-3 text-cbpviolet-400" />
-                <span>Try these examples in your AI assistant of choice</span>
+                <span>
+                  Prueba estos ejemplos en tu asistente de IA preferido
+                </span>
               </div>
             </div>
           </motion.div>

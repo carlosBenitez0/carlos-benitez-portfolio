@@ -158,13 +158,13 @@ export const AISection = () => {
   ];
 
   return (
-    <section id="ai" className="py-16 bg-cbpgray-900" ref={sectionRef}>
-      <div className="container mx-auto px-4">
+    <section id="ai" className="py-8 bg-cbpgray-900" ref={sectionRef}>
+      <div className="container mx-auto px-8">
         {/* Título principal de la sección */}
         <SectionTitle title="Inteligencia Artificial" icon={<FaRobot />} />
 
         {/* Descripción de la sección */}
-        <p className="text-center text-cbpgray-300 max-w-3xl mx-auto mb-12">
+        <p className="text-cbpgray-300  mb-12">
           Utilizo herramientas de IA avanzadas para mejorar la calidad y
           eficiencia del desarrollo de software. Estas son algunas de las
           tecnologías que integro en mi flujo de trabajo diario.
