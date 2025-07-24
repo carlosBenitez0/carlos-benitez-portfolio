@@ -77,15 +77,18 @@ function App() {
       ></div>
       <div
         id="start"
-        className={`mx-auto h-full w-full text-white ${isMobile ? maxW : "max-w-5xl"}`}
+        className={`mx-auto h-full w-full text-white ${isMobile ? maxW : "max-w-[950px]"}`}
       >
         <Navbar />
 
         <Header />
         <main>
-          <section id="projects" className="mb-20 mt-30 p-4">
+          <section
+            id="projects"
+            className={`mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
+          >
             <SectionTitle title="Proyectos" icon={<IoCodeWorkingOutline />} />
-            <div className="cardsContainer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+            <div className="cardsContainer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
               {proyects.map((proyect, index) => (
                 <div key={proyect.name + index} className="relative">
                   <ProyectCard
@@ -266,7 +269,10 @@ function App() {
               })}
             </div>
           </section>
-          <section id="contact" className="mb-20 mt-30 p-4">
+          <section
+            id="contact"
+            className={`mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
+          >
             <SectionTitle
               title="Contáctame"
               icon={<MdOutlineConnectWithoutContact />}

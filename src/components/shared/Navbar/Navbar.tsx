@@ -127,7 +127,7 @@ export const Navbar = () => {
           autoAlpha: 1,
           width: "auto",
           background: "rgba(10, 14, 26, 0.7)",
-          height: isMobile ? "40px" : "60px",
+          height: isMobile ? "40px" : "50px",
           paddingTop: isMobile ? 6 : 16,
           paddingBottom: isMobile ? 6 : 16,
           duration: 1.5,
@@ -173,7 +173,7 @@ export const Navbar = () => {
 
   return (
     <div
-      className={`z-40 flex items-center fixed top-0 mx-auto w-full lg:max-w-5xl ${isMobile ? "justify-between p-4 " : "justify-between"}`}
+      className={`z-40 flex items-center fixed top-0 mx-auto w-full lg:max-w-[950px] ${isMobile ? "justify-between p-4 " : "justify-between"}`}
     >
       {/* <div className="from-cbpviolet-400 via-cbpviolet-600 to-cbpviolet-500 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
         CarlosBenítez
@@ -183,7 +183,7 @@ export const Navbar = () => {
         <img
           src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751309549/cb-logo2_kowmru.png"
           alt=""
-          className={`cb-logo  ${isMobile ? "w-10 max-w-10" : "min-w-14 w-14"}`}
+          className={`cb-logo  ${isMobile ? "w-10 max-w-10" : "min-w-12 w-12"}`}
         />
       </figure>
       <nav className="nav-padding">
@@ -212,7 +212,7 @@ export const Navbar = () => {
       >
         <a
           href="https://www.linkedin.com/in/carlos-ben%C3%ADtez-profile/"
-          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[22px]" : "text-[24px]"}`}
+          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[22px]" : "text-[22px]"}`}
           target="_blank"
           aria-label="Linkedin"
         >
@@ -221,7 +221,7 @@ export const Navbar = () => {
         <a
           href="https://github.com/carlosBenitez0"
           target="_blank"
-          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[18px]" : "text-[21px]"}`}
+          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[18px]" : "text-[19px]"}`}
           aria-label="Github"
         >
           <FaGithub />
@@ -229,7 +229,7 @@ export const Navbar = () => {
         <a
           href="./downloads/Carlos-Francisco-Benítez-Quintanilla-CV.pdf"
           download
-          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[20px]" : "text-[24px]"}`}
+          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[20px]" : "text-[22px]"}`}
           aria-label="Curriculum vitae"
         >
           <PiReadCvLogoLight />

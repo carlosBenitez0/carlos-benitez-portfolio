@@ -20,11 +20,11 @@ export const Footer = () => {
 
   return (
     <div
-      className={`py-12 mt-8 grid grid-cols-2 border-t border-cbpgray-800 ${isMobile ? "p-4 gap-8" : "gap-12"}`}
+      className={`mt-8 grid grid-cols-2 border-t border-cbpgray-800 ${isMobile ? "px-4 py-15 gap-8" : "gap-20 py-18 pb-28"}`}
     >
       <div className="flex flex-col gap-4">
         <div
-          className={`flex ${isMobile ? " flex-col gap-4" : " items-center"} gap-2`}
+          className={`flex ${isMobile ? " flex-col" : " items-center"} gap-4`}
         >
           <figure>
             <img
@@ -50,7 +50,7 @@ export const Footer = () => {
           Tecnologías utilizadas en el desarrollo de esta página:
         </p>
         <ul
-          className={`flex flex-wrap ${isMobile ? "justify-start gap-8 gap-y-12" : "gap-8"}`}
+          className={`flex flex-wrap ${isMobile ? "justify-start gap-8 gap-y-12" : "gap-8 gap-y-14"}`}
         >
           {technologies &&
             technologiesFilter &&

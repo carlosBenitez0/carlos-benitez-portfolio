@@ -18,12 +18,12 @@ export const Technology = ({
     <a
       href={url}
       target="_blank"
-      className={`flex flex-col items-center gap-2 ${isMobile ? "w-[28px]" : ""} ${classNames}`}
+      className={`flex flex-col items-center gap-2  ${isMobile ? "w-[28px]" : ""} ${classNames}`}
     >
       <img
         src={logo}
         alt={name}
-        className="w-10 h-auto aspect-square object-contain "
+        className="w-10 aspect-square object-contain "
       />
       <p className={isMobile ? "text-[12px]" : ""}>{name}</p>
     </a>

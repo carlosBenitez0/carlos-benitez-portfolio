@@ -66,13 +66,13 @@ export const Header = () => {
       className={`relative min-h-screen  ${isMobile ? "mt-0 flex flex-col items-center justify-center" : "mt-24"}`}
     >
       <div
-        className={`mx-auto grid  w-full  gap-6 text-white lg:max-w-5xl ${isMobile ? "grid-cols-1 grid-rows-2 text-center h-[calc(20vh)] relative top-15 " : "grid-cols-2 grid-rows-1 h-[calc(100vh-80px)]"}`}
+        className={`mx-auto grid  w-full  gap-6 text-white lg:max-w-[950px] ${isMobile ? "grid-cols-1 grid-rows-2 text-center h-[calc(20vh)] relative top-15 " : "grid-cols-2 grid-rows-1 h-[calc(100vh-80px)] pb-16"}`}
       >
         <div
           className={`col-span-1 flex flex-col justify-center ${isMobile ? "row-start-2 row-end-3" : ""}`}
         >
           <h1
-            className={`relative appear-text text-5xl mb-2 ${isMobile ? "text-[36px] " : ""}`}
+            className={`relative appear-text mb-2 ${isMobile ? "text-[36px] " : "text-[44px]"}`}
           >
             Hola,{" "}
             <AnimatedGradientText
@@ -95,7 +95,9 @@ export const Header = () => {
             />
           </h2>
           {!isMobile && (
-            <div className="appear-text text-balance text-cbpgray-200 font-poppins text-lg leading-relaxed z-10">
+            <div
+              className={`appear-text text-balance text-cbpgray-200 font-poppins text-lg leading-relaxed z-10 ${!isMobile && "text-[16px]"}`}
+            >
               Construyo{" "}
               <HighlightText shadowOpacity={1}>
                 {" "}
@@ -130,13 +132,13 @@ export const Header = () => {
               <HighlightText shadowOpacity={1}>
                 {" "}
                 <ShinyText
-                  text="creativo"
+                  text="creativo. "
                   disabled={false}
                   speed={3}
                   className="custom-class"
                 />
               </HighlightText>
-              . Creo que la programación va más allá de la lógica: es un espacio
+              Creo que la programación va más allá de la lógica: es un espacio
               para{" "}
               <HighlightText shadowOpacity={1}>
                 {" "}
@@ -151,17 +153,16 @@ export const Header = () => {
               <HighlightText shadowOpacity={1}>
                 {" "}
                 <ShinyText
-                  text="soluciones ingeniosas"
+                  text="soluciones ingeniosas."
                   disabled={false}
                   speed={3}
                   className="custom-class"
                 />
               </HighlightText>
-              .
             </div>
           )}
         </div>
-        <div className="col-span-1 ">
+        <div className="col-span-1">
           <MyPicture />
         </div>
       </div>

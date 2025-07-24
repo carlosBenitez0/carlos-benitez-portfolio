@@ -194,10 +194,10 @@ export const MyPicture = () => {
             ? "shadow-[inset_8px_8px_16px_rgba(54,26,111,0.5),inset_-8px_-8px_16px_rgba(175,55,239,0.4),0px_0px_5px_rgba(140,55,200,0.3),0px_0px_25px_rgba(140,55,200,0.3),0px_0px_50px_rgba(140,55,200,0.3),0px_0px_100px_rgba(140,55,200,0.3)]"
             : "shadow-[inset_4px_4px_8px_rgba(54,26,111,0.5),inset_-4px_-4px_8px_rgba(175,55,239,0.4),0px_0px_2px_rgba(140,55,200,0.3),0px_0px_10px_rgba(140,55,200,0.3),0px_0px_20px_rgba(140,55,200,0.3),0px_0px_40px_rgba(140,55,200,0.3)]"
         }
-          rounded-full bg-gradient-to-b from-cbpviolet-500/30 to-cbpviolet-900/50  ${isMobile ? "h-[200px] w-[200px] " : "h-[400px] w-[400px] left-[50px]"} `}
+          rounded-full bg-gradient-to-b from-cbpviolet-500/30 to-cbpviolet-900/50  ${isMobile ? "h-[200px] w-[200px] " : "h-[300px] w-[300px] left-[75px]"} `}
       ></div>
       <figure
-        className={`my-picture absolute object-cover ${isMobile ? "w-[150px] top-[-120px]" : "w-[300px] top-[-250px]"}`}
+        className={`my-picture absolute object-cover ${isMobile ? "w-[150px] top-[-120px]" : "w-[225px] top-[-180px]"}`}
       >
         <img
           src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751572816/carlos-benitez-foto_mamqno.png"

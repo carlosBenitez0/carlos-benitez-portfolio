@@ -219,7 +219,7 @@ export const ContactContainer = () => {
 
   return (
     <div
-      className={`anim-about-text grid relative overflow-hidden gap-8 bg-transparent filter-blur-3xl rounded-xl border-2 border-white/5
+      className={`anim-about-text grid relative overflow-hidden  bg-transparent filter-blur-3xl rounded-xl border-2 border-white/5
     ${isMobile ? "grid-cols-1 grid-rows-2" : " grid-cols-2"}`}
     >
       <svg
@@ -476,7 +476,7 @@ export const ContactContainer = () => {
           </div>
           <div className="absolute bottom-0 left-0 w-10 h-26"></div>
           <div
-            className={`${isMobile ? "absolute top-0 right-0 w-24 h-24" : "absolute top-8 right-8 w-26 h-26"}  bg-gradient-to-bl from-cbpviolet-700 to-cbpbg-900 rounded-full
+            className={`${isMobile ? "absolute top-0 right-0 w-24 h-24" : "absolute top-8 right-8 w-20 h-20"}  bg-gradient-to-bl from-cbpviolet-700 to-cbpbg-900 rounded-full
           shadow-[inset_0px_5px_10px_rgba(255,255,255,0.1),0px_0px_10px_rgba(255,255,255,0.1),0px_0px_20px_rgba(255,255,255,0.1),0px_0px_30px_rgba(255,255,255,0.1)]`}
           ></div>
         </div>
