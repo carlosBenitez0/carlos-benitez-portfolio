@@ -17,6 +17,7 @@ import { technologies as technologiesSectionData } from "./utils/technologies";
 import { TechnologiesContainer } from "./components/ui/Technologies/TechnologiesContainer";
 import { BgDotGradient } from "./components/ui/BgDotGradient";
 import { ContactContainer } from "./components/ui/contact/ContactContainer";
+import { AISection } from "./components/ui/ai/AISection";
 import { useEffect } from "react";
 import gsap from "gsap";
 import { useIsMobile } from "./hooks/useIsMobile";
@@ -269,6 +270,7 @@ function App() {
               })}
             </div>
           </section>
+          <AISection />
           <section
             id="contact"
             className={`mb-20 mt-30 ${isMobile ? "p-4" : ""}`}

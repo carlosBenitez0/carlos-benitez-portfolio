@@ -7,6 +7,7 @@ import { MdOutlineConnectWithoutContact } from "react-icons/md";
 import { CiLinkedin } from "react-icons/ci";
 import { FaGithub } from "react-icons/fa";
 import { PiReadCvLogoLight } from "react-icons/pi";
+import { FaRobot } from "react-icons/fa";
 import { NavbarLink } from "./NavbarLink";
 import gsap from "gsap";
 import { useIsMobile } from "../../../hooks/useIsMobile";
@@ -44,6 +45,12 @@ export const Navbar = () => {
       href: "#technologies",
       icon: <IoCodeSlashOutline />,
       text: "Tecnologías",
+    },
+    {
+      label: "ai",
+      href: "#ai",
+      icon: <FaRobot className="text-lg" />,
+      text: "AI",
     },
     {
       label: "contact",
@@ -121,7 +128,14 @@ export const Navbar = () => {
     observerRef.current = new IntersectionObserver(handleIntersect, options);
 
     // Observe all sections
-    const sections = ["start", "projects", "about", "technologies", "contact"];
+    const sections = [
+      "start",
+      "projects",
+      "about",
+      "technologies",
+      "ai",
+      "contact",
+    ];
     sections.forEach((section) => {
       const element = document.getElementById(section);
       if (element) {
