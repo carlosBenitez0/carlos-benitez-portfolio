@@ -16,6 +16,10 @@ export const Navbar = () => {
   const menuRef = useRef<HTMLUListElement>(null);
   const socialMenuRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useIsMobile();
+  const sectionRefs = useRef<{
+    [key: string]: IntersectionObserverEntry | null;
+  }>({});
+  const observerRef = useRef<IntersectionObserver | null>(null);
   const links = [
     {
       label: "start",
@@ -86,6 +90,51 @@ export const Navbar = () => {
       }
     };
   }, [handleMouseMove]); // Dependencia del callback
+
+  // Set up Intersection Observer
+  useEffect(() => {
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      let mostVisibleSection = "";
+      let maxRatio = 0;
+
+      entries.forEach((entry) => {
+        const sectionId = entry.target.id;
+        sectionRefs.current[sectionId] = entry;
+
+        if (entry.intersectionRatio > maxRatio) {
+          maxRatio = entry.intersectionRatio;
+          mostVisibleSection = sectionId;
+        }
+      });
+
+      if (mostVisibleSection && maxRatio > 0.1) {
+        setOptionSelected(mostVisibleSection);
+      }
+    };
+
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.1, // Very low threshold to catch any visibility
+    };
+
+    observerRef.current = new IntersectionObserver(handleIntersect, options);
+
+    // Observe all sections
+    const sections = ["start", "projects", "about", "technologies", "contact"];
+    sections.forEach((section) => {
+      const element = document.getElementById(section);
+      if (element) {
+        observerRef.current?.observe(element);
+      }
+    });
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, []);
 
   //animacion de gsap blurText para cada link con un delay de .3s
   useEffect(() => {
