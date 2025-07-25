@@ -21,6 +21,7 @@ import { AISection } from "./components/ui/ai/AISection";
 import { useEffect } from "react";
 import gsap from "gsap";
 import { useIsMobile } from "./hooks/useIsMobile";
+import { TechTooltip } from "./components/ui/ai/TechTooltip";
 
 function App() {
   const proyects = useProyects();
@@ -72,10 +73,14 @@ function App() {
     <div
       className={`font-poppins bg-cbpbg-900 relative z-40 h-screen  overflow-x-hidden ${isMobile ? maxW : "w-full"}`}
     >
+      {/* Tech Tooltip - componente que muestra información sobre las tecnologías */}
+      <TechTooltip />
+
       <div
         className="absolute top-0 h-[70vh] w-full rounded-b-full mx-auto
         bg-gradient-to-b from-cbpviolet-500/20 to-cbpviolet-900/10 blur-3xl"
       ></div>
+
       <div
         id="start"
         className={`mx-auto h-full w-full text-white ${isMobile ? maxW : "max-w-[950px]"}`}

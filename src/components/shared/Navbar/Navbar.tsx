@@ -270,7 +270,7 @@ export const Navbar = () => {
       </nav>
       <div
         ref={socialMenuRef}
-        className={`fade-in-menu relative border-white/7 flex items-center rounded-full border  backdrop-blur-sm ${isMobile ? "justify-center gap-2 px-3" : "gap-5 px-6 py-4"}
+        className={`fade-in-menu relative border-white/7 flex items-center rounded-full border  backdrop-blur-sm ${isMobile ? "justify-center gap-1 px-2" : "gap-5 px-6 py-4"}
      ${!isMobile ? "before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 before:z-[-1] before:pointer-events-none before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]" : ""}`}
       >
         <a
