@@ -6,7 +6,7 @@ import { AIToolCard } from "./AIToolCard";
 import { AITerminal } from "./AITerminal";
 // Importación de iconos de la biblioteca react-icons
 import { FaRobot, FaTerminal, FaCode, FaBrain } from "react-icons/fa";
-import { SiGithub, SiOpenai, SiGoogle } from "react-icons/si";
+import { SiGithub, SiOpenai, SiGoogle, SiClaude } from "react-icons/si";
 import { BiLogoVisualStudio } from "react-icons/bi";
 import { FaBolt } from "react-icons/fa6";
 // Importación de hooks de React
@@ -62,6 +62,28 @@ export const AISection = () => {
       ],
     },
     {
+      nombre: "GitHub Copilot",
+      icono: <SiGithub className="text-2xl" />,
+      descripcion:
+        "Asistente de programación en pares impulsado por IA para sugerencias de código en tiempo real.",
+      beneficios: [
+        "Sugerencias de código en tiempo real",
+        "Integración con editores populares",
+        "Aprendizaje automático contextual",
+      ],
+    },
+    {
+      nombre: "ClaudeAI",
+      icono: <SiClaude className="text-2xl" />,
+      descripcion:
+        "Asistente de IA enfocado en razonamiento, análisis y generación de soluciones de código con alto contexto.",
+      beneficios: [
+        "Excelente análisis y explicación de código",
+        "Respuestas estructuradas para tareas complejas",
+        "Buen soporte para arquitectura y refactorización",
+      ],
+    },
+    {
       nombre: "Gemini",
       icono: <SiGoogle className="text-2xl" />,
       descripcion:
@@ -70,17 +92,6 @@ export const AISection = () => {
         "Capacidades multimodales avanzadas",
         "Integración con herramientas de Google",
         "Buen rendimiento en tareas de programación",
-      ],
-    },
-    {
-      nombre: "Bolt.new",
-      icono: <FaBolt className="text-2xl" />,
-      descripcion:
-        "Plataforma para generar proyectos completos usando indicaciones en lenguaje natural.",
-      beneficios: [
-        "Creación de proyectos desde cero con prompts",
-        "Asistencia con IA para estructurar código y archivos",
-        "Compatible con varios lenguajes de programación",
       ],
     },
     {
@@ -96,17 +107,6 @@ export const AISection = () => {
       ],
     },
     {
-      nombre: "GitHub Copilot",
-      icono: <SiGithub className="text-2xl" />,
-      descripcion:
-        "Asistente de programación en pares impulsado por IA para sugerencias de código en tiempo real.",
-      beneficios: [
-        "Sugerencias de código en tiempo real",
-        "Integración con editores populares",
-        "Aprendizaje automático contextual",
-      ],
-    },
-    {
       nombre: "Windsurf",
       icono: <SiOpenai className="text-2xl" />,
       descripcion:
@@ -116,6 +116,28 @@ export const AISection = () => {
         "Análisis de código en tiempo real",
         "Soporte para múltiples lenguajes",
         "Integración con el flujo de desarrollo",
+      ],
+    },
+    {
+      nombre: "Bolt.new",
+      icono: <FaBolt className="text-2xl" />,
+      descripcion:
+        "Plataforma para generar proyectos completos usando indicaciones en lenguaje natural.",
+      beneficios: [
+        "Creación de proyectos desde cero con prompts",
+        "Asistencia con IA para estructurar código y archivos",
+        "Compatible con varios lenguajes de programación",
+      ],
+    },
+    {
+      nombre: "Antigravity",
+      icono: <FaRobot className="text-2xl" />,
+      descripcion:
+        "Asistente de IA orientado a productividad para acelerar tareas repetitivas y flujo de desarrollo.",
+      beneficios: [
+        "Automatización de tareas frecuentes",
+        "Mejora de productividad en el ciclo de desarrollo",
+        "Soporte para trabajo asistido con IA",
       ],
     },
 

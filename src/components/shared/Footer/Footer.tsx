@@ -35,7 +35,7 @@ export const Footer = () => {
           </figure>
           <div className="flex flex-col">
             <p className="text-transparent bg-clip-text bg-gradient-to-r from-cbpviolet-400 via-cbpviolet-100 to-cbpviolet-200">
-              Carlos Francisco Benítez Quintanilla
+              Carlos Benítez
             </p>
             <span className="text-cbpgray-400 text-sm">Desarrollador web</span>
           </div>

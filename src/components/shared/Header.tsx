@@ -88,7 +88,7 @@ export const Header = () => {
           </h1>
           <h2 className={`relative appear-text text-[16px] mb-8 text-balance `}>
             <ShinyText
-              text="Egresado de Ingeniería en Sistemas y Computación | Desarrollador Web"
+              text="Ingeniero en Sistemas y Computación | Desarrollador Web"
               disabled={false}
               speed={3}
               className="custom-class"
@@ -138,7 +138,7 @@ export const Header = () => {
                   className="custom-class"
                 />
               </HighlightText>
-              Creo que la programación va más allá de la lógica: es un espacio
+              {" "}Creo que la programación va más allá de la lógica: es un espacio
               para{" "}
               <HighlightText shadowOpacity={1}>
                 {" "}

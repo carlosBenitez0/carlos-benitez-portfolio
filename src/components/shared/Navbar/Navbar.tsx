@@ -274,7 +274,7 @@ export const Navbar = () => {
      ${!isMobile ? "before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 before:z-[-1] before:pointer-events-none before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]" : ""}`}
       >
         <a
-          href="https://www.linkedin.com/in/carlos-ben%C3%ADtez-profile/"
+          href="https://www.linkedin.com/in/carlos-benitez-profile/"
           className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[22px]" : "text-[22px]"}`}
           target="_blank"
           aria-label="Linkedin"
@@ -290,7 +290,7 @@ export const Navbar = () => {
           <FaGithub />
         </a>
         <a
-          href="./downloads/Carlos-Francisco-Benítez-Quintanilla-CV.pdf"
+          href="./downloads/ES - Carlos Francisco Benítez Quintanilla - CV.pdf"
           download
           className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[20px]" : "text-[22px]"}`}
           aria-label="Curriculum vitae"

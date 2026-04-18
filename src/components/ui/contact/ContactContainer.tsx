@@ -448,7 +448,7 @@ export const ContactContainer = () => {
             </div>
             <div className="flex items-center gap-3">
               <a
-                href="https://www.linkedin.com/in/carlos-ben%C3%ADtez-profile/"
+                href="https://www.linkedin.com/in/carlos-benitez-profile/"
                 className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[34px]"
                 target="_blank"
                 aria-label="Linkedin"
@@ -465,7 +465,7 @@ export const ContactContainer = () => {
               </a>
 
               <a
-                href="./downloads/Carlos-Francisco-Benítez-Quintanilla-CV.pdf"
+                href="./downloads/ES - Carlos Francisco Benítez Quintanilla - CV.pdf"
                 download
                 className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] 
                 flex items-center gap-2 py-[2px] px-3 rounded-full border border-cbpgray-300/70 hover:border-cbpgray-300"
