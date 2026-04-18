@@ -290,7 +290,7 @@ export const Navbar = () => {
           <FaGithub />
         </a>
         <a
-          href="./downloads/ES - Carlos Francisco Benítez Quintanilla - CV.pdf"
+          href="/ES - Carlos Francisco Benítez Quintanilla - CV.pdf"
           download
           className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[20px]" : "text-[22px]"}`}
           aria-label="Curriculum vitae"
