@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { BgDotGradient } from "./BgDotGradient";
 import gsap from "gsap";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { pauseTweensWhileOffscreen } from "../../utils/visibility";
 
 export const MyPicture = () => {
   const { isMobile } = useIsMobile();
@@ -139,7 +140,11 @@ export const MyPicture = () => {
     };
     tl.call(() => dots.forEach(drift));
 
+    // La deriva se congela cuando el hero sale de pantalla
+    const stopPausing = pauseTweensWhileOffscreen(root, dots);
+
     return () => {
+      stopPausing();
       ctx.revert();
       gsap.killTweensOf(dots);
     };
@@ -150,7 +155,7 @@ export const MyPicture = () => {
       ref={rootRef}
       className={`relative flex items-center justify-center ${isMobile ? "-top-16" : "top-1/2"}`}
     >
-      <div className="dot absolute flex items-center justify-center bg-red-500">
+      <div className="dot absolute flex items-center justify-center will-change-transform bg-red-500">
         <BgDotGradient
           size={isMobile ? "xl" : "2xl"}
           colors={["accent", "violet"]}
@@ -158,7 +163,7 @@ export const MyPicture = () => {
           position={{ right: 0, top: 0 }}
         />
       </div>
-      <div className="dot absolute flex items-center justify-center">
+      <div className="dot absolute flex items-center justify-center will-change-transform">
         <BgDotGradient
           size={isMobile ? "xl" : "3xl"}
           colors={["black", "pink"]}
@@ -166,7 +171,7 @@ export const MyPicture = () => {
           position={{ right: 0, top: 0 }}
         />
       </div>
-      <div className="dot absolute flex items-center justify-center">
+      <div className="dot absolute flex items-center justify-center will-change-transform">
         <BgDotGradient
           size={isMobile ? "2xl" : "5xl"}
           colors={["accent", "blue"]}
@@ -174,7 +179,7 @@ export const MyPicture = () => {
           position={{ right: 0, top: 0 }}
         />
       </div>
-      <div className="dot absolute flex items-center justify-center">
+      <div className="dot absolute flex items-center justify-center will-change-transform">
         <BgDotGradient
           size={isMobile ? "2xl" : "5xl"}
           colors={["brown", "red"]}
@@ -182,14 +187,14 @@ export const MyPicture = () => {
           position={{ right: 0, top: 0 }}
         />
       </div>
-      <div className="dot absolute flex items-center justify-center">
+      <div className="dot absolute flex items-center justify-center will-change-transform">
         <BgDotGradient
           size={isMobile ? "3xl" : "6xl"}
           colors={["orange", "yellow"]}
           blur="xl"
           position={{ right: 0, top: 0 }}
         />
-        <div className="dot absolute flex items-center justify-center">
+        <div className="dot absolute flex items-center justify-center will-change-transform">
           <BgDotGradient
             size={isMobile ? "2xl" : "5xl"}
             colors={["purple", "green"]}

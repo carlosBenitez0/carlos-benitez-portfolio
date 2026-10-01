@@ -14,6 +14,10 @@ import ShinyText from "../ShinyText";
 import emailjs from "@emailjs/browser";
 import { SendedComponent } from "./SendedComponent";
 import { useIsMobile } from "../../../hooks/useIsMobile";
+import {
+  onVisibilityChange,
+  pauseTweensWhileOffscreen,
+} from "../../../utils/visibility";
 
 interface UserData {
   name: string;
@@ -25,6 +29,7 @@ interface UserData {
 export const ContactContainer = () => {
   const { isMobile } = useIsMobile();
   const form = useRef<HTMLFormElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     name: "",
@@ -197,8 +202,10 @@ export const ContactContainer = () => {
   };
 
   useEffect(() => {
-    const tl = gsap.timeline();
-    const dots = document.querySelectorAll(".dot-contact");
+    const container = containerRef.current;
+    if (!container) return;
+    const dots = container.querySelectorAll(".dot-contact");
+    const waves = container.querySelector("svg");
 
     dots.forEach((dot) => {
       gsap.to(dot, {
@@ -210,15 +217,24 @@ export const ContactContainer = () => {
       });
     });
 
+    // Manchas y olas quietas mientras el formulario no se ve
+    const stopPausingDots = pauseTweensWhileOffscreen(container, dots);
+    const stopPausingWaves = onVisibilityChange(container, (visible) => {
+      if (visible) waves?.unpauseAnimations();
+      else waves?.pauseAnimations();
+    });
+
     return () => {
       // Limpiar todas las animaciones al desmontar
-      tl.kill();
+      stopPausingDots();
+      stopPausingWaves();
       gsap.killTweensOf(dots);
     };
   }, []);
 
   return (
     <div
+      ref={containerRef}
       className={`anim-about-text grid relative overflow-hidden  bg-transparent filter-blur-3xl rounded-xl border-2 border-white/5
     ${isMobile ? "grid-cols-1 grid-rows-2" : " grid-cols-2"}`}
     >
@@ -294,7 +310,7 @@ export const ContactContainer = () => {
         className={`ring-component absolute ${isMobile ? "-top-35 -left-35 blur-xl w-100 h-100" : "-top-15 -left-15 blur-md w-64 h-64"}  border-[15px] border-cbpviolet-500/50 rounded-full -z-1`}
       ></div>
 
-      <div className="dot-contact absolute flex items-center justify-center">
+      <div className="dot-contact absolute flex items-center justify-center will-change-transform">
         <BgDotGradient
           colors={["violet", "blue"]}
           size="lg"
@@ -302,7 +318,7 @@ export const ContactContainer = () => {
           position={{ top: 200, left: 200 }}
         />
       </div>
-      <div className="dot-contact absolute flex items-center justify-center ">
+      <div className="dot-contact absolute flex items-center justify-center will-change-transform">
         <BgDotGradient
           colors={["blue", "green"]}
           size="lg"

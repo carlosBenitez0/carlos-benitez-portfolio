@@ -180,7 +180,12 @@ export const AISection = () => {
   ];
 
   return (
-    <section id="ai" className="py-8 bg-cbpgray-900" ref={sectionRef}>
+    <section
+      id="ai"
+      data-pause-offscreen
+      className="py-8 bg-cbpgray-900"
+      ref={sectionRef}
+    >
       <div className="container mx-auto px-8">
         {/* Título principal de la sección */}
         <SectionTitle title="Inteligencia Artificial" icon={<FaRobot />} />

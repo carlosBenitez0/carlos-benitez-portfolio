@@ -63,6 +63,7 @@ export const Header = () => {
 
   return (
     <header
+      data-pause-offscreen
       className={`relative min-h-screen  ${isMobile ? "mt-0 flex flex-col items-center justify-center" : "mt-24"}`}
     >
       <div

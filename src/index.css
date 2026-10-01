@@ -241,6 +241,13 @@
   }
 }
 
+/* Animaciones infinitas pausadas mientras su sección está fuera de pantalla
+   (ver usePauseOffscreenAnimations). */
+[data-offscreen]
+  :is(.shiny-text, .animate-gradient, .animate-gradient-rgb, .animate-pulse) {
+  animation-play-state: paused;
+}
+
 .spinner {
   animation: spin 1s linear infinite;
 }
