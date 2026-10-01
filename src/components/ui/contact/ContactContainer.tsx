@@ -18,11 +18,14 @@ import {
   prefersReducedMotion,
 } from "../../../utils/visibility";
 import {
+  getCooldownRemaining,
+  isHoneypotFilled,
+  markContactSent,
+  MAX_LENGTHS,
   validateContact,
   type ContactData,
 } from "../../../utils/contactForm";
 import { sendContactMessage } from "../../../utils/sendContact";
-
 
 export const ContactContainer = () => {
   const { isMobile } = useIsMobile();
@@ -33,6 +36,8 @@ export const ContactContainer = () => {
     error: "",
   });
   const [sended, setSended] = useState<boolean>(false);
+  // Campo trampa para bots (ver isHoneypotFilled)
+  const [company, setCompany] = useState("");
   const [userData, setUserData] = useState<ContactData>({
     name: "",
     email: "",
@@ -62,10 +67,21 @@ export const ContactContainer = () => {
       return;
     }
 
+    const cooldown = getCooldownRemaining();
+    if (cooldown > 0) {
+      setError({
+        name: "formError",
+        error: `Espera ${Math.ceil(cooldown / 1000)} s para enviar otro mensaje`,
+      });
+      return;
+    }
+
     // Si pasa todas las validaciones
     setLoading(true);
     try {
-      await sendContactMessage(userData);
+      // A un bot se le muestra éxito sin enviar nada, para no darle pistas
+      if (!isHoneypotFilled(company)) await sendContactMessage(userData);
+      markContactSent();
       setSended(true);
       // Solo se vacía si se envió: si falla, el visitante conserva su texto
       setUserData({
@@ -221,6 +237,7 @@ export const ContactContainer = () => {
             autoComplete="off"
             className={``}
             name="name"
+            maxLength={MAX_LENGTHS.name}
             onChange={handleChange}
           />
         </div>
@@ -232,6 +249,7 @@ export const ContactContainer = () => {
             placeholder="Email"
             autoComplete="off"
             name="email"
+            maxLength={MAX_LENGTHS.email}
             onChange={handleChange}
           />
         </div>
@@ -243,6 +261,7 @@ export const ContactContainer = () => {
             placeholder="Asunto"
             autoComplete="off"
             name="subject"
+            maxLength={MAX_LENGTHS.subject}
             onChange={handleChange}
           />
         </div>
@@ -253,6 +272,7 @@ export const ContactContainer = () => {
             placeholder="Mensaje"
             autoComplete="off"
             name="message"
+            maxLength={MAX_LENGTHS.message}
             onChange={handleChange}
           ></textarea>
           {error.name && error.error && (
@@ -274,6 +294,24 @@ export const ContactContainer = () => {
           {sended && (
             <SendedComponent message="Revisa tu correo, te dejé un mensaje 😁✌️" />
           )}
+        </span>
+        {/* Honeypot: fuera de pantalla (no display:none, que algunos bots
+            detectan), fuera del orden de tabulación y oculto a lectores. */}
+        <span
+          aria-hidden="true"
+          className="absolute -left-[9999px] h-px w-px overflow-hidden"
+        >
+          <label>
+            Empresa
+            <input
+              type="text"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+            />
+          </label>
         </span>
         <button
           type="submit"

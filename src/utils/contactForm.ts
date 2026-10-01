@@ -63,5 +63,59 @@ export const validateContact = (data: ContactData): ContactError | null => {
       error: "El mensaje debe tener al menos 10 caracteres",
     };
 
+  return validateLengths(data);
+};
+
+// --- Anti-abuso -------------------------------------------------------------
+
+export const MAX_LENGTHS: Record<ContactField, number> = {
+  name: 80,
+  email: 254,
+  subject: 120,
+  message: 2000,
+};
+
+const FIELD_LABELS: Record<ContactField, string> = {
+  name: "El nombre",
+  email: "El email",
+  subject: "El asunto",
+  message: "El mensaje",
+};
+
+export const validateLengths = (data: ContactData): ContactError | null => {
+  for (const field of Object.keys(MAX_LENGTHS) as ContactField[]) {
+    if (data[field].trim().length > MAX_LENGTHS[field]) {
+      return {
+        name: field,
+        error: `${FIELD_LABELS[field]} no puede superar ${MAX_LENGTHS[field]} caracteres`,
+      };
+    }
+  }
   return null;
+};
+
+// Campo trampa invisible: una persona nunca lo llena, un bot sí.
+export const isHoneypotFilled = (value: string) => value.trim() !== "";
+
+// Un envío cada 60 s por navegador. Se guarda en localStorage para que una
+// recarga no lo reinicie; si el storage no está disponible, no bloquea.
+export const COOLDOWN_MS = 60_000;
+const LAST_SENT_KEY = "contact:lastSentAt";
+
+export const getCooldownRemaining = (now = Date.now()) => {
+  try {
+    const lastSent = Number(localStorage.getItem(LAST_SENT_KEY));
+    if (!lastSent) return 0;
+    return Math.max(0, lastSent + COOLDOWN_MS - now);
+  } catch {
+    return 0;
+  }
+};
+
+export const markContactSent = (now = Date.now()) => {
+  try {
+    localStorage.setItem(LAST_SENT_KEY, String(now));
+  } catch {
+    // Sin storage (modo privado estricto): el cooldown no persiste.
+  }
 };

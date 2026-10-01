@@ -1,5 +1,14 @@
-import { describe, expect, it } from "vitest";
-import { isValidEmail, validateContact, type ContactData } from "./contactForm";
+import { describe, expect, it, vi } from "vitest";
+import {
+  COOLDOWN_MS,
+  getCooldownRemaining,
+  isHoneypotFilled,
+  isValidEmail,
+  markContactSent,
+  MAX_LENGTHS,
+  validateContact,
+  type ContactData,
+} from "./contactForm";
 
 const valid: ContactData = {
   name: "Carlos",
@@ -84,5 +93,59 @@ describe("validateContact", () => {
     expect(validateContact({ ...valid, message: "  corto     " })?.name).toBe(
       "message",
     );
+  });
+});
+
+describe("límites de longitud", () => {
+  it.each(Object.entries(MAX_LENGTHS))(
+    "%s acepta %i caracteres y rechaza uno más",
+    (field, max) => {
+      const base = field === "email" ? "@gmail.com" : "";
+      const atLimit = "a".repeat(max - base.length) + base;
+      // Para email el límite de longitud lo aplica isValidEmail
+      if (field !== "email") {
+        expect(validateContact({ ...valid, [field]: atLimit })).toBeNull();
+      }
+      const tooLong = validateContact({ ...valid, [field]: atLimit + "a" });
+      expect(tooLong?.name).toBe(field);
+    },
+  );
+
+  it("explica el límite en el mensaje", () => {
+    expect(
+      validateContact({ ...valid, message: "a".repeat(2001) })?.error,
+    ).toBe("El mensaje no puede superar 2000 caracteres");
+  });
+});
+
+describe("honeypot", () => {
+  it("solo se considera lleno con contenido real", () => {
+    expect(isHoneypotFilled("")).toBe(false);
+    expect(isHoneypotFilled("   ")).toBe(false);
+    expect(isHoneypotFilled("ACME")).toBe(true);
+  });
+});
+
+describe("cooldown", () => {
+  it("bloquea 60 s después de un envío", () => {
+    markContactSent(1_000_000);
+    expect(getCooldownRemaining(1_000_000)).toBe(COOLDOWN_MS);
+    expect(getCooldownRemaining(1_000_000 + 59_000)).toBe(1_000);
+    expect(getCooldownRemaining(1_000_000 + COOLDOWN_MS)).toBe(0);
+  });
+
+  it("sin envíos previos no bloquea", () => {
+    expect(getCooldownRemaining()).toBe(0);
+  });
+
+  it("si localStorage falla, no bloquea ni rompe", () => {
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    expect(() => markContactSent()).not.toThrow();
+    expect(getCooldownRemaining()).toBe(0);
   });
 });

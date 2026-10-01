@@ -88,3 +88,55 @@ describe("ContactContainer", () => {
     await act(async () => resolve());
   });
 });
+
+describe("ContactContainer anti-abuso", () => {
+  it("con el honeypot lleno muestra éxito pero no envía nada", async () => {
+    const { container } = render(<ContactContainer />);
+    fill();
+    fireEvent.change(container.querySelector('input[name="company"]')!, {
+      target: { value: "ACME" },
+    });
+    await submit();
+
+    expect(send).not.toHaveBeenCalled();
+    expect(screen.getByText(/te dejé un mensaje/)).toBeInTheDocument();
+  });
+
+  it("el honeypot queda fuera del orden de tabulación y de los lectores", () => {
+    const { container } = render(<ContactContainer />);
+    const trap = container.querySelector('input[name="company"]')!;
+    expect(trap).toHaveAttribute("tabindex", "-1");
+    expect(trap.closest('[aria-hidden="true"]')).not.toBeNull();
+  });
+
+  it("bloquea un segundo envío durante el cooldown, también tras recargar", async () => {
+    send.mockResolvedValue(undefined);
+    const first = render(<ContactContainer />);
+    fill();
+    await submit();
+    expect(send).toHaveBeenCalledTimes(1);
+
+    // Simula recargar la página: nuevo montaje, mismo localStorage
+    first.unmount();
+    render(<ContactContainer />);
+    fill();
+    await submit();
+
+    expect(send).toHaveBeenCalledTimes(1);
+    expect(
+      screen.getByText(/Espera \d+ s para enviar otro mensaje/),
+    ).toBeInTheDocument();
+  });
+
+  it("limita la longitud de cada campo en el propio input", () => {
+    render(<ContactContainer />);
+    expect(screen.getByPlaceholderText("Nombre")).toHaveAttribute(
+      "maxlength",
+      "80",
+    );
+    expect(screen.getByPlaceholderText("Mensaje")).toHaveAttribute(
+      "maxlength",
+      "2000",
+    );
+  });
+});
