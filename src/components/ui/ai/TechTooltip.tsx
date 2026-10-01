@@ -92,12 +92,12 @@ export const TechTooltip = () => {
               </div>
 
               <p className="text-cbpgray-300 text-sm mb-4 text-center">
-                Si desconoces alguna tecnología, puedes clickearla para obtener
-                más información por medio de su documentación oficial.
+                Si desconoces alguna tecnología, puedes hacer clic en ella para
+                ver su documentación oficial.
               </p>
 
               <div className="flex items-center justify-center flex-col text-cbpgray-200 text-sm gap-4">
-                <span className="">Ejemplos de technologías clickeables:</span>
+                <span>Ejemplos de tecnologías en las que puedes hacer clic:</span>
                 <div className="flex items-center gap-8">
                   <TechnologyLabel
                     name={technologies[0].name}

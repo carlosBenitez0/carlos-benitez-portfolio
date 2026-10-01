@@ -6,7 +6,14 @@ import { AIToolCard } from "./AIToolCard";
 import { AITerminal } from "./AITerminal";
 // Importación de iconos de la biblioteca react-icons
 import { FaRobot, FaTerminal, FaCode, FaBrain } from "react-icons/fa";
-import { SiGithub, SiOpenai, SiGoogle, SiClaude } from "react-icons/si";
+import {
+  SiGithub,
+  SiOpenai,
+  SiGoogle,
+  SiClaude,
+  SiCodeium,
+} from "react-icons/si";
+import { LuBrainCircuit } from "react-icons/lu";
 import { BiLogoVisualStudio } from "react-icons/bi";
 import { FaBolt } from "react-icons/fa6";
 // Importación de hooks de React
@@ -96,7 +103,7 @@ export const AISection = () => {
     },
     {
       nombre: "DeepSeek",
-      icono: <BiLogoVisualStudio className="text-2xl" />,
+      icono: <LuBrainCircuit className="text-2xl" />,
       descripcion:
         "Modelo de IA avanzado para comprensión y generación de código con gran contexto.",
       experiencia: "6+ meses",
@@ -108,7 +115,7 @@ export const AISection = () => {
     },
     {
       nombre: "Windsurf",
-      icono: <SiOpenai className="text-2xl" />,
+      icono: <SiCodeium className="text-2xl" />,
       descripcion:
         "Asistente de desarrollo de IA que entiende el contexto de tu código y flujo de trabajo.",
       experiencia: "1+ año",
@@ -175,7 +182,8 @@ export const AISection = () => {
     {
       nombre: "MCP",
       icono: <FaBrain />,
-      descripcion: "Modelos de Comportamiento Predictivo en desarrollo",
+      descripcion:
+        "Model Context Protocol: conectar modelos de IA con herramientas y datos",
     },
   ];
 

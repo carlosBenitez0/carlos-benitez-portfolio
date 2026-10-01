@@ -224,3 +224,24 @@ test.describe("esquema de color del sistema", () => {
     expect(await colorsIn("light")).toEqual(await colorsIn("dark"));
   });
 });
+
+test.describe("textos", () => {
+  test("sin erratas conocidas ni descripciones incorrectas", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.getByRole("button", { name: "Mostrar información" }).click();
+    const text = await page.locator("body").innerText();
+
+    for (const wrong of [
+      "FORMANDOME",
+      "technologías",
+      "clickea",
+      "Comportamiento Predictivo",
+    ]) {
+      expect(text).not.toContain(wrong);
+    }
+    expect(text).toContain("FORMÁNDOME");
+    expect(text).toContain("Model Context Protocol");
+  });
+});

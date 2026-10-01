@@ -71,7 +71,7 @@ export const TechnologiesContainer = ({
           {title === "tools"
             ? "HERRAMIENTAS"
             : title === "learning"
-              ? "FORMANDOME"
+              ? "FORMÁNDOME"
               : title.toUpperCase()}
         </h2>
       </div>
