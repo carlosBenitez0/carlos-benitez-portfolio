@@ -266,15 +266,16 @@ export const Navbar = () => {
          ${!isMobile ? "before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-[1] before:z-[-1] before:pointer-events-none before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]" : ""}`}
         >
           {links.map((link) => (
-            <NavbarLink
-              key={link.label}
-              label={link.label}
-              href={link.href}
-              optionSelected={optionSelected}
-              setOptionSelected={setOptionSelected}
-              icon={link.icon}
-              text={link.text}
-            />
+            <li key={link.label}>
+              <NavbarLink
+                label={link.label}
+                href={link.href}
+                optionSelected={optionSelected}
+                setOptionSelected={setOptionSelected}
+                icon={link.icon}
+                text={link.text}
+              />
+            </li>
           ))}
         </ul>
       </nav>

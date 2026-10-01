@@ -26,7 +26,10 @@ export const TechnologyLabel = ({
         color: color,
       }}
     >
-      {icon}
+      {/* Decorativo: el nombre ya está en texto */}
+      <span aria-hidden="true" className="contents">
+        {icon}
+      </span>
       {name}
     </a>
   );

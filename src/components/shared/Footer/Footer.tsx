@@ -57,13 +57,14 @@ export const Footer = () => {
           {technologies &&
             technologiesFilter &&
             technologiesFilter.map((technology) => (
-              <Technology
-                key={technology.name}
-                name={technology.name}
-                logo={technology.logo}
-                url={technology.url}
-                classNames="w-10 h-10 text-[12px]"
-              />
+              <li key={technology.name}>
+                <Technology
+                  name={technology.name}
+                  logo={technology.logo}
+                  url={technology.url}
+                  classNames="w-10 h-10 text-[12px]"
+                />
+              </li>
             ))}
         </ul>
       </div>
