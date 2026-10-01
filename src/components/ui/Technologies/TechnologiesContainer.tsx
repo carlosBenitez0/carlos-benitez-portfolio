@@ -67,7 +67,7 @@ export const TechnologiesContainer = ({
         <VscTools className="w-8 h-8 text-cbpviolet-200" />
       )}
       <div>
-        <h2 className="text-center text-2xl mb-8 bg-gradient-to-r from-cbpviolet-500 to-cbpviolet-100 bg-clip-text text-transparent">
+        <h2 className="text-center text-2xl mb-8 bg-gradient-to-r from-cbpviolet-400 to-cbpviolet-100 bg-clip-text text-transparent">
           {title === "tools"
             ? "HERRAMIENTAS"
             : title === "learning"

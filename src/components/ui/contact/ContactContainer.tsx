@@ -385,7 +385,7 @@ export const ContactContainer = () => {
             >
               <div className="flex items-center gap-2 text-2xl">
                 <IoLocationOutline className="text-cbpviolet-500" />
-                <p className="bg-gradient-to-l from-cbpviolet-200 to-cbpviolet-500 bg-clip-text text-transparent">
+                <p className="bg-gradient-to-l from-cbpviolet-200 to-cbpviolet-400 bg-clip-text text-transparent">
                   El Salvador
                 </p>
               </div>

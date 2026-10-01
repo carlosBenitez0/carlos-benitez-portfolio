@@ -73,7 +73,7 @@ export const TechTooltip = () => {
                 <div className="bg-cbpviolet-500/20 py-2 rounded-full mr-3">
                   <FaInfoCircle className="text-cbpviolet-300 text-xl rounded-full shadow-[0_0_20px_rgba(139,92,246,1)]" />
                 </div>
-                <h3 className="text-lg font-semibold text-center text-transparent bg-clip-text bg-gradient-to-r from-cbpviolet-300 to-cbpviolet-500">
+                <h3 className="text-lg font-semibold text-center text-transparent bg-clip-text bg-gradient-to-r from-cbpviolet-300 to-cbpviolet-400">
                   ¡Tecnologías Interactivas!
                 </h3>
               </div>

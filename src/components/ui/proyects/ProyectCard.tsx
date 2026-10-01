@@ -108,7 +108,7 @@ export const ProyectCard = ({
       >
         <div className="flex items-center justify-between gap-2">
           <AnimatedGradientText
-            colors={["#9d4eddff", "#e0aaffff", "#7b2cbfff"]}
+            colors={["#9d4eddff", "#e0aaffff", "#9d4eddff"]}
             classNames={["text-xl", "font-bold"]}
           >
             {name}

@@ -26,7 +26,13 @@ export const Technology = ({
         alt={name}
         className="w-10 aspect-square object-contain "
       />
-      <p className={isMobile ? "text-[12px]" : ""}>{name}</p>
+      {/* Halo oscuro: las manchas de colores pasan por detrás; con el halo el
+          texto mantiene contraste AA esté donde esté la mancha. */}
+      <p
+        className={`[text-shadow:0_0_2px_#050010,0_0_2px_#050010,0_0_4px_#050010] ${isMobile ? "text-[12px]" : ""}`}
+      >
+        {name}
+      </p>
     </a>
   );
 };
