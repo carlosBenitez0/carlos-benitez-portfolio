@@ -20,9 +20,8 @@ const securityHeaders = Object.fromEntries(
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  server: {
-    host: "0.0.0.0",
-  },
+  // Sin `server.host`: el dev server escucha solo en localhost. Para probar
+  // desde el celular en la misma red: `npm run dev:lan`.
   preview: {
     headers: securityHeaders,
   },
