@@ -356,10 +356,6 @@
 
 /* Reducir movimiento: sin bucles decorativos y revelados solo con opacidad */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   .shiny-text,
   .animate-gradient,
   .animate-gradient-rgb,
