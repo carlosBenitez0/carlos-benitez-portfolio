@@ -6,63 +6,78 @@ import ShinyText from "../ui/ShinyText";
 import AnimatedGradientText from "../ui/AnimatedGradientText";
 import HighlightText from "../ui/HighlightText";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { pauseTweensWhileOffscreen } from "../../utils/visibility";
 
 export const Header = () => {
   const arrowRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const { isMobile } = useIsMobile();
 
   useEffect(() => {
-    const appearText = document.querySelectorAll(".appear-text");
-    if (!arrowRef.current) return;
+    const header = headerRef.current;
+    const arrow = arrowRef.current;
+    if (!header || !arrow) return;
 
-    gsap.fromTo(
-      arrowRef.current,
-      {
-        y: -1000,
-        opacity: 0,
-        scale: 40,
-        rotation: 360,
-        repeat: -1,
-        filter: "blur(10px)",
-        yoyo: true,
-        ease: "power1.inOut",
-      },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        rotation: 0,
-        filter: "blur(0px)",
-        duration: 5,
-        ease: "power1.out",
-        onComplete: () => {
-          gsap.to(arrowRef.current, {
-            y: -10,
-            duration: 0.8,
-            repeat: -1,
-            yoyo: true,
-            ease: "power1.inOut",
-          });
+    const ctx = gsap.context(() => {
+      const appearText = header.querySelectorAll(".appear-text");
+
+      // Sin filter: blur aquí: a scale 40 la flecha mide más de 1000px y el
+      // desenfoque se recalculaba en cada frame durante 5 segundos.
+      gsap.fromTo(
+        arrow,
+        {
+          y: -1000,
+          opacity: 0,
+          scale: 40,
+          rotation: 360,
         },
-      },
-    );
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          rotation: 0,
+          duration: 5,
+          ease: "power1.out",
+          onComplete: () => {
+            ctx.add(() => {
+              gsap.to(arrow, {
+                y: -10,
+                duration: 0.8,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut",
+              });
+            });
+          },
+        },
+      );
 
-    gsap.fromTo(
-      appearText,
-      { opacity: 0, filter: "blur(5px)", translateY: 50 },
-      {
-        opacity: 1,
-        duration: 4.5,
-        ease: "power3.out",
-        filter: "blur(0px)",
-        translateY: 0,
-        stagger: 1.5,
-      },
-    );
+      gsap.fromTo(
+        appearText,
+        { opacity: 0, filter: "blur(5px)", translateY: 50 },
+        {
+          opacity: 1,
+          duration: 4.5,
+          ease: "power3.out",
+          filter: "blur(0px)",
+          translateY: 0,
+          stagger: 1.5,
+        },
+      );
+    }, header);
+
+    // El rebote infinito de la flecha se detiene cuando el header no se ve
+    const stopPausing = pauseTweensWhileOffscreen(header, arrow);
+
+    return () => {
+      stopPausing();
+      ctx.revert();
+    };
   }, []);
 
   return (
     <header
+      ref={headerRef}
       data-pause-offscreen
       className={`relative min-h-screen  ${isMobile ? "mt-0 flex flex-col items-center justify-center" : "mt-24"}`}
     >
