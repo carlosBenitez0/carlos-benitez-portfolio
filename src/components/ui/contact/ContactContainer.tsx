@@ -11,7 +11,6 @@ import { ErrorComponent } from "./ErrorComponent";
 import { IoLocationOutline } from "react-icons/io5";
 import { CiLinkedin } from "react-icons/ci";
 import ShinyText from "../ShinyText";
-import emailjs from "@emailjs/browser";
 import { SendedComponent } from "./SendedComponent";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import {
@@ -22,11 +21,11 @@ import {
   validateContact,
   type ContactData,
 } from "../../../utils/contactForm";
+import { sendContactMessage } from "../../../utils/sendContact";
 
 
 export const ContactContainer = () => {
   const { isMobile } = useIsMobile();
-  const form = useRef<HTMLFormElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
@@ -50,8 +49,9 @@ export const ContactContainer = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return;
     setSended(false);
     setError({ name: "", error: "" });
 
@@ -64,95 +64,32 @@ export const ContactContainer = () => {
 
     // Si pasa todas las validaciones
     setLoading(true);
-
-    // Enviar el formulario
-    /* setTimeout(() => {
-      setLoading(false);
-      emailjs
-        .sendForm(
-          "service_3wblnba",
-          "template_vx2h6qt",
-          form.current as HTMLFormElement,
-          {
-            publicKey: "p1-mlOCmCgRp2jNnJ",
-          },
-        )
-        .then(
-          () => {
-            setSended(true);
-          },
-          () => {
-            setError({
-              name: "formError",
-              error: "No se pudo enviar el mensaje",
-            });
-          },
-        );
-
+    try {
+      await sendContactMessage(userData);
+      setSended(true);
+      // Solo se vacía si se envió: si falla, el visitante conserva su texto
       setUserData({
         name: "",
         email: "",
         subject: "",
         message: "",
       });
-
-      // Reset después de mostrar el mensaje de éxito
-      setTimeout(() => {
-        setSended(false);
-      }, 3000);
-    }, 3000); */
-
-    emailjs
-      .sendForm(
-        "service_3wblnba",
-        "template_vx2h6qt",
-        form.current as HTMLFormElement,
-        {
-          publicKey: "p1-mlOCmCgRp2jNnJ",
-        },
-      )
-      .then(
-        () => {
-          setLoading(false);
-          setSended(true);
-        },
-        () => {
-          setLoading(false);
-          setError({
-            name: "formError",
-            error: "No se pudo enviar el mensaje",
-          });
-        },
-      );
-
-    emailjs
-      .sendForm(
-        "service_3wblnba",
-        "template_32ukwf4",
-        form.current as HTMLFormElement,
-        {
-          publicKey: "p1-mlOCmCgRp2jNnJ",
-        },
-      )
-      .then(
-        () => {
-          setSended(true);
-        },
-        () => {
-          console.log("No se pudo enviar el mensaje");
-        },
-      );
-
-    setTimeout(() => {
-      setSended(false);
-    }, 10000);
-    setUserData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
+    } catch {
+      setError({
+        name: "formError",
+        error: "No se pudo enviar el mensaje",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // El aviso de éxito desaparece a los 10 s
+  useEffect(() => {
+    if (!sended) return;
+    const timer = setTimeout(() => setSended(false), 10000);
+    return () => clearTimeout(timer);
+  }, [sended]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -257,7 +194,6 @@ export const ContactContainer = () => {
       </div>
 
       <form
-        ref={form}
         onSubmit={handleSubmit}
         className={`z-50 grid grid-cols-2 gap-6 rounded-xl ${isMobile ? "pb-5 px-5" : "p-8"}
         [&>div]:flex [&>div]:items-center [&>div]:w-full [&>div]:pl-2 [&>div,&>span>textarea]:border [&>div,&>span>textarea]:border-white/15 [&>div,&>span>textarea]:rounded-lg
@@ -341,7 +277,8 @@ export const ContactContainer = () => {
         </span>
         <button
           type="submit"
-          className="flex gap-2 items-center justify-center col-span-2 cursor-pointer w-fit border border-cbpbg-50 bg-cbpbg-500/50 hover:bg-cbpbg-500/75 py-2 px-4 rounded-md
+          disabled={loading}
+          className="disabled:cursor-wait flex gap-2 items-center justify-center col-span-2 cursor-pointer w-fit border border-cbpbg-50 bg-cbpbg-500/50 hover:bg-cbpbg-500/75 py-2 px-4 rounded-md
           transition duration-300
            [&:hover>.send-icon]:-rotate-35
            shadow-[inset_0px_0px_10px_rgba(255,255,255,0.1)]"

@@ -6,7 +6,7 @@ interface SendedComponentProps {
 }
 
 export const SendedComponent = ({ message }: SendedComponentProps) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   return (
     <div

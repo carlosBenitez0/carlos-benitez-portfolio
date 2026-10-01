@@ -1,0 +1,90 @@
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { sendContactMessage } from "../../../utils/sendContact";
+import { ContactContainer } from "./ContactContainer";
+
+vi.mock("../../../utils/sendContact", () => ({
+  sendContactMessage: vi.fn(),
+}));
+const send = vi.mocked(sendContactMessage);
+
+const fill = () => {
+  fireEvent.change(screen.getByPlaceholderText("Nombre"), {
+    target: { value: "Carlos" },
+  });
+  fireEvent.change(screen.getByPlaceholderText("Email"), {
+    target: { value: "carlos+trabajo@gmail.com" },
+  });
+  fireEvent.change(screen.getByPlaceholderText("Asunto"), {
+    target: { value: "Propuesta" },
+  });
+  fireEvent.change(screen.getByPlaceholderText("Mensaje"), {
+    target: { value: "Hola, me interesa tu trabajo." },
+  });
+};
+
+const submit = async () => {
+  await act(async () => {
+    fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
+  });
+};
+
+beforeEach(() => {
+  send.mockReset();
+});
+
+describe("ContactContainer", () => {
+  it("con éxito muestra un único resultado y vacía el formulario", async () => {
+    send.mockResolvedValue(undefined);
+    render(<ContactContainer />);
+    fill();
+    await submit();
+
+    expect(send).toHaveBeenCalledTimes(1);
+    expect(screen.getByText(/te dejé un mensaje/)).toBeInTheDocument();
+    expect(screen.queryByText("No se pudo enviar el mensaje")).toBeNull();
+    expect(screen.getByPlaceholderText("Mensaje")).toHaveValue("");
+  });
+
+  it("si falla solo muestra el error y conserva lo escrito", async () => {
+    send.mockRejectedValue(new Error("network"));
+    render(<ContactContainer />);
+    fill();
+    await submit();
+
+    expect(
+      screen.getByText("No se pudo enviar el mensaje"),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/te dejé un mensaje/)).toBeNull();
+    expect(screen.getByPlaceholderText("Mensaje")).toHaveValue(
+      "Hola, me interesa tu trabajo.",
+    );
+  });
+
+  it("no envía si la validación falla", async () => {
+    render(<ContactContainer />);
+    fill();
+    fireEvent.change(screen.getByPlaceholderText("Email"), {
+      target: { value: "no-es-email" },
+    });
+    await submit();
+
+    expect(send).not.toHaveBeenCalled();
+    expect(screen.getByText("El email es invalido")).toBeInTheDocument();
+  });
+
+  it("deshabilita el botón mientras envía (sin doble envío)", async () => {
+    let resolve!: () => void;
+    send.mockReturnValue(new Promise<void>((r) => (resolve = r)));
+    render(<ContactContainer />);
+    fill();
+    await submit();
+
+    const button = screen.getByRole("button", { name: /enviando/i });
+    expect(button).toBeDisabled();
+    fireEvent.click(button);
+    expect(send).toHaveBeenCalledTimes(1);
+
+    await act(async () => resolve());
+  });
+});
