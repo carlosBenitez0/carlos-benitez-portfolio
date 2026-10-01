@@ -245,3 +245,35 @@ test.describe("textos", () => {
     expect(text).toContain("Model Context Protocol");
   });
 });
+
+test.describe("SEO", () => {
+  const SITE = "https://carlos-benitez-portfolio.vercel.app/";
+
+  test("tiene metadatos para buscadores y redes sociales", async ({ page }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const meta = (selector: string) =>
+      page.locator(selector).getAttribute("content");
+
+    await expect(page).toHaveTitle("Carlos Benítez | Desarrollador Web");
+    expect(await meta('meta[name="description"]')).toBeTruthy();
+    expect(
+      await page.locator('link[rel="canonical"]').getAttribute("href"),
+    ).toBe(SITE);
+    expect(await meta('meta[property="og:url"]')).toBe(SITE);
+    expect(await meta('meta[property="og:image"]')).toMatch(
+      /^https:\/\/res\.cloudinary\.com\/.+w_1200,h_630/,
+    );
+    expect(await meta('meta[name="twitter:card"]')).toBe("summary_large_image");
+    expect(await page.locator("html").getAttribute("lang")).toBe("es");
+  });
+
+  test("sirve robots.txt y sitemap.xml", async ({ request }) => {
+    const robots = await request.get("/robots.txt");
+    expect(robots.ok()).toBe(true);
+    expect(await robots.text()).toContain(`Sitemap: ${SITE}sitemap.xml`);
+
+    const sitemap = await request.get("/sitemap.xml");
+    expect(sitemap.ok()).toBe(true);
+    expect(await sitemap.text()).toContain(`<loc>${SITE}</loc>`);
+  });
+});
