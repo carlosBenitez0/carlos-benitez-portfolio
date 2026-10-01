@@ -28,8 +28,7 @@ import { pauseTweensWhileOffscreen } from "./utils/visibility";
 function App() {
   const proyects = useProyects();
   const technologies = useTechnologies();
-  const { isMobile, viewSize } = useIsMobile();
-  const maxW = "max-w-[" + (viewSize - 40) + "px]";
+  const { isMobile } = useIsMobile();
 
   const technologiesRef = useRef<HTMLElement>(null);
   usePauseOffscreenAnimations();
@@ -80,7 +79,7 @@ function App() {
 
   return (
     <div
-      className={`font-poppins bg-cbpbg-900 relative z-40 h-screen  overflow-x-hidden ${isMobile ? maxW : "w-full"}`}
+      className={`font-poppins bg-cbpbg-900 relative z-40 h-screen  overflow-x-hidden ${isMobile ? "" : "w-full"}`}
     >
       {/* Tech Tooltip - componente que muestra información sobre las tecnologías */}
       <TechTooltip />
@@ -92,7 +91,7 @@ function App() {
 
       <div
         id="start"
-        className={`mx-auto h-full w-full text-white ${isMobile ? maxW : "max-w-[950px]"}`}
+        className={`mx-auto h-full w-full text-white ${isMobile ? "" : "max-w-[950px]"}`}
       >
         <Navbar />
 
