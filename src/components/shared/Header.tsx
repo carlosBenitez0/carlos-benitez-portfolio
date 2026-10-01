@@ -112,7 +112,6 @@ export const Header = () => {
                 text="soy Carlos"
                 disabled={false}
                 speed={3}
-                className="custom-class"
               />
             </AnimatedGradientText>
           </h1>
@@ -121,7 +120,6 @@ export const Header = () => {
               text="Ingeniero en Sistemas y Computación | Desarrollador Web"
               disabled={false}
               speed={3}
-              className="custom-class"
             />
           </h2>
           {!isMobile && (
@@ -135,7 +133,6 @@ export const Header = () => {
                   text="soluciones web"
                   disabled={false}
                   speed={3}
-                  className="custom-class"
                 />{" "}
               </HighlightText>{" "}
               robustas, fusionando{" "}
@@ -145,7 +142,6 @@ export const Header = () => {
                   text="código eficiente"
                   disabled={false}
                   speed={3}
-                  className="custom-class"
                 />{" "}
               </HighlightText>{" "}
               con
@@ -155,7 +151,6 @@ export const Header = () => {
                   text="diseño intuitivo"
                   disabled={false}
                   speed={3}
-                  className="custom-class"
                 />{" "}
               </HighlightText>{" "}
               y{" "}
@@ -165,7 +160,6 @@ export const Header = () => {
                   text="creativo. "
                   disabled={false}
                   speed={3}
-                  className="custom-class"
                 />
               </HighlightText>
               {" "}Creo que la programación va más allá de la lógica: es un espacio
@@ -176,7 +170,6 @@ export const Header = () => {
                   text="innovar"
                   disabled={false}
                   speed={3}
-                  className="custom-class"
                 />{" "}
               </HighlightText>{" "}
               y resolver problemas con
@@ -186,7 +179,6 @@ export const Header = () => {
                   text="soluciones ingeniosas."
                   disabled={false}
                   speed={3}
-                  className="custom-class"
                 />
               </HighlightText>
             </div>

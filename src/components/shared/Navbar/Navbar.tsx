@@ -247,10 +247,6 @@ export const Navbar = () => {
       ref={navbarRef}
       className={`z-40 flex items-center fixed top-0 mx-auto w-full lg:max-w-[950px] ${isMobile ? "justify-between p-4 " : "justify-between"}`}
     >
-      {/* <div className="from-cbpviolet-400 via-cbpviolet-600 to-cbpviolet-500 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
-        CarlosBenítez
-      </div> */}
-
       <figure>
         <img
           src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751309549/cb-logo2_kowmru.png"

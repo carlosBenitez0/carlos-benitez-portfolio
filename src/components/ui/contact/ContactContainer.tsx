@@ -238,7 +238,6 @@ export const ContactContainer = () => {
             value={userData.name}
             placeholder="Nombre"
             autoComplete="off"
-            className={``}
             name="name"
             id="contact-name"
             aria-invalid={error.name === "name"}
@@ -355,7 +354,6 @@ export const ContactContainer = () => {
            [&:hover>.send-icon]:-rotate-35
            shadow-[inset_0px_0px_10px_rgba(255,255,255,0.1)]"
         >
-          {/* <Spinner /> */}
           {sended ? (
             <>
               Enviado correctamente

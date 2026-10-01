@@ -16,8 +16,6 @@ import {
 import { LuBrainCircuit } from "react-icons/lu";
 import { BiLogoVisualStudio } from "react-icons/bi";
 import { FaBolt } from "react-icons/fa6";
-// Importación de hooks de React
-import { useEffect, useRef } from "react";
 
 /**
  * Componente AISection
@@ -27,34 +25,6 @@ import { useEffect, useRef } from "react";
  * que muestra ejemplos de uso de IA.
  */
 export const AISection = () => {
-  // Referencia para el Intersection Observer
-  const sectionRef = useRef<HTMLElement>(null);
-
-  // Efecto para el Intersection Observer
-  useEffect(() => {
-    const currentRef = sectionRef.current;
-    const observer = new IntersectionObserver(
-      () => {
-        // Aquí puedes agregar lógica cuando la sección entre/salga de la vista
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.1,
-      },
-    );
-
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
-
   // Datos de las herramientas de IA que se mostrarán en las tarjetas
   const herramientas = [
     {
@@ -192,7 +162,6 @@ export const AISection = () => {
       id="ai"
       data-pause-offscreen
       className="py-8 bg-cbpgray-900"
-      ref={sectionRef}
     >
       <div className="container mx-auto px-8">
         {/* Título principal de la sección */}

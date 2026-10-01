@@ -5,9 +5,9 @@ export interface ContactData {
   message: string;
 }
 
-export type ContactField = keyof ContactData;
+type ContactField = keyof ContactData;
 
-export interface ContactError {
+interface ContactError {
   name: ContactField;
   error: string;
 }
@@ -82,7 +82,7 @@ const FIELD_LABELS: Record<ContactField, string> = {
   message: "El mensaje",
 };
 
-export const validateLengths = (data: ContactData): ContactError | null => {
+const validateLengths = (data: ContactData): ContactError | null => {
   for (const field of Object.keys(MAX_LENGTHS) as ContactField[]) {
     if (data[field].trim().length > MAX_LENGTHS[field]) {
       return {

@@ -95,7 +95,6 @@ export const ProyectCard = ({
             text={state}
             disabled={false}
             speed={3}
-            className="custom-class"
             color={state === "Terminado" ? "#b5f2b5a5" : "#feb555a5"}
           />
         </span>

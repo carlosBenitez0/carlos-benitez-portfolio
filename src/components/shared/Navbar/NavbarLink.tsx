@@ -17,15 +17,6 @@ export const NavbarLink = ({
   text,
   label,
 }: NavbarLinkProps) => {
-  /* const scrollHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setOptionSelected(label);
-    window.scrollTo({
-      top: document.getElementById(label)?.offsetTop || 0,
-      behavior: "smooth",
-    });
-  }; */
-
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setOptionSelected(label);

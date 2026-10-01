@@ -11,25 +11,9 @@ export const TechTooltip = () => {
   const [isVisible, setIsVisible] = useState(true);
   const technologies = useTechnologies();
 
-  /* useEffect(() => {
-    // Verificar si ya se ha mostrado el tooltip
-    const hasSeenTooltip = localStorage.getItem("hasSeenTechTooltip");
-
-    // Solo mostrar si no se ha visto antes
-    if (hasSeenTooltip !== "true") {
-      const timer = setTimeout(() => {
-        console.log("Mostrando tooltip..."); // Debug
-        setIsVisible(true);
-      }, 5000); // Reducido a 1 segundo para pruebas
-
-      return () => clearTimeout(timer);
-    }
-  }, []); */
-
   const handleButtonClick = () => {
     if (!isExpanded) {
       setIsExpanded(true);
-      //   localStorage.setItem("hasSeenTechTooltip", "true");
     }
   };
 
