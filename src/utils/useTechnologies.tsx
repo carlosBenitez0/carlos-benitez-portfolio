@@ -142,7 +142,7 @@ export const useTechnologies = () => {
     {
       name: "Axios",
       icon: <SiAxios />,
-      color: "#671ddf",
+      color: "#9763eb",
       url: "https://axios-http.com/",
     },
     {

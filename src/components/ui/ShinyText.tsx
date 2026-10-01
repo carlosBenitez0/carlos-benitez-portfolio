@@ -26,7 +26,7 @@ const ShinyText: React.FC<ShinyTextProps> = ({
         backgroundSize: "200% 100%",
         WebkitBackgroundClip: "text",
         animationDuration: animationDuration,
-        color: color ? color : "#b5b5b5a4",
+        color: color ? color : "#b5b5b5b8",
       }}
     >
       {text}
