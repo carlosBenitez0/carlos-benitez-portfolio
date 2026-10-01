@@ -140,3 +140,39 @@ describe("ContactContainer anti-abuso", () => {
     );
   });
 });
+
+describe("ContactContainer accesibilidad", () => {
+  it("cada campo tiene una etiqueta accesible", () => {
+    render(<ContactContainer />);
+    for (const label of ["Nombre", "Email", "Asunto", "Mensaje"]) {
+      expect(screen.getByLabelText(label)).toBeInTheDocument();
+    }
+  });
+
+  it("anuncia el error y lo asocia al campo inválido", async () => {
+    render(<ContactContainer />);
+    fill();
+    fireEvent.change(screen.getByLabelText("Email"), {
+      target: { value: "no-es-email" },
+    });
+    await submit();
+
+    const alert = screen.getByRole("alert");
+    expect(alert).toHaveTextContent("El email es invalido");
+    const email = screen.getByLabelText("Email");
+    expect(email).toHaveAttribute("aria-invalid", "true");
+    expect(email).toHaveAttribute("aria-describedby", alert.id);
+    expect(screen.getByLabelText("Nombre")).toHaveAttribute(
+      "aria-invalid",
+      "false",
+    );
+  });
+
+  it("anuncia el éxito como estado", async () => {
+    send.mockResolvedValue(undefined);
+    render(<ContactContainer />);
+    fill();
+    await submit();
+    expect(screen.getByRole("status")).toHaveTextContent(/te dejé un mensaje/);
+  });
+});

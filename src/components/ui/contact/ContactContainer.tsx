@@ -230,6 +230,9 @@ export const ContactContainer = () => {
       >
         <div className={` ${isMobile ? "col-span-2" : ""}`}>
           <FaRegUser className={`form-icon min-w-4 min-h-4 `} />
+          <label htmlFor="contact-name" className="sr-only">
+            Nombre
+          </label>
           <input
             type="text"
             value={userData.name}
@@ -237,41 +240,71 @@ export const ContactContainer = () => {
             autoComplete="off"
             className={``}
             name="name"
+            id="contact-name"
+            aria-invalid={error.name === "name"}
+            aria-describedby={
+              error.name === "name" ? "contact-error" : undefined
+            }
             maxLength={MAX_LENGTHS.name}
             onChange={handleChange}
           />
         </div>
         <div className={` ${isMobile ? "col-span-2" : ""}`}>
           <MdOutlineEmail className="form-icon min-w-4 min-h-4" />
+          <label htmlFor="contact-email" className="sr-only">
+            Email
+          </label>
           <input
             type="text"
             value={userData.email}
             placeholder="Email"
+            inputMode="email"
             autoComplete="off"
             name="email"
+            id="contact-email"
+            aria-invalid={error.name === "email"}
+            aria-describedby={
+              error.name === "email" ? "contact-error" : undefined
+            }
             maxLength={MAX_LENGTHS.email}
             onChange={handleChange}
           />
         </div>
         <div className="col-span-2">
           <MdOutlineSubject className="form-icon min-w-4 min-h-4" />
+          <label htmlFor="contact-subject" className="sr-only">
+            Asunto
+          </label>
           <input
             type="text"
             value={userData.subject}
             placeholder="Asunto"
             autoComplete="off"
             name="subject"
+            id="contact-subject"
+            aria-invalid={error.name === "subject"}
+            aria-describedby={
+              error.name === "subject" ? "contact-error" : undefined
+            }
             maxLength={MAX_LENGTHS.subject}
             onChange={handleChange}
           />
         </div>
         <span className="col-span-2 ">
+          <label htmlFor="contact-message" className="sr-only">
+            Mensaje
+          </label>
           <textarea
             className="p-2 h-30 mb-2 resize-none"
             value={userData.message}
             placeholder="Mensaje"
             autoComplete="off"
             name="message"
+            id="contact-message"
+            aria-invalid={error.name === "message"}
+            aria-describedby={
+              error.name === "message" ? "contact-error" : undefined
+            }
             maxLength={MAX_LENGTHS.message}
             onChange={handleChange}
           ></textarea>
@@ -289,6 +322,7 @@ export const ContactContainer = () => {
                 )
               }
               error={error.error}
+              id="contact-error"
             />
           )}
           {sended && (

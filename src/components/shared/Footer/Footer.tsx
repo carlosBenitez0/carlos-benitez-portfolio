@@ -28,6 +28,7 @@ export const Footer = () => {
           className={`flex ${isMobile ? " flex-col" : " items-center"} gap-4`}
         >
           <figure>
+            {/* Decorativo: el nombre ya aparece en texto justo al lado */}
             <img
               src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751309549/cb-logo2_kowmru.png"
               alt=""
