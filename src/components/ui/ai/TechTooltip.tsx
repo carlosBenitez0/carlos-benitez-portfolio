@@ -29,26 +29,29 @@ export const TechTooltip = () => {
         bottom: "32px",
         right: "32px",
         zIndex: 1000,
-        opacity: isVisible ? 1 : 0,
       }}
     >
       <AnimatePresence>
+        {/* Tras cerrar el panel no queda nada: antes el botón seguía ahí,
+            invisible pero clicable y enfocable. */}
         {!isExpanded ? (
-          <motion.button
-            onClick={handleButtonClick}
-            className="bg-cbpviolet-500 rounded-full cursor-pointer shadow-[0_0_20px_rgba(139,92,246,1)]
+          isVisible && (
+            <motion.button
+              onClick={handleButtonClick}
+              className="bg-cbpviolet-500 rounded-full cursor-pointer shadow-[0_0_20px_rgba(139,92,246,1)]
                      border-2 border-cbpviolet-500 hover:bg-cbpviolet-600 hover:border-cbpviolet-600 transition-all duration-300
                      flex items-center justify-center"
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            whileTap={{ scale: 0.95 }}
-            aria-label="Mostrar información"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
-            <FaInfoCircle className="text-2xl" />
-          </motion.button>
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label="Mostrar información"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              <FaInfoCircle className="text-2xl" />
+            </motion.button>
+          )
         ) : (
           <motion.div
             className="bg-cbpgray-800 rounded-xl shadow-2xl overflow-hidden border-2 border-cbpgray-600"
@@ -81,7 +84,9 @@ export const TechTooltip = () => {
               </p>
 
               <div className="flex items-center justify-center flex-col text-cbpgray-200 text-sm gap-4">
-                <span>Ejemplos de tecnologías en las que puedes hacer clic:</span>
+                <span>
+                  Ejemplos de tecnologías en las que puedes hacer clic:
+                </span>
                 <div className="flex items-center gap-8">
                   <TechnologyLabel
                     name={technologies[0].name}
