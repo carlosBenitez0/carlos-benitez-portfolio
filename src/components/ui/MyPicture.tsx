@@ -1,15 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { BgDotGradient } from "./BgDotGradient";
 import gsap from "gsap";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
 export const MyPicture = () => {
   const { isMobile } = useIsMobile();
+  const rootRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const picture = document.querySelector(".my-picture");
-    const dots = document.querySelectorAll(".dot");
-    const bubble = document.querySelector(".picture-bubble");
-    const tl = gsap.timeline();
+    const root = rootRef.current;
+    if (!root) return;
+
+    const picture = root.querySelector(".my-picture");
+    const dots = root.querySelectorAll<HTMLElement>(".dot");
+    const bubble = root.querySelector(".picture-bubble");
+    // gsap.context registra la timeline de entrada para revertirla en el cleanup.
+    const ctx = gsap.context(() => {}, root);
+    let tl!: gsap.core.Timeline;
+    ctx.add(() => {
+      tl = gsap.timeline();
+    });
 
     const generateRandomPosition = () => {
       if (isMobile) {
@@ -113,30 +123,31 @@ export const MyPicture = () => {
       const randomValue = Math.random() * (isMobile ? 1.2 : 1.3);
       return randomValue;
     };
-    const timer = setInterval(() => {
-      dots.forEach((dot, index) => {
-        tl.to(
-          dot,
-          {
-            x: generateRandomMovement(),
-            y: generateRandomMovement(),
-            scale: generateRandomSize(),
-            duration: 3,
-            ease: "power1.inOut",
-            delay: index * 0.1,
-            repeat: -1,
-            yoyo: true,
-          },
-          "<0.1", // Comienza 0.5s después del inicio de la timeline
-        );
+    // Deriva continua: cada dot tiene un único tween vivo que, al terminar,
+    // encadena el siguiente hacia una posición aleatoria nueva. Antes un
+    // setInterval añadía 6 tweens infinitos por segundo sin liberarlos nunca.
+    const drift = (dot: HTMLElement, index: number) => {
+      gsap.to(dot, {
+        x: generateRandomMovement(),
+        y: generateRandomMovement(),
+        scale: generateRandomSize(),
+        duration: 3,
+        delay: index * 0.1,
+        ease: "power1.inOut",
+        onComplete: () => drift(dot, 0),
       });
-    }, 1000);
+    };
+    tl.call(() => dots.forEach(drift));
 
-    return () => clearInterval(timer);
+    return () => {
+      ctx.revert();
+      gsap.killTweensOf(dots);
+    };
   }, [isMobile]);
 
   return (
     <div
+      ref={rootRef}
       className={`relative flex items-center justify-center ${isMobile ? "-top-16" : "top-1/2"}`}
     >
       <div className="dot absolute flex items-center justify-center bg-red-500">
