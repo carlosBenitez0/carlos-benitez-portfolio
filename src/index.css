@@ -242,8 +242,102 @@
 /* Animaciones infinitas pausadas mientras su sección está fuera de pantalla
    (ver usePauseOffscreenAnimations). */
 [data-offscreen]
-  :is(.shiny-text, .animate-gradient, .animate-gradient-rgb, .animate-pulse) {
+  :is(
+    .shiny-text,
+    .animate-gradient,
+    .animate-gradient-rgb,
+    .animate-pulse,
+    .contact-wave
+  ) {
   animation-play-state: paused;
+}
+
+/* Olas del formulario de contacto (antes SMIL <animateTransform>). Se mueve
+   cada <svg> completo con transform para que lo componga la GPU. Los valores
+   están en unidades del viewBox (1600x900, "slice"): --wave-unit es cuántos
+   px mide una unidad, igual que la escala que aplica preserveAspectRatio. El
+   cubic-bezier es el mismo keySpline de la animación original. */
+.contact-waves {
+  container-type: size;
+}
+
+.contact-wave {
+  --wave-unit: max(calc(100cqw / 1600), calc(100cqh / 900));
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+  will-change: transform;
+}
+
+.contact-wave-a {
+  transform: translate(
+    calc(270 * var(--wave-unit)),
+    calc(230 * var(--wave-unit))
+  );
+  animation-name: contact-wave-a;
+  animation-duration: 10s;
+}
+
+.contact-wave-b {
+  transform: translate(
+    calc(-270 * var(--wave-unit)),
+    calc(230 * var(--wave-unit))
+  );
+  animation-name: contact-wave-b;
+  animation-duration: 8s;
+}
+
+.contact-wave-c {
+  transform: translate(0px, calc(230 * var(--wave-unit)));
+  animation-name: contact-wave-c;
+  animation-duration: 6s;
+}
+
+@keyframes contact-wave-a {
+  0%,
+  100% {
+    transform: translate(
+      calc(270 * var(--wave-unit)),
+      calc(230 * var(--wave-unit))
+    );
+  }
+
+  50% {
+    transform: translate(
+      calc(-334 * var(--wave-unit)),
+      calc(180 * var(--wave-unit))
+    );
+  }
+}
+
+@keyframes contact-wave-b {
+  0%,
+  100% {
+    transform: translate(
+      calc(-270 * var(--wave-unit)),
+      calc(230 * var(--wave-unit))
+    );
+  }
+
+  60% {
+    transform: translate(
+      calc(243 * var(--wave-unit)),
+      calc(220 * var(--wave-unit))
+    );
+  }
+}
+
+@keyframes contact-wave-c {
+  0%,
+  100% {
+    transform: translate(0px, calc(230 * var(--wave-unit)));
+  }
+
+  40% {
+    transform: translate(
+      calc(-140 * var(--wave-unit)),
+      calc(200 * var(--wave-unit))
+    );
+  }
 }
 
 .spinner {
@@ -269,7 +363,8 @@
   .shiny-text,
   .animate-gradient,
   .animate-gradient-rgb,
-  .animate-pulse {
+  .animate-pulse,
+  .contact-wave {
     animation: none;
   }
 

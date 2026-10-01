@@ -15,7 +15,6 @@ import emailjs from "@emailjs/browser";
 import { SendedComponent } from "./SendedComponent";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import {
-  onVisibilityChange,
   pauseTweensWhileOffscreen,
   prefersReducedMotion,
 } from "../../../utils/visibility";
@@ -206,12 +205,8 @@ export const ContactContainer = () => {
     const container = containerRef.current;
     if (!container) return;
     const dots = container.querySelectorAll(".dot-contact");
-    const waves = container.querySelector("svg");
 
-    if (prefersReducedMotion()) {
-      waves?.pauseAnimations();
-      return;
-    }
+    if (prefersReducedMotion()) return;
 
     dots.forEach((dot) => {
       gsap.to(dot, {
@@ -223,17 +218,13 @@ export const ContactContainer = () => {
       });
     });
 
-    // Manchas y olas quietas mientras el formulario no se ve
+    // Manchas quietas mientras el formulario no se ve (las olas son CSS y se
+    // pausan con data-offscreen)
     const stopPausingDots = pauseTweensWhileOffscreen(container, dots);
-    const stopPausingWaves = onVisibilityChange(container, (visible) => {
-      if (visible) waves?.unpauseAnimations();
-      else waves?.pauseAnimations();
-    });
 
     return () => {
       // Limpiar todas las animaciones al desmontar
       stopPausingDots();
-      stopPausingWaves();
       gsap.killTweensOf(dots);
     };
   }, []);
@@ -244,74 +235,53 @@ export const ContactContainer = () => {
       className={`anim-about-text grid relative overflow-hidden  bg-transparent filter-blur-3xl rounded-xl border-2 border-white/5
     ${isMobile ? "grid-cols-1 grid-rows-2" : " grid-cols-2"}`}
     >
-      <svg
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        x="0px"
-        y="0px"
-        width="100%"
-        height="100%"
-        viewBox="0 0 1600 900"
-        preserveAspectRatio="xMidYMax slice"
-        className="absolute z-[-1] bg-transparent bg-gradient-to-bl from-cbpbg-50 via-cbpbg-500/20 to-transparent
-        w-full"
-      >
-        <defs>
-          <linearGradient id="bg">
-            <stop offset="0%" stopColor="#7b2cbf11"></stop>
-            <stop offset="50%" stopColor="#9d4edd22"></stop>
-            <stop offset="100%" stopColor="#b96edf33"></stop>
-          </linearGradient>
-          <path
-            id="wave"
-            fill="url(#bg)"
-            d="M-363.852,502.589c0,0,236.988-41.997,505.475,0
+      {/* Olas de fondo: cada una es su propio <svg> y se anima la caja completa
+          con transform (compuesto en GPU). Animar elementos dentro de un SVG
+          recalculaba su layout en cada frame. */}
+      <div className="contact-waves absolute top-0 left-0 z-[-1] h-full w-full overflow-hidden bg-gradient-to-bl from-cbpbg-50 via-cbpbg-500/20 to-transparent">
+        <svg className="absolute h-0 w-0" aria-hidden="true">
+          <defs>
+            <linearGradient id="bg">
+              <stop offset="0%" stopColor="#7b2cbf11"></stop>
+              <stop offset="50%" stopColor="#9d4edd22"></stop>
+              <stop offset="100%" stopColor="#b96edf33"></stop>
+            </linearGradient>
+            <path
+              id="wave"
+              fill="url(#bg)"
+              d="M-363.852,502.589c0,0,236.988-41.997,505.475,0
 	s371.981,38.998,575.971,0s293.985-39.278,505.474,5.859s493.475,48.368,716.963-4.995v560.106H-363.852V502.589z"
-          />
-        </defs>
-        <g className="translate-y-10">
-          <use xlinkHref="#wave" opacity=".3">
-            <animateTransform
-              attributeName="transform"
-              attributeType="XML"
-              type="translate"
-              dur="10s"
-              calcMode="spline"
-              values="270 230; -334 180; 270 230"
-              keyTimes="0; .5; 1"
-              keySplines="0.42, 0, 0.58, 1.0;0.42, 0, 0.58, 1.0"
-              repeatCount="indefinite"
             />
-          </use>
-          <use xlinkHref="#wave" opacity=".6">
-            <animateTransform
-              attributeName="transform"
-              attributeType="XML"
-              type="translate"
-              dur="8s"
-              calcMode="spline"
-              values="-270 230;243 220;-270 230"
-              keyTimes="0; .6; 1"
-              keySplines="0.42, 0, 0.58, 1.0;0.42, 0, 0.58, 1.0"
-              repeatCount="indefinite"
-            />
-          </use>
-          <use xlinkHref="#wave" opacity=".9">
-            <animateTransform
-              attributeName="transform"
-              attributeType="XML"
-              type="translate"
-              dur="6s"
-              calcMode="spline"
-              values="0 230;-140 200;0 230"
-              keyTimes="0; .4; 1"
-              keySplines="0.42, 0, 0.58, 1.0;0.42, 0, 0.58, 1.0"
-              repeatCount="indefinite"
-            />
-          </use>
-        </g>
-      </svg>
+          </defs>
+        </svg>
+        <svg
+          viewBox="0 0 1600 900"
+          preserveAspectRatio="xMidYMax slice"
+          className="contact-wave contact-wave-a absolute inset-0 h-full w-full overflow-visible"
+        >
+          <g className="translate-y-10">
+            <use href="#wave" opacity=".3" />
+          </g>
+        </svg>
+        <svg
+          viewBox="0 0 1600 900"
+          preserveAspectRatio="xMidYMax slice"
+          className="contact-wave contact-wave-b absolute inset-0 h-full w-full overflow-visible"
+        >
+          <g className="translate-y-10">
+            <use href="#wave" opacity=".6" />
+          </g>
+        </svg>
+        <svg
+          viewBox="0 0 1600 900"
+          preserveAspectRatio="xMidYMax slice"
+          className="contact-wave contact-wave-c absolute inset-0 h-full w-full overflow-visible"
+        >
+          <g className="translate-y-10">
+            <use href="#wave" opacity=".9" />
+          </g>
+        </svg>
+      </div>
       <div
         className={`ring-component absolute ${isMobile ? "-top-35 -left-35 blur-xl w-100 h-100" : "-top-15 -left-15 blur-md w-64 h-64"}  border-[15px] border-cbpviolet-500/50 rounded-full -z-1`}
       ></div>
