@@ -259,3 +259,35 @@
     transform: rotate(360deg);
   }
 }
+
+/* Reducir movimiento: sin bucles decorativos y revelados solo con opacidad */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .shiny-text,
+  .animate-gradient,
+  .animate-gradient-rgb,
+  .animate-pulse {
+    animation: none;
+  }
+
+  .anim-about-text,
+  .anim-achievement-text,
+  .proyect-card-anim,
+  .technologies-container-left,
+  .technologies-container-right {
+    animation-name: fade-only;
+  }
+}
+
+@keyframes fade-only {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

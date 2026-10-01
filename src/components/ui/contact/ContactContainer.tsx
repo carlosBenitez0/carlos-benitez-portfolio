@@ -17,6 +17,7 @@ import { useIsMobile } from "../../../hooks/useIsMobile";
 import {
   onVisibilityChange,
   pauseTweensWhileOffscreen,
+  prefersReducedMotion,
 } from "../../../utils/visibility";
 
 interface UserData {
@@ -206,6 +207,11 @@ export const ContactContainer = () => {
     if (!container) return;
     const dots = container.querySelectorAll(".dot-contact");
     const waves = container.querySelector("svg");
+
+    if (prefersReducedMotion()) {
+      waves?.pauseAnimations();
+      return;
+    }
 
     dots.forEach((dot) => {
       gsap.to(dot, {

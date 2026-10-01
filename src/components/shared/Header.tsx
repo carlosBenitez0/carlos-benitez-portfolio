@@ -6,7 +6,10 @@ import ShinyText from "../ui/ShinyText";
 import AnimatedGradientText from "../ui/AnimatedGradientText";
 import HighlightText from "../ui/HighlightText";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { pauseTweensWhileOffscreen } from "../../utils/visibility";
+import {
+  pauseTweensWhileOffscreen,
+  prefersReducedMotion,
+} from "../../utils/visibility";
 
 export const Header = () => {
   const arrowRef = useRef<HTMLDivElement>(null);
@@ -18,8 +21,19 @@ export const Header = () => {
     const arrow = arrowRef.current;
     if (!header || !arrow) return;
 
+    const reduceMotion = prefersReducedMotion();
+
     const ctx = gsap.context(() => {
       const appearText = header.querySelectorAll(".appear-text");
+
+      if (reduceMotion) {
+        gsap.fromTo(
+          [arrow, ...appearText],
+          { opacity: 0 },
+          { opacity: 1, duration: 0.6, stagger: 0.15, ease: "power1.out" },
+        );
+        return;
+      }
 
       // Sin filter: blur aquí: a scale 40 la flecha mide más de 1000px y el
       // desenfoque se recalculaba en cada frame durante 5 segundos.

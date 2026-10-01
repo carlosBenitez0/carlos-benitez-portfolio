@@ -23,7 +23,10 @@ import gsap from "gsap";
 import { useIsMobile } from "./hooks/useIsMobile";
 import { TechTooltip } from "./components/ui/ai/TechTooltip";
 import { usePauseOffscreenAnimations } from "./hooks/usePauseOffscreenAnimations";
-import { pauseTweensWhileOffscreen } from "./utils/visibility";
+import {
+  pauseTweensWhileOffscreen,
+  prefersReducedMotion,
+} from "./utils/visibility";
 
 function App() {
   const proyects = useProyects();
@@ -35,7 +38,7 @@ function App() {
 
   useEffect(() => {
     const technologiesSection = technologiesRef.current;
-    if (!technologiesSection) return;
+    if (!technologiesSection || prefersReducedMotion()) return;
     const dots_technologies =
       technologiesSection.querySelectorAll(".dot-technologies");
 

@@ -54,3 +54,7 @@ export const pauseTweensWhileOffscreen = (
   onVisibilityChange(container, (visible) => {
     gsap.getTweensOf(targets).forEach((tween) => tween.paused(!visible));
   });
+
+// Preferencia del sistema "reducir movimiento": sin bucles decorativos.
+export const prefersReducedMotion = () =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;

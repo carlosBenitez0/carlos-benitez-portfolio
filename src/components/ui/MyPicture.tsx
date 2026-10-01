@@ -2,7 +2,10 @@ import { useEffect, useRef } from "react";
 import { BgDotGradient } from "./BgDotGradient";
 import gsap from "gsap";
 import { useIsMobile } from "../../hooks/useIsMobile";
-import { pauseTweensWhileOffscreen } from "../../utils/visibility";
+import {
+  pauseTweensWhileOffscreen,
+  prefersReducedMotion,
+} from "../../utils/visibility";
 
 export const MyPicture = () => {
   const { isMobile } = useIsMobile();
@@ -138,7 +141,7 @@ export const MyPicture = () => {
         onComplete: () => drift(dot, 0),
       });
     };
-    tl.call(() => dots.forEach(drift));
+    if (!prefersReducedMotion()) tl.call(() => dots.forEach(drift));
 
     // La deriva se congela cuando el hero sale de pantalla
     const stopPausing = pauseTweensWhileOffscreen(root, dots);
