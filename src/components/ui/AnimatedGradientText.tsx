@@ -22,7 +22,7 @@ export default function AnimatedGradientText({
 
   return (
     <div
-      className={`relative inline  max-w-fit  backdrop-blur transition-shadow duration-500 overflow-hidden ${classNames.join(" ")}`}
+      className={`relative inline  max-w-fit transition-shadow duration-500 overflow-hidden ${classNames.join(" ")}`}
     >
       {showBorder && (
         <div
