@@ -18,13 +18,11 @@ import {
   pauseTweensWhileOffscreen,
   prefersReducedMotion,
 } from "../../../utils/visibility";
+import {
+  validateContact,
+  type ContactData,
+} from "../../../utils/contactForm";
 
-interface UserData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
 
 export const ContactContainer = () => {
   const { isMobile } = useIsMobile();
@@ -36,7 +34,7 @@ export const ContactContainer = () => {
     error: "",
   });
   const [sended, setSended] = useState<boolean>(false);
-  const [userData, setUserData] = useState<UserData>({
+  const [userData, setUserData] = useState<ContactData>({
     name: "",
     email: "",
     subject: "",
@@ -58,54 +56,9 @@ export const ContactContainer = () => {
     setError({ name: "", error: "" });
 
     // Validaciones
-    if (userData.name === "") {
-      setError({ name: "name", error: "El nombre es requerido" });
-      return;
-    }
-
-    if (userData.name.length < 3) {
-      setError({
-        name: "name",
-        error: "El nombre debe tener al menos 3 caracteres",
-      });
-      return;
-    }
-
-    if (userData.email === "") {
-      setError({ name: "email", error: "El email es requerido" });
-      return;
-    }
-
-    if (
-      !/^\w+([/.-]?\w+)@\w+([/.-]?\w+)\.[a-zA-Z]{2,3}$/.test(userData.email)
-    ) {
-      setError({ name: "email", error: "El email es invalido" });
-      return;
-    }
-
-    if (userData.subject === "") {
-      setError({ name: "subject", error: "El asunto es requerido" });
-      return;
-    }
-
-    if (userData.subject.length < 3) {
-      setError({
-        name: "subject",
-        error: "El asunto debe tener al menos 3 caracteres",
-      });
-      return;
-    }
-
-    if (userData.message === "") {
-      setError({ name: "message", error: "El mensaje es requerido" });
-      return;
-    }
-
-    if (userData.message.length < 10) {
-      setError({
-        name: "message",
-        error: "El mensaje debe tener al menos 10 caracteres",
-      });
+    const validationError = validateContact(userData);
+    if (validationError) {
+      setError(validationError);
       return;
     }
 
