@@ -42,7 +42,7 @@ export const Footer = () => {
             <span className="text-cbpgray-400 text-sm">Desarrollador web</span>
           </div>
         </div>
-        <p className="italic text-gray-700 dark:text-gray-300 mb-2 p-2 border border-cbpgray-800 rounded-md">
+        <p className="italic text-gray-300 mb-2 p-2 border border-cbpgray-800 rounded-md">
           "La innovación es el <ShinyText text="IDE" /> del progreso; la
           creatividad, su <ShinyText text='lenguaje de programación".' />
         </p>

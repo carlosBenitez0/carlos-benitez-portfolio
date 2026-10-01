@@ -203,3 +203,24 @@ test.describe("reducir movimiento", () => {
     );
   });
 });
+
+test.describe("esquema de color del sistema", () => {
+  // El sitio es siempre oscuro: el modo claro del sistema no debe cambiar
+  // ningún color de texto.
+  test("el modo claro del sistema no altera los textos", async ({
+    browser,
+  }) => {
+    const colorsIn = async (colorScheme: "light" | "dark") => {
+      const page = await browser.newPage({ colorScheme });
+      await page.goto("/", { waitUntil: "domcontentloaded" });
+      const colors = await page.evaluate(() =>
+        [...document.querySelectorAll("p, span, h1, h2, h3, h4, a, li")].map(
+          (el) => getComputedStyle(el).color,
+        ),
+      );
+      await page.close();
+      return colors;
+    };
+    expect(await colorsIn("light")).toEqual(await colorsIn("dark"));
+  });
+});
