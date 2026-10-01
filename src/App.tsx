@@ -17,10 +17,11 @@ import { TechnologiesContainer } from "./components/ui/Technologies/Technologies
 import { BgDotGradient } from "./components/ui/BgDotGradient";
 import { ContactContainer } from "./components/ui/contact/ContactContainer";
 import { AISection } from "./components/ui/ai/AISection";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useIsMobile } from "./hooks/useIsMobile";
-import { TechTooltip } from "./components/ui/ai/TechTooltip";
+import { TechTooltip } from "./components/deferred";
+import { preloadDeferredComponents } from "./utils/preloadDeferred";
 import { usePauseOffscreenAnimations } from "./hooks/usePauseOffscreenAnimations";
 import {
   pauseTweensWhileOffscreen,
@@ -34,6 +35,7 @@ function App() {
 
   const technologiesRef = useRef<HTMLElement>(null);
   usePauseOffscreenAnimations();
+  useEffect(() => preloadDeferredComponents(), []);
 
   useEffect(() => {
     const technologiesSection = technologiesRef.current;
@@ -84,7 +86,9 @@ function App() {
       className={`font-poppins bg-cbpbg-900 relative z-40 h-screen  overflow-x-hidden ${isMobile ? "" : "w-full"}`}
     >
       {/* Tech Tooltip - componente que muestra información sobre las tecnologías */}
-      <TechTooltip />
+      <Suspense fallback={null}>
+        <TechTooltip />
+      </Suspense>
 
       <div
         className="absolute top-0 h-[70vh] w-full rounded-b-full mx-auto

@@ -5,6 +5,7 @@ import { ContactContainer } from "./ContactContainer";
 
 vi.mock("../../../utils/sendContact", () => ({
   sendContactMessage: vi.fn(),
+  preloadEmailJs: vi.fn(),
 }));
 const send = vi.mocked(sendContactMessage);
 

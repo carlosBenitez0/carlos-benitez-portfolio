@@ -158,24 +158,20 @@ export const AISection = () => {
   ];
 
   return (
-    <section
-      id="ai"
-      data-pause-offscreen
-      className="py-8 bg-cbpgray-900"
-    >
+    <section id="ai" data-pause-offscreen className="bg-cbpgray-900 py-8">
       <div className="container mx-auto px-8">
         {/* Título principal de la sección */}
         <SectionTitle title="Inteligencia Artificial" icon={<FaRobot />} />
 
         {/* Descripción de la sección */}
-        <p className="text-cbpgray-300  mb-12">
+        <p className="mb-12 text-cbpgray-300">
           Utilizo herramientas de IA avanzadas para mejorar la calidad y
           eficiencia del desarrollo de software. Estas son algunas de las
           tecnologías que integro en mi flujo de trabajo diario.
         </p>
 
         {/* Grid de herramientas de IA */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+        <div className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-2">
           {herramientas.map((herramienta, index) => (
             <AIToolCard
               key={herramienta.nombre}
@@ -195,18 +191,18 @@ export const AISection = () => {
 
         {/* Sección de estudios actuales */}
         <div className="mt-20">
-          <h3 className="text-2xl font-bold text-white mb-8 flex items-center justify-center">
+          <h3 className="mb-8 flex items-center justify-center text-2xl font-bold text-white">
             <span className="text-cbpgray-300">Áreas de Estudio Actuales</span>
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {areasDeEstudio.map((area) => (
               <div
                 key={area.nombre}
-                className="bg-cbpgray-800/50 rounded-lg p-5 border border-cbpgray-700/50 hover:border-cbpviolet-500/30 transition-colors"
+                className="rounded-lg border border-cbpgray-700/50 bg-cbpgray-800/50 p-5 transition-colors hover:border-cbpviolet-500/30"
               >
-                <div className="flex items-center mb-3">
-                  <div className="p-2 rounded-lg bg-cbpviolet-500/10 mr-3 text-cbpviolet-400">
+                <div className="mb-3 flex items-center">
+                  <div className="mr-3 rounded-lg bg-cbpviolet-500/10 p-2 text-cbpviolet-400">
                     {area.icono}
                   </div>
                   <h4 className="text-lg font-semibold text-white">

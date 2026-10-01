@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { FaTerminal, FaChevronRight, FaChevronDown } from "react-icons/fa";
 
 type TerminalCommand = {
@@ -98,76 +97,83 @@ Como desarrollador web, ¿cómo puedo aprovechar la IA en mi flujo de trabajo ac
           <span className="text-xs text-cbpgray-400">
             {activeTab + 1}/{commands.length}
           </span>
-          <motion.div
-            animate={{ rotate: isOpen ? 0 : -90 }}
-            transition={{ duration: 0.2 }}
+          {/* Botón real para teclado y lectores; el clic en toda la barra
+                sigue funcionando con el mouse */}
+          <button
+            type="button"
+            aria-expanded={isOpen}
+            aria-controls="ai-terminal-body"
+            aria-label={isOpen ? "Ocultar terminal" : "Mostrar terminal"}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(!isOpen);
+            }}
+            className="cursor-pointer"
           >
-            <FaChevronDown className="text-cbpgray-400" />
-          </motion.div>
+            <FaChevronDown
+              className={`text-cbpgray-400 transition-transform duration-200 ${isOpen ? "" : "-rotate-90"}`}
+            />
+          </button>
         </div>
       </div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="overflow-hidden"
+      {/* Abrir/cerrar con CSS: la fila del grid pasa de 1fr a 0fr. Cerrado,
+            el contenido queda inerte (fuera del foco y de los lectores). */}
+      <div
+        id="ai-terminal-body"
+        inert={!isOpen}
+        className={`grid transition-[grid-template-rows,opacity] duration-200 ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+      >
+        <div className="overflow-hidden">
+          <div
+            ref={terminalRef}
+            // Región con scroll: alcanzable y desplazable con el teclado
+            tabIndex={0}
+            role="region"
+            aria-label="Ejemplo de prompt y respuesta de IA"
+            className="max-h-96 overflow-y-auto p-4 font-mono text-sm"
           >
-            <div
-              ref={terminalRef}
-              // Región con scroll: alcanzable y desplazable con el teclado
-              tabIndex={0}
-              role="region"
-              aria-label="Ejemplo de prompt y respuesta de IA"
-              className="max-h-96 overflow-y-auto p-4 font-mono text-sm"
-            >
-              {/* Input */}
-              <div className="mb-4">
-                <div className="flex items-start">
-                  <div className="mt-2">
-                    <div className="mb-1 text-xs font-medium text-cbpgray-400">
-                      <span className="mr-2 text-cbpviolet-400">$</span>Ejemplo
-                      de prompt profesional:
-                    </div>
-                    <div className="rounded bg-cbpgray-800/50 p-4 font-mono text-sm text-cbpgray-300">
-                      {activeCommand.prompt}
-                    </div>
+            {/* Input */}
+            <div className="mb-4">
+              <div className="flex items-start">
+                <div className="mt-2">
+                  <div className="mb-1 text-xs font-medium text-cbpgray-400">
+                    <span className="mr-2 text-cbpviolet-400">$</span>
+                    Ejemplo de prompt profesional:
+                  </div>
+                  <div className="rounded bg-cbpgray-800/50 p-4 font-mono text-sm text-cbpgray-300">
+                    {activeCommand.prompt}
                   </div>
                 </div>
               </div>
-
-              {/* Output */}
-              <div className="relative mt-6">
-                <div className="mb-2 text-xs font-medium text-cbpgray-400">
-                  Ejemplo de respuesta de IA:
-                </div>
-                <pre
-                  tabIndex={0}
-                  role="region"
-                  aria-label="Código de la respuesta de IA"
-                  className="mt-2 overflow-x-auto rounded bg-cbpgray-900/50 p-4 text-cbpgray-100"
-                >
-                  <code>
-                    {activeCommand.response
-                      .replace(/```[\w]*\n?|```$/g, "")
-                      .trim()}
-                  </code>
-                </pre>
-              </div>
-
-              <div className="mt-4 flex items-center text-xs text-cbpgray-400">
-                <FaChevronRight className="mr-1.5 inline-block h-3 w-3 text-cbpviolet-400" />
-                <span>
-                  Prueba estos ejemplos en tu asistente de IA preferido
-                </span>
-              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+            {/* Output */}
+            <div className="relative mt-6">
+              <div className="mb-2 text-xs font-medium text-cbpgray-400">
+                Ejemplo de respuesta de IA:
+              </div>
+              <pre
+                tabIndex={0}
+                role="region"
+                aria-label="Código de la respuesta de IA"
+                className="mt-2 overflow-x-auto rounded bg-cbpgray-900/50 p-4 text-cbpgray-100"
+              >
+                <code>
+                  {activeCommand.response
+                    .replace(/```[\w]*\n?|```$/g, "")
+                    .trim()}
+                </code>
+              </pre>
+            </div>
+
+            <div className="mt-4 flex items-center text-xs text-cbpgray-400">
+              <FaChevronRight className="mr-1.5 inline-block h-3 w-3 text-cbpviolet-400" />
+              <span>Prueba estos ejemplos en tu asistente de IA preferido</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

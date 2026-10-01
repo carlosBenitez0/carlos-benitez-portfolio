@@ -25,7 +25,10 @@ import {
   validateContact,
   type ContactData,
 } from "../../../utils/contactForm";
-import { sendContactMessage } from "../../../utils/sendContact";
+import {
+  preloadEmailJs,
+  sendContactMessage,
+} from "../../../utils/sendContact";
 
 export const ContactContainer = () => {
   const { isMobile } = useIsMobile();
@@ -211,6 +214,7 @@ export const ContactContainer = () => {
 
       <form
         onSubmit={handleSubmit}
+        onFocus={preloadEmailJs}
         className={`z-50 grid grid-cols-2 gap-6 rounded-xl ${isMobile ? "pb-5 px-5" : "p-8"}
         [&>div]:flex [&>div]:items-center [&>div]:w-full [&>div]:pl-2 [&>div,&>span>textarea]:border [&>div,&>span>textarea]:border-white/15 [&>div,&>span>textarea]:rounded-lg
         [&>div>input,&>span>textarea]:outline-none [&>div>input]:p-3 [&>div>input,&>span>textarea]:w-full 

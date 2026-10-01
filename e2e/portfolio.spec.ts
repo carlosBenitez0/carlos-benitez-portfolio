@@ -146,9 +146,16 @@ test.describe("animaciones fuera de pantalla", () => {
     await expect(wave).toHaveCSS("animation-play-state", "paused");
 
     await scrollToSection(page, "contact");
-    await expect(wave).toHaveCSS("animation-play-state", "running");
-    const [before, after] = await transformsOver(page, ".contact-wave-a", 400);
-    expect(after).not.toBe(before);
+    await expect(wave).toHaveCSS("animation-play-state", "running", {
+      timeout: 10_000,
+    });
+    // Con la máquina cargada los frames se espacian: esperar a que se mueva
+    const start = await wave.evaluate((el) => getComputedStyle(el).transform);
+    await expect
+      .poll(() => wave.evaluate((el) => getComputedStyle(el).transform), {
+        timeout: 10_000,
+      })
+      .not.toBe(start);
   });
 
   test("las manchas del hero se congelan cuando el hero no se ve", async ({
