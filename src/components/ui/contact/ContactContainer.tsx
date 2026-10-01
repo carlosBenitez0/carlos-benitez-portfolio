@@ -405,6 +405,7 @@ export const ContactContainer = () => {
                 href="https://www.linkedin.com/in/carlos-benitez-profile/"
                 className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[34px]"
                 target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Linkedin"
               >
                 <CiLinkedin />
@@ -412,6 +413,7 @@ export const ContactContainer = () => {
               <a
                 href="https://github.com/carlosBenitez0"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[28px]"
                 aria-label="Github"
               >

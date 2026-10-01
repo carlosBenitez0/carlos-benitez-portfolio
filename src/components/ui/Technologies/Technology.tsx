@@ -18,6 +18,7 @@ export const Technology = ({
     <a
       href={url}
       target="_blank"
+      rel="noopener noreferrer"
       className={`flex flex-col items-center gap-2  ${isMobile ? "w-[28px]" : ""} ${classNames}`}
     >
       <img

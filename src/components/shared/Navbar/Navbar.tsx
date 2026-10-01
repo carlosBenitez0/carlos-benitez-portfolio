@@ -288,6 +288,7 @@ export const Navbar = () => {
           href="https://www.linkedin.com/in/carlos-benitez-profile/"
           className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[22px]" : "text-[22px]"}`}
           target="_blank"
+          rel="noopener noreferrer"
           aria-label="Linkedin"
         >
           <CiLinkedin />
@@ -295,6 +296,7 @@ export const Navbar = () => {
         <a
           href="https://github.com/carlosBenitez0"
           target="_blank"
+          rel="noopener noreferrer"
           className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[18px]" : "text-[19px]"}`}
           aria-label="Github"
         >
