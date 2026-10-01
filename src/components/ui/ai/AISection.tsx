@@ -159,22 +159,22 @@ export const AISection = () => {
   const areasDeEstudio = [
     {
       nombre: "Prompt Engineering",
-      icono: <FaTerminal className="text-cbpviolet" />,
+      icono: <FaTerminal />,
       descripcion: "Diseño de prompts efectivos para modelos de IA",
     },
     {
       nombre: "Context Engineering",
-      icono: <FaCode className="text-cbpviolet" />,
+      icono: <FaCode />,
       descripcion: "Optimización del contexto para mejorar respuestas de IA",
     },
     {
       nombre: "Vibecoding",
-      icono: <FaRobot className="text-cbpviolet" />,
+      icono: <FaRobot />,
       descripcion: "Técnicas de programación guiadas por IA",
     },
     {
       nombre: "MCP",
-      icono: <FaBrain className="text-cbpviolet" />,
+      icono: <FaBrain />,
       descripcion: "Modelos de Comportamiento Predictivo en desarrollo",
     },
   ];
@@ -226,10 +226,10 @@ export const AISection = () => {
             {areasDeEstudio.map((area) => (
               <div
                 key={area.nombre}
-                className="bg-cbpgray-800/50 rounded-lg p-5 border border-cbpgray-700/50 hover:border-cbpviolet/30 transition-colors"
+                className="bg-cbpgray-800/50 rounded-lg p-5 border border-cbpgray-700/50 hover:border-cbpviolet-500/30 transition-colors"
               >
                 <div className="flex items-center mb-3">
-                  <div className="p-2 rounded-lg bg-cbpviolet/10 mr-3 text-cbpviolet-400">
+                  <div className="p-2 rounded-lg bg-cbpviolet-500/10 mr-3 text-cbpviolet-400">
                     {area.icono}
                   </div>
                   <h4 className="text-lg font-semibold text-white">
