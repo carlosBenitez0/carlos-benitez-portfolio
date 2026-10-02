@@ -124,56 +124,26 @@ export const Header = () => {
             >
               Construyo{" "}
               <HighlightText shadowOpacity={1}>
-                {" "}
-                <ShinyText
-                  text="soluciones web"
-                  disabled={false}
-                  speed={3}
-                />{" "}
+                <ShinyText text="soluciones web" disabled={false} speed={3} />
               </HighlightText>{" "}
-              robustas, fusionando{" "}
+              robustas que combinan{" "}
               <HighlightText shadowOpacity={1}>
-                {" "}
-                <ShinyText
-                  text="código eficiente"
-                  disabled={false}
-                  speed={3}
-                />{" "}
+                <ShinyText text="código eficiente" disabled={false} speed={3} />
               </HighlightText>{" "}
-              con
+              con un{" "}
               <HighlightText shadowOpacity={1}>
-                {" "}
-                <ShinyText
-                  text="diseño intuitivo"
-                  disabled={false}
-                  speed={3}
-                />{" "}
-              </HighlightText>{" "}
-              y{" "}
+                <ShinyText text="diseño intuitivo" disabled={false} speed={3} />
+              </HighlightText>
+              . Para mí, programar es resolver problemas reales con criterio y{" "}
               <HighlightText shadowOpacity={1}>
-                {" "}
-                <ShinyText text="creativo. " disabled={false} speed={3} />
-              </HighlightText>{" "}
-              Creo que la programación va más allá de la lógica: es un espacio
-              para{" "}
-              <HighlightText shadowOpacity={1}>
-                {" "}
-                <ShinyText text="innovar" disabled={false} speed={3} />{" "}
-              </HighlightText>{" "}
-              y resolver problemas con
-              <HighlightText shadowOpacity={1}>
-                {" "}
-                <ShinyText
-                  text="soluciones ingeniosas."
-                  disabled={false}
-                  speed={3}
-                />
-              </HighlightText>{" "}
-              Trabajo con{" "}
+                <ShinyText text="creatividad" disabled={false} speed={3} />
+              </HighlightText>
+              . Trabajo con{" "}
               <HighlightText shadowOpacity={1}>
                 <ShinyText text="agentes de IA" disabled={false} speed={3} />
               </HighlightText>{" "}
-              para llevar las ideas a producción más rápido, sin perder calidad.
+              para llevar las ideas a producción más rápido, sin sacrificar
+              calidad.
             </div>
           )}
         </div>

@@ -352,7 +352,7 @@ test.describe("sección de IA", () => {
     const tools = await ai.locator("h4").allTextContents();
     expect(tools.slice(0, 4)).toEqual([
       "Claude Code",
-      "ClaudeAI",
+      "Claude",
       "Codex",
       "OpenCode",
     ]);

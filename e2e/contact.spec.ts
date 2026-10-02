@@ -37,7 +37,7 @@ test.describe("formulario de contacto", () => {
     await fillForm(page);
     await submit(page);
 
-    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
+    await expect(page.getByRole("status")).toContainText("Mensaje enviado", {
       timeout: 10_000,
     });
     await expect(page.getByRole("alert")).toHaveCount(0);
@@ -56,7 +56,7 @@ test.describe("formulario de contacto", () => {
     await submit(page);
 
     // EmailJS se descarga al enviar: esperar el resultado, no un tiempo fijo
-    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
+    await expect(page.getByRole("status")).toContainText("Mensaje enviado", {
       timeout: 10_000,
     });
     expect(calls[0].template_params).toEqual({
@@ -76,7 +76,7 @@ test.describe("formulario de contacto", () => {
     await submit(page);
 
     await expect(page.getByRole("alert")).toHaveText(
-      "No se pudo enviar el mensaje",
+      "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.",
       { timeout: 10_000 },
     );
     await expect(page.getByRole("status")).toHaveCount(0);
@@ -95,7 +95,7 @@ test.describe("formulario de contacto", () => {
     await fillForm(page);
     await submit(page);
 
-    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
+    await expect(page.getByRole("status")).toContainText("Mensaje enviado", {
       timeout: 10_000,
     });
     await expect(page.getByRole("alert")).toHaveCount(0);
@@ -110,7 +110,7 @@ test.describe("formulario de contacto", () => {
     await page.locator('input[name="company"]').fill("ACME", { force: true });
     await submit(page);
 
-    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
+    await expect(page.getByRole("status")).toContainText("Mensaje enviado", {
       timeout: 10_000,
     });
     await page.waitForTimeout(500);
@@ -128,7 +128,7 @@ test.describe("formulario de contacto", () => {
     await fillForm(page);
     await submit(page);
     // El spinner de "Enviando" también es role=status: esperar el texto de éxito
-    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
+    await expect(page.getByRole("status")).toContainText("Mensaje enviado", {
       timeout: 10_000,
     });
 
@@ -137,7 +137,7 @@ test.describe("formulario de contacto", () => {
     await submit(page);
 
     await expect(page.getByRole("alert")).toContainText(
-      /Espera \d+ s para enviar otro mensaje/,
+      /Espera \d+ s antes de enviar otro mensaje/,
       { timeout: 10_000 },
     );
     expect(calls.filter((c) => c.template_id === NOTIFY_TEMPLATE)).toHaveLength(
@@ -151,9 +151,12 @@ test.describe("formulario de contacto", () => {
     await fillForm(page, { Email: "no-es-email" });
     await submit(page);
 
-    await expect(page.getByRole("alert")).toHaveText("El email es invalido", {
-      timeout: 10_000,
-    });
+    await expect(page.getByRole("alert")).toHaveText(
+      "Introduce un email válido",
+      {
+        timeout: 10_000,
+      },
+    );
     await expect(page.getByLabel("Email", { exact: true })).toHaveAttribute(
       "aria-invalid",
       "true",

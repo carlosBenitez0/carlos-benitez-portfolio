@@ -73,7 +73,7 @@ export const ContactContainer = () => {
     if (cooldown > 0) {
       setError({
         name: "formError",
-        error: `Espera ${Math.ceil(cooldown / 1000)} s para enviar otro mensaje`,
+        error: `Espera ${Math.ceil(cooldown / 1000)} s antes de enviar otro mensaje`,
       });
       return;
     }
@@ -95,7 +95,8 @@ export const ContactContainer = () => {
     } catch {
       setError({
         name: "formError",
-        error: "No se pudo enviar el mensaje",
+        error:
+          "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.",
       });
     } finally {
       setLoading(false);
@@ -316,7 +317,7 @@ export const ContactContainer = () => {
             />
           )}
           {sended && (
-            <SendedComponent message="Revisa tu correo, te dejé un mensaje 😁✌️" />
+            <SendedComponent message="Mensaje enviado. Recibirás una confirmación en tu correo." />
           )}
         </span>
         {/* Honeypot: fuera de pantalla (no display:none, que algunos bots

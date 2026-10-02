@@ -38,32 +38,32 @@ export const AISection = () => {
       nombre: "Claude Code",
       icono: <ClaudeCodeIcon className="text-2xl" />,
       descripcion:
-        "Agente de programación de Anthropic que trabaja en la terminal: entiende el repositorio, edita código, ejecuta tests y prepara commits.",
+        "Agente de programación de Anthropic que trabaja desde la terminal: comprende el repositorio, edita código, ejecuta pruebas y prepara commits.",
       beneficios: [
-        "Tareas completas de varios pasos sobre el proyecto",
+        "Tareas de varios pasos sobre todo el proyecto",
         "Reglas, memoria y skills por proyecto",
-        "Integración con MCP, git y GitHub",
+        "Integración con MCP, Git y GitHub",
       ],
     },
     {
-      nombre: "ClaudeAI",
+      nombre: "Claude",
       icono: <ClaudeIcon className="text-2xl" />,
       descripcion:
-        "Asistente de IA enfocado en razonamiento, análisis y generación de soluciones de código con alto contexto.",
+        "Asistente de IA de Anthropic orientado al razonamiento y al análisis de problemas complejos.",
       beneficios: [
-        "Excelente análisis y explicación de código",
+        "Análisis y explicación de código",
         "Respuestas estructuradas para tareas complejas",
-        "Buen soporte para arquitectura y refactorización",
+        "Apoyo en arquitectura y refactorización",
       ],
     },
     {
       nombre: "Codex",
       icono: <CodexIcon className="text-2xl" />,
       descripcion:
-        "Agente de programación de OpenAI para la terminal y la nube que implementa cambios y revisa código sobre el repositorio.",
+        "Agente de programación de OpenAI, disponible en la terminal y en la nube, que implementa cambios y revisa código.",
       beneficios: [
-        "Implementación de cambios de punta a punta",
-        "Revisión de código y propuestas de mejora",
+        "Implementación de cambios de principio a fin",
+        "Revisión de código con propuestas de mejora",
         "Trabajo en paralelo sobre varias tareas",
       ],
     },
@@ -74,7 +74,7 @@ export const AISection = () => {
         "Agente de programación de código abierto para la terminal, compatible con modelos de distintos proveedores.",
       beneficios: [
         "Código abierto y configurable",
-        "Elección libre del modelo de IA",
+        "Libertad para elegir el modelo",
         "Flujo de trabajo desde la terminal",
       ],
     },
@@ -82,79 +82,77 @@ export const AISection = () => {
       nombre: "GitHub Copilot",
       icono: <GithubCopilotIcon className="text-2xl" />,
       descripcion:
-        "Asistente de programación en pares impulsado por IA para sugerencias de código en tiempo real.",
+        "Asistente de programación integrado en el editor, con sugerencias de código en tiempo real.",
       beneficios: [
-        "Sugerencias de código en tiempo real",
-        "Integración con editores populares",
-        "Aprendizaje automático contextual",
+        "Autocompletado de código según el contexto",
+        "Integración con los editores más usados",
+        "Chat y modo agente dentro del editor",
       ],
     },
     {
       nombre: "ChatGPT",
       icono: <OpenAIIcon className="text-2xl" />,
       descripcion:
-        "Modelo de lenguaje avanzado para generación de código, resolución de problemas y asistencia en programación.",
+        "Asistente de IA de OpenAI para generar código, resolver problemas y explicar conceptos.",
       beneficios: [
         "Respuestas detalladas y contextuales",
         "Soporte para múltiples lenguajes de programación",
-        "Útil para depuración y explicación de conceptos",
+        "Apoyo en depuración y aprendizaje",
       ],
     },
     {
       nombre: "Gemini",
       icono: <GeminiIcon className="text-2xl" />,
       descripcion:
-        "Modelo multimodal de Google capaz de entender y generar texto, código e imágenes de manera integrada.",
+        "Modelo multimodal de Google que comprende y genera texto, código e imágenes.",
       beneficios: [
-        "Capacidades multimodales avanzadas",
-        "Integración con herramientas de Google",
-        "Buen rendimiento en tareas de programación",
+        "Capacidades multimodales",
+        "Integración con el ecosistema de Google",
+        "Amplia ventana de contexto",
       ],
     },
     {
       nombre: "Antigravity",
       icono: <AntigravityIcon className="text-2xl" />,
       descripcion:
-        "Asistente de IA orientado a productividad para acelerar tareas repetitivas y flujo de desarrollo.",
+        "Entorno de desarrollo de Google pensado para trabajar con agentes de IA en el editor, la terminal y el navegador.",
       beneficios: [
-        "Automatización de tareas frecuentes",
-        "Mejora de productividad en el ciclo de desarrollo",
-        "Soporte para trabajo asistido con IA",
+        "Agentes integrados en el flujo de desarrollo",
+        "Seguimiento del trabajo de cada agente",
+        "Varias tareas en paralelo",
       ],
     },
     {
       nombre: "Windsurf",
       icono: <WindsurfIcon className="text-2xl" />,
       descripcion:
-        "Asistente de desarrollo de IA que entiende el contexto de tu código y flujo de trabajo.",
-      experiencia: "1+ año",
+        "Editor con IA que comprende el contexto del código y del flujo de trabajo.",
       beneficios: [
-        "Análisis de código en tiempo real",
+        "Asistencia contextual en tiempo real",
+        "Agente integrado en el editor",
         "Soporte para múltiples lenguajes",
-        "Integración con el flujo de desarrollo",
       ],
     },
     {
       nombre: "DeepSeek",
       icono: <DeepSeekIcon className="text-2xl" />,
       descripcion:
-        "Modelo de IA avanzado para comprensión y generación de código con gran contexto.",
-      experiencia: "6+ meses",
+        "Familia de modelos de IA de pesos abiertos con buen desempeño en programación y razonamiento.",
       beneficios: [
-        "Gran capacidad de contexto",
-        "Precisión en generación de código",
-        "Soporte para múltiples lenguajes",
+        "Amplia capacidad de contexto",
+        "Precisión en la generación de código",
+        "Modelos de pesos abiertos",
       ],
     },
     {
       nombre: "Bolt.new",
       icono: <BoltIcon className="text-2xl" />,
       descripcion:
-        "Plataforma para generar proyectos completos usando indicaciones en lenguaje natural.",
+        "Plataforma que genera aplicaciones web completas a partir de instrucciones en lenguaje natural.",
       beneficios: [
-        "Creación de proyectos desde cero con prompts",
-        "Asistencia con IA para estructurar código y archivos",
-        "Compatible con varios lenguajes de programación",
+        "Prototipos funcionales en poco tiempo",
+        "Estructura de proyecto y código generados",
+        "Vista previa y despliegue desde el navegador",
       ],
     },
   ];
@@ -171,7 +169,7 @@ export const AISection = () => {
       nombre: "Context Engineering",
       icono: <FaCode />,
       descripcion:
-        "Reglas, memoria y skills: darle a la IA el contexto correcto en cada paso",
+        "Reglas, memoria y skills: el contexto adecuado para la IA en cada paso",
     },
     {
       nombre: "MCP",
@@ -183,7 +181,7 @@ export const AISection = () => {
       nombre: "Evals y verificación",
       icono: <FaVialCircleCheck />,
       descripcion:
-        "Tests y evaluaciones para comprobar que el código generado funciona",
+        "Pruebas y evaluaciones que comprueban que el código generado funciona",
     },
   ];
 
@@ -191,7 +189,7 @@ export const AISection = () => {
     <section id="ai" data-pause-offscreen className="bg-cbpgray-900 py-8">
       <div className="container mx-auto px-8">
         {/* Título principal de la sección */}
-        <SectionTitle title="Inteligencia Artificial" icon={<FaRobot />} />
+        <SectionTitle title="Inteligencia artificial" icon={<FaRobot />} />
 
         {/* Descripción de la sección */}
         <p className="mb-12 text-cbpgray-300">
@@ -223,7 +221,7 @@ export const AISection = () => {
         {/* Sección de estudios actuales */}
         <div className="mt-20">
           <h3 className="mb-8 flex items-center justify-center text-2xl font-bold text-white">
-            <span className="text-cbpgray-300">Áreas de Estudio Actuales</span>
+            <span className="text-cbpgray-300">Áreas de estudio actuales</span>
           </h3>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

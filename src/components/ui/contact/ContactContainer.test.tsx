@@ -42,8 +42,12 @@ describe("ContactContainer", () => {
     await submit();
 
     expect(send).toHaveBeenCalledTimes(1);
-    expect(screen.getByText(/te dejé un mensaje/)).toBeInTheDocument();
-    expect(screen.queryByText("No se pudo enviar el mensaje")).toBeNull();
+    expect(screen.getByText(/Mensaje enviado/)).toBeInTheDocument();
+    expect(
+      screen.queryByText(
+        "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.",
+      ),
+    ).toBeNull();
     expect(screen.getByPlaceholderText("Mensaje")).toHaveValue("");
   });
 
@@ -54,9 +58,11 @@ describe("ContactContainer", () => {
     await submit();
 
     expect(
-      screen.getByText("No se pudo enviar el mensaje"),
+      screen.getByText(
+        "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.",
+      ),
     ).toBeInTheDocument();
-    expect(screen.queryByText(/te dejé un mensaje/)).toBeNull();
+    expect(screen.queryByText(/Mensaje enviado/)).toBeNull();
     expect(screen.getByPlaceholderText("Mensaje")).toHaveValue(
       "Hola, me interesa tu trabajo.",
     );
@@ -71,7 +77,7 @@ describe("ContactContainer", () => {
     await submit();
 
     expect(send).not.toHaveBeenCalled();
-    expect(screen.getByText("El email es invalido")).toBeInTheDocument();
+    expect(screen.getByText("Introduce un email válido")).toBeInTheDocument();
   });
 
   it("deshabilita el botón mientras envía (sin doble envío)", async () => {
@@ -100,7 +106,7 @@ describe("ContactContainer anti-abuso", () => {
     await submit();
 
     expect(send).not.toHaveBeenCalled();
-    expect(screen.getByText(/te dejé un mensaje/)).toBeInTheDocument();
+    expect(screen.getByText(/Mensaje enviado/)).toBeInTheDocument();
   });
 
   it("el honeypot queda fuera del orden de tabulación y de los lectores", () => {
@@ -125,7 +131,7 @@ describe("ContactContainer anti-abuso", () => {
 
     expect(send).toHaveBeenCalledTimes(1);
     expect(
-      screen.getByText(/Espera \d+ s para enviar otro mensaje/),
+      screen.getByText(/Espera \d+ s antes de enviar otro mensaje/),
     ).toBeInTheDocument();
   });
 
@@ -159,7 +165,7 @@ describe("ContactContainer accesibilidad", () => {
     await submit();
 
     const alert = screen.getByRole("alert");
-    expect(alert).toHaveTextContent("El email es invalido");
+    expect(alert).toHaveTextContent("Introduce un email válido");
     const email = screen.getByLabelText("Email");
     expect(email).toHaveAttribute("aria-invalid", "true");
     expect(email).toHaveAttribute("aria-describedby", alert.id);
@@ -174,6 +180,6 @@ describe("ContactContainer accesibilidad", () => {
     render(<ContactContainer />);
     fill();
     await submit();
-    expect(screen.getByRole("status")).toHaveTextContent(/te dejé un mensaje/);
+    expect(screen.getByRole("status")).toHaveTextContent(/Mensaje enviado/);
   });
 });

@@ -51,7 +51,7 @@ export const Navbar = () => {
       label: "ai",
       href: "#ai",
       icon: <FaRobot className="text-lg" />,
-      text: "AI",
+      text: "IA",
     },
     {
       label: "contact",

@@ -5,7 +5,7 @@ export const useProyects = () => {
       image:
         "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751660477/ibgarcade_yywgwl.webp",
       description:
-        "Sitio web cristiano con 3 juegos, el clasico XO y 2 juegos de preguntas.",
+        "Sitio web cristiano con tres juegos: el clásico tres en raya y dos juegos de preguntas.",
       technologies: ["React", "CSS", "TypeScript", "Motion", "bolt.new"],
       state: "Terminado",
       url: "https://ibg-arcade.vercel.app/",
@@ -16,7 +16,7 @@ export const useProyects = () => {
       image:
         "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751660476/techzone_rxdiy0.webp",
       description:
-        "E-commerce de tecnología con un diseño moderno y con panel de administración.",
+        "Tienda en línea de tecnología con diseño moderno y panel de administración.",
       technologies: ["Next.js", "CSS", "GSAP", "TypeScript", "Zustand"],
       state: "En desarrollo",
       url: "https://techzone-zeta.vercel.app/",
@@ -26,7 +26,7 @@ export const useProyects = () => {
       name: "Pokédex",
       image:
         "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751662453/352_1x_shots_so_clxxz8.png",
-      description: "Aplicación de Pokédex, utilizando la API de Pokeapi.",
+      description: "Pokédex web que consume la PokeAPI.",
       technologies: ["React", "Tailwind CSS", "TypeScript", "Axios", "Pokeapi"],
       state: "En desarrollo",
       url: "https://pok-dex-yx1k.vercel.app/",
@@ -37,7 +37,7 @@ export const useProyects = () => {
       image:
         "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752342229/porfatolio-catedra_whfj1g.webp",
       description:
-        "Proyecto desarrollado como trabajo de cátedra universitaria que sintetiza 11 semanas de contenido sobre la administración estratégica de recursos empresariales y tecnológicos.",
+        "Proyecto académico que sintetiza once semanas de contenido sobre la administración estratégica de recursos empresariales y tecnológicos.",
       technologies: ["HTML", "CSS", "JavaScript"],
       state: "Terminado",
       url: "https://rad-conkies-95b333.netlify.app/",
@@ -48,7 +48,7 @@ export const useProyects = () => {
       image:
         "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751730507/to-do-firebase_o2u85j.webp",
       description:
-        "Aplicación de To-Do con estilo de neumorphism y Firebase, para gestionar tareas.",
+        "Gestor de tareas con estilo neumórfico y almacenamiento en Firebase.",
       technologies: [
         "React",
         "Tailwind CSS",
@@ -65,7 +65,7 @@ export const useProyects = () => {
       image:
         "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751649922/youtube_asp8lp.webp",
       description:
-        "Clon de la página de inicio de YouTube (responsive pendiente).",
+        "Réplica de la página de inicio de YouTube; la versión responsive está en desarrollo.",
       technologies: ["HTML", "CSS"],
       state: "En desarrollo",
       url: "https://clon-yt-one.vercel.app/",
