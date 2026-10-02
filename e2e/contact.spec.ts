@@ -120,6 +120,9 @@ test.describe("formulario de contacto", () => {
   test("el cooldown bloquea un segundo envío, también tras recargar", async ({
     page,
   }) => {
+    // Dos cargas completas de la página en un mismo test: con la máquina
+    // cargada supera los 30 s por defecto.
+    test.slow();
     const calls = await mockEmailJs(page);
     await page.goto("/", READY);
     await fillForm(page);

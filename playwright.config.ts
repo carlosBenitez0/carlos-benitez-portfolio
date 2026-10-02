@@ -14,6 +14,10 @@ export default defineConfig({
   // Las animaciones dependen de tiempo real: con todos los núcleos ocupados la
   // máquina se satura y los tiempos se disparan.
   workers: process.env.CI ? 2 : "50%",
+  // Varios tests recorren el sitio completo, esperan la intro (~7 s) o
+  // analizan el DOM con axe; con la máquina cargada superan los 30 s por
+  // defecto. Las esperas son por eventos, así que un fallo real no tarda más.
+  timeout: 60_000,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL: `http://127.0.0.1:${PORT}`,
