@@ -432,3 +432,38 @@ test.describe("canoa del formulario de contacto", () => {
     await expect(page.locator(".contact-canoe")).toBeHidden();
   });
 });
+
+test.describe("footer", () => {
+  test("muestra las tecnologías ordenadas y vuelve arriba", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const footer = page.getByRole("contentinfo");
+    await footer.scrollIntoViewIfNeeded();
+
+    const names = footer.locator("li span");
+    await expect(names).toHaveText([
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Motion",
+      "GSAP",
+      "React Icons",
+      "React Bits",
+    ]);
+    // Cada nombre en una sola línea
+    for (const box of await names.evaluateAll((els) =>
+      els.map((e) => e.getBoundingClientRect().height),
+    )) {
+      expect(box).toBeLessThan(20);
+    }
+    await expect(footer).toContainText(
+      `© ${new Date().getFullYear()} Carlos Benítez`,
+    );
+
+    await footer.getByRole("button", { name: "Volver arriba" }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toBeInViewport({
+      timeout: 5_000,
+    });
+  });
+});

@@ -21,11 +21,8 @@ export const Technology = ({
       rel="noopener noreferrer"
       className={`flex flex-col items-center gap-2 ${isMobile ? "w-[28px]" : ""} ${classNames}`}
     >
-      <img
-        src={logo}
-        alt={name}
-        className="aspect-square w-10 object-contain"
-      />
+      {/* Decorativo: el nombre ya va en texto debajo */}
+      <img src={logo} alt="" className="aspect-square w-10 object-contain" />
       {/* Halo oscuro: las manchas de colores pasan por detrás; con el halo el
           texto mantiene contraste AA esté donde esté la mancha. */}
       <p
