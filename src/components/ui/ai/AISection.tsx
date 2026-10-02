@@ -195,9 +195,10 @@ export const AISection = () => {
 
         {/* Descripción de la sección */}
         <p className="mb-12 text-cbpgray-300">
-          Utilizo herramientas de IA avanzadas para mejorar la calidad y
-          eficiencia del desarrollo de software. Estas son algunas de las
-          tecnologías que integro en mi flujo de trabajo diario.
+          La IA es parte central de mi forma de desarrollar: trabajo con agentes
+          de programación que planifican, editan código y ejecutan tests, y con
+          asistentes para investigar, diseñar y revisar. Estas son las
+          herramientas que uso en mi día a día.
         </p>
 
         {/* Grid de herramientas de IA */}

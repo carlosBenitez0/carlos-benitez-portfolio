@@ -301,7 +301,7 @@ test.describe("SEO", () => {
     const meta = (selector: string) =>
       page.locator(selector).getAttribute("content");
 
-    await expect(page).toHaveTitle("Carlos Benítez | Desarrollador Web");
+    await expect(page).toHaveTitle("Carlos Benítez | Desarrollador Web con IA");
     expect(await meta('meta[name="description"]')).toBeTruthy();
     expect(
       await page.locator('link[rel="canonical"]').getAttribute("href"),

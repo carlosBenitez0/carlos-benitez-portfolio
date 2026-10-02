@@ -191,11 +191,44 @@ function App() {
                   <ShinyText text="frontend" /> y <ShinyText text="backend" />{" "}
                   para crear experiencias fluidas.
                 </p>
+                <p className="anim-about-text">
+                  Hoy gran parte de mi trabajo es{" "}
+                  <ShinyText text="desarrollo agéntico" />: programo junto a
+                  agentes de IA como <ShinyText text="Claude Code" />,{" "}
+                  <ShinyText text="Codex" /> y <ShinyText text="OpenCode" />,
+                  que planifican, editan código y ejecutan tests. Me enfoco en
+                  el <ShinyText text="harness engineering" />, es decir, en
+                  preparar el entorno donde trabajan esos agentes: el{" "}
+                  <ShinyText text="contexto" /> correcto (reglas del proyecto,
+                  memoria y skills), la conexión con herramientas mediante{" "}
+                  <ShinyText text="MCP" /> y una{" "}
+                  <ShinyText text="verificación automática" /> (tests, linters y
+                  CI) para que cada cambio esté comprobado. Este mismo
+                  portafolio lo optimicé y aseguré así: rendimiento, seguridad,
+                  accesibilidad y más de 150 tests automáticos.
+                </p>
                 <div className="anim-about-text space-y-3">
                   <p className="font-medium">
                     Entre mis logros destacados están:
                   </p>
                   <ul className="list-none space-y-2">
+                    <li className="anim-achievement-text flex items-start">
+                      <FaCheck className="mr-2 text-cbpviolet-500" />
+                      <span>
+                        Desarrollo agéntico con <ShinyText text="Claude Code" />
+                        , <ShinyText text="Codex" /> y{" "}
+                        <ShinyText text="OpenCode" />: de la tarea al commit,
+                        con tests
+                      </span>
+                    </li>
+                    <li className="anim-achievement-text flex items-start">
+                      <FaCheck className="mr-2 text-cbpviolet-500" />
+                      <span>
+                        <ShinyText text="Harness engineering" />: reglas,
+                        memoria, skills y <ShinyText text="MCP" /> para que los
+                        agentes trabajen con contexto y verificación
+                      </span>
+                    </li>
                     <li className="anim-achievement-text flex items-start">
                       <FaCheck className="mr-2 text-cbpviolet-500" />
                       <span>

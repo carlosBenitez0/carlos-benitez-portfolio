@@ -113,7 +113,7 @@ export const Header = () => {
           </h1>
           <h2 className={`appear-text relative mb-8 text-[16px] text-balance`}>
             <ShinyText
-              text="Ingeniero en Sistemas y Computación | Desarrollador Web"
+              text="Ingeniero en Sistemas y Computación | Desarrollador Web con IA"
               disabled={false}
               speed={3}
             />
@@ -168,7 +168,12 @@ export const Header = () => {
                   disabled={false}
                   speed={3}
                 />
-              </HighlightText>
+              </HighlightText>{" "}
+              Trabajo con{" "}
+              <HighlightText shadowOpacity={1}>
+                <ShinyText text="agentes de IA" disabled={false} speed={3} />
+              </HighlightText>{" "}
+              para llevar las ideas a producción más rápido, sin perder calidad.
             </div>
           )}
         </div>
