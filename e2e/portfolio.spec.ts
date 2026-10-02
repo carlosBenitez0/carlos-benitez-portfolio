@@ -197,6 +197,10 @@ test.describe("reducir movimiento", () => {
       "none",
     );
     await expect(page.locator(".contact-bird").first()).toBeHidden();
+    await expect(page.locator(".flag-strip").last()).toHaveCSS(
+      "animation-name",
+      "none",
+    );
     await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
   });
 
@@ -375,6 +379,20 @@ test.describe("canoa del formulario de contacto", () => {
       timeout: 10_000,
     });
     await expect(wing).toHaveCSS("animation-play-state", "running");
+  });
+
+  test("la bandera ondea mientras se ve la sección", async ({ page }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const flag = page.getByRole("img", { name: "Bandera de El Salvador" });
+    await expect(flag).toBeAttached();
+    const strip = page.locator(".flag-strip").last();
+    await expect(strip).toHaveCSS("animation-name", "flag-wave");
+    await expect(strip).toHaveCSS("animation-play-state", "paused");
+
+    await scrollToSection(page, "contact");
+    await expect(strip).toHaveCSS("animation-play-state", "running", {
+      timeout: 10_000,
+    });
   });
 
   test("en móvil no tapa el formulario", async ({ page, isMobile }) => {

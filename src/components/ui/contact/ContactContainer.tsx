@@ -13,6 +13,7 @@ import { CiLinkedin } from "react-icons/ci";
 import ShinyText from "../ShinyText";
 import { SendedComponent } from "./SendedComponent";
 import { Birds, Canoe } from "./WaterScene";
+import { WavingFlag } from "./WavingFlag";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import {
   pauseTweensWhileOffscreen,
@@ -379,11 +380,9 @@ export const ContactContainer = () => {
               <span className="text-md">
                 <ShinyText text={'"Desde el corazón de Centroamérica"'} />
               </span>
-              <img
-                src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1752763407/el-salvador_s5asqk.png"
-                alt="El Salvador"
-                className="mb-2 h-20 w-20 drop-shadow-[0px_0px_5px_#7b2cbfff]"
-              />
+              <div className="mb-2">
+                <WavingFlag />
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <a
