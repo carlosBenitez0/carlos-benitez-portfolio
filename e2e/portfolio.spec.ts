@@ -61,6 +61,32 @@ test.describe("navbar", () => {
     await expect(pill).toHaveCSS("clip-path", "none");
   });
 
+  test("cabe en pantalla y cada link ocupa una sola línea", async ({
+    page,
+  }) => {
+    for (const width of [768, 1000, 1024, 1366]) {
+      await page.setViewportSize({ width, height: 700 });
+      await page.goto("/", { waitUntil: "domcontentloaded" });
+      await expect(page.locator('nav a[aria-label="Contáctame"]')).toBeVisible({
+        timeout: 15_000,
+      });
+      const layout = await page.evaluate(() => {
+        const bar = document.querySelector("nav")!.parentElement!;
+        const items = [...bar.children].map((c) => c.getBoundingClientRect());
+        return {
+          fits: items.every((r) => r.left >= 0 && r.right <= innerWidth + 0.5),
+          singleLine: [...document.querySelectorAll("nav ul a")].every(
+            (a) => a.getBoundingClientRect().height < 26,
+          ),
+        };
+      });
+      expect(layout, `ancho ${width}px`).toEqual({
+        fits: true,
+        singleLine: true,
+      });
+    }
+  });
+
   test("los links llevan a cada sección", async ({ page }) => {
     await page.goto("/");
     for (const [name, id] of [

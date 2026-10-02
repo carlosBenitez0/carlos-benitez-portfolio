@@ -245,7 +245,7 @@ export const Navbar = () => {
   return (
     <div
       ref={navbarRef}
-      className={`fixed top-0 z-40 mx-auto flex w-full items-center lg:max-w-[950px] ${isMobile ? "justify-between p-4" : "justify-between"}`}
+      className={`fixed inset-x-0 top-0 z-40 mx-auto flex w-full items-center lg:max-w-[950px] ${isMobile ? "justify-between p-4" : "justify-between px-4 lg:px-0"}`}
     >
       <figure>
         <img
