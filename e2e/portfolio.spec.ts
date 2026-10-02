@@ -197,10 +197,11 @@ test.describe("reducir movimiento", () => {
       "none",
     );
     await expect(page.locator(".contact-bird").first()).toBeHidden();
-    await expect(page.locator(".flag-strip").last()).toHaveCSS(
-      "animation-name",
-      "none",
-    );
+    // La bandera queda quieta: su trazo no cambia
+    const outline = page.locator('.waving-flag path[data-shape="outline"]');
+    const before = await outline.getAttribute("d");
+    await page.waitForTimeout(400);
+    expect(await outline.getAttribute("d")).toBe(before);
     await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
   });
 
@@ -381,18 +382,22 @@ test.describe("canoa del formulario de contacto", () => {
     await expect(wing).toHaveCSS("animation-play-state", "running");
   });
 
-  test("la bandera ondea mientras se ve la sección", async ({ page }) => {
+  test("la bandera ondea solo mientras se ve la sección", async ({ page }) => {
     await page.goto("/", { waitUntil: "domcontentloaded" });
     const flag = page.getByRole("img", { name: "Bandera de El Salvador" });
     await expect(flag).toBeAttached();
-    const strip = page.locator(".flag-strip").last();
-    await expect(strip).toHaveCSS("animation-name", "flag-wave");
-    await expect(strip).toHaveCSS("animation-play-state", "paused");
+    const outline = page.locator('.waving-flag path[data-shape="outline"]');
+    const d = () => outline.getAttribute("d");
 
+    // Fuera de pantalla: quieta
+    const offA = await d();
+    await page.waitForTimeout(400);
+    expect(await d()).toBe(offA);
+
+    // En pantalla: el trazo cambia cuadro a cuadro
     await scrollToSection(page, "contact");
-    await expect(strip).toHaveCSS("animation-play-state", "running", {
-      timeout: 10_000,
-    });
+    const onA = await d();
+    await expect.poll(d, { timeout: 10_000 }).not.toBe(onA);
   });
 
   test("en móvil no tapa el formulario", async ({ page, isMobile }) => {

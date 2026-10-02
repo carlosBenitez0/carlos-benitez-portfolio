@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { setReducedMotion } from "../../../test/browserMocks";
 import { WavingFlag } from "./WavingFlag";
 
 describe("WavingFlag", () => {
@@ -10,16 +11,24 @@ describe("WavingFlag", () => {
     ).toBeInTheDocument();
   });
 
-  it("se compone de franjas con más amplitud hacia el extremo libre", () => {
+  it("dibuja de inmediato todas las figuras como trazos vectoriales", () => {
     const { container } = render(<WavingFlag />);
-    const strips = [...container.querySelectorAll<HTMLElement>(".flag-strip")];
-    expect(strips).toHaveLength(44);
+    const paths = [...container.querySelectorAll("path[data-shape]")];
+    expect(paths.map((p) => p.getAttribute("data-shape"))).toEqual([
+      "outline",
+      "stripes",
+      "circle",
+      "triangle",
+      "details",
+    ]);
+    for (const p of paths) expect(p.getAttribute("d")).toMatch(/^M/);
+  });
 
-    const amp = (el: HTMLElement) => Number(el.style.getPropertyValue("--amp"));
-    expect(amp(strips[0])).toBeLessThan(1);
-    expect(amp(strips[strips.length - 1])).toBeGreaterThan(4.5);
-    // La onda viaja hacia la derecha: cada franja va un poco detrás de la anterior
-    const delays = strips.map((el) => parseFloat(el.style.animationDelay));
-    expect(delays.every((d, i) => i === 0 || d > delays[i - 1])).toBe(true);
+  it("con 'reducir movimiento' queda dibujada en reposo", () => {
+    setReducedMotion(true);
+    const { container } = render(<WavingFlag />);
+    expect(
+      container.querySelector('path[data-shape="outline"]')?.getAttribute("d"),
+    ).toMatch(/^M.*Z$/);
   });
 });

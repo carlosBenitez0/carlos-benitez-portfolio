@@ -255,8 +255,7 @@
     .contact-bird,
     .bird-bob,
     .bird-wing-inner,
-    .bird-wing-outer,
-    .flag-strip
+    .bird-wing-outer
   ) {
   animation-play-state: paused;
 }
@@ -740,50 +739,11 @@
   }
 }
 
-/* Bandera de El Salvador ondeando (WavingFlag.tsx). Cada franja muestra su
-   porción de la bandera y oscila en vertical con un desfase: la suma forma la
-   onda. --amp (px) crece hacia el extremo libre. Solo transform. */
+/* Bandera de El Salvador (WavingFlag.tsx): la onda la dibuja JS deformando
+   la geometría; aquí solo el tamaño. */
 .waving-flag {
-  --flag-w: 88px;
-  --flag-h: 57.2px;
-  --flag-pad: 8px;
-  position: relative;
-  width: var(--flag-w);
-  height: calc(var(--flag-h) + 2 * var(--flag-pad));
-}
-
-.flag-strip {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: calc(var(--strip) * var(--flag-w) / var(--strips));
-  /* medio píxel de solape para que no se vean costuras entre franjas */
-  width: calc(var(--flag-w) / var(--strips) + 0.5px);
-  overflow: hidden;
-  animation-name: flag-wave;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  will-change: transform;
-}
-
-.flag-art {
-  position: absolute;
-  top: var(--flag-pad);
-  left: calc(var(--strip) * var(--flag-w) / var(--strips) * -1);
-  width: var(--flag-w);
-  height: var(--flag-h);
-  overflow: visible;
-}
-
-@keyframes flag-wave {
-  0%,
-  100% {
-    transform: translateY(calc(var(--amp) * -1px));
-  }
-
-  50% {
-    transform: translateY(calc(var(--amp) * 1px));
-  }
+  width: 96px;
+  height: 68px;
 }
 
 .spinner {
@@ -810,8 +770,7 @@
   .contact-canoe,
   .canoe-rower,
   .canoe-paddle,
-  .canoe-splash,
-  .flag-strip {
+  .canoe-splash {
     animation: none;
   }
 
