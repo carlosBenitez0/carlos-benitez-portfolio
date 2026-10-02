@@ -77,6 +77,8 @@ export const ProyectCard = ({
       <a
         href={url}
         target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Ver el proyecto ${name} (${state})`}
         className="grid-area-image relative z-10 rounded-t-xl
       bg-[length:100%_150%] bg-center"
         style={{
@@ -115,6 +117,8 @@ export const ProyectCard = ({
           <a
             href={gitHub}
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Código de ${name} en GitHub`}
             className="text-cbpgray-200/50 hover:text-cbpgray-200/80 transition-colors flex items-center gap-2  border p-2 rounded-md "
           >
             <FaGithub />

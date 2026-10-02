@@ -6,10 +6,11 @@ interface SendedComponentProps {
 }
 
 export const SendedComponent = ({ message }: SendedComponentProps) => {
-  const isMobile = useIsMobile();
+  const { isMobile } = useIsMobile();
 
   return (
     <div
+      role="status"
       className={`flex shadow-none text-nowrap items-center gap-2 py-2 px-4 border border-green-500/50 bg-green-500/15 rounded-full text-sm text-green-500/70
         ${isMobile ? "w-full" : ""}`}
     >

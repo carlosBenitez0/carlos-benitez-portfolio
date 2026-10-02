@@ -17,6 +17,7 @@ export const TechnologyLabel = ({
     <a
       href={url}
       target="_blank"
+      rel="noopener noreferrer"
       className={` inline-flex items-center gap-2 px-2 py-[2px] rounded-full text-sm
       ${fitContent ? "w-fit " : "w-max"}`}
       style={{
@@ -25,7 +26,10 @@ export const TechnologyLabel = ({
         color: color,
       }}
     >
-      {icon}
+      {/* Decorativo: el nombre ya está en texto */}
+      <span aria-hidden="true" className="contents">
+        {icon}
+      </span>
       {name}
     </a>
   );

@@ -254,7 +254,7 @@ export const Navbar = () => {
       <figure>
         <img
           src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751309549/cb-logo2_kowmru.png"
-          alt=""
+          alt="Carlos Benítez"
           className={`cb-logo  ${isMobile ? "w-10 max-w-10" : "min-w-12 w-12"}`}
         />
       </figure>
@@ -266,15 +266,16 @@ export const Navbar = () => {
          ${!isMobile ? "before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-[1] before:z-[-1] before:pointer-events-none before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]" : ""}`}
         >
           {links.map((link) => (
-            <NavbarLink
-              key={link.label}
-              label={link.label}
-              href={link.href}
-              optionSelected={optionSelected}
-              setOptionSelected={setOptionSelected}
-              icon={link.icon}
-              text={link.text}
-            />
+            <li key={link.label}>
+              <NavbarLink
+                label={link.label}
+                href={link.href}
+                optionSelected={optionSelected}
+                setOptionSelected={setOptionSelected}
+                icon={link.icon}
+                text={link.text}
+              />
+            </li>
           ))}
         </ul>
       </nav>
@@ -288,6 +289,7 @@ export const Navbar = () => {
           href="https://www.linkedin.com/in/carlos-benitez-profile/"
           className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[22px]" : "text-[22px]"}`}
           target="_blank"
+          rel="noopener noreferrer"
           aria-label="Linkedin"
         >
           <CiLinkedin />
@@ -295,6 +297,7 @@ export const Navbar = () => {
         <a
           href="https://github.com/carlosBenitez0"
           target="_blank"
+          rel="noopener noreferrer"
           className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[18px]" : "text-[19px]"}`}
           aria-label="Github"
         >
