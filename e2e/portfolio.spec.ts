@@ -307,6 +307,16 @@ test.describe("sección de IA", () => {
         ai.getByRole("heading", { level: 4, name: area, exact: true }),
       ).toBeAttached();
     }
+    // Orden por importancia: primero los agentes de programación de Claude
+    // Las tarjetas de herramientas van antes que las áreas de estudio
+    const tools = await ai.locator("h4").allTextContents();
+    expect(tools.slice(0, 4)).toEqual([
+      "Claude Code",
+      "ClaudeAI",
+      "Codex",
+      "OpenCode",
+    ]);
+
     // Áreas reemplazadas
     await expect(ai.getByText("Vibecoding")).toHaveCount(0);
     await expect(ai.getByText("Prompt Engineering")).toHaveCount(0);

@@ -29,26 +29,17 @@ import { FaBolt } from "react-icons/fa6";
 export const AISection = () => {
   // Datos de las herramientas de IA que se mostrarán en las tarjetas
   const herramientas = [
+    // Orden por importancia: primero los agentes de programación (harness),
+    // encabezados por Claude; después asistentes y herramientas puntuales.
     {
-      nombre: "ChatGPT",
-      icono: <SiOpenai className="text-2xl" />,
+      nombre: "Claude Code",
+      icono: <SiAnthropic className="text-2xl" />,
       descripcion:
-        "Modelo de lenguaje avanzado para generación de código, resolución de problemas y asistencia en programación.",
+        "Agente de programación de Anthropic que trabaja en la terminal: entiende el repositorio, edita código, ejecuta tests y prepara commits.",
       beneficios: [
-        "Respuestas detalladas y contextuales",
-        "Soporte para múltiples lenguajes de programación",
-        "Útil para depuración y explicación de conceptos",
-      ],
-    },
-    {
-      nombre: "GitHub Copilot",
-      icono: <SiGithub className="text-2xl" />,
-      descripcion:
-        "Asistente de programación en pares impulsado por IA para sugerencias de código en tiempo real.",
-      beneficios: [
-        "Sugerencias de código en tiempo real",
-        "Integración con editores populares",
-        "Aprendizaje automático contextual",
+        "Tareas completas de varios pasos sobre el proyecto",
+        "Reglas, memoria y skills por proyecto",
+        "Integración con MCP, git y GitHub",
       ],
     },
     {
@@ -60,17 +51,6 @@ export const AISection = () => {
         "Excelente análisis y explicación de código",
         "Respuestas estructuradas para tareas complejas",
         "Buen soporte para arquitectura y refactorización",
-      ],
-    },
-    {
-      nombre: "Claude Code",
-      icono: <SiAnthropic className="text-2xl" />,
-      descripcion:
-        "Agente de programación de Anthropic que trabaja en la terminal: entiende el repositorio, edita código, ejecuta tests y prepara commits.",
-      beneficios: [
-        "Tareas completas de varios pasos sobre el proyecto",
-        "Reglas, memoria y skills por proyecto",
-        "Integración con MCP, git y GitHub",
       ],
     },
     {
@@ -96,6 +76,28 @@ export const AISection = () => {
       ],
     },
     {
+      nombre: "GitHub Copilot",
+      icono: <SiGithub className="text-2xl" />,
+      descripcion:
+        "Asistente de programación en pares impulsado por IA para sugerencias de código en tiempo real.",
+      beneficios: [
+        "Sugerencias de código en tiempo real",
+        "Integración con editores populares",
+        "Aprendizaje automático contextual",
+      ],
+    },
+    {
+      nombre: "ChatGPT",
+      icono: <SiOpenai className="text-2xl" />,
+      descripcion:
+        "Modelo de lenguaje avanzado para generación de código, resolución de problemas y asistencia en programación.",
+      beneficios: [
+        "Respuestas detalladas y contextuales",
+        "Soporte para múltiples lenguajes de programación",
+        "Útil para depuración y explicación de conceptos",
+      ],
+    },
+    {
       nombre: "Gemini",
       icono: <SiGoogle className="text-2xl" />,
       descripcion:
@@ -107,15 +109,14 @@ export const AISection = () => {
       ],
     },
     {
-      nombre: "DeepSeek",
-      icono: <LuBrainCircuit className="text-2xl" />,
+      nombre: "Antigravity",
+      icono: <FaRobot className="text-2xl" />,
       descripcion:
-        "Modelo de IA avanzado para comprensión y generación de código con gran contexto.",
-      experiencia: "6+ meses",
+        "Asistente de IA orientado a productividad para acelerar tareas repetitivas y flujo de desarrollo.",
       beneficios: [
-        "Gran capacidad de contexto",
-        "Precisión en generación de código",
-        "Soporte para múltiples lenguajes",
+        "Automatización de tareas frecuentes",
+        "Mejora de productividad en el ciclo de desarrollo",
+        "Soporte para trabajo asistido con IA",
       ],
     },
     {
@@ -131,6 +132,18 @@ export const AISection = () => {
       ],
     },
     {
+      nombre: "DeepSeek",
+      icono: <LuBrainCircuit className="text-2xl" />,
+      descripcion:
+        "Modelo de IA avanzado para comprensión y generación de código con gran contexto.",
+      experiencia: "6+ meses",
+      beneficios: [
+        "Gran capacidad de contexto",
+        "Precisión en generación de código",
+        "Soporte para múltiples lenguajes",
+      ],
+    },
+    {
       nombre: "Bolt.new",
       icono: <FaBolt className="text-2xl" />,
       descripcion:
@@ -141,18 +154,6 @@ export const AISection = () => {
         "Compatible con varios lenguajes de programación",
       ],
     },
-    {
-      nombre: "Antigravity",
-      icono: <FaRobot className="text-2xl" />,
-      descripcion:
-        "Asistente de IA orientado a productividad para acelerar tareas repetitivas y flujo de desarrollo.",
-      beneficios: [
-        "Automatización de tareas frecuentes",
-        "Mejora de productividad en el ciclo de desarrollo",
-        "Soporte para trabajo asistido con IA",
-      ],
-    },
-
     {
       nombre: "Editores de Código",
       icono: <BiLogoVisualStudio className="text-2xl" />,
