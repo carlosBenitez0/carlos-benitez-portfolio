@@ -1,0 +1,89 @@
+/* Página 404: mismos colores y tipografía que el portafolio */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background:
+    radial-gradient(
+      ellipse 60% 45% at 50% 0%,
+      rgba(123, 44, 191, 0.25),
+      transparent 70%
+    ),
+    #050010;
+  color: #e5e7eb;
+  font-family: "Poppins", system-ui, sans-serif;
+  text-align: center;
+}
+
+.not-found {
+  max-width: 32rem;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 24px;
+}
+
+.code {
+  margin: 0;
+  font-size: clamp(4.5rem, 18vw, 7rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #b96edf;
+}
+
+h1 {
+  margin: 12px 0 8px;
+  font-size: clamp(1.4rem, 5vw, 1.75rem);
+  font-weight: 600;
+  color: #f2d9ff;
+}
+
+.text {
+  margin: 0 0 32px;
+  color: #d1d5db;
+  line-height: 1.6;
+}
+
+.home {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #9d4edd;
+  border-radius: 9999px;
+  background: rgba(90, 24, 154, 0.35);
+  color: #f2d9ff;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 150ms ease-out,
+    border-color 150ms ease-out;
+}
+
+.home:hover {
+  background: rgba(123, 44, 191, 0.55);
+  border-color: #b96edf;
+}
+
+.home:focus-visible {
+  outline: 2px solid #e0aaff;
+  outline-offset: 3px;
+}
+
+::selection {
+  background: #7b2cbf;
+  color: #fff;
+}
