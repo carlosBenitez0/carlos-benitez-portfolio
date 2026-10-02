@@ -8,7 +8,6 @@ import { AITerminal } from "./AITerminal";
 import { FaRobot, FaCode, FaBrain } from "react-icons/fa";
 import { LuBot } from "react-icons/lu";
 import { FaVialCircleCheck } from "react-icons/fa6";
-import { VscVscode } from "react-icons/vsc";
 import {
   AntigravityIcon,
   BoltIcon,
@@ -156,18 +155,6 @@ export const AISection = () => {
         "Creación de proyectos desde cero con prompts",
         "Asistencia con IA para estructurar código y archivos",
         "Compatible con varios lenguajes de programación",
-      ],
-    },
-    {
-      nombre: "Editores de Código",
-      icono: <VscVscode className="text-2xl" />,
-      descripcion:
-        "Herramientas esenciales potenciadas con IA para desarrollo de software.",
-      experiencia: "3+ años",
-      beneficios: [
-        "Soporte para extensiones de IA",
-        "Autocompletado inteligente",
-        "Depuración asistida",
       ],
     },
   ];

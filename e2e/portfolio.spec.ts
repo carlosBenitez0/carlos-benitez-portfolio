@@ -320,5 +320,6 @@ test.describe("sección de IA", () => {
     // Áreas reemplazadas
     await expect(ai.getByText("Vibecoding")).toHaveCount(0);
     await expect(ai.getByText("Prompt Engineering")).toHaveCount(0);
+    await expect(ai.getByText("Editores de Código")).toHaveCount(0);
   });
 });
