@@ -188,6 +188,10 @@ test.describe("reducir movimiento", () => {
       "animation-name",
       "none",
     );
+    await expect(page.locator(".contact-canoe")).toHaveCSS(
+      "animation-name",
+      "none",
+    );
     await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
   });
 
@@ -321,5 +325,35 @@ test.describe("sección de IA", () => {
     await expect(ai.getByText("Vibecoding")).toHaveCount(0);
     await expect(ai.getByText("Prompt Engineering")).toHaveCount(0);
     await expect(ai.getByText("Editores de Código")).toHaveCount(0);
+  });
+});
+
+test.describe("canoa del formulario de contacto", () => {
+  test("navega sincronizada con la ola y se pausa fuera de pantalla", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, "en móvil la canoa no se muestra");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const canoe = page.locator(".contact-canoe");
+    await expect(canoe).toHaveCSS("animation-name", "contact-canoe");
+    // Misma duración que la ola delantera que acompaña
+    await expect(canoe).toHaveCSS("animation-duration", "6s");
+    await expect(page.locator(".contact-wave-c")).toHaveCSS(
+      "animation-duration",
+      "6s",
+    );
+    await expect(canoe).toHaveCSS("animation-play-state", "paused");
+
+    await scrollToSection(page, "contact");
+    await expect(canoe).toHaveCSS("animation-play-state", "running", {
+      timeout: 10_000,
+    });
+  });
+
+  test("en móvil no tapa el formulario", async ({ page, isMobile }) => {
+    test.skip(!isMobile, "solo aplica a móvil");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await expect(page.locator(".contact-canoe")).toBeHidden();
   });
 });

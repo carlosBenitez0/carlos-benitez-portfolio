@@ -247,7 +247,8 @@
     .animate-gradient,
     .animate-gradient-rgb,
     .animate-pulse,
-    .contact-wave
+    .contact-wave,
+    .contact-canoe
   ) {
   animation-play-state: paused;
 }
@@ -340,6 +341,182 @@
   }
 }
 
+/* Canoa (cayuco) sobre la ola delantera. Misma escala que las olas: el
+   centro de la canoa está en x=900 del viewBox y la quilla queda apenas
+   hundida en la superficie (ajuste medido en el navegador). Los keyframes se calcularon del trazado
+   #wave y de la animación contact-wave-c (6 s, mismo cubic-bezier), así que
+   altura e inclinación siguen la forma real de la ola. Solo transform. */
+.contact-canoe {
+  --wave-unit: max(calc(100cqw / 1600), calc(100cqh / 900));
+  position: absolute;
+  width: calc(140 * var(--wave-unit));
+  height: calc(46.67 * var(--wave-unit));
+  left: calc((100cqw - 1600 * var(--wave-unit)) / 2 + 830 * var(--wave-unit));
+  top: calc(100cqh - 900 * var(--wave-unit) + 723.5 * var(--wave-unit));
+  transform-origin: 50% 100%;
+  transform: rotate(-4.04deg);
+  animation: contact-canoe 6s linear infinite;
+  will-change: transform;
+}
+
+/* En móvil las olas pasan por detrás del formulario: la canoa taparía los
+   campos, así que solo se muestra desde tablet. */
+@media (max-width: 767px) {
+  .contact-canoe {
+    display: none;
+  }
+}
+
+@keyframes contact-canoe {
+  0% {
+    transform: translateY(calc(0 * var(--wave-unit))) rotate(-4.04deg);
+  }
+  2.08% {
+    transform: translateY(calc(-0.21 * var(--wave-unit))) rotate(-3.99deg);
+  }
+  4.17% {
+    transform: translateY(calc(-0.86 * var(--wave-unit))) rotate(-3.85deg);
+  }
+  6.25% {
+    transform: translateY(calc(-1.95 * var(--wave-unit))) rotate(-3.6deg);
+  }
+  8.33% {
+    transform: translateY(calc(-3.48 * var(--wave-unit))) rotate(-3.25deg);
+  }
+  10.42% {
+    transform: translateY(calc(-5.42 * var(--wave-unit))) rotate(-2.77deg);
+  }
+  12.5% {
+    transform: translateY(calc(-7.7 * var(--wave-unit))) rotate(-2.18deg);
+  }
+  14.58% {
+    transform: translateY(calc(-10.25 * var(--wave-unit))) rotate(-1.48deg);
+  }
+  16.67% {
+    transform: translateY(calc(-12.93 * var(--wave-unit))) rotate(-0.68deg);
+  }
+  18.75% {
+    transform: translateY(calc(-15.61 * var(--wave-unit))) rotate(0.18deg);
+  }
+  20.83% {
+    transform: translateY(calc(-18.16 * var(--wave-unit))) rotate(1.06deg);
+  }
+  22.92% {
+    transform: translateY(calc(-20.47 * var(--wave-unit))) rotate(1.93deg);
+  }
+  25% {
+    transform: translateY(calc(-22.49 * var(--wave-unit))) rotate(2.73deg);
+  }
+  27.08% {
+    transform: translateY(calc(-24.17 * var(--wave-unit))) rotate(3.44deg);
+  }
+  29.17% {
+    transform: translateY(calc(-25.51 * var(--wave-unit))) rotate(4.05deg);
+  }
+  31.25% {
+    transform: translateY(calc(-26.55 * var(--wave-unit))) rotate(4.53deg);
+  }
+  33.33% {
+    transform: translateY(calc(-27.32 * var(--wave-unit))) rotate(4.9deg);
+  }
+  35.42% {
+    transform: translateY(calc(-27.84 * var(--wave-unit))) rotate(5.16deg);
+  }
+  37.5% {
+    transform: translateY(calc(-28.16 * var(--wave-unit))) rotate(5.32deg);
+  }
+  39.58% {
+    transform: translateY(calc(-28.28 * var(--wave-unit))) rotate(5.38deg);
+  }
+  41.67% {
+    transform: translateY(calc(-28.26 * var(--wave-unit))) rotate(5.37deg);
+  }
+  43.75% {
+    transform: translateY(calc(-28.16 * var(--wave-unit))) rotate(5.32deg);
+  }
+  45.83% {
+    transform: translateY(calc(-27.97 * var(--wave-unit))) rotate(5.22deg);
+  }
+  47.92% {
+    transform: translateY(calc(-27.69 * var(--wave-unit))) rotate(5.08deg);
+  }
+  50% {
+    transform: translateY(calc(-27.32 * var(--wave-unit))) rotate(4.9deg);
+  }
+  52.08% {
+    transform: translateY(calc(-26.84 * var(--wave-unit))) rotate(4.67deg);
+  }
+  54.17% {
+    transform: translateY(calc(-26.24 * var(--wave-unit))) rotate(4.38deg);
+  }
+  56.25% {
+    transform: translateY(calc(-25.51 * var(--wave-unit))) rotate(4.05deg);
+  }
+  58.33% {
+    transform: translateY(calc(-24.65 * var(--wave-unit))) rotate(3.66deg);
+  }
+  60.42% {
+    transform: translateY(calc(-23.64 * var(--wave-unit))) rotate(3.22deg);
+  }
+  62.5% {
+    transform: translateY(calc(-22.49 * var(--wave-unit))) rotate(2.73deg);
+  }
+  64.58% {
+    transform: translateY(calc(-21.18 * var(--wave-unit))) rotate(2.2deg);
+  }
+  66.67% {
+    transform: translateY(calc(-19.73 * var(--wave-unit))) rotate(1.64deg);
+  }
+  68.75% {
+    transform: translateY(calc(-18.16 * var(--wave-unit))) rotate(1.06deg);
+  }
+  70.83% {
+    transform: translateY(calc(-16.48 * var(--wave-unit))) rotate(0.47deg);
+  }
+  72.92% {
+    transform: translateY(calc(-14.72 * var(--wave-unit))) rotate(-0.11deg);
+  }
+  75% {
+    transform: translateY(calc(-12.93 * var(--wave-unit))) rotate(-0.68deg);
+  }
+  77.08% {
+    transform: translateY(calc(-11.13 * var(--wave-unit))) rotate(-1.22deg);
+  }
+  79.17% {
+    transform: translateY(calc(-9.38 * var(--wave-unit))) rotate(-1.73deg);
+  }
+  81.25% {
+    transform: translateY(calc(-7.7 * var(--wave-unit))) rotate(-2.18deg);
+  }
+  83.33% {
+    transform: translateY(calc(-6.14 * var(--wave-unit))) rotate(-2.59deg);
+  }
+  85.42% {
+    transform: translateY(calc(-4.73 * var(--wave-unit))) rotate(-2.95deg);
+  }
+  87.5% {
+    transform: translateY(calc(-3.48 * var(--wave-unit))) rotate(-3.25deg);
+  }
+  89.58% {
+    transform: translateY(calc(-2.41 * var(--wave-unit))) rotate(-3.5deg);
+  }
+  91.67% {
+    transform: translateY(calc(-1.53 * var(--wave-unit))) rotate(-3.7deg);
+  }
+  93.75% {
+    transform: translateY(calc(-0.86 * var(--wave-unit))) rotate(-3.85deg);
+  }
+  95.83% {
+    transform: translateY(calc(-0.38 * var(--wave-unit))) rotate(-3.95deg);
+  }
+  97.92% {
+    transform: translateY(calc(-0.09 * var(--wave-unit))) rotate(-4.02deg);
+  }
+  100% {
+    transform: translateY(calc(0 * var(--wave-unit))) rotate(-4.04deg);
+  }
+}
+
 .spinner {
   animation: spin 1s linear infinite;
 }
@@ -360,7 +537,8 @@
   .animate-gradient,
   .animate-gradient-rgb,
   .animate-pulse,
-  .contact-wave {
+  .contact-wave,
+  .contact-canoe {
     animation: none;
   }
 

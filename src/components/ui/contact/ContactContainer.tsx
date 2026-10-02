@@ -186,6 +186,51 @@ export const ContactContainer = () => {
             <use href="#wave" opacity=".9" />
           </g>
         </svg>
+        {/* Canoa sobre la ola delantera: su altura e inclinación siguen la
+            superficie de la ola (keyframes calculados del trazado, ver
+            index.css). */}
+        <div className="contact-canoe" aria-hidden="true">
+          <svg viewBox="0 0 120 40" className="h-full w-full overflow-visible">
+            {/* Remo */}
+            <path
+              d="M86 -6 L58 34"
+              stroke="#e0aaff"
+              strokeOpacity=".55"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            />
+            <ellipse
+              cx="57"
+              cy="35"
+              rx="2.6"
+              ry="5"
+              transform="rotate(35 57 35)"
+              fill="#e0aaff"
+              fillOpacity=".45"
+            />
+            {/* Remero */}
+            <circle cx="74" cy="2.5" r="3.4" fill="#e0aaff" fillOpacity=".7" />
+            <path
+              d="M70.5 7 Q74 5.5 77.5 7 L78.5 17 L69.5 17 Z"
+              fill="#e0aaff"
+              fillOpacity=".6"
+            />
+            {/* Casco del cayuco, con las puntas levantadas */}
+            <path
+              d="M1 9 Q12 16 24 17 L96 17 Q108 16 119 9 Q108 32 60 33 Q12 32 1 9 Z"
+              fill="#9d4edd"
+              fillOpacity=".7"
+            />
+            <path
+              d="M1 9 Q12 16 24 17 L96 17 Q108 16 119 9"
+              fill="none"
+              stroke="#f2d9ff"
+              strokeOpacity=".55"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
       </div>
       <div
         className={`ring-component absolute ${isMobile ? "-top-35 -left-35 h-100 w-100 blur-xl" : "-top-15 -left-15 h-64 w-64 blur-md"} -z-1 rounded-full border-[15px] border-cbpviolet-500/50`}
