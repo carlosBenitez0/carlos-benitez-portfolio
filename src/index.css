@@ -248,7 +248,14 @@
     .animate-gradient-rgb,
     .animate-pulse,
     .contact-wave,
-    .contact-canoe
+    .contact-canoe,
+    .canoe-rower,
+    .canoe-paddle,
+    .canoe-splash,
+    .contact-bird,
+    .bird-bob,
+    .bird-wing-inner,
+    .bird-wing-outer
   ) {
   animation-play-state: paused;
 }
@@ -357,6 +364,221 @@
   transform: rotate(-4.04deg);
   animation: contact-canoe 6s linear infinite;
   will-change: transform;
+}
+
+/* Capas de la canoa: misma caja y viewBox; el remo y los brazos giran desde
+   el hombro (75,6 del viewBox) y el remero se inclina desde la cadera
+   (74.5,17.5). Ciclo de remada de 1.8 s: entra, tira, sale y recupera. */
+.canoe-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.canoe-rower {
+  transform-origin: 62.08% 43.75%;
+  animation: canoe-lean 1.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.canoe-paddle {
+  transform-origin: 62.5% 15%;
+  animation: canoe-stroke 1.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.canoe-splash {
+  opacity: 0;
+  animation: canoe-splash 1.8s ease-out infinite;
+}
+
+@keyframes canoe-stroke {
+  /* entra al agua adelante -> tira hacia atrás -> sale -> recupera */
+  0% {
+    transform: rotate(-14deg);
+  }
+
+  45% {
+    transform: rotate(18deg);
+  }
+
+  58% {
+    transform: translateY(-7%) rotate(20deg);
+  }
+
+  88% {
+    transform: translateY(-8%) rotate(-16deg);
+  }
+
+  100% {
+    transform: rotate(-14deg);
+  }
+}
+
+@keyframes canoe-lean {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+
+  45% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes canoe-splash {
+  0%,
+  44% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  54% {
+    opacity: 0.9;
+  }
+
+  72% {
+    opacity: 0;
+    transform: translateY(-8%);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Pájaros: la capa exterior cruza el cielo con una leve ondulación. Dentro,
+   cada ala son dos segmentos (brazo y punta) que giran desde el hombro y el
+   codo; la punta va desfasada. Tamaño y ritmo de aleteo: --bird-size y
+   --bird-flap (WaterScene.tsx). Solo transform. */
+.contact-bird {
+  position: absolute;
+  left: 0;
+  width: var(--bird-size);
+  height: calc(var(--bird-size) * 0.5);
+  transform: translateX(-10cqw);
+  animation: contact-bird-flight 20s linear infinite;
+  will-change: transform;
+}
+
+.bird-bob {
+  position: absolute;
+  inset: 0;
+  animation: bird-bob var(--bird-flap) ease-in-out infinite;
+}
+
+.bird-body {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--bird-size) * 0.1);
+  height: calc(var(--bird-size) * 0.07);
+  border-radius: 9999px;
+  background: #e0aaff;
+  transform: translate(-50%, -30%);
+}
+
+/* El ala izquierda crece hacia la izquierda desde el hombro (centro);
+   la derecha es su espejo. */
+.bird-wing {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+}
+
+.bird-wing-right {
+  transform: scaleX(-1);
+}
+
+.bird-wing-inner {
+  position: absolute;
+  right: 0;
+  top: calc(var(--bird-size) * -0.03);
+  width: calc(var(--bird-size) * 0.26);
+  height: calc(var(--bird-size) * 0.12);
+  transform-origin: 100% 25%;
+  animation: bird-wing-inner var(--bird-flap) ease-in-out infinite;
+}
+
+.bird-wing-outer {
+  position: absolute;
+  /* Solapa un poco el brazo para que el ala se vea continua en el codo */
+  right: 96%;
+  top: 0;
+  width: calc(var(--bird-size) * 0.25);
+  height: 100%;
+  transform-origin: 100% 35%;
+  animation: bird-wing-outer var(--bird-flap) ease-in-out infinite;
+  animation-delay: calc(var(--bird-flap) * -0.85);
+}
+
+.bird-wing-inner svg,
+.bird-wing-outer svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Positivo = ala arriba (el segmento crece hacia la izquierda del pivote) */
+@keyframes bird-wing-inner {
+  0%,
+  100% {
+    transform: rotate(34deg);
+  }
+
+  50% {
+    transform: rotate(-26deg);
+  }
+}
+
+@keyframes bird-wing-outer {
+  0%,
+  100% {
+    transform: rotate(22deg);
+  }
+
+  50% {
+    transform: rotate(-30deg);
+  }
+}
+
+@keyframes bird-bob {
+  0%,
+  100% {
+    transform: translateY(calc(var(--bird-size) * 0.05));
+  }
+
+  50% {
+    transform: translateY(calc(var(--bird-size) * -0.05));
+  }
+}
+
+@keyframes contact-bird-flight {
+  0% {
+    transform: translate(-10cqw, 0);
+  }
+
+  25% {
+    transform: translate(20cqw, -10px);
+  }
+
+  50% {
+    transform: translate(48cqw, 4px);
+  }
+
+  75% {
+    transform: translate(76cqw, -8px);
+  }
+
+  100% {
+    transform: translate(110cqw, 0);
+  }
 }
 
 /* En móvil las olas pasan por detrás del formulario: la canoa taparía los
@@ -538,8 +760,15 @@
   .animate-gradient-rgb,
   .animate-pulse,
   .contact-wave,
-  .contact-canoe {
+  .contact-canoe,
+  .canoe-rower,
+  .canoe-paddle,
+  .canoe-splash {
     animation: none;
+  }
+
+  .contact-bird {
+    display: none;
   }
 
   .anim-about-text,

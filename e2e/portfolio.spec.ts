@@ -192,6 +192,11 @@ test.describe("reducir movimiento", () => {
       "animation-name",
       "none",
     );
+    await expect(page.locator(".canoe-paddle")).toHaveCSS(
+      "animation-name",
+      "none",
+    );
+    await expect(page.locator(".contact-bird").first()).toBeHidden();
     await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
   });
 
@@ -349,6 +354,27 @@ test.describe("canoa del formulario de contacto", () => {
     await expect(canoe).toHaveCSS("animation-play-state", "running", {
       timeout: 10_000,
     });
+  });
+
+  test("el remero rema y los pájaros aletean mientras se ve la sección", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, "en móvil la canoa no se muestra");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const paddle = page.locator(".canoe-paddle");
+    const wing = page.locator(".bird-wing-inner").first();
+    await expect(page.locator(".contact-bird")).toHaveCount(3);
+    await expect(paddle).toHaveCSS("animation-name", "canoe-stroke");
+    await expect(wing).toHaveCSS("animation-name", "bird-wing-inner");
+    await expect(paddle).toHaveCSS("animation-play-state", "paused");
+    await expect(wing).toHaveCSS("animation-play-state", "paused");
+
+    await scrollToSection(page, "contact");
+    await expect(paddle).toHaveCSS("animation-play-state", "running", {
+      timeout: 10_000,
+    });
+    await expect(wing).toHaveCSS("animation-play-state", "running");
   });
 
   test("en móvil no tapa el formulario", async ({ page, isMobile }) => {
