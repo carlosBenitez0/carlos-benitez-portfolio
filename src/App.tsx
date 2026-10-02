@@ -21,6 +21,7 @@ import { Suspense, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useIsMobile } from "./hooks/useIsMobile";
 import { TechTooltip } from "./components/deferred";
+import { SiteAnalytics } from "./components/SiteAnalytics";
 import { preloadDeferredComponents } from "./utils/preloadDeferred";
 import { usePauseOffscreenAnimations } from "./hooks/usePauseOffscreenAnimations";
 import {
@@ -86,6 +87,7 @@ function App() {
       className={`relative z-40 h-screen overflow-x-hidden bg-cbpbg-900 font-poppins ${isMobile ? "" : "w-full"}`}
     >
       {/* Tech Tooltip - componente que muestra información sobre las tecnologías */}
+      <SiteAnalytics />
       <Suspense fallback={null}>
         <TechTooltip />
       </Suspense>

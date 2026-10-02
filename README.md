@@ -12,6 +12,7 @@ Portafolio personal de Carlos Benítez, desarrollador web: proyectos, tecnologí
 - Formulario de contacto: EmailJS
 - Tests: Vitest + Testing Library (unitarios) y Playwright + axe (E2E y accesibilidad)
 - Despliegue: Vercel
+- Analítica: Vercel Web Analytics (sin cookies). Solo se carga en deploys de Vercel; hay que activarla una vez en el panel del proyecto → _Analytics_.
 
 ## Comandos
 
