@@ -6,18 +6,22 @@ import { AIToolCard } from "./AIToolCard";
 import { AITerminal } from "./AITerminal";
 // Importación de iconos de la biblioteca react-icons
 import { FaRobot, FaCode, FaBrain } from "react-icons/fa";
-import {
-  SiGithub,
-  SiOpenai,
-  SiGoogle,
-  SiClaude,
-  SiCodeium,
-  SiAnthropic,
-} from "react-icons/si";
-import { LuBot, LuBrainCircuit, LuSquareTerminal } from "react-icons/lu";
+import { LuBot } from "react-icons/lu";
 import { FaVialCircleCheck } from "react-icons/fa6";
-import { BiLogoVisualStudio } from "react-icons/bi";
-import { FaBolt } from "react-icons/fa6";
+import { VscVscode } from "react-icons/vsc";
+import {
+  AntigravityIcon,
+  BoltIcon,
+  ClaudeCodeIcon,
+  ClaudeIcon,
+  CodexIcon,
+  DeepSeekIcon,
+  GeminiIcon,
+  GithubCopilotIcon,
+  OpenAIIcon,
+  OpenCodeIcon,
+  WindsurfIcon,
+} from "./brandIcons";
 
 /**
  * Componente AISection
@@ -33,7 +37,7 @@ export const AISection = () => {
     // encabezados por Claude; después asistentes y herramientas puntuales.
     {
       nombre: "Claude Code",
-      icono: <SiAnthropic className="text-2xl" />,
+      icono: <ClaudeCodeIcon className="text-2xl" />,
       descripcion:
         "Agente de programación de Anthropic que trabaja en la terminal: entiende el repositorio, edita código, ejecuta tests y prepara commits.",
       beneficios: [
@@ -44,7 +48,7 @@ export const AISection = () => {
     },
     {
       nombre: "ClaudeAI",
-      icono: <SiClaude className="text-2xl" />,
+      icono: <ClaudeIcon className="text-2xl" />,
       descripcion:
         "Asistente de IA enfocado en razonamiento, análisis y generación de soluciones de código con alto contexto.",
       beneficios: [
@@ -55,7 +59,7 @@ export const AISection = () => {
     },
     {
       nombre: "Codex",
-      icono: <SiOpenai className="text-2xl" />,
+      icono: <CodexIcon className="text-2xl" />,
       descripcion:
         "Agente de programación de OpenAI para la terminal y la nube que implementa cambios y revisa código sobre el repositorio.",
       beneficios: [
@@ -66,7 +70,7 @@ export const AISection = () => {
     },
     {
       nombre: "OpenCode",
-      icono: <LuSquareTerminal className="text-2xl" />,
+      icono: <OpenCodeIcon className="text-2xl" />,
       descripcion:
         "Agente de programación de código abierto para la terminal, compatible con modelos de distintos proveedores.",
       beneficios: [
@@ -77,7 +81,7 @@ export const AISection = () => {
     },
     {
       nombre: "GitHub Copilot",
-      icono: <SiGithub className="text-2xl" />,
+      icono: <GithubCopilotIcon className="text-2xl" />,
       descripcion:
         "Asistente de programación en pares impulsado por IA para sugerencias de código en tiempo real.",
       beneficios: [
@@ -88,7 +92,7 @@ export const AISection = () => {
     },
     {
       nombre: "ChatGPT",
-      icono: <SiOpenai className="text-2xl" />,
+      icono: <OpenAIIcon className="text-2xl" />,
       descripcion:
         "Modelo de lenguaje avanzado para generación de código, resolución de problemas y asistencia en programación.",
       beneficios: [
@@ -99,7 +103,7 @@ export const AISection = () => {
     },
     {
       nombre: "Gemini",
-      icono: <SiGoogle className="text-2xl" />,
+      icono: <GeminiIcon className="text-2xl" />,
       descripcion:
         "Modelo multimodal de Google capaz de entender y generar texto, código e imágenes de manera integrada.",
       beneficios: [
@@ -110,7 +114,7 @@ export const AISection = () => {
     },
     {
       nombre: "Antigravity",
-      icono: <FaRobot className="text-2xl" />,
+      icono: <AntigravityIcon className="text-2xl" />,
       descripcion:
         "Asistente de IA orientado a productividad para acelerar tareas repetitivas y flujo de desarrollo.",
       beneficios: [
@@ -121,7 +125,7 @@ export const AISection = () => {
     },
     {
       nombre: "Windsurf",
-      icono: <SiCodeium className="text-2xl" />,
+      icono: <WindsurfIcon className="text-2xl" />,
       descripcion:
         "Asistente de desarrollo de IA que entiende el contexto de tu código y flujo de trabajo.",
       experiencia: "1+ año",
@@ -133,7 +137,7 @@ export const AISection = () => {
     },
     {
       nombre: "DeepSeek",
-      icono: <LuBrainCircuit className="text-2xl" />,
+      icono: <DeepSeekIcon className="text-2xl" />,
       descripcion:
         "Modelo de IA avanzado para comprensión y generación de código con gran contexto.",
       experiencia: "6+ meses",
@@ -145,7 +149,7 @@ export const AISection = () => {
     },
     {
       nombre: "Bolt.new",
-      icono: <FaBolt className="text-2xl" />,
+      icono: <BoltIcon className="text-2xl" />,
       descripcion:
         "Plataforma para generar proyectos completos usando indicaciones en lenguaje natural.",
       beneficios: [
@@ -156,7 +160,7 @@ export const AISection = () => {
     },
     {
       nombre: "Editores de Código",
-      icono: <BiLogoVisualStudio className="text-2xl" />,
+      icono: <VscVscode className="text-2xl" />,
       descripcion:
         "Herramientas esenciales potenciadas con IA para desarrollo de software.",
       experiencia: "3+ años",
