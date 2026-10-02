@@ -21,12 +21,10 @@ export const Footer = () => {
   return (
     <div
       data-pause-offscreen
-      className={`mt-8 grid grid-cols-2 border-t border-cbpgray-800 ${isMobile ? "px-4 py-15 gap-8" : "gap-20 py-18 pb-28"}`}
+      className={`mt-8 grid grid-cols-2 border-t border-cbpgray-800 ${isMobile ? "gap-8 px-4 py-15" : "gap-20 py-18 pb-28"}`}
     >
       <div className="flex flex-col gap-4">
-        <div
-          className={`flex ${isMobile ? " flex-col" : " items-center"} gap-4`}
-        >
+        <div className={`flex ${isMobile ? "flex-col" : "items-center"} gap-4`}>
           <figure>
             {/* Decorativo: el nombre ya aparece en texto justo al lado */}
             <img
@@ -36,13 +34,13 @@ export const Footer = () => {
             />
           </figure>
           <div className="flex flex-col">
-            <p className="text-transparent bg-clip-text bg-gradient-to-r from-cbpviolet-400 via-cbpviolet-100 to-cbpviolet-200">
+            <p className="bg-gradient-to-r from-cbpviolet-400 via-cbpviolet-100 to-cbpviolet-200 bg-clip-text text-transparent">
               Carlos Benítez
             </p>
-            <span className="text-cbpgray-400 text-sm">Desarrollador web</span>
+            <span className="text-sm text-cbpgray-400">Desarrollador web</span>
           </div>
         </div>
-        <p className="italic text-gray-700 dark:text-gray-300 mb-2 p-2 border border-cbpgray-800 rounded-md">
+        <p className="mb-2 rounded-md border border-cbpgray-800 p-2 text-gray-300 italic">
           "La innovación es el <ShinyText text="IDE" /> del progreso; la
           creatividad, su <ShinyText text='lenguaje de programación".' />
         </p>

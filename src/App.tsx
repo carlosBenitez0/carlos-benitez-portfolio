@@ -1,4 +1,3 @@
-import "./App.css";
 import { Footer } from "./components/shared/Footer/Footer";
 import { Header } from "./components/shared/Header";
 import { Navbar } from "./components/shared/Navbar/Navbar";
@@ -18,10 +17,11 @@ import { TechnologiesContainer } from "./components/ui/Technologies/Technologies
 import { BgDotGradient } from "./components/ui/BgDotGradient";
 import { ContactContainer } from "./components/ui/contact/ContactContainer";
 import { AISection } from "./components/ui/ai/AISection";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useIsMobile } from "./hooks/useIsMobile";
-import { TechTooltip } from "./components/ui/ai/TechTooltip";
+import { TechTooltip } from "./components/deferred";
+import { preloadDeferredComponents } from "./utils/preloadDeferred";
 import { usePauseOffscreenAnimations } from "./hooks/usePauseOffscreenAnimations";
 import {
   pauseTweensWhileOffscreen,
@@ -35,6 +35,7 @@ function App() {
 
   const technologiesRef = useRef<HTMLElement>(null);
   usePauseOffscreenAnimations();
+  useEffect(() => preloadDeferredComponents(), []);
 
   useEffect(() => {
     const technologiesSection = technologiesRef.current;
@@ -82,15 +83,14 @@ function App() {
 
   return (
     <div
-      className={`font-poppins bg-cbpbg-900 relative z-40 h-screen  overflow-x-hidden ${isMobile ? "" : "w-full"}`}
+      className={`relative z-40 h-screen overflow-x-hidden bg-cbpbg-900 font-poppins ${isMobile ? "" : "w-full"}`}
     >
       {/* Tech Tooltip - componente que muestra información sobre las tecnologías */}
-      <TechTooltip />
+      <Suspense fallback={null}>
+        <TechTooltip />
+      </Suspense>
 
-      <div
-        className="absolute top-0 h-[70vh] w-full rounded-b-full mx-auto
-        bg-gradient-to-b from-cbpviolet-500/20 to-cbpviolet-900/10 blur-3xl"
-      ></div>
+      <div className="absolute top-0 mx-auto h-[70vh] w-full rounded-b-full bg-gradient-to-b from-cbpviolet-500/20 to-cbpviolet-900/10 blur-3xl"></div>
 
       <div
         id="start"
@@ -103,10 +103,10 @@ function App() {
           <section
             id="projects"
             data-pause-offscreen
-            className={`mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
+            className={`mt-30 mb-20 ${isMobile ? "p-4" : ""}`}
           >
             <SectionTitle title="Proyectos" icon={<IoCodeWorkingOutline />} />
-            <div className="cardsContainer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+            <div className="cardsContainer grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {proyects.map((proyect, index) => (
                 <div key={proyect.name + index} className="relative">
                   <ProyectCard
@@ -125,7 +125,7 @@ function App() {
           <section
             id="about"
             data-pause-offscreen
-            className={`mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
+            className={`mt-30 mb-20 ${isMobile ? "p-4" : ""}`}
           >
             <SectionTitle
               title="Sobre mí"
@@ -133,10 +133,10 @@ function App() {
             />
 
             <div
-              className={`flex flex-col items-center gap-8 md:flex-row justify-between`}
+              className={`flex flex-col items-center justify-between gap-8 md:flex-row`}
             >
               <div
-                className={`[&>p]:mb-4 text-balance ${isMobile ? "order-2" : ""}`}
+                className={`text-balance [&>p]:mb-4 ${isMobile ? "order-2" : ""}`}
               >
                 <p className="anim-about-text">
                   ¡Hola de nuevo! 👋 Soy Carlos Benítez,{" "}
@@ -147,7 +147,7 @@ function App() {
                   <ShinyText text="diseño atractivo" /> con{" "}
                   <ShinyText text="arquitecturas sólidas." />
                 </p>
-                <p className="anim-about-text ">
+                <p className="anim-about-text">
                   Mi expertise abarca desde el desarrollo de{" "}
                   <ShinyText
                     text="interfaces
@@ -189,28 +189,28 @@ function App() {
                   <ShinyText text="frontend" /> y <ShinyText text="backend" />{" "}
                   para crear experiencias fluidas.
                 </p>
-                <div className="space-y-3 anim-about-text">
+                <div className="anim-about-text space-y-3">
                   <p className="font-medium">
                     Entre mis logros destacados están:
                   </p>
                   <ul className="list-none space-y-2">
-                    <li className="flex items-start anim-achievement-text">
-                      <FaCheck className="text-cbpviolet-500 mr-2" />
+                    <li className="anim-achievement-text flex items-start">
+                      <FaCheck className="mr-2 text-cbpviolet-500" />
                       <span>
                         Desarrollo de soluciones full-stack para{" "}
                         <ShinyText text="automatización" /> de procesos
                       </span>
                     </li>
-                    <li className="flex items-start anim-achievement-text">
-                      <FaCheck className="text-cbpviolet-500 mr-2" />
+                    <li className="anim-achievement-text flex items-start">
+                      <FaCheck className="mr-2 text-cbpviolet-500" />
                       <span>
                         Implementación de interfaces modernas con{" "}
                         <ShinyText text="React" /> y{" "}
                         <ShinyText text="Next.js" />
                       </span>
                     </li>
-                    <li className="flex items-start anim-achievement-text">
-                      <FaCheck className="text-cbpviolet-500 mr-2" />
+                    <li className="anim-achievement-text flex items-start">
+                      <FaCheck className="mr-2 text-cbpviolet-500" />
                       <span>
                         Creación de APIs eficientes con{" "}
                         <ShinyText text="Python" /> y{" "}
@@ -218,8 +218,8 @@ function App() {
                       </span>
                     </li>
 
-                    <li className="flex items-start anim-achievement-text">
-                      <FaCheck className="text-cbpviolet-500 mr-2" />
+                    <li className="anim-achievement-text flex items-start">
+                      <FaCheck className="mr-2 text-cbpviolet-500" />
                       <span>
                         Transferencia de conocimiento técnico mediante{" "}
                         <ShinyText text="mentorías" />
@@ -232,7 +232,7 @@ function App() {
               <img
                 src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1752513118/320_1x_shots_so_sf9nou.png"
                 alt="Foto de Carlos Benítez"
-                className={`object-cover w-64 h-full p-1 rotate-3 lg:p-2 lg:w-72 aspect-square rounded-2xl proyect-card-anim ${isMobile ? "order-1 w-3xl" : ""}`}
+                className={`proyect-card-anim aspect-square h-full w-64 rotate-3 rounded-2xl object-cover p-1 lg:w-72 lg:p-2 ${isMobile ? "order-1 w-3xl" : ""}`}
               />
             </div>
           </section>
@@ -240,7 +240,7 @@ function App() {
             id="technologies"
             ref={technologiesRef}
             data-pause-offscreen
-            className={`relative mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
+            className={`relative mt-30 mb-20 ${isMobile ? "p-4" : ""}`}
           >
             <div className="dot-technologies absolute flex items-center justify-center will-change-transform">
               <BgDotGradient
@@ -277,7 +277,7 @@ function App() {
 
             <SectionTitle title="Tecnologías" icon={<IoCodeSlashOutline />} />
             <div
-              className={`grid ${isMobile ? "" : "grid-cols-3 grid-rows-2"} gap-4 w-full`}
+              className={`grid ${isMobile ? "" : "grid-cols-3 grid-rows-2"} w-full gap-4`}
             >
               {Object.entries(technologiesSectionData).map(([key, value]) => {
                 return (
@@ -294,7 +294,7 @@ function App() {
           <section
             id="contact"
             data-pause-offscreen
-            className={`mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
+            className={`mt-30 mb-20 ${isMobile ? "p-4" : ""}`}
           >
             <SectionTitle
               title="Contáctame"

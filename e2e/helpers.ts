@@ -54,7 +54,7 @@ export const recordCspViolations = async (page: Page) => {
 export const NOTIFY_TEMPLATE = "template_vx2h6qt";
 export const AUTO_REPLY_TEMPLATE = "template_32ukwf4";
 
-export interface EmailJsCall {
+interface EmailJsCall {
   template_id: string;
   service_id: string;
   template_params: Record<string, string>;

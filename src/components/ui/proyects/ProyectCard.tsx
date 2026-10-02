@@ -67,9 +67,7 @@ export const ProyectCard = ({
   return (
     <div
       // ref={proyectCardRef}
-      className={`proyect-card-anim h-full relative grid ${isMobile ? "grid-rows-[180px_1fr]" : "grid-rows-[150px_1fr]"} grid-areas-[image_text] rounded-2xl 
-        text-center rounded-t-2xl bg-cbpbg-700 border-4 border-cbpbg-400
-        `}
+      className={`proyect-card-anim relative grid h-full ${isMobile ? "grid-rows-[180px_1fr]" : "grid-rows-[150px_1fr]"} grid-areas-[image_text] rounded-2xl rounded-t-2xl border-4 border-cbpbg-400 bg-cbpbg-700 text-center`}
     >
       {/* after:content-[''] after:absolute after:-inset-2
      after:rounded-2xl after:z-[-1] after:blur-xs after:animate-gradient-rgb after:bg-cbpviolet-300/10 after:bg-[linear-gradient(45deg,#ff0000_0%,#00ff00_17%,#0000ff_33%,#ff00ff_50%,#00ffff_67%,#ffff00_83%,#ff0000_100%)] */}
@@ -79,37 +77,27 @@ export const ProyectCard = ({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Ver el proyecto ${name} (${state})`}
-        className="grid-area-image relative z-10 rounded-t-xl
-      bg-[length:100%_150%] bg-center"
+        className="grid-area-image relative z-10 rounded-t-xl bg-[length:100%_150%] bg-center"
         style={{
           backgroundImage: `url(${image})`,
         }}
       >
-        <span
-          className="absolute z-10 flex items-center justify-center text-sm top-[-4px] right-[-4px] bg-cbpbg-900 px-3 py-2 border-b-4 border-cbpbg-400 border-l-4 rounded-bl-xl
-          after:content-[''] after:rounded-tr-xl after:bg-transparent after:h-[7px] after:w-[7px] after:top-[0px] after:left-[-7px] after:absolute after:shadow-[2px_-2px_rgba(5,0,16,1)]
-          before:content-[''] before:absolute before:h-[7px] before:w-[7px] before:bg-transparent before:bottom-[-7px] before:right-0 before:rounded-tr-xl before:shadow-[2px_-2px_rgba(5,0,16,1)]
-        "
-        >
+        <span className="absolute top-[-4px] right-[-4px] z-10 flex items-center justify-center rounded-bl-xl border-b-4 border-l-4 border-cbpbg-400 bg-cbpbg-900 px-3 py-2 text-sm before:absolute before:right-0 before:bottom-[-7px] before:h-[7px] before:w-[7px] before:rounded-tr-xl before:bg-transparent before:shadow-[2px_-2px_rgba(5,0,16,1)] before:content-[''] after:absolute after:top-[0px] after:left-[-7px] after:h-[7px] after:w-[7px] after:rounded-tr-xl after:bg-transparent after:shadow-[2px_-2px_rgba(5,0,16,1)] after:content-['']">
           <ShinyText
             text={state}
             disabled={false}
             speed={3}
-            className="custom-class"
             color={state === "Terminado" ? "#b5f2b5a5" : "#feb555a5"}
           />
         </span>
       </a>{" "}
       <div
         ref={cardTextRef}
-        className="grid-area-text relative z-10 text-left p-4 rounded-b-xl before:rounded-b-xl
-        before:content-[''] before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-300
-        hover:before:opacity-[1] before:pointer-events-none
-        before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_20%)]"
+        className="grid-area-text relative z-10 rounded-b-xl p-4 text-left before:pointer-events-none before:absolute before:inset-0 before:rounded-b-xl before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_20%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1]"
       >
         <div className="flex items-center justify-between gap-2">
           <AnimatedGradientText
-            colors={["#9d4eddff", "#e0aaffff", "#7b2cbfff"]}
+            colors={["#9d4eddff", "#e0aaffff", "#9d4eddff"]}
             classNames={["text-xl", "font-bold"]}
           >
             {name}
@@ -119,14 +107,14 @@ export const ProyectCard = ({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Código de ${name} en GitHub`}
-            className="text-cbpgray-200/50 hover:text-cbpgray-200/80 transition-colors flex items-center gap-2  border p-2 rounded-md "
+            className="flex items-center gap-2 rounded-md border p-2 text-cbpgray-200/50 transition-colors hover:text-cbpgray-200/80"
           >
             <FaGithub />
           </a>
         </div>
 
-        <p className="mt-2 text-sm text-cbpgray-200 ">{description}</p>
-        <div className="mt-4 flex gap-2 flex-wrap">
+        <p className="mt-2 text-sm text-cbpgray-200">{description}</p>
+        <div className="mt-4 flex flex-wrap gap-2">
           {technologiesFiltered.map((technology) => (
             <TechnologyLabel
               key={technology.name}

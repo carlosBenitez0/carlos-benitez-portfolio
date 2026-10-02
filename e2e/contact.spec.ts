@@ -37,7 +37,9 @@ test.describe("formulario de contacto", () => {
     await fillForm(page);
     await submit(page);
 
-    await expect(page.getByRole("status")).toContainText("te dejé un mensaje");
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
+      timeout: 10_000,
+    });
     await expect(page.getByRole("alert")).toHaveCount(0);
     await expect(page.getByLabel("Mensaje", { exact: true })).toHaveValue("");
     await expect.poll(() => calls.length).toBe(2);
@@ -53,7 +55,10 @@ test.describe("formulario de contacto", () => {
     await fillForm(page);
     await submit(page);
 
-    await expect.poll(() => calls.length).toBeGreaterThan(0);
+    // EmailJS se descarga al enviar: esperar el resultado, no un tiempo fijo
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
+      timeout: 10_000,
+    });
     expect(calls[0].template_params).toEqual({
       name: VALID.Nombre,
       email: VALID.Email,
@@ -72,6 +77,7 @@ test.describe("formulario de contacto", () => {
 
     await expect(page.getByRole("alert")).toHaveText(
       "No se pudo enviar el mensaje",
+      { timeout: 10_000 },
     );
     await expect(page.getByRole("status")).toHaveCount(0);
     await expect(page.getByLabel("Mensaje", { exact: true })).toHaveValue(
@@ -89,7 +95,9 @@ test.describe("formulario de contacto", () => {
     await fillForm(page);
     await submit(page);
 
-    await expect(page.getByRole("status")).toContainText("te dejé un mensaje");
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
+      timeout: 10_000,
+    });
     await expect(page.getByRole("alert")).toHaveCount(0);
   });
 
@@ -102,7 +110,9 @@ test.describe("formulario de contacto", () => {
     await page.locator('input[name="company"]').fill("ACME", { force: true });
     await submit(page);
 
-    await expect(page.getByRole("status")).toContainText("te dejé un mensaje");
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
+      timeout: 10_000,
+    });
     await page.waitForTimeout(500);
     expect(calls).toHaveLength(0);
   });
@@ -110,11 +120,17 @@ test.describe("formulario de contacto", () => {
   test("el cooldown bloquea un segundo envío, también tras recargar", async ({
     page,
   }) => {
+    // Dos cargas completas de la página en un mismo test: con la máquina
+    // cargada supera los 30 s por defecto.
+    test.slow();
     const calls = await mockEmailJs(page);
     await page.goto("/", READY);
     await fillForm(page);
     await submit(page);
-    await expect(page.getByRole("status")).toBeVisible();
+    // El spinner de "Enviando" también es role=status: esperar el texto de éxito
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
+      timeout: 10_000,
+    });
 
     await page.reload(READY);
     await fillForm(page);
@@ -122,6 +138,7 @@ test.describe("formulario de contacto", () => {
 
     await expect(page.getByRole("alert")).toContainText(
       /Espera \d+ s para enviar otro mensaje/,
+      { timeout: 10_000 },
     );
     expect(calls.filter((c) => c.template_id === NOTIFY_TEMPLATE)).toHaveLength(
       1,
@@ -134,7 +151,9 @@ test.describe("formulario de contacto", () => {
     await fillForm(page, { Email: "no-es-email" });
     await submit(page);
 
-    await expect(page.getByRole("alert")).toHaveText("El email es invalido");
+    await expect(page.getByRole("alert")).toHaveText("El email es invalido", {
+      timeout: 10_000,
+    });
     await expect(page.getByLabel("Email", { exact: true })).toHaveAttribute(
       "aria-invalid",
       "true",

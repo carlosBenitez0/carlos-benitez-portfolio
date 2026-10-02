@@ -1,6 +1,6 @@
 import emailjs from "@emailjs/browser";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { sendContactMessage } from "./sendContact";
+import { preloadEmailJs, sendContactMessage } from "./sendContact";
 
 vi.mock("@emailjs/browser", () => ({ default: { send: vi.fn() } }));
 const send = vi.mocked(emailjs.send);
@@ -53,5 +53,15 @@ describe("sendContactMessage", () => {
       .mockRejectedValueOnce(new Error("auto-reply"));
 
     await expect(sendContactMessage(data)).resolves.toBeUndefined();
+  });
+});
+
+describe("preloadEmailJs", () => {
+  it("se puede llamar varias veces sin enviar nada", () => {
+    expect(() => {
+      preloadEmailJs();
+      preloadEmailJs();
+    }).not.toThrow();
+    expect(send).not.toHaveBeenCalled();
   });
 });

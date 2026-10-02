@@ -93,40 +93,34 @@ export const Header = () => {
     <header
       ref={headerRef}
       data-pause-offscreen
-      className={`relative min-h-screen  ${isMobile ? "mt-0 flex flex-col items-center justify-center" : "mt-24"}`}
+      className={`relative min-h-screen ${isMobile ? "mt-0 flex flex-col items-center justify-center" : "mt-24"}`}
     >
       <div
-        className={`mx-auto grid  w-full  gap-6 text-white lg:max-w-[950px] ${isMobile ? "grid-cols-1 grid-rows-2 text-center h-[calc(20vh)] relative top-15 " : "grid-cols-2 grid-rows-1 h-[calc(100vh-80px)] pb-16"}`}
+        className={`mx-auto grid w-full gap-6 text-white lg:max-w-[950px] ${isMobile ? "relative top-15 h-[calc(20vh)] grid-cols-1 grid-rows-2 text-center" : "h-[calc(100vh-80px)] grid-cols-2 grid-rows-1 pb-16"}`}
       >
         <div
           className={`col-span-1 flex flex-col justify-center ${isMobile ? "row-start-2 row-end-3" : ""}`}
         >
           <h1
-            className={`relative appear-text mb-2 ${isMobile ? "text-[36px] " : "text-[44px]"}`}
+            className={`appear-text relative mb-2 ${isMobile ? "text-[36px]" : "text-[44px]"}`}
           >
             Hola,{" "}
             <AnimatedGradientText
               colors={["#b388ff", "#7c4dff", "#651fff", "#9c64ff", "#d500f9"]}
             >
-              <ShinyText
-                text="soy Carlos"
-                disabled={false}
-                speed={3}
-                className="custom-class"
-              />
+              <ShinyText text="soy Carlos" disabled={false} speed={3} />
             </AnimatedGradientText>
           </h1>
-          <h2 className={`relative appear-text text-[16px] mb-8 text-balance `}>
+          <h2 className={`appear-text relative mb-8 text-[16px] text-balance`}>
             <ShinyText
               text="Ingeniero en Sistemas y Computación | Desarrollador Web"
               disabled={false}
               speed={3}
-              className="custom-class"
             />
           </h2>
           {!isMobile && (
             <div
-              className={`appear-text text-balance text-cbpgray-200 font-poppins text-lg leading-relaxed z-10 ${!isMobile && "text-[16px]"}`}
+              className={`appear-text z-10 font-poppins text-lg leading-relaxed text-balance text-cbpgray-200 ${!isMobile && "text-[16px]"}`}
             >
               Construyo{" "}
               <HighlightText shadowOpacity={1}>
@@ -135,7 +129,6 @@ export const Header = () => {
                   text="soluciones web"
                   disabled={false}
                   speed={3}
-                  className="custom-class"
                 />{" "}
               </HighlightText>{" "}
               robustas, fusionando{" "}
@@ -145,7 +138,6 @@ export const Header = () => {
                   text="código eficiente"
                   disabled={false}
                   speed={3}
-                  className="custom-class"
                 />{" "}
               </HighlightText>{" "}
               con
@@ -155,29 +147,18 @@ export const Header = () => {
                   text="diseño intuitivo"
                   disabled={false}
                   speed={3}
-                  className="custom-class"
                 />{" "}
               </HighlightText>{" "}
               y{" "}
               <HighlightText shadowOpacity={1}>
                 {" "}
-                <ShinyText
-                  text="creativo. "
-                  disabled={false}
-                  speed={3}
-                  className="custom-class"
-                />
-              </HighlightText>
-              {" "}Creo que la programación va más allá de la lógica: es un espacio
+                <ShinyText text="creativo. " disabled={false} speed={3} />
+              </HighlightText>{" "}
+              Creo que la programación va más allá de la lógica: es un espacio
               para{" "}
               <HighlightText shadowOpacity={1}>
                 {" "}
-                <ShinyText
-                  text="innovar"
-                  disabled={false}
-                  speed={3}
-                  className="custom-class"
-                />{" "}
+                <ShinyText text="innovar" disabled={false} speed={3} />{" "}
               </HighlightText>{" "}
               y resolver problemas con
               <HighlightText shadowOpacity={1}>
@@ -186,7 +167,6 @@ export const Header = () => {
                   text="soluciones ingeniosas."
                   disabled={false}
                   speed={3}
-                  className="custom-class"
                 />
               </HighlightText>
             </div>

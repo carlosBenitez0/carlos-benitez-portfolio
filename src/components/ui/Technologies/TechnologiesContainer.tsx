@@ -50,28 +50,23 @@ export const TechnologiesContainer = ({
   return (
     <div
       ref={techContainerRef}
-      className={`${!isMobile ? (title === "tools" ? "col-span-2" : title === "learning" || title === "backend" ? "col-span-1" : "col-span-2") : ""} ${title === "frontend" && !isMobile ? "col-span-2" : ""}  p-4
-       backdrop-blur-2xl border-4 border-white/5 
-       before:content-[''] before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-300
-         hover:before:opacity-[1] before:z-[-1] before:pointer-events-none
-         before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.15)_0%,transparent_20%)]
-         ${title === "tools" || title === "backend" ? "technologies-container-right" : "technologies-container-left"}`}
+      className={`${!isMobile ? (title === "tools" ? "col-span-2" : title === "learning" || title === "backend" ? "col-span-1" : "col-span-2") : ""} ${title === "frontend" && !isMobile ? "col-span-2" : ""} border-4 border-white/5 p-4 backdrop-blur-2xl before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.15)_0%,transparent_20%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1] ${title === "tools" || title === "backend" ? "technologies-container-right" : "technologies-container-left"}`}
     >
       {title === "frontend" ? (
-        <BsBorderStyle className="w-8 h-8 text-cbpviolet-200" />
+        <BsBorderStyle className="h-8 w-8 text-cbpviolet-200" />
       ) : title === "backend" ? (
-        <LuSquareDashedBottomCode className="w-8 h-8 text-cbpviolet-200" />
+        <LuSquareDashedBottomCode className="h-8 w-8 text-cbpviolet-200" />
       ) : title === "learning" ? (
-        <PiStudent className="w-8 h-8 text-cbpviolet-200" />
+        <PiStudent className="h-8 w-8 text-cbpviolet-200" />
       ) : (
-        <VscTools className="w-8 h-8 text-cbpviolet-200" />
+        <VscTools className="h-8 w-8 text-cbpviolet-200" />
       )}
       <div>
-        <h2 className="text-center text-2xl mb-8 bg-gradient-to-r from-cbpviolet-500 to-cbpviolet-100 bg-clip-text text-transparent">
+        <h2 className="mb-8 bg-gradient-to-r from-cbpviolet-400 to-cbpviolet-100 bg-clip-text text-center text-2xl text-transparent">
           {title === "tools"
             ? "HERRAMIENTAS"
             : title === "learning"
-              ? "FORMANDOME"
+              ? "FORMÁNDOME"
               : title.toUpperCase()}
         </h2>
       </div>

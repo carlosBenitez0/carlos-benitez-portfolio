@@ -25,7 +25,7 @@ import {
   validateContact,
   type ContactData,
 } from "../../../utils/contactForm";
-import { sendContactMessage } from "../../../utils/sendContact";
+import { preloadEmailJs, sendContactMessage } from "../../../utils/sendContact";
 
 export const ContactContainer = () => {
   const { isMobile } = useIsMobile();
@@ -138,8 +138,7 @@ export const ContactContainer = () => {
   return (
     <div
       ref={containerRef}
-      className={`anim-about-text grid relative overflow-hidden  bg-transparent filter-blur-3xl rounded-xl border-2 border-white/5
-    ${isMobile ? "grid-cols-1 grid-rows-2" : " grid-cols-2"}`}
+      className={`anim-about-text filter-blur-3xl relative grid overflow-hidden rounded-xl border-2 border-white/5 bg-transparent ${isMobile ? "grid-cols-1 grid-rows-2" : "grid-cols-2"}`}
     >
       {/* Olas de fondo: cada una es su propio <svg> y se anima la caja completa
           con transform (compuesto en GPU). Animar elementos dentro de un SVG
@@ -189,7 +188,7 @@ export const ContactContainer = () => {
         </svg>
       </div>
       <div
-        className={`ring-component absolute ${isMobile ? "-top-35 -left-35 blur-xl w-100 h-100" : "-top-15 -left-15 blur-md w-64 h-64"}  border-[15px] border-cbpviolet-500/50 rounded-full -z-1`}
+        className={`ring-component absolute ${isMobile ? "-top-35 -left-35 h-100 w-100 blur-xl" : "-top-15 -left-15 h-64 w-64 blur-md"} -z-1 rounded-full border-[15px] border-cbpviolet-500/50`}
       ></div>
 
       <div className="dot-contact absolute flex items-center justify-center will-change-transform">
@@ -211,25 +210,11 @@ export const ContactContainer = () => {
 
       <form
         onSubmit={handleSubmit}
-        className={`z-50 grid grid-cols-2 gap-6 rounded-xl ${isMobile ? "pb-5 px-5" : "p-8"}
-        [&>div]:flex [&>div]:items-center [&>div]:w-full [&>div]:pl-2 [&>div,&>span>textarea]:border [&>div,&>span>textarea]:border-white/15 [&>div,&>span>textarea]:rounded-lg
-        [&>div>input,&>span>textarea]:outline-none [&>div>input]:p-3 [&>div>input,&>span>textarea]:w-full 
-        [&>div>input,&>span>textarea]:placeholder:text-white/50 [&>div>input,&>span>textarea]:bg-transparent [&>div,&>span>textarea]:shadow-[inset_0px_0px_20px_rgba(255,255,255,0.1)]
-        [&>div>input,&>span>textarea]:autofill:bg-transparent 
-        [&>div>.form-icon]:text-white/50 
-        ${userData.name !== "" ? "[&>div:nth-child(1)>input,&>div:nth-child(1)>.form-icon]:text-white/90" : ""}
-        ${userData.email !== "" ? "[&>div:nth-child(2)>input,&>div:nth-child(2)>.form-icon]:text-white/90" : ""}
-        ${userData.subject !== "" ? "[&>div:nth-child(3)>input,&>div:nth-child(3)>.form-icon]:text-white/90" : ""}
-        ${userData.message !== "" ? "[&>div:nth-child(4)>textarea]:text-white/90" : ""}
-
-        ${userData.name !== "" ? "[&>div:nth-child(1)]:border-white/25" : ""}
-        ${userData.email !== "" ? "[&>div:nth-child(2)]:border-white/25" : ""}
-        ${userData.subject !== "" ? "[&>div:nth-child(3)]:border-white/25" : ""}
-        ${userData.message !== "" ? "[&>span>textarea]:border-white/25" : ""}
-        ${isMobile ? "row-start-2 row-end-3" : ""}`}
+        onFocus={preloadEmailJs}
+        className={`z-50 grid grid-cols-2 gap-6 rounded-xl ${isMobile ? "px-5 pb-5" : "p-8"} [&>div]:flex [&>div]:w-full [&>div]:items-center [&>div]:pl-2 [&>div,&>span>textarea]:rounded-lg [&>div,&>span>textarea]:border [&>div,&>span>textarea]:border-white/15 [&>div,&>span>textarea]:shadow-[inset_0px_0px_20px_rgba(255,255,255,0.1)] [&>div>.form-icon]:text-white/50 [&>div>input]:p-3 [&>div>input,&>span>textarea]:w-full [&>div>input,&>span>textarea]:bg-transparent [&>div>input,&>span>textarea]:outline-none [&>div>input,&>span>textarea]:placeholder:text-white/50 [&>div>input,&>span>textarea]:autofill:bg-transparent ${userData.name !== "" ? "[&>div:nth-child(1)>input,&>div:nth-child(1)>.form-icon]:text-white/90" : ""} ${userData.email !== "" ? "[&>div:nth-child(2)>input,&>div:nth-child(2)>.form-icon]:text-white/90" : ""} ${userData.subject !== "" ? "[&>div:nth-child(3)>input,&>div:nth-child(3)>.form-icon]:text-white/90" : ""} ${userData.message !== "" ? "[&>div:nth-child(4)>textarea]:text-white/90" : ""} ${userData.name !== "" ? "[&>div:nth-child(1)]:border-white/25" : ""} ${userData.email !== "" ? "[&>div:nth-child(2)]:border-white/25" : ""} ${userData.subject !== "" ? "[&>div:nth-child(3)]:border-white/25" : ""} ${userData.message !== "" ? "[&>span>textarea]:border-white/25" : ""} ${isMobile ? "row-start-2 row-end-3" : ""}`}
       >
         <div className={` ${isMobile ? "col-span-2" : ""}`}>
-          <FaRegUser className={`form-icon min-w-4 min-h-4 `} />
+          <FaRegUser className={`form-icon min-h-4 min-w-4`} />
           <label htmlFor="contact-name" className="sr-only">
             Nombre
           </label>
@@ -238,7 +223,6 @@ export const ContactContainer = () => {
             value={userData.name}
             placeholder="Nombre"
             autoComplete="off"
-            className={``}
             name="name"
             id="contact-name"
             aria-invalid={error.name === "name"}
@@ -250,7 +234,7 @@ export const ContactContainer = () => {
           />
         </div>
         <div className={` ${isMobile ? "col-span-2" : ""}`}>
-          <MdOutlineEmail className="form-icon min-w-4 min-h-4" />
+          <MdOutlineEmail className="form-icon min-h-4 min-w-4" />
           <label htmlFor="contact-email" className="sr-only">
             Email
           </label>
@@ -271,7 +255,7 @@ export const ContactContainer = () => {
           />
         </div>
         <div className="col-span-2">
-          <MdOutlineSubject className="form-icon min-w-4 min-h-4" />
+          <MdOutlineSubject className="form-icon min-h-4 min-w-4" />
           <label htmlFor="contact-subject" className="sr-only">
             Asunto
           </label>
@@ -290,12 +274,12 @@ export const ContactContainer = () => {
             onChange={handleChange}
           />
         </div>
-        <span className="col-span-2 ">
+        <span className="col-span-2">
           <label htmlFor="contact-message" className="sr-only">
             Mensaje
           </label>
           <textarea
-            className="p-2 h-30 mb-2 resize-none"
+            className="mb-2 h-30 resize-none p-2"
             value={userData.message}
             placeholder="Mensaje"
             autoComplete="off"
@@ -350,12 +334,8 @@ export const ContactContainer = () => {
         <button
           type="submit"
           disabled={loading}
-          className="disabled:cursor-wait flex gap-2 items-center justify-center col-span-2 cursor-pointer w-fit border border-cbpbg-50 bg-cbpbg-500/50 hover:bg-cbpbg-500/75 py-2 px-4 rounded-md
-          transition duration-300
-           [&:hover>.send-icon]:-rotate-35
-           shadow-[inset_0px_0px_10px_rgba(255,255,255,0.1)]"
+          className="col-span-2 flex w-fit cursor-pointer items-center justify-center gap-2 rounded-md border border-cbpbg-50 bg-cbpbg-500/50 px-4 py-2 shadow-[inset_0px_0px_10px_rgba(255,255,255,0.1)] transition duration-300 hover:bg-cbpbg-500/75 disabled:cursor-wait [&:hover>.send-icon]:-rotate-35"
         >
-          {/* <Spinner /> */}
           {sended ? (
             <>
               Enviado correctamente
@@ -375,19 +355,19 @@ export const ContactContainer = () => {
         </button>
       </form>
 
-      <div className={isMobile ? "row-start-1 row-end-2 p-5 " : ""}>
+      <div className={isMobile ? "row-start-1 row-end-2 p-5" : ""}>
         <div
           className={`relative h-full ${isMobile ? "flex items-center justify-center" : ""}`}
         >
           <div
-            className={`${isMobile ? "relative top-15" : "absolute"} inset-0 flex items-center justify-center flex-col`}
+            className={`${isMobile ? "relative top-15" : "absolute"} inset-0 flex flex-col items-center justify-center`}
           >
             <div
               className={`flex flex-col items-center ${isMobile ? "gap-4" : "gap-2"}`}
             >
               <div className="flex items-center gap-2 text-2xl">
                 <IoLocationOutline className="text-cbpviolet-500" />
-                <p className="bg-gradient-to-l from-cbpviolet-200 to-cbpviolet-500 bg-clip-text text-transparent">
+                <p className="bg-gradient-to-l from-cbpviolet-200 to-cbpviolet-400 bg-clip-text text-transparent">
                   El Salvador
                 </p>
               </div>
@@ -397,13 +377,13 @@ export const ContactContainer = () => {
               <img
                 src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1752763407/el-salvador_s5asqk.png"
                 alt="El Salvador"
-                className="w-20 h-20 drop-shadow-[0px_0px_5px_#7b2cbfff] mb-2"
+                className="mb-2 h-20 w-20 drop-shadow-[0px_0px_5px_#7b2cbfff]"
               />
             </div>
             <div className="flex items-center gap-3">
               <a
                 href="https://www.linkedin.com/in/carlos-benitez-profile/"
-                className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[34px]"
+                className="blur-text-git text-[34px] text-cbpgray-300/70 hover:text-cbpgray-300"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Linkedin"
@@ -414,7 +394,7 @@ export const ContactContainer = () => {
                 href="https://github.com/carlosBenitez0"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[28px]"
+                className="blur-text-git text-[28px] text-cbpgray-300/70 hover:text-cbpgray-300"
                 aria-label="Github"
               >
                 <FaGithub />
@@ -423,17 +403,15 @@ export const ContactContainer = () => {
               <a
                 href="/ES - Carlos Francisco Benítez Quintanilla - CV.pdf"
                 download
-                className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[20px] 
-                flex items-center gap-2 py-[2px] px-3 rounded-full border border-cbpgray-300/70 hover:border-cbpgray-300"
+                className="blur-text-git flex items-center gap-2 rounded-full border border-cbpgray-300/70 px-3 py-[2px] text-[20px] text-cbpgray-300/70 hover:border-cbpgray-300 hover:text-cbpgray-300"
               >
                 <span className="text-[16px]">Descargar CV</span>
               </a>
             </div>
           </div>
-          <div className="absolute bottom-0 left-0 w-10 h-26"></div>
+          <div className="absolute bottom-0 left-0 h-26 w-10"></div>
           <div
-            className={`${isMobile ? "absolute top-0 right-0 w-24 h-24" : "absolute top-8 right-8 w-20 h-20"}  bg-gradient-to-bl from-cbpviolet-700 to-cbpbg-900 rounded-full
-          shadow-[inset_0px_5px_10px_rgba(255,255,255,0.1),0px_0px_10px_rgba(255,255,255,0.1),0px_0px_20px_rgba(255,255,255,0.1),0px_0px_30px_rgba(255,255,255,0.1)]`}
+            className={`${isMobile ? "absolute top-0 right-0 h-24 w-24" : "absolute top-8 right-8 h-20 w-20"} rounded-full bg-gradient-to-bl from-cbpviolet-700 to-cbpbg-900 shadow-[inset_0px_5px_10px_rgba(255,255,255,0.1),0px_0px_10px_rgba(255,255,255,0.1),0px_0px_20px_rgba(255,255,255,0.1),0px_0px_30px_rgba(255,255,255,0.1)]`}
           ></div>
         </div>
       </div>
