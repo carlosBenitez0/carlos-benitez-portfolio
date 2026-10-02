@@ -5,15 +5,17 @@ import { AIToolCard } from "./AIToolCard";
 // Importación del componente de terminal interactivo
 import { AITerminal } from "./AITerminal";
 // Importación de iconos de la biblioteca react-icons
-import { FaRobot, FaTerminal, FaCode, FaBrain } from "react-icons/fa";
+import { FaRobot, FaCode, FaBrain } from "react-icons/fa";
 import {
   SiGithub,
   SiOpenai,
   SiGoogle,
   SiClaude,
   SiCodeium,
+  SiAnthropic,
 } from "react-icons/si";
-import { LuBrainCircuit } from "react-icons/lu";
+import { LuBot, LuBrainCircuit, LuSquareTerminal } from "react-icons/lu";
+import { FaVialCircleCheck } from "react-icons/fa6";
 import { BiLogoVisualStudio } from "react-icons/bi";
 import { FaBolt } from "react-icons/fa6";
 
@@ -58,6 +60,39 @@ export const AISection = () => {
         "Excelente análisis y explicación de código",
         "Respuestas estructuradas para tareas complejas",
         "Buen soporte para arquitectura y refactorización",
+      ],
+    },
+    {
+      nombre: "Claude Code",
+      icono: <SiAnthropic className="text-2xl" />,
+      descripcion:
+        "Agente de programación de Anthropic que trabaja en la terminal: entiende el repositorio, edita código, ejecuta tests y prepara commits.",
+      beneficios: [
+        "Tareas completas de varios pasos sobre el proyecto",
+        "Reglas, memoria y skills por proyecto",
+        "Integración con MCP, git y GitHub",
+      ],
+    },
+    {
+      nombre: "Codex",
+      icono: <SiOpenai className="text-2xl" />,
+      descripcion:
+        "Agente de programación de OpenAI para la terminal y la nube que implementa cambios y revisa código sobre el repositorio.",
+      beneficios: [
+        "Implementación de cambios de punta a punta",
+        "Revisión de código y propuestas de mejora",
+        "Trabajo en paralelo sobre varias tareas",
+      ],
+    },
+    {
+      nombre: "OpenCode",
+      icono: <LuSquareTerminal className="text-2xl" />,
+      descripcion:
+        "Agente de programación de código abierto para la terminal, compatible con modelos de distintos proveedores.",
+      beneficios: [
+        "Código abierto y configurable",
+        "Elección libre del modelo de IA",
+        "Flujo de trabajo desde la terminal",
       ],
     },
     {
@@ -135,25 +170,28 @@ export const AISection = () => {
   // Áreas de estudio actuales
   const areasDeEstudio = [
     {
-      nombre: "Prompt Engineering",
-      icono: <FaTerminal />,
-      descripcion: "Diseño de prompts efectivos para modelos de IA",
+      nombre: "Agentes de IA",
+      icono: <LuBot />,
+      descripcion:
+        "Agentes que planifican, editan código y ejecutan tareas de varios pasos",
     },
     {
       nombre: "Context Engineering",
       icono: <FaCode />,
-      descripcion: "Optimización del contexto para mejorar respuestas de IA",
-    },
-    {
-      nombre: "Vibecoding",
-      icono: <FaRobot />,
-      descripcion: "Técnicas de programación guiadas por IA",
+      descripcion:
+        "Reglas, memoria y skills: darle a la IA el contexto correcto en cada paso",
     },
     {
       nombre: "MCP",
       icono: <FaBrain />,
       descripcion:
         "Model Context Protocol: conectar modelos de IA con herramientas y datos",
+    },
+    {
+      nombre: "Evals y verificación",
+      icono: <FaVialCircleCheck />,
+      descripcion:
+        "Tests y evaluaciones para comprobar que el código generado funciona",
     },
   ];
 

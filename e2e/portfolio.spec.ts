@@ -284,3 +284,31 @@ test.describe("SEO", () => {
     expect(await sitemap.text()).toContain(`<loc>${SITE}</loc>`);
   });
 });
+
+test.describe("sección de IA", () => {
+  test("muestra los agentes de programación y las áreas de estudio actuales", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const ai = page.locator("#ai");
+
+    for (const tool of ["Claude Code", "Codex", "OpenCode"]) {
+      await expect(
+        ai.getByRole("heading", { level: 4, name: tool, exact: true }),
+      ).toBeAttached();
+    }
+    for (const area of [
+      "Agentes de IA",
+      "Context Engineering",
+      "MCP",
+      "Evals y verificación",
+    ]) {
+      await expect(
+        ai.getByRole("heading", { level: 4, name: area, exact: true }),
+      ).toBeAttached();
+    }
+    // Áreas reemplazadas
+    await expect(ai.getByText("Vibecoding")).toHaveCount(0);
+    await expect(ai.getByText("Prompt Engineering")).toHaveCount(0);
+  });
+});
