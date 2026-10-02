@@ -19,7 +19,7 @@ const ShinyText: React.FC<ShinyTextProps> = ({
 
   return (
     <div
-      className={`bg-clip-text inline-block ${disabled ? "" : "shiny-text "} ${className}`}
+      className={`inline-block bg-clip-text ${disabled ? "" : "shiny-text"} ${className}`}
       style={{
         backgroundImage:
           "linear-gradient(120deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 60%)",

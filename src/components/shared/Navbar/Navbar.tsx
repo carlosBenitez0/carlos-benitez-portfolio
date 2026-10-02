@@ -245,21 +245,23 @@ export const Navbar = () => {
   return (
     <div
       ref={navbarRef}
-      className={`z-40 flex items-center fixed top-0 mx-auto w-full lg:max-w-[950px] ${isMobile ? "justify-between p-4 " : "justify-between"}`}
+      className={`fixed top-0 z-40 mx-auto flex w-full items-center lg:max-w-[950px] ${isMobile ? "justify-between p-4" : "justify-between"}`}
     >
       <figure>
         <img
           src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751309549/cb-logo2_kowmru.png"
           alt="Carlos Benítez"
-          className={`cb-logo  ${isMobile ? "w-10 max-w-10" : "min-w-12 w-12"}`}
+          className={`cb-logo ${isMobile ? "w-10 max-w-10" : "w-12 min-w-12"}`}
         />
       </figure>
       <nav className="nav-padding p-5">
         <ul
           ref={menuRef}
-          style={{ height: isMobile ? 40 : 50, paddingBlock: isMobile ? 6 : 16 }}
-          className={`fade-in-menu relative border-white/7 flex items-center justify-center rounded-full border backdrop-blur-sm ${isMobile ? "px-3 py-0 gap-2" : "gap-5 px-6 py-4"}
-         ${!isMobile ? "before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-[1] before:z-[-1] before:pointer-events-none before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]" : ""}`}
+          style={{
+            height: isMobile ? 40 : 50,
+            paddingBlock: isMobile ? 6 : 16,
+          }}
+          className={`fade-in-menu relative flex items-center justify-center rounded-full border border-white/7 backdrop-blur-sm ${isMobile ? "gap-2 px-3 py-0" : "gap-5 px-6 py-4"} ${!isMobile ? "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-full before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1]" : ""}`}
         >
           {links.map((link) => (
             <li key={link.label}>
@@ -278,12 +280,11 @@ export const Navbar = () => {
       <div
         ref={socialMenuRef}
         style={{ height: isMobile ? 40 : 50, paddingBlock: isMobile ? 6 : 16 }}
-        className={`fade-in-menu relative border-white/7 flex items-center rounded-full border  backdrop-blur-sm ${isMobile ? "justify-center gap-1 px-2" : "gap-5 px-6 py-4"}
-     ${!isMobile ? "before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 before:z-[-1] before:pointer-events-none before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]" : ""}`}
+        className={`fade-in-menu relative flex items-center rounded-full border border-white/7 backdrop-blur-sm ${isMobile ? "justify-center gap-1 px-2" : "gap-5 px-6 py-4"} ${!isMobile ? "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-full before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-100" : ""}`}
       >
         <a
           href="https://www.linkedin.com/in/carlos-benitez-profile/"
-          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[22px]" : "text-[22px]"}`}
+          className={`blur-text-git text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[22px]" : "text-[22px]"}`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Linkedin"
@@ -294,7 +295,7 @@ export const Navbar = () => {
           href="https://github.com/carlosBenitez0"
           target="_blank"
           rel="noopener noreferrer"
-          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[18px]" : "text-[19px]"}`}
+          className={`blur-text-git text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[18px]" : "text-[19px]"}`}
           aria-label="Github"
         >
           <FaGithub />
@@ -302,7 +303,7 @@ export const Navbar = () => {
         <a
           href="/ES - Carlos Francisco Benítez Quintanilla - CV.pdf"
           download
-          className={`blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 transition-transform duration-300 hover:-translate-y-1 ${isMobile ? "text-[20px]" : "text-[22px]"}`}
+          className={`blur-text-git text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[20px]" : "text-[22px]"}`}
           aria-label="Curriculum vitae"
         >
           <PiReadCvLogoLight />

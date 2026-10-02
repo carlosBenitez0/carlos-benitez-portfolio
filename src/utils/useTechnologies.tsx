@@ -66,7 +66,7 @@ export const useTechnologies = () => {
         <img
           src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751564282/zustand-logo-removebg-preview_bbzpat.png"
           alt="zustand"
-          className="w-[17px] h-[17px] "
+          className="h-[17px] w-[17px]"
         />
       ),
       color: "#E6B97A",
@@ -78,7 +78,7 @@ export const useTechnologies = () => {
         <img
           src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751562961/logo-motion_lelpra.png"
           alt="motion"
-          className="w-[17px] h-[9px]"
+          className="h-[9px] w-[17px]"
         />
       ),
       color: "#FFF42B",
@@ -151,7 +151,7 @@ export const useTechnologies = () => {
         <img
           src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751661655/pokeapi-logo_gcsoac.webp"
           alt="pokeapi"
-          className="w-[17px] h-[9px]"
+          className="h-[9px] w-[17px]"
         />
       ),
       color: "#EaE452",

@@ -37,9 +37,7 @@ export const NavbarLink = ({
   return (
     <a
       href={href}
-      className={`blur-text text-cbpgray-300/70 hover:text-cbpgray-300 after:bg-cbpgray-300 hover:translate-y-1 relative flex items-center gap-2 transition-transform duration-300 after:absolute after:top-[50%] after:right-[0] after:h-[0px] after:w-[0px] after:translate-y-[-50%] after:rounded-full after:content-[''] 
-        ${isActive ? "text-cbpgray-300/100 after:ml-6 after:h-[5px] after:w-[5px] after:animate-pulse" : ""}
-        ${isMobile ? "after:hidden gap-1 pr-0 text-[18px]" : "pr-3 text-[14px]"}`}
+      className={`blur-text relative flex items-center gap-2 text-cbpgray-300/70 transition-transform duration-300 after:absolute after:top-[50%] after:right-[0] after:h-[0px] after:w-[0px] after:translate-y-[-50%] after:rounded-full after:bg-cbpgray-300 after:content-[''] hover:translate-y-1 hover:text-cbpgray-300 ${isActive ? "text-cbpgray-300/100 after:ml-6 after:h-[5px] after:w-[5px] after:animate-pulse" : ""} ${isMobile ? "gap-1 pr-0 text-[18px] after:hidden" : "pr-3 text-[14px]"}`}
       title={text}
       aria-label={text}
       onClick={handleClick}

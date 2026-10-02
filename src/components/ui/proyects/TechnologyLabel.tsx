@@ -18,8 +18,7 @@ export const TechnologyLabel = ({
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className={` inline-flex items-center gap-2 px-2 py-[2px] rounded-full text-sm
-      ${fitContent ? "w-fit " : "w-max"}`}
+      className={`inline-flex items-center gap-2 rounded-full px-2 py-[2px] text-sm ${fitContent ? "w-fit" : "w-max"}`}
       style={{
         backgroundColor: color + (color != "#dddddd" ? "10" : "1d"),
         boxShadow: `0px 0px 2px ${color}`,
