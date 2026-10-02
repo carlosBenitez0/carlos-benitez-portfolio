@@ -29,3 +29,6 @@ dist-ssr
 
 # Grafo de graphify (generado localmente)
 /graphify-out/
+
+# Caché local del plugin impeccable
+/.impeccable/
