@@ -20,6 +20,7 @@ export const Footer = () => {
 
   return (
     <div
+      data-pause-offscreen
       className={`mt-8 grid grid-cols-2 border-t border-cbpgray-800 ${isMobile ? "px-4 py-15 gap-8" : "gap-20 py-18 pb-28"}`}
     >
       <div className="flex flex-col gap-4">
