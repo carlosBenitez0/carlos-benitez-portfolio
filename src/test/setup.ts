@@ -7,11 +7,14 @@ import {
   resetBrowserMocks,
 } from "./browserMocks";
 
-installMatchMedia();
-installIntersectionObserver();
+// Los tests del servidor (server/) corren en entorno node, sin DOM
+if (typeof window !== "undefined") {
+  installMatchMedia();
+  installIntersectionObserver();
 
-afterEach(() => {
-  cleanup();
-  localStorage.clear();
-  resetBrowserMocks();
-});
+  afterEach(() => {
+    cleanup();
+    localStorage.clear();
+    resetBrowserMocks();
+  });
+}
