@@ -11,6 +11,8 @@ export const profile = {
   jobTitle: "Desarrollador Web",
   headline: "Ingeniero en Sistemas y Computación | Desarrollador Web",
   location: "El Salvador",
+  photo:
+    "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751572816/carlos-benitez-foto_mamqno.png",
   summary:
     "Desarrollador web de El Salvador, especializado en aplicaciones web modernas y en desarrollo agéntico con IA: Claude Code, Codex, MCP y verificación con tests automáticos.",
   intro:

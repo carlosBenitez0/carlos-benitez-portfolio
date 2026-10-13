@@ -1595,3 +1595,16 @@
     animation-duration: 0.01s !important;
   }
 }
+
+/* Contenido estático que el build pone en #root para buscadores y agentes
+   sin JavaScript (vite-plugins/seoContent.ts). React lo reemplaza al montar;
+   mientras tanto queda oculto a la vista pero accesible. Sin JavaScript,
+   public/noscript.css lo vuelve visible. */
+.static-content {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
