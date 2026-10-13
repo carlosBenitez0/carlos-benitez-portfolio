@@ -136,7 +136,9 @@ test.describe("accesibilidad", () => {
   test("sin violaciones graves de WCAG 2.1 AA", async ({ page }) => {
     await page.goto("/");
     // Esperar la intro del navbar (los links aparecen tras ~7 s)
-    await expect(page.getByRole("link", { name: "Proyectos" })).toBeVisible({
+    await expect(
+      page.getByRole("link", { name: "Proyectos", exact: true }),
+    ).toBeVisible({
       timeout: 15_000,
     });
     await visitAllSections(page);
