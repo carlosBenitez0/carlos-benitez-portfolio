@@ -27,7 +27,33 @@ import {
   validateContact,
   type ContactData,
 } from "../../../utils/contactForm";
-import { preloadEmailJs, sendContactMessage } from "../../../utils/sendContact";
+import {
+  ContactRequestError,
+  prepareContact,
+  sendContactMessage,
+} from "../../../utils/sendContact";
+
+const SEND_FAILED =
+  "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.";
+
+// Traduce la respuesta del servidor al error que ve el visitante
+const describeSendError = (error: unknown) => {
+  if (!(error instanceof ContactRequestError)) {
+    return { name: "formError", error: SEND_FAILED };
+  }
+  const { detail } = error;
+  if (detail.kind === "invalid") {
+    return { name: detail.field, error: detail.message };
+  }
+  if (detail.kind === "rate_limited") {
+    const minutes = Math.ceil(detail.retryAfter / 60);
+    return {
+      name: "formError",
+      error: `Demasiados envíos seguidos. Inténtalo de nuevo en ${minutes} min`,
+    };
+  }
+  return { name: "formError", error: SEND_FAILED };
+};
 
 export const ContactContainer = () => {
   const { isMobile } = useIsMobile();
@@ -82,7 +108,9 @@ export const ContactContainer = () => {
     setLoading(true);
     try {
       // A un bot se le muestra éxito sin enviar nada, para no darle pistas
-      if (!isHoneypotFilled(company)) await sendContactMessage(userData);
+      if (!isHoneypotFilled(company)) {
+        await sendContactMessage(userData, company);
+      }
       markContactSent();
       setSended(true);
       // Solo se vacía si se envió: si falla, el visitante conserva su texto
@@ -92,12 +120,8 @@ export const ContactContainer = () => {
         subject: "",
         message: "",
       });
-    } catch {
-      setError({
-        name: "formError",
-        error:
-          "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.",
-      });
+    } catch (sendError) {
+      setError(describeSendError(sendError));
     } finally {
       setLoading(false);
     }
@@ -225,7 +249,7 @@ export const ContactContainer = () => {
 
       <form
         onSubmit={handleSubmit}
-        onFocus={preloadEmailJs}
+        onFocus={prepareContact}
         className={`z-50 grid grid-cols-2 gap-6 rounded-xl ${isMobile ? "px-5 pb-5" : "p-8"} [&>div]:flex [&>div]:w-full [&>div]:items-center [&>div]:pl-2 [&>div,&>span>textarea]:rounded-lg [&>div,&>span>textarea]:border [&>div,&>span>textarea]:border-white/15 [&>div,&>span>textarea]:shadow-[inset_0px_0px_20px_rgba(255,255,255,0.1)] [&>div>.form-icon]:text-white/50 [&>div>input]:p-3 [&>div>input,&>span>textarea]:w-full [&>div>input,&>span>textarea]:bg-transparent [&>div>input,&>span>textarea]:outline-none [&>div>input,&>span>textarea]:placeholder:text-white/50 [&>div>input,&>span>textarea]:autofill:bg-transparent ${userData.name !== "" ? "[&>div:nth-child(1)>input,&>div:nth-child(1)>.form-icon]:text-white/90" : ""} ${userData.email !== "" ? "[&>div:nth-child(2)>input,&>div:nth-child(2)>.form-icon]:text-white/90" : ""} ${userData.subject !== "" ? "[&>div:nth-child(3)>input,&>div:nth-child(3)>.form-icon]:text-white/90" : ""} ${userData.message !== "" ? "[&>div:nth-child(4)>textarea]:text-white/90" : ""} ${userData.name !== "" ? "[&>div:nth-child(1)]:border-white/25" : ""} ${userData.email !== "" ? "[&>div:nth-child(2)]:border-white/25" : ""} ${userData.subject !== "" ? "[&>div:nth-child(3)]:border-white/25" : ""} ${userData.message !== "" ? "[&>span>textarea]:border-white/25" : ""} ${isMobile ? "row-start-2 row-end-3" : ""}`}
       >
         <div className={`fx-focus ${isMobile ? "col-span-2" : ""}`}>

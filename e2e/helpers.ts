@@ -49,34 +49,30 @@ export const recordCspViolations = async (page: Page) => {
     );
 };
 
-// --- EmailJS simulado ---------------------------------------------------------
+// --- API de contacto simulada -------------------------------------------------
 
-export const NOTIFY_TEMPLATE = "template_vx2h6qt";
-export const AUTO_REPLY_TEMPLATE = "template_32ukwf4";
-
-interface EmailJsCall {
-  template_id: string;
-  service_id: string;
-  template_params: Record<string, string>;
+// `vite preview` no ejecuta las funciones de Vercel: se simula /api/contact.
+// GET entrega un token y cada POST responde con `replies` en orden (por
+// defecto 200). Devuelve los cuerpos de los POST recibidos.
+export interface ContactReply {
+  status: number;
+  body?: unknown;
 }
 
-// Intercepta la API de EmailJS: nunca se envía un correo real. `failTemplates`
-// responde 400 para esas plantillas.
-export const mockEmailJs = async (
+export const mockContactApi = async (
   page: Page,
-  { failTemplates = [] as string[] } = {},
+  { replies = [] as ContactReply[] } = {},
 ) => {
-  const calls: EmailJsCall[] = [];
-  await page.route("https://api.emailjs.com/**", async (route: Route) => {
+  const posts: Record<string, string>[] = [];
+  await page.route("**/api/contact", async (route: Route) => {
     const request: Request = route.request();
-    const body = request.postDataJSON() as EmailJsCall;
-    calls.push(body);
-    const fail = failTemplates.includes(body.template_id);
-    await route.fulfill({
-      status: fail ? 400 : 200,
-      contentType: "text/plain",
-      body: fail ? "Bad request" : "OK",
-    });
+    if (request.method() === "GET") {
+      await route.fulfill({ json: { token: "e2e-token" } });
+      return;
+    }
+    posts.push(request.postDataJSON() as Record<string, string>);
+    const reply = replies.shift() ?? { status: 200, body: { ok: true } };
+    await route.fulfill({ status: reply.status, json: reply.body ?? {} });
   });
-  return calls;
+  return posts;
 };

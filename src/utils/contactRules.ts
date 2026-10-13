@@ -110,6 +110,10 @@ const validateLinks = (message: string): ContactError | null =>
       }
     : null;
 
+// Tiempo mínimo entre pedir el token del formulario y enviar: una persona
+// tarda más en llenarlo, un script no. El servidor rechaza envíos más rápidos.
+export const FORM_TOKEN_MIN_AGE_MS = 3_000;
+
 // Campo trampa invisible: una persona nunca lo llena, un bot sí.
 export const isHoneypotFilled = (value: string) => value.trim() !== "";
 

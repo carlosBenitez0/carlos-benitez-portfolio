@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
+import { FORM_TOKEN_MIN_AGE_MS } from "../src/utils/contactRules.js";
 
 // Token de formulario firmado por el servidor (sin CAPTCHA ni servicios
 // externos). El navegador lo pide al empezar a usar el formulario y lo manda
@@ -8,7 +9,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 // - usarlo desde la misma IP a la que se emitió,
 // - y usarlo antes de que venza.
 
-export const TOKEN_MIN_AGE_MS = 3_000;
+export const TOKEN_MIN_AGE_MS = FORM_TOKEN_MIN_AGE_MS;
 export const TOKEN_MAX_AGE_MS = 2 * 60 * 60 * 1000;
 
 const sign = (secret: string, issuedAt: number, ip: string) =>

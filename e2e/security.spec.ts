@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import {
   collectPageErrors,
-  mockEmailJs,
+  mockContactApi,
   recordCspViolations,
   scrollToSection,
   visitAllSections,
@@ -50,11 +50,11 @@ test.describe("CSP en uso real", () => {
   }) => {
     const getViolations = await recordCspViolations(page);
     const errors = collectPageErrors(page);
-    await mockEmailJs(page);
+    await mockContactApi(page);
     await page.goto("/");
     await visitAllSections(page);
 
-    // Tooltip de tecnologías (framer-motion) y envío del formulario (EmailJS)
+    // Tooltip de tecnologías (framer-motion) y envío del formulario (/api/contact)
     await page.getByRole("button", { name: "Mostrar información" }).click();
     await scrollToSection(page, "contact");
     await page.getByLabel("Nombre", { exact: true }).fill("Carlos");
