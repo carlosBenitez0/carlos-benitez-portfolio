@@ -304,8 +304,13 @@ test.describe("SEO", () => {
     const meta = (selector: string) =>
       page.locator(selector).getAttribute("content");
 
-    await expect(page).toHaveTitle("Carlos Benítez | Desarrollador Web");
+    await expect(page).toHaveTitle(
+      "Carlos Benítez | Desarrollador Web y Desarrollo Agéntico con IA",
+    );
     expect(await meta('meta[name="description"]')).toBeTruthy();
+    expect(await meta('meta[name="robots"]')).toContain("index, follow");
+    // Google la ignora y Bing la toma como señal de spam
+    await expect(page.locator('meta[name="keywords"]')).toHaveCount(0);
     expect(
       await page.locator('link[rel="canonical"]').getAttribute("href"),
     ).toBe(SITE);
