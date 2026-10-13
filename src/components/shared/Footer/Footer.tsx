@@ -60,13 +60,13 @@ export const Footer = () => (
                 href={technology.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center gap-2 text-center"
+                className="group fx-trigger flex flex-col items-center gap-2 text-center"
               >
                 {/* Decorativo: el nombre va en texto debajo */}
                 <img
                   src={technology.logo}
                   alt=""
-                  className="aspect-square w-9 object-contain transition-transform duration-200 group-hover:-translate-y-0.5"
+                  className="fx-icon fx-lift aspect-square w-9 object-contain"
                 />
                 <span className="text-xs whitespace-nowrap text-cbpgray-300 transition-colors group-hover:text-white">
                   {technology.name}
@@ -83,9 +83,9 @@ export const Footer = () => (
       <button
         type="button"
         onClick={scrollToTop}
-        className="flex cursor-pointer items-center gap-1.5 rounded-full border border-cbpgray-800 px-3 py-1.5 transition-colors hover:border-cbpviolet-400 hover:text-cbpgray-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-300"
+        className="fx-trigger flex cursor-pointer items-center gap-1.5 rounded-full border border-cbpgray-800 px-3 py-1.5 transition-colors hover:border-cbpviolet-400 hover:text-cbpgray-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-300"
       >
-        <IoIosArrowUp aria-hidden="true" />
+        <IoIosArrowUp aria-hidden="true" className="fx-icon fx-rise" />
         Volver arriba
       </button>
     </div>

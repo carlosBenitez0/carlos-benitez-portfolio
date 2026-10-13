@@ -301,7 +301,7 @@ test.describe("SEO", () => {
     const meta = (selector: string) =>
       page.locator(selector).getAttribute("content");
 
-    await expect(page).toHaveTitle("Carlos Benítez | Desarrollador Web con IA");
+    await expect(page).toHaveTitle("Carlos Benítez | Desarrollador Web");
     expect(await meta('meta[name="description"]')).toBeTruthy();
     expect(
       await page.locator('link[rel="canonical"]').getAttribute("href"),
@@ -332,7 +332,7 @@ test.describe("sección de IA", () => {
     await page.goto("/", { waitUntil: "domcontentloaded" });
     const ai = page.locator("#ai");
 
-    for (const tool of ["Claude Code", "Codex", "OpenCode"]) {
+    for (const tool of ["Claude Code", "Codex", "GitHub Copilot"]) {
       await expect(
         ai.getByRole("heading", { level: 4, name: tool, exact: true }),
       ).toBeAttached();
@@ -350,11 +350,13 @@ test.describe("sección de IA", () => {
     // Orden por importancia: primero los agentes de programación de Claude
     // Las tarjetas de herramientas van antes que las áreas de estudio
     const tools = await ai.locator("h4").allTextContents();
-    expect(tools.slice(0, 4)).toEqual([
+    expect(tools.slice(0, 6)).toEqual([
       "Claude Code",
       "Claude",
       "Codex",
-      "OpenCode",
+      "GitHub Copilot",
+      "ChatGPT",
+      "Gemini",
     ]);
 
     // Áreas reemplazadas
@@ -429,7 +431,28 @@ test.describe("canoa del formulario de contacto", () => {
   test("en móvil no tapa el formulario", async ({ page, isMobile }) => {
     test.skip(!isMobile, "solo aplica a móvil");
     await page.goto("/", { waitUntil: "domcontentloaded" });
-    await expect(page.locator(".contact-canoe")).toBeHidden();
+    await scrollToSection(page, "contact");
+    // En móvil las olas van bajo el formulario: la canoa se ve, pero ningún
+    // campo ni el botón quedan debajo de ella
+    const overlaps = await page.evaluate(() => {
+      const canoe = document
+        .querySelector(".contact-canoe")!
+        .getBoundingClientRect();
+      return [
+        ...document.querySelectorAll(
+          "#contact form input, #contact form textarea, #contact form button",
+        ),
+      ]
+        .map((field) => field.getBoundingClientRect())
+        .some(
+          (f) =>
+            f.bottom > canoe.top &&
+            f.top < canoe.bottom &&
+            f.right > canoe.left &&
+            f.left < canoe.right,
+        );
+    });
+    expect(overlaps).toBe(false);
   });
 });
 

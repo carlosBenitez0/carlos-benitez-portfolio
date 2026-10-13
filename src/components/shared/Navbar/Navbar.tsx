@@ -18,45 +18,41 @@ export const Navbar = () => {
   const socialMenuRef = useRef<HTMLDivElement>(null);
   const navbarRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useIsMobile();
-  const sectionRefs = useRef<{
-    [key: string]: IntersectionObserverEntry | null;
-  }>({});
-  const observerRef = useRef<IntersectionObserver | null>(null);
   const links = [
     {
       label: "start",
       href: "#start",
-      icon: <RiHomeLine />,
+      icon: <RiHomeLine className="fx-icon fx-hop" />,
       text: "Inicio",
     },
     {
       label: "projects",
       href: "#projects",
-      icon: <IoCodeWorkingOutline />,
+      icon: <IoCodeWorkingOutline className="fx-icon fx-stretch" />,
       text: "Proyectos",
     },
     {
       label: "about",
       href: "#about",
-      icon: <IoIosInformationCircleOutline />,
+      icon: <IoIosInformationCircleOutline className="fx-icon fx-swing" />,
       text: "Sobre mí",
     },
     {
       label: "technologies",
       href: "#technologies",
-      icon: <IoCodeSlashOutline />,
+      icon: <IoCodeSlashOutline className="fx-icon fx-glitch" />,
       text: "Tecnologías",
     },
     {
       label: "ai",
       href: "#ai",
-      icon: <FaRobot className="text-lg" />,
+      icon: <FaRobot className="fx-icon fx-beep text-lg" />,
       text: "IA",
     },
     {
       label: "contact",
       href: "#contact",
-      icon: <MdOutlineConnectWithoutContact />,
+      icon: <MdOutlineConnectWithoutContact className="fx-icon fx-ring" />,
       text: "Contáctame",
     },
   ];
@@ -99,55 +95,62 @@ export const Navbar = () => {
     };
   }, [handleMouseMove]); // Dependencia del callback
 
-  // Set up Intersection Observer
+  // Sección activa según el scroll: la última cuyo borde superior ya pasó
+  // una línea al 35% de la pantalla ("Inicio" si ninguna lo hizo).
+  // Todo es geometría de la propia sección, sin depender de qué elemento hace
+  // scroll (la página se desplaza con el contenedor raíz de App, no con
+  // window, y ese contenedor puede no tener aún sus estilos al montar).
   useEffect(() => {
-    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-      let mostVisibleSection = "";
-      let maxRatio = 0;
+    const sections = ["projects", "about", "technologies", "ai", "contact"];
+    let frame = 0;
 
-      entries.forEach((entry) => {
-        const sectionId = entry.target.id;
-        sectionRefs.current[sectionId] = entry;
-
-        if (entry.intersectionRatio > maxRatio) {
-          maxRatio = entry.intersectionRatio;
-          mostVisibleSection = sectionId;
+    const update = () => {
+      frame = 0;
+      const line = window.innerHeight * 0.35;
+      let active = "start";
+      for (const id of sections) {
+        const element = document.getElementById(id);
+        if (element && element.getBoundingClientRect().top <= line) {
+          active = id;
         }
-      });
-
-      if (mostVisibleSection && maxRatio > 0.1) {
-        setOptionSelected(mostVisibleSection);
       }
+      // La última sección quizá nunca llegue a la línea (debajo solo está el
+      // footer): cuenta como activa cuando ya se ve completa.
+      const last = document.getElementById(sections[sections.length - 1]);
+      if (last) {
+        const rect = last.getBoundingClientRect();
+        if (
+          rect.top < window.innerHeight &&
+          rect.bottom <= window.innerHeight
+        ) {
+          active = sections[sections.length - 1];
+        }
+      }
+      setOptionSelected(active);
     };
 
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.1, // Very low threshold to catch any visibility
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
     };
 
-    observerRef.current = new IntersectionObserver(handleIntersect, options);
-
-    // Observe all sections
-    const sections = [
-      "start",
-      "projects",
-      "about",
-      "technologies",
-      "ai",
-      "contact",
-    ];
-    sections.forEach((section) => {
-      const element = document.getElementById(section);
-      if (element) {
-        observerRef.current?.observe(element);
-      }
+    // El evento scroll no burbujea: en captura llega el de cualquier elemento
+    document.addEventListener("scroll", schedule, {
+      capture: true,
+      passive: true,
     });
+    window.addEventListener("resize", schedule);
+    // Recalcula cuando cambia el layout (estilos, imágenes, fuentes)
+    const resizeObserver = new ResizeObserver(schedule);
+    resizeObserver.observe(document.body);
+    const start = document.getElementById("start");
+    if (start) resizeObserver.observe(start);
+    schedule();
 
     return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
+      cancelAnimationFrame(frame);
+      document.removeEventListener("scroll", schedule, { capture: true });
+      window.removeEventListener("resize", schedule);
+      resizeObserver.disconnect();
     };
   }, []);
 
@@ -165,78 +168,67 @@ export const Navbar = () => {
       const logo = root.querySelector(".cb-logo");
       const tl = gsap.timeline();
 
+      // Entrada rápida y en paralelo (~1,2 s): antes cada pieza esperaba a la
+      // anterior y los links no estaban listos hasta los ~8 s.
+      // clearProps "filter": un blur(0px) residual empeora la nitidez.
       tl.fromTo(
         logo,
-        {
-          autoAlpha: 0,
-          y: 10,
-          filter: "blur(5px)",
-        },
+        { autoAlpha: 0, y: 10, filter: "blur(5px)" },
         {
           autoAlpha: 1,
           y: 0,
           duration: 0.4,
           filter: "blur(0px)",
           ease: "power3.out",
+          clearProps: "filter",
         },
+        0,
       );
 
       // La píldora "crece" desde su centro recortándose, en lugar de animar
-      // su tamaño real.
-      menu.forEach((menu) => {
-        tl.fromTo(
-          menu,
-          {
-            autoAlpha: 0,
-            clipPath: "inset(50% 50% round 9999px)",
-            background: "purple",
-          },
-          {
-            autoAlpha: 1,
-            clipPath: "inset(0% 0% round 9999px)",
-            background: "rgba(10, 14, 26, 0.7)",
-            duration: 1.5,
-            ease: "power3.out",
-            clearProps: "clipPath",
-          },
-        );
-      });
+      // su tamaño real. Las dos píldoras a la vez.
+      tl.fromTo(
+        menu,
+        {
+          autoAlpha: 0,
+          clipPath: "inset(50% 50% round 9999px)",
+          background: "purple",
+        },
+        {
+          autoAlpha: 1,
+          clipPath: "inset(0% 0% round 9999px)",
+          background: "rgba(10, 14, 26, 0.7)",
+          duration: 0.7,
+          ease: "power3.out",
+          clearProps: "clipPath",
+        },
+        0.1,
+      );
 
       // Equivale al antiguo padding 100px -> 20px del nav: la barra entra
       // desplazada hacia abajo y sube a su sitio.
       tl.fromTo(
         root,
         { y: isMobile ? 30 : 80 },
-        { y: 0, duration: 1.5, ease: "power3.out", clearProps: "transform" },
+        { y: 0, duration: 0.8, ease: "power3.out", clearProps: "transform" },
+        0.1,
       );
 
-      links.forEach((link) => {
-        tl.fromTo(
-          link,
-          { autoAlpha: 0, y: 10, filter: "blur(5px)" },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.25,
-            filter: "blur(0px)",
-            ease: "power1.inOut",
-          },
-        );
-      });
-
-      linksInGit.forEach((link) => {
-        tl.fromTo(
-          link,
-          { autoAlpha: 0, y: 10, filter: "blur(5px)" },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.3,
-            filter: "blur(0px)",
-            ease: "power3.out",
-          },
-        );
-      });
+      // Links e iconos sociales en cascada corta mientras la barra sube
+      tl.fromTo(
+        [...links, ...linksInGit],
+        { autoAlpha: 0, y: 10, filter: "blur(5px)" },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.35,
+          filter: "blur(0px)",
+          ease: "power2.out",
+          stagger: 0.05,
+          clearProps: "filter",
+        },
+        0.35,
+      );
     }, root);
 
     return () => ctx.revert();
@@ -284,29 +276,29 @@ export const Navbar = () => {
       >
         <a
           href="https://www.linkedin.com/in/carlos-benitez-profile/"
-          className={`blur-text-git text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[22px]" : "text-[22px]"}`}
+          className={`blur-text-git fx-trigger text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[22px]" : "text-[22px]"}`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Linkedin"
         >
-          <CiLinkedin />
+          <CiLinkedin className="fx-icon fx-pop" />
         </a>
         <a
           href="https://github.com/carlosBenitez0"
           target="_blank"
           rel="noopener noreferrer"
-          className={`blur-text-git text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[18px]" : "text-[19px]"}`}
+          className={`blur-text-git fx-trigger text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[18px]" : "text-[19px]"}`}
           aria-label="Github"
         >
-          <FaGithub />
+          <FaGithub className="fx-icon fx-spin" />
         </a>
         <a
           href="/ES - Carlos Francisco Benítez Quintanilla - CV.pdf"
           download
-          className={`blur-text-git text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[20px]" : "text-[22px]"}`}
+          className={`blur-text-git fx-trigger text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[20px]" : "text-[22px]"}`}
           aria-label="Curriculum vitae"
         >
-          <PiReadCvLogoLight />
+          <PiReadCvLogoLight className="fx-icon fx-flip" />
         </a>
       </div>
     </div>

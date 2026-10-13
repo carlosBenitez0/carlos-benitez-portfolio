@@ -46,30 +46,35 @@ export const AIToolCard = ({
       className={`h-full transition-[opacity,translate] duration-500 ease-out motion-reduce:translate-y-0 ${revealed ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"}`}
     >
       {/* Efecto al pasar el mouse: sube 5px, sombra y borde violeta */}
-      <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-700 bg-gray-800/80 p-6 transition-[translate,box-shadow,border-color] duration-200 ease-out hover:-translate-y-[5px] hover:border-[rgba(139,92,246,0.5)] hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_10px_10px_-5px_rgba(0,0,0,0.04)] motion-reduce:hover:translate-y-0">
+      <div className="group fx-trigger relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-700 bg-gray-800/80 p-4 transition-[translate,box-shadow,border-color] duration-200 ease-out hover:-translate-y-[5px] hover:border-[rgba(139,92,246,0.5)] hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_10px_10px_-5px_rgba(0,0,0,0.04)] motion-reduce:hover:translate-y-0 md:p-6">
         {/* Efecto de gradiente que aparece al pasar el mouse */}
         <div className="absolute inset-0 bg-gradient-to-br from-cbpviolet-900/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
         {/* Contenido de la tarjeta */}
         <div className="relative z-10">
           {/* Encabezado con nombre de la herramienta */}
-          <div className="mb-4 flex items-center gap-3">
+          <div className="mb-3 flex flex-col items-start gap-2 md:mb-4 md:flex-row md:items-center md:gap-3">
             {/* Contenedor del icono con efecto hover */}
             <div
               aria-hidden="true"
-              className="rounded-lg bg-cbpviolet-900/50 p-2 text-cbpviolet-300 transition-colors group-hover:bg-cbpviolet-800/70"
+              className="fx-icon fx-tilt rounded-lg bg-cbpviolet-900/50 p-2 text-cbpviolet-300 group-hover:bg-cbpviolet-800/70"
             >
               {icono}
             </div>
-            <h4 className="text-lg font-semibold text-cbpgray-100">{nombre}</h4>
+            <h4 className="text-sm leading-tight font-semibold text-cbpgray-100 md:text-lg">
+              {nombre}
+            </h4>
           </div>
 
           {/* Descripción de la herramienta */}
-          <p className="mb-4 text-sm text-cbpgray-300">{descripcion}</p>
+          <p className="line-clamp-4 text-xs text-cbpgray-300 md:mb-4 md:line-clamp-none md:text-sm">
+            {descripcion}
+          </p>
 
           {/* Lista de beneficios (solo si hay beneficios) */}
+          {/* En móvil (2 columnas) se ocultan para que las cards no se alarguen */}
           {beneficios.length > 0 && (
-            <div className="mt-auto">
+            <div className="mt-auto hidden md:block">
               <h5 className="mb-2 text-xs font-medium text-cbpgray-400">
                 Beneficios:
               </h5>
@@ -79,7 +84,14 @@ export const AIToolCard = ({
                     key={index}
                     className="flex items-center text-sm text-cbpgray-200"
                   >
-                    <FaCheck className="mr-2 h-3.5 w-3.5 flex-shrink-0 text-cbpviolet-400" />
+                    <FaCheck
+                      className="fx-icon fx-check mr-2 h-3.5 w-3.5 text-cbpviolet-400"
+                      style={
+                        {
+                          "--fx-delay": `${index * 80}ms`,
+                        } as React.CSSProperties
+                      }
+                    />
                     {beneficio}
                   </li>
                 ))}

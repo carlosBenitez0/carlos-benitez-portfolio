@@ -8,12 +8,12 @@ describe("TechTooltip", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Mostrar información" }),
     );
-    expect(screen.getByText("Tecnologías interactivas")).toBeInTheDocument();
+    expect(screen.getByText("¡Tecnologías interactivas!")).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Cerrar" }));
 
     await waitFor(() => {
-      expect(screen.queryByText("Tecnologías interactivas")).toBeNull();
+      expect(screen.queryByText("¡Tecnologías interactivas!")).toBeNull();
     });
     expect(screen.queryByRole("button")).toBeNull();
   });

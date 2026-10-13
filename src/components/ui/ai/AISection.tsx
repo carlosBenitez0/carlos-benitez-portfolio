@@ -4,22 +4,18 @@ import { SectionTitle } from "../SectionTitle";
 import { AIToolCard } from "./AIToolCard";
 // Importación del componente de terminal interactivo
 import { AITerminal } from "./AITerminal";
+import { AgentOrbitPanel } from "./AgentOrbitPanel";
 // Importación de iconos de la biblioteca react-icons
 import { FaRobot, FaCode, FaBrain } from "react-icons/fa";
 import { LuBot } from "react-icons/lu";
 import { FaVialCircleCheck } from "react-icons/fa6";
 import {
-  AntigravityIcon,
-  BoltIcon,
   ClaudeCodeIcon,
   ClaudeIcon,
   CodexIcon,
-  DeepSeekIcon,
   GeminiIcon,
   GithubCopilotIcon,
   OpenAIIcon,
-  OpenCodeIcon,
-  WindsurfIcon,
 } from "./brandIcons";
 
 /**
@@ -32,8 +28,8 @@ import {
 export const AISection = () => {
   // Datos de las herramientas de IA que se mostrarán en las tarjetas
   const herramientas = [
-    // Orden por importancia: primero los agentes de programación (harness),
-    // encabezados por Claude; después asistentes y herramientas puntuales.
+    // Solo las de más peso en el mercado. Orden por importancia: primero los
+    // agentes de programación, encabezados por Claude; después asistentes.
     {
       nombre: "Claude Code",
       icono: <ClaudeCodeIcon className="text-2xl" />,
@@ -65,17 +61,6 @@ export const AISection = () => {
         "Implementación de cambios de principio a fin",
         "Revisión de código con propuestas de mejora",
         "Trabajo en paralelo sobre varias tareas",
-      ],
-    },
-    {
-      nombre: "OpenCode",
-      icono: <OpenCodeIcon className="text-2xl" />,
-      descripcion:
-        "Agente de programación de código abierto para la terminal, compatible con modelos de distintos proveedores.",
-      beneficios: [
-        "Código abierto y configurable",
-        "Libertad para elegir el modelo",
-        "Flujo de trabajo desde la terminal",
       ],
     },
     {
@@ -111,50 +96,6 @@ export const AISection = () => {
         "Amplia ventana de contexto",
       ],
     },
-    {
-      nombre: "Antigravity",
-      icono: <AntigravityIcon className="text-2xl" />,
-      descripcion:
-        "Entorno de desarrollo de Google pensado para trabajar con agentes de IA en el editor, la terminal y el navegador.",
-      beneficios: [
-        "Agentes integrados en el flujo de desarrollo",
-        "Seguimiento del trabajo de cada agente",
-        "Varias tareas en paralelo",
-      ],
-    },
-    {
-      nombre: "Windsurf",
-      icono: <WindsurfIcon className="text-2xl" />,
-      descripcion:
-        "Editor con IA que comprende el contexto del código y del flujo de trabajo.",
-      beneficios: [
-        "Asistencia contextual en tiempo real",
-        "Agente integrado en el editor",
-        "Soporte para múltiples lenguajes",
-      ],
-    },
-    {
-      nombre: "DeepSeek",
-      icono: <DeepSeekIcon className="text-2xl" />,
-      descripcion:
-        "Familia de modelos de IA de pesos abiertos con buen desempeño en programación y razonamiento.",
-      beneficios: [
-        "Amplia capacidad de contexto",
-        "Precisión en la generación de código",
-        "Modelos de pesos abiertos",
-      ],
-    },
-    {
-      nombre: "Bolt.new",
-      icono: <BoltIcon className="text-2xl" />,
-      descripcion:
-        "Plataforma que genera aplicaciones web completas a partir de instrucciones en lenguaje natural.",
-      beneficios: [
-        "Prototipos funcionales en poco tiempo",
-        "Estructura de proyecto y código generados",
-        "Vista previa y despliegue desde el navegador",
-      ],
-    },
   ];
 
   // Áreas de estudio actuales
@@ -187,9 +128,12 @@ export const AISection = () => {
 
   return (
     <section id="ai" data-pause-offscreen className="bg-cbpgray-900 py-8">
-      <div className="container mx-auto px-8">
+      <div className="container mx-auto px-4 md:px-8">
         {/* Título principal de la sección */}
-        <SectionTitle title="Inteligencia artificial" icon={<FaRobot />} />
+        <SectionTitle
+          title="Inteligencia artificial"
+          icon={<FaRobot className="fx-icon fx-beep" />}
+        />
 
         {/* Descripción de la sección */}
         <p className="mb-12 text-cbpgray-300">
@@ -200,7 +144,7 @@ export const AISection = () => {
         </p>
 
         {/* Grid de herramientas de IA */}
-        <div className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="mb-16 grid grid-cols-2 gap-3 md:gap-6">
           {herramientas.map((herramienta, index) => (
             <AIToolCard
               key={herramienta.nombre}
@@ -214,8 +158,9 @@ export const AISection = () => {
         </div>
 
         {/* Terminal interactiva */}
-        <div className="mb-16">
+        <div className="mb-16 space-y-6">
           <AITerminal />
+          <AgentOrbitPanel />
         </div>
 
         {/* Sección de estudios actuales */}
@@ -224,21 +169,23 @@ export const AISection = () => {
             <span className="text-cbpgray-300">Áreas de estudio actuales</span>
           </h3>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
             {areasDeEstudio.map((area) => (
               <div
                 key={area.nombre}
-                className="rounded-lg border border-cbpgray-700/50 bg-cbpgray-800/50 p-5 transition-colors hover:border-cbpviolet-500/30"
+                className="fx-trigger rounded-lg border border-cbpgray-700/50 bg-cbpgray-800/50 p-4 transition-[border-color,translate] duration-300 hover:-translate-y-1 hover:border-cbpviolet-500/30 motion-reduce:hover:translate-y-0 md:p-5"
               >
-                <div className="mb-3 flex items-center">
-                  <div className="mr-3 rounded-lg bg-cbpviolet-500/10 p-2 text-cbpviolet-400">
+                <div className="mb-3 flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-0">
+                  <div className="fx-icon fx-tilt rounded-lg bg-cbpviolet-500/10 p-2 text-cbpviolet-400 md:mr-3">
                     {area.icono}
                   </div>
-                  <h4 className="text-lg font-semibold text-white">
+                  <h4 className="text-sm leading-tight font-semibold text-white md:text-lg">
                     {area.nombre}
                   </h4>
                 </div>
-                <p className="text-sm text-cbpgray-300">{area.descripcion}</p>
+                <p className="text-xs text-cbpgray-300 md:text-sm">
+                  {area.descripcion}
+                </p>
               </div>
             ))}
           </div>

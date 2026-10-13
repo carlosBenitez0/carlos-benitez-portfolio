@@ -581,14 +581,6 @@
   }
 }
 
-/* En móvil las olas pasan por detrás del formulario: la canoa taparía los
-   campos, así que solo se muestra desde tablet. */
-@media (max-width: 767px) {
-  .contact-canoe {
-    display: none;
-  }
-}
-
 @keyframes contact-canoe {
   0% {
     transform: translateY(calc(0 * var(--wave-unit))) rotate(-4.04deg);
@@ -794,5 +786,812 @@
 
   to {
     opacity: 1;
+  }
+}
+
+/* Progreso de cada fase en la ilustración de orquestación de agentes */
+@keyframes phase-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Barras de scroll de la terminal: finas, con un degradado violeta que brilla
+   al pasar el mouse y sin flechas ni fondo gris del sistema. */
+.cbp-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+}
+
+.cbp-scrollbar::-webkit-scrollbar-track {
+  margin: 6px;
+  border-radius: 9999px;
+  background: rgb(157 78 221 / 0.06);
+}
+
+.cbp-scrollbar::-webkit-scrollbar-thumb {
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  background: linear-gradient(
+      180deg,
+      var(--color-cbpviolet-300),
+      var(--color-cbpviolet-500)
+    )
+    padding-box;
+  box-shadow: 0 0 8px rgb(157 78 221 / 0.6);
+}
+
+.cbp-scrollbar::-webkit-scrollbar-thumb:horizontal {
+  background: linear-gradient(
+      90deg,
+      var(--color-cbpviolet-500),
+      var(--color-cbpviolet-300)
+    )
+    padding-box;
+}
+
+.cbp-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+      180deg,
+      var(--color-cbpviolet-200),
+      var(--color-cbpviolet-400)
+    )
+    padding-box;
+}
+
+.cbp-scrollbar::-webkit-scrollbar-button,
+.cbp-scrollbar::-webkit-scrollbar-corner {
+  display: none;
+  background: transparent;
+}
+
+/* Firefox no admite los pseudo-elementos: barra fina con los mismos colores.
+   (En Chrome, scrollbar-color anularía el degradado, por eso va aparte.) */
+@supports (-moz-appearance: none) {
+  .cbp-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-cbpviolet-400) transparent;
+  }
+}
+
+/* ===================== Iconos interactivos =====================
+   Cada icono tiene una "personalidad" (fx-*) acorde a lo que representa y
+   el mismo icono se comporta igual en todo el sitio. La animación se
+   dispara desde el elemento interactivo que lo contiene (.fx-trigger: hover
+   o foco con teclado; .fx-focus: un campo de formulario enfocado) y, en el
+   navbar, cuando su sección pasa a estar activa (aria-current).
+   Son animaciones de una sola pasada (≤0,8s), salvo .fx-rise, que repite
+   mientras dura el hover. */
+@layer components {
+  .fx-icon {
+    --fx-glow: rgb(185 110 223 / 0.75);
+    --fx-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: inline-block;
+    flex-shrink: 0;
+    transform-origin: center;
+    transition:
+      filter 0.3s ease,
+      color 0.3s ease,
+      transform 0.45s var(--fx-spring);
+  }
+
+  .fx-trigger:is(:hover, :focus-visible) .fx-icon,
+  .fx-focus:focus-within .fx-icon,
+  .fx-trigger[aria-current] .fx-icon {
+    filter: drop-shadow(0 0 6px var(--fx-glow));
+    animation: var(--fx-anim);
+    animation-delay: var(--fx-delay, 0ms);
+  }
+
+  .fx-trigger[aria-current] .fx-icon {
+    color: var(--color-cbpviolet-200);
+  }
+
+  /* Personalidades de una sola pasada */
+  .fx-hop {
+    --fx-anim: fx-hop 0.65s ease-out;
+  }
+  .fx-stretch {
+    --fx-anim: fx-stretch 0.6s ease-out;
+  }
+  .fx-swing {
+    --fx-anim: fx-swing 0.7s ease-in-out;
+  }
+  .fx-glitch {
+    --fx-anim: fx-glitch 0.45s steps(1, end);
+  }
+  .fx-beep {
+    --fx-anim: fx-beep 0.7s ease-in-out;
+  }
+  .fx-ring {
+    --fx-anim: fx-ring 0.7s ease-in-out;
+  }
+  .fx-pop {
+    --fx-anim: fx-pop 0.55s ease-out;
+  }
+  .fx-spin {
+    --fx-anim: fx-spin 0.8s var(--fx-spring);
+  }
+  .fx-flip {
+    --fx-anim: fx-flip 0.8s var(--fx-spring);
+  }
+  .fx-check {
+    --fx-anim: fx-check 0.5s ease-out;
+  }
+  .fx-launch {
+    --fx-anim: fx-launch 0.7s ease-in-out;
+  }
+  .fx-drop {
+    --fx-anim: fx-drop 0.7s ease-out;
+  }
+  .fx-rise {
+    --fx-anim: fx-rise 0.8s ease-in-out infinite;
+  }
+
+  /* Personalidades que se mantienen mientras dura el hover */
+  .fx-trigger:is(:hover, :focus-visible) .fx-tilt {
+    transform: rotate(-10deg) scale(1.15);
+  }
+  .fx-trigger:is(:hover, :focus-visible) .fx-turn {
+    transform: rotate(90deg);
+  }
+  /* Hijo directo: un bloque que contiene varios logos no los levanta todos */
+  .fx-trigger:is(:hover, :focus-visible) > .fx-lift {
+    transform: translateY(-5px) scale(1.12) rotate(-4deg);
+    filter: drop-shadow(0 8px 10px rgb(0 0 0 / 0.45))
+      drop-shadow(0 0 10px rgb(185 110 223 / 0.45));
+  }
+}
+
+@keyframes fx-hop {
+  0%,
+  100% {
+    transform: none;
+  }
+  20% {
+    transform: scale(1.15, 0.85);
+  }
+  45% {
+    transform: translateY(-6px) scale(0.92, 1.1);
+  }
+  70% {
+    transform: scale(1.08, 0.92);
+  }
+  85% {
+    transform: scale(0.97, 1.03);
+  }
+}
+
+@keyframes fx-stretch {
+  0%,
+  100% {
+    transform: none;
+  }
+  40% {
+    transform: scaleX(1.35);
+  }
+  65% {
+    transform: scaleX(0.9);
+  }
+  85% {
+    transform: scaleX(1.05);
+  }
+}
+
+@keyframes fx-swing {
+  0%,
+  100% {
+    transform: none;
+  }
+  20% {
+    transform: rotate(-18deg);
+  }
+  40% {
+    transform: rotate(14deg);
+  }
+  60% {
+    transform: rotate(-8deg);
+  }
+  80% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes fx-glitch {
+  0%,
+  100% {
+    transform: none;
+  }
+  15% {
+    transform: translateX(-2px) skewX(14deg);
+  }
+  30% {
+    transform: translateX(2px) skewX(-14deg);
+  }
+  45% {
+    transform: translateX(-1px) skewX(8deg);
+  }
+  60% {
+    transform: translateX(1px) skewX(-4deg);
+  }
+}
+
+@keyframes fx-beep {
+  0%,
+  100% {
+    transform: none;
+  }
+  15% {
+    transform: translateY(-3px) rotate(-10deg);
+  }
+  35% {
+    transform: translateY(-3px) rotate(10deg);
+  }
+  55% {
+    transform: translateY(-1px) rotate(-6deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes fx-ring {
+  0%,
+  100% {
+    transform: none;
+  }
+  10%,
+  30%,
+  50% {
+    transform: rotate(-14deg);
+  }
+  20%,
+  40%,
+  60% {
+    transform: rotate(14deg);
+  }
+  70% {
+    transform: rotate(-6deg);
+  }
+  80% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes fx-pop {
+  0%,
+  100% {
+    transform: none;
+  }
+  35% {
+    transform: scale(1.3);
+  }
+  60% {
+    transform: scale(0.9);
+  }
+  80% {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes fx-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fx-flip {
+  from {
+    transform: perspective(80px) rotateY(0deg);
+  }
+  to {
+    transform: perspective(80px) rotateY(360deg);
+  }
+}
+
+@keyframes fx-check {
+  0%,
+  100% {
+    transform: none;
+  }
+  40% {
+    transform: scale(1.45) rotate(-12deg);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+}
+
+/* El avión sale volando por la derecha y vuelve a entrar por la izquierda */
+@keyframes fx-launch {
+  0%,
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+  40% {
+    transform: translate(18px, -10px) rotate(-25deg);
+    opacity: 0;
+  }
+  41% {
+    transform: translate(-18px, 8px);
+    opacity: 0;
+  }
+}
+
+@keyframes fx-drop {
+  0%,
+  100% {
+    transform: none;
+  }
+  30% {
+    transform: translateY(-8px);
+  }
+  55% {
+    transform: scale(1.15, 0.85);
+  }
+  75% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes fx-rise {
+  0%,
+  100% {
+    transform: none;
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Con "reducir movimiento" solo queda el brillo y el cambio de color */
+@media (prefers-reduced-motion: reduce) {
+  .fx-icon {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ================= Tarjeta holográfica de "Sobre mí" =================
+   .holo-card: escena con perspectiva (la que mide el puntero)
+   .holo-tilt: se inclina con GSAP; .holo-flipper: gira 180° al voltear.
+   --holo-x/--holo-y: posición del puntero, mueven el brillo y el tornasol. */
+.holo-card {
+  --holo-x: 50%;
+  --holo-y: 50%;
+  perspective: 900px;
+}
+
+.holo-tilt,
+.holo-flipper {
+  transform-style: preserve-3d;
+}
+
+.holo-flipper {
+  position: relative;
+  transition: transform 0.9s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+.holo-flipper.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.holo-face {
+  position: absolute;
+  inset: 0;
+  /* clip, no hidden: hidden crea un contenedor de scroll y el revelado
+     (animation-timeline: view()) mediría ese contenedor en vez de la página */
+  overflow: clip;
+  border-radius: 1rem;
+  backface-visibility: hidden;
+  border: 1px solid rgb(224 170 255 / 0.18);
+  box-shadow:
+    0 20px 40px -12px rgb(0 0 0 / 0.7),
+    0 0 40px -8px rgb(157 78 221 / 0.45);
+  transition: box-shadow 0.4s ease;
+}
+
+.holo-card:hover .holo-face {
+  box-shadow:
+    0 30px 50px -12px rgb(0 0 0 / 0.75),
+    0 0 60px -6px rgb(157 78 221 / 0.7);
+}
+
+.holo-face--back {
+  transform: rotateY(180deg);
+  background:
+    radial-gradient(
+      120% 90% at 100% 0%,
+      rgb(123 44 191 / 0.45),
+      transparent 60%
+    ),
+    radial-gradient(90% 70% at 0% 100%, rgb(60 9 108 / 0.6), transparent 60%),
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px) 0 0 / 100%
+      18px,
+    var(--color-cbpbg-700);
+}
+
+/* Reflejo tornasol: bandas de color que se desplazan con el puntero */
+.holo-shine,
+.holo-glare,
+.holo-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.holo-shine {
+  opacity: 0;
+  mix-blend-mode: color-dodge;
+  background: repeating-linear-gradient(
+    115deg,
+    rgb(255 0 200 / 0) 0%,
+    rgb(80 220 255 / 0.32) 7%,
+    rgb(185 110 255 / 0.32) 14%,
+    rgb(255 120 200 / 0.32) 21%,
+    rgb(255 230 120 / 0) 28%
+  );
+  background-size: 260% 260%;
+  background-position: var(--holo-x) var(--holo-y);
+  filter: brightness(0.85) contrast(1.3) saturate(1.3);
+  transition: opacity 0.4s ease;
+}
+
+/* Brillo de luz que sigue al puntero */
+.holo-glare {
+  opacity: 0;
+  mix-blend-mode: overlay;
+  background: radial-gradient(
+    farthest-corner circle at var(--holo-x) var(--holo-y),
+    rgb(255 255 255 / 0.75) 8%,
+    rgb(255 255 255 / 0.2) 28%,
+    transparent 60%
+  );
+  transition: opacity 0.4s ease;
+}
+
+.holo-card:hover .holo-shine {
+  opacity: 0.8;
+}
+.holo-card:hover .holo-glare {
+  opacity: 1;
+}
+
+/* En reposo (y en táctil): un destello cruza la tarjeta cada pocos segundos */
+.holo-sweep {
+  mix-blend-mode: soft-light;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgb(255 255 255 / 0.55) 48%,
+    rgb(224 170 255 / 0.6) 52%,
+    transparent 62%
+  );
+  background-size: 300% 100%;
+  animation: holo-sweep 6s ease-in-out infinite;
+  transition: opacity 0.4s ease;
+}
+.holo-card:hover .holo-sweep {
+  opacity: 0;
+}
+
+@keyframes holo-sweep {
+  0%,
+  55% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+/* Revelado al hacer scroll: de gris y desenfocada a color */
+.holo-develop {
+  animation: holo-develop linear both;
+  animation-timeline: view();
+  animation-range: entry 5% cover 40%;
+}
+
+@keyframes holo-develop {
+  from {
+    filter: grayscale(1) blur(10px) brightness(0.5) contrast(1.3);
+  }
+  to {
+    filter: none;
+  }
+}
+
+/* Flota suavemente; usa "translate" para no pisar el giro de la escena */
+.holo-float {
+  animation: holo-float 7s ease-in-out infinite;
+}
+
+@keyframes holo-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+.holo-hint {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+.holo-float:hover .holo-hint {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .holo-float,
+  .holo-sweep,
+  .holo-develop {
+    animation: none;
+  }
+  .holo-flipper {
+    transition-duration: 0.01s;
+  }
+}
+
+/* ================= Burbuja de jabón de la foto del header ================= */
+/* Esfera de vidrio: volumen con luz violeta suave (sin brillos blancos) y
+   un filo de luz en la base, como el reflejo del suelo en una esfera real. */
+.glass-sphere {
+  background:
+    radial-gradient(
+      circle at 50% 118%,
+      rgb(185 110 223 / 0.4),
+      transparent 52%
+    ),
+    radial-gradient(circle at 32% 24%, rgb(123 44 191 / 0.38), transparent 58%),
+    radial-gradient(
+      circle at 50% 45%,
+      rgb(36 0 70 / 0.3),
+      rgb(16 0 43 / 0.72) 100%
+    );
+}
+
+/* Orbe 3D (HeroOrb): lienzo más grande que la burbuja para que el relieve y
+   el borde iridiscente no se corten; un halo violeta lo funde con el fondo */
+.hero-orb {
+  position: absolute;
+  inset: -31%;
+  pointer-events: none;
+}
+
+.hero-orb::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgb(157 78 221 / 0.35) 0%,
+    rgb(123 44 191 / 0.18) 45%,
+    transparent 70%
+  );
+  z-index: -1;
+}
+
+.hero-orb canvas {
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.hero-orb.is-ready canvas {
+  opacity: 1;
+}
+
+/* ============ Diagrama de orquestación de agentes (AgentFlow) ============
+   Estados por nodo/conexión (data-state): idle = aún no le toca,
+   active = lo que pasa ahora, done = ya hecho, ok = verificado (verde). */
+.agent-flow {
+  --flow-idle: rgb(75 75 105);
+  --flow-violet: #b96edf;
+  --flow-violet-soft: rgb(185 110 223 / 0.5);
+  --flow-green: #4ade80;
+  font-family: var(--font-poppins);
+}
+
+.agent-flow .flow-edge {
+  fill: none;
+  stroke: var(--flow-idle);
+  stroke-width: 1.5;
+  transition: stroke 0.5s ease;
+}
+.agent-flow .flow-edge[data-state="done"] {
+  stroke: var(--flow-violet-soft);
+}
+.agent-flow .flow-edge[data-state="ok"] {
+  stroke: rgb(74 222 128 / 0.6);
+}
+.agent-flow .flow-edge[data-state="active"] {
+  stroke: var(--flow-violet);
+  stroke-dasharray: 5 5;
+  animation: flow-dash 0.7s linear infinite;
+}
+
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+.agent-flow .flow-node .card {
+  fill: rgb(14 12 28 / 0.92);
+  stroke: var(--flow-idle);
+  stroke-width: 1.2;
+  transition:
+    stroke 0.5s ease,
+    fill 0.5s ease,
+    filter 0.5s ease;
+}
+.agent-flow .flow-node[data-state="done"] .card {
+  stroke: var(--flow-violet-soft);
+}
+.agent-flow .flow-node[data-state="active"] .card {
+  stroke: var(--flow-violet);
+  fill: rgb(60 9 108 / 0.55);
+  filter: drop-shadow(0 0 8px rgb(157 78 221 / 0.55));
+}
+.agent-flow .flow-node[data-state="ok"] .card {
+  stroke: var(--flow-green);
+  fill: rgb(20 83 45 / 0.35);
+  filter: drop-shadow(0 0 6px rgb(74 222 128 / 0.35));
+}
+
+.agent-flow .title {
+  fill: rgb(156 156 180);
+  font-size: 12.5px;
+  font-weight: 600;
+  transition: fill 0.5s ease;
+}
+.agent-flow .flow-node:not([data-state="idle"]) .title {
+  fill: #f5ecff;
+}
+.agent-flow .flow-node[data-state="ok"] .title {
+  fill: #bbf7d0;
+}
+.agent-flow .caption {
+  fill: rgb(156 156 180);
+  font-size: 10.5px;
+}
+
+/* Subtareas numeradas (en el orquestador y en cada subagente) */
+.agent-flow .flow-subtask {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.agent-flow .flow-subtask[data-visible="true"] {
+  opacity: 1;
+}
+.agent-flow .flow-subtask circle,
+.agent-flow .flow-packet circle {
+  fill: var(--flow-violet);
+}
+.agent-flow .flow-subtask text,
+.agent-flow .flow-packet text {
+  fill: #12002b;
+  font-size: 10px;
+  font-weight: 700;
+}
+.agent-flow .flow-packet circle {
+  filter: drop-shadow(0 0 5px rgb(224 170 255 / 0.9));
+}
+.agent-flow .flow-packet--ok circle {
+  fill: var(--flow-green);
+  filter: drop-shadow(0 0 5px rgb(74 222 128 / 0.9));
+}
+
+/* Herramienta del subagente */
+.agent-flow .flow-tool rect {
+  fill: rgb(96 165 250 / 0.06);
+  stroke: rgb(96 165 250 / 0.25);
+  transition:
+    fill 0.4s ease,
+    stroke 0.4s ease;
+}
+.agent-flow .flow-tool text {
+  fill: rgb(147 197 253 / 0.6);
+  font-size: 10.5px;
+  transition: fill 0.4s ease;
+}
+.agent-flow .flow-tool[data-state="active"] rect {
+  fill: rgb(96 165 250 / 0.2);
+  stroke: rgb(147 197 253 / 0.9);
+  animation: flow-tool-pulse 1.1s ease-in-out infinite;
+}
+.agent-flow .flow-tool[data-state="active"] text {
+  fill: #dbeafe;
+}
+.agent-flow .flow-tool[data-state="done"] text {
+  fill: rgb(147 197 253 / 0.8);
+}
+
+@keyframes flow-tool-pulse {
+  50% {
+    fill: rgb(96 165 250 / 0.32);
+  }
+}
+
+/* Progreso mientras el subagente trabaja y ✓ al verificarse */
+.agent-flow .flow-track {
+  fill: rgb(255 255 255 / 0.08);
+  transition: opacity 0.3s ease;
+}
+.agent-flow .flow-track[data-hidden="true"] {
+  opacity: 0;
+}
+.agent-flow .flow-progress {
+  fill: var(--flow-violet);
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: flow-progress ease-in-out forwards;
+}
+
+@keyframes flow-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.agent-flow .flow-verified {
+  fill: var(--flow-green);
+  font-size: 10.5px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.agent-flow .flow-verified[data-visible="true"] {
+  opacity: 1;
+}
+
+.agent-flow .flow-check {
+  fill: none;
+  stroke: var(--flow-idle);
+  stroke-width: 1.3;
+  transition:
+    fill 0.3s ease,
+    stroke 0.3s ease;
+}
+.agent-flow .flow-check[data-visible="true"] {
+  fill: var(--flow-green);
+  stroke: var(--flow-green);
+}
+.agent-flow .flow-check-mark {
+  fill: none;
+  stroke: #052e16;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.agent-flow .flow-check-mark[data-visible="true"] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-flow .flow-edge[data-state="active"],
+  .agent-flow .flow-tool[data-state="active"] rect {
+    animation: none;
+  }
+  .agent-flow .flow-progress {
+    animation-duration: 0.01s !important;
   }
 }

@@ -141,12 +141,21 @@ export const ContactContainer = () => {
   return (
     <div
       ref={containerRef}
-      className={`anim-about-text filter-blur-3xl relative grid overflow-hidden rounded-xl border-2 border-white/5 bg-transparent ${isMobile ? "grid-cols-1 grid-rows-2" : "grid-cols-2"}`}
+      className={`anim-about-text filter-blur-3xl relative grid overflow-hidden rounded-xl border-2 border-white/5 bg-transparent ${isMobile ? "grid-cols-1 grid-rows-2 pb-24" : "grid-cols-2"}`}
     >
       {/* Olas de fondo: cada una es su propio <svg> y se anima la caja completa
           con transform (compuesto en GPU). Animar elementos dentro de un SVG
           recalculaba su layout en cada frame. */}
-      <div className="contact-waves absolute top-0 left-0 z-[-1] h-full w-full overflow-hidden bg-gradient-to-bl from-cbpbg-50 via-cbpbg-500/20 to-transparent">
+      {/* En móvil las olas (con la canoa) ocupan una franja inferior de alto
+          fijo: así la canoa navega bajo el botón Enviar en vez de sobre los
+          campos. El fondo, con el degradado y los pájaros en el cielo, sigue
+          cubriendo toda la tarjeta (es su contenedor para las unidades cq*). */}
+      <div className="[container-type:size] absolute inset-0 z-[-1] overflow-hidden bg-gradient-to-bl from-cbpbg-50 via-cbpbg-500/20 to-transparent">
+        <Birds />
+      </div>
+      <div
+        className={`contact-waves absolute bottom-0 left-0 z-[-1] w-full overflow-hidden ${isMobile ? "h-[440px]" : "h-full"}`}
+      >
         <svg className="absolute h-0 w-0" aria-hidden="true">
           <defs>
             <linearGradient id="bg">
@@ -189,10 +198,9 @@ export const ContactContainer = () => {
             <use href="#wave" opacity=".9" />
           </g>
         </svg>
-        {/* Canoa sobre la ola delantera y pájaros en el cielo: su altura e
-            inclinación siguen la superficie de la ola (ver index.css). */}
+        {/* Canoa sobre la ola delantera: su altura e inclinación siguen la
+            superficie de la ola (ver index.css). */}
         <Canoe />
-        <Birds />
       </div>
       <div
         className={`ring-component absolute ${isMobile ? "-top-35 -left-35 h-100 w-100 blur-xl" : "-top-15 -left-15 h-64 w-64 blur-md"} -z-1 rounded-full border-[15px] border-cbpviolet-500/50`}
@@ -220,8 +228,8 @@ export const ContactContainer = () => {
         onFocus={preloadEmailJs}
         className={`z-50 grid grid-cols-2 gap-6 rounded-xl ${isMobile ? "px-5 pb-5" : "p-8"} [&>div]:flex [&>div]:w-full [&>div]:items-center [&>div]:pl-2 [&>div,&>span>textarea]:rounded-lg [&>div,&>span>textarea]:border [&>div,&>span>textarea]:border-white/15 [&>div,&>span>textarea]:shadow-[inset_0px_0px_20px_rgba(255,255,255,0.1)] [&>div>.form-icon]:text-white/50 [&>div>input]:p-3 [&>div>input,&>span>textarea]:w-full [&>div>input,&>span>textarea]:bg-transparent [&>div>input,&>span>textarea]:outline-none [&>div>input,&>span>textarea]:placeholder:text-white/50 [&>div>input,&>span>textarea]:autofill:bg-transparent ${userData.name !== "" ? "[&>div:nth-child(1)>input,&>div:nth-child(1)>.form-icon]:text-white/90" : ""} ${userData.email !== "" ? "[&>div:nth-child(2)>input,&>div:nth-child(2)>.form-icon]:text-white/90" : ""} ${userData.subject !== "" ? "[&>div:nth-child(3)>input,&>div:nth-child(3)>.form-icon]:text-white/90" : ""} ${userData.message !== "" ? "[&>div:nth-child(4)>textarea]:text-white/90" : ""} ${userData.name !== "" ? "[&>div:nth-child(1)]:border-white/25" : ""} ${userData.email !== "" ? "[&>div:nth-child(2)]:border-white/25" : ""} ${userData.subject !== "" ? "[&>div:nth-child(3)]:border-white/25" : ""} ${userData.message !== "" ? "[&>span>textarea]:border-white/25" : ""} ${isMobile ? "row-start-2 row-end-3" : ""}`}
       >
-        <div className={` ${isMobile ? "col-span-2" : ""}`}>
-          <FaRegUser className={`form-icon min-h-4 min-w-4`} />
+        <div className={`fx-focus ${isMobile ? "col-span-2" : ""}`}>
+          <FaRegUser className="form-icon fx-icon fx-pop min-h-4 min-w-4" />
           <label htmlFor="contact-name" className="sr-only">
             Nombre
           </label>
@@ -240,8 +248,8 @@ export const ContactContainer = () => {
             onChange={handleChange}
           />
         </div>
-        <div className={` ${isMobile ? "col-span-2" : ""}`}>
-          <MdOutlineEmail className="form-icon min-h-4 min-w-4" />
+        <div className={`fx-focus ${isMobile ? "col-span-2" : ""}`}>
+          <MdOutlineEmail className="form-icon fx-icon fx-pop min-h-4 min-w-4" />
           <label htmlFor="contact-email" className="sr-only">
             Email
           </label>
@@ -261,8 +269,8 @@ export const ContactContainer = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="col-span-2">
-          <MdOutlineSubject className="form-icon min-h-4 min-w-4" />
+        <div className="fx-focus col-span-2">
+          <MdOutlineSubject className="form-icon fx-icon fx-pop min-h-4 min-w-4" />
           <label htmlFor="contact-subject" className="sr-only">
             Asunto
           </label>
@@ -317,7 +325,7 @@ export const ContactContainer = () => {
             />
           )}
           {sended && (
-            <SendedComponent message="Mensaje enviado. Recibirás una confirmación en tu correo." />
+            <SendedComponent message="Revisa tu correo, te dejé un mensaje 😁✌️" />
           )}
         </span>
         {/* Honeypot: fuera de pantalla (no display:none, que algunos bots
@@ -341,7 +349,7 @@ export const ContactContainer = () => {
         <button
           type="submit"
           disabled={loading}
-          className="col-span-2 flex w-fit cursor-pointer items-center justify-center gap-2 rounded-md border border-cbpbg-50 bg-cbpbg-500/50 px-4 py-2 shadow-[inset_0px_0px_10px_rgba(255,255,255,0.1)] transition duration-300 hover:bg-cbpbg-500/75 disabled:cursor-wait [&:hover>.send-icon]:-rotate-35"
+          className="fx-trigger col-span-2 flex w-fit cursor-pointer items-center justify-center gap-2 rounded-md border border-cbpbg-50 bg-cbpbg-500/50 px-4 py-2 shadow-[inset_0px_0px_10px_rgba(255,255,255,0.1)] transition duration-300 hover:bg-cbpbg-500/75 disabled:cursor-wait"
         >
           {sended ? (
             <>
@@ -356,7 +364,7 @@ export const ContactContainer = () => {
           ) : (
             <>
               Enviar
-              <IoMdSend className="send-icon transition-transform duration-300" />
+              <IoMdSend className="fx-icon fx-launch" />
             </>
           )}
         </button>
@@ -372,8 +380,8 @@ export const ContactContainer = () => {
             <div
               className={`flex flex-col items-center ${isMobile ? "gap-4" : "gap-2"}`}
             >
-              <div className="flex items-center gap-2 text-2xl">
-                <IoLocationOutline className="text-cbpviolet-500" />
+              <div className="fx-trigger flex items-center gap-2 text-2xl">
+                <IoLocationOutline className="fx-icon fx-drop text-cbpviolet-500" />
                 <p className="bg-gradient-to-l from-cbpviolet-200 to-cbpviolet-400 bg-clip-text text-transparent">
                   El Salvador
                 </p>
@@ -388,21 +396,21 @@ export const ContactContainer = () => {
             <div className="flex items-center gap-3">
               <a
                 href="https://www.linkedin.com/in/carlos-benitez-profile/"
-                className="blur-text-git text-[34px] text-cbpgray-300/70 hover:text-cbpgray-300"
+                className="blur-text-git fx-trigger text-[34px] text-cbpgray-300/70 hover:text-cbpgray-300"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Linkedin"
               >
-                <CiLinkedin />
+                <CiLinkedin className="fx-icon fx-pop" />
               </a>
               <a
                 href="https://github.com/carlosBenitez0"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="blur-text-git text-[28px] text-cbpgray-300/70 hover:text-cbpgray-300"
+                className="blur-text-git fx-trigger text-[28px] text-cbpgray-300/70 hover:text-cbpgray-300"
                 aria-label="Github"
               >
-                <FaGithub />
+                <FaGithub className="fx-icon fx-spin" />
               </a>
 
               <a

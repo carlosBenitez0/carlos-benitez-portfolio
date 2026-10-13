@@ -87,13 +87,25 @@ export const technologies = {
       logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752592236/mysql_qiqkye.png",
       url: "https://www.mysql.com/",
     },
+    // Logos locales (public/tech): la CSP solo permite imágenes propias y
+    // de unos pocos orígenes
+    {
+      name: "PostgreSQL",
+      logo: "/tech/postgresql.svg",
+      url: "https://www.postgresql.org/",
+    },
+    {
+      name: "Prisma",
+      logo: "/tech/prisma.svg",
+      url: "https://www.prisma.io/",
+    },
+    {
+      name: "Supabase",
+      logo: "/tech/supabase.svg",
+      url: "https://supabase.com/",
+    },
   ],
   learning: [
-    {
-      name: "Node.js",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595842/nodejs_gzydnb.png",
-      url: "https://nodejs.org/en",
-    },
     {
       name: "Docker",
       logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595840/docker-removebg-preview_emgyto.png",
@@ -103,11 +115,6 @@ export const technologies = {
       name: "AWS",
       logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595841/aws_wm6xcq.png",
       url: "https://aws.amazon.com/es/free/?trk=8fa18207-f2c2-4587-81a1-f2a3648571b3&sc_channel=ps&ef_id=Cj0KCQjw-NfDBhDyARIsAD-ILeBZtjIe_wRekhY3dR-KcCwtxIHRSKVP5bPQwbZqppinc4v2dq-QISIaAgKOEALw_wcB:G:s&s_kwcid=AL!4422!3!647999789205!e!!g!!aws!19685287144!146461596896&gad_campaignid=19685287144&gbraid=0AAAAADjHtp_AsCOnQfE2LCnNpHXe20rkt&gclid=Cj0KCQjw-NfDBhDyARIsAD-ILeBZtjIe_wRekhY3dR-KcCwtxIHRSKVP5bPQwbZqppinc4v2dq-QISIaAgKOEALw_wcB&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all",
-    },
-    {
-      name: "Material UI",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595840/mui-removebg-preview_cqap8o.png",
-      url: "https://mui.com/",
     },
   ],
   tools: [
@@ -135,6 +142,21 @@ export const technologies = {
       name: "Terminal",
       logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752601285/comandos-terminal_zlk2fv.webp",
       url: "https://learn.microsoft.com/es-es/windows-server/administration/windows-commands/cmd",
+    },
+    {
+      name: "Warp",
+      logo: "/tech/warp.svg",
+      url: "https://www.warp.dev/",
+    },
+    {
+      name: "Wispr Flow",
+      logo: "/tech/wispr-flow.svg",
+      url: "https://wisprflow.ai/",
+    },
+    {
+      name: "n8n",
+      logo: "/tech/n8n.svg",
+      url: "https://n8n.io/",
     },
     {
       name: "Windsurf",

@@ -65,7 +65,7 @@ test.describe("CSP en uso real", () => {
       .fill("Hola, me interesa tu trabajo.");
     await page.getByRole("button", { name: /enviar/i }).click();
     // El spinner de "Enviando" también es role=status: esperar el texto de éxito
-    await expect(page.getByRole("status")).toContainText("Mensaje enviado", {
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
       timeout: 10_000,
     });
 

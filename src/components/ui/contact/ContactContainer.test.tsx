@@ -42,7 +42,7 @@ describe("ContactContainer", () => {
     await submit();
 
     expect(send).toHaveBeenCalledTimes(1);
-    expect(screen.getByText(/Mensaje enviado/)).toBeInTheDocument();
+    expect(screen.getByText(/te dejé un mensaje/)).toBeInTheDocument();
     expect(
       screen.queryByText(
         "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.",
@@ -62,7 +62,7 @@ describe("ContactContainer", () => {
         "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.",
       ),
     ).toBeInTheDocument();
-    expect(screen.queryByText(/Mensaje enviado/)).toBeNull();
+    expect(screen.queryByText(/te dejé un mensaje/)).toBeNull();
     expect(screen.getByPlaceholderText("Mensaje")).toHaveValue(
       "Hola, me interesa tu trabajo.",
     );
@@ -106,7 +106,7 @@ describe("ContactContainer anti-abuso", () => {
     await submit();
 
     expect(send).not.toHaveBeenCalled();
-    expect(screen.getByText(/Mensaje enviado/)).toBeInTheDocument();
+    expect(screen.getByText(/te dejé un mensaje/)).toBeInTheDocument();
   });
 
   it("el honeypot queda fuera del orden de tabulación y de los lectores", () => {
@@ -180,6 +180,6 @@ describe("ContactContainer accesibilidad", () => {
     render(<ContactContainer />);
     fill();
     await submit();
-    expect(screen.getByRole("status")).toHaveTextContent(/Mensaje enviado/);
+    expect(screen.getByRole("status")).toHaveTextContent(/te dejé un mensaje/);
   });
 });

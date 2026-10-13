@@ -37,7 +37,7 @@ test.describe("formulario de contacto", () => {
     await fillForm(page);
     await submit(page);
 
-    await expect(page.getByRole("status")).toContainText("Mensaje enviado", {
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
       timeout: 10_000,
     });
     await expect(page.getByRole("alert")).toHaveCount(0);
@@ -56,7 +56,7 @@ test.describe("formulario de contacto", () => {
     await submit(page);
 
     // EmailJS se descarga al enviar: esperar el resultado, no un tiempo fijo
-    await expect(page.getByRole("status")).toContainText("Mensaje enviado", {
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
       timeout: 10_000,
     });
     expect(calls[0].template_params).toEqual({
@@ -95,7 +95,7 @@ test.describe("formulario de contacto", () => {
     await fillForm(page);
     await submit(page);
 
-    await expect(page.getByRole("status")).toContainText("Mensaje enviado", {
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
       timeout: 10_000,
     });
     await expect(page.getByRole("alert")).toHaveCount(0);
@@ -110,7 +110,7 @@ test.describe("formulario de contacto", () => {
     await page.locator('input[name="company"]').fill("ACME", { force: true });
     await submit(page);
 
-    await expect(page.getByRole("status")).toContainText("Mensaje enviado", {
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
       timeout: 10_000,
     });
     await page.waitForTimeout(500);
@@ -128,7 +128,7 @@ test.describe("formulario de contacto", () => {
     await fillForm(page);
     await submit(page);
     // El spinner de "Enviando" también es role=status: esperar el texto de éxito
-    await expect(page.getByRole("status")).toContainText("Mensaje enviado", {
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
       timeout: 10_000,
     });
 
