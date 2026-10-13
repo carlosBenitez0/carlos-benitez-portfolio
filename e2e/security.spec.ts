@@ -21,6 +21,8 @@ test.describe("cabeceras de seguridad", () => {
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
+      // El formulario envía a /api/contact: ningún origen externo
+      "connect-src 'self';",
     ]) {
       expect(csp).toContain(directive);
     }
