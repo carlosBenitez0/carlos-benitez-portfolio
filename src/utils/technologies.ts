@@ -182,6 +182,11 @@ export const technologies = {
       url: "https://www.notion.com/",
     },
     {
+      name: "Slack",
+      logo: "/tech/slack.svg",
+      url: "https://slack.com/",
+    },
+    {
       name: "Responsively",
       logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596027/responsively_s0vuun.webp",
       url: "https://responsively.app/",
