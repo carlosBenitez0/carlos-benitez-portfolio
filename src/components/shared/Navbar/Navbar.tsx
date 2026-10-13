@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { links as siteLinks } from "../../../content/site";
 import { RiHomeLine } from "react-icons/ri";
 import { IoCodeWorkingOutline } from "react-icons/io5";
 import { IoIosInformationCircleOutline } from "react-icons/io";
@@ -275,7 +276,7 @@ export const Navbar = () => {
         className={`fade-in-menu relative flex items-center rounded-full border border-white/7 backdrop-blur-sm ${isMobile ? "justify-center gap-1 px-2" : "gap-5 px-6 py-4"} ${!isMobile ? "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-full before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-100" : ""}`}
       >
         <a
-          href="https://www.linkedin.com/in/carlos-benitez-profile/"
+          href={siteLinks.linkedin}
           className={`blur-text-git fx-trigger text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[22px]" : "text-[22px]"}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -284,7 +285,7 @@ export const Navbar = () => {
           <CiLinkedin className="fx-icon fx-pop" />
         </a>
         <a
-          href="https://github.com/carlosBenitez0"
+          href={siteLinks.github}
           target="_blank"
           rel="noopener noreferrer"
           className={`blur-text-git fx-trigger text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[18px]" : "text-[19px]"}`}
@@ -293,7 +294,7 @@ export const Navbar = () => {
           <FaGithub className="fx-icon fx-spin" />
         </a>
         <a
-          href="/ES - Carlos Francisco Benítez Quintanilla - CV.pdf"
+          href={siteLinks.cv}
           download
           className={`blur-text-git fx-trigger text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[20px]" : "text-[22px]"}`}
           aria-label="Curriculum vitae"
