@@ -4,7 +4,7 @@ import { SiteAnalytics } from "./SiteAnalytics";
 
 const analyticsScripts = () =>
   [...document.querySelectorAll("script")].filter((s) =>
-    /_vercel\/insights|vercel-scripts/.test(s.src),
+    /_vercel\/(speed-)?insights|vercel-scripts/.test(s.src),
   );
 
 afterEach(() => {
@@ -17,8 +17,14 @@ describe("SiteAnalytics", () => {
     expect(analyticsScripts()).toHaveLength(0);
   });
 
-  it("en un deploy de Vercel carga el script de analítica", () => {
+  it("en un deploy de Vercel carga Web Analytics y Speed Insights", () => {
     render(<SiteAnalytics vercelEnv="production" />);
-    expect(analyticsScripts()).toHaveLength(1);
+    // En tests carga las versiones de depuración (CDN); en producción las
+    // mismas rutas cuelgan de /_vercel/ en el propio dominio
+    const sources = analyticsScripts().map((s) => s.src);
+    expect(sources).toHaveLength(2);
+    expect(
+      sources.filter((src) => src.includes("speed-insights")),
+    ).toHaveLength(1);
   });
 });

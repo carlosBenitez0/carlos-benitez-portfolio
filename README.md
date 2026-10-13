@@ -12,7 +12,7 @@ Portafolio personal de Carlos Benítez, desarrollador web: proyectos, tecnologí
 - Formulario de contacto: EmailJS
 - Tests: Vitest + Testing Library (unitarios) y Playwright + axe (E2E y accesibilidad)
 - Despliegue: Vercel
-- Analítica: Vercel Web Analytics (sin cookies). Solo se carga en deploys de Vercel; hay que activarla una vez en el panel del proyecto → _Analytics_.
+- Analítica: Vercel Web Analytics (visitas, sin cookies) y Speed Insights (Core Web Vitals reales). Solo se cargan en deploys de Vercel; hay que activar cada una una vez en el panel del proyecto → _Analytics_ y _Speed Insights_.
 
 ## Comandos
 
@@ -40,6 +40,22 @@ Los hooks se instalan solos con `npm install` (`simple-git-hooks`). Para saltarl
 
 Dependabot revisa las dependencias npm y las GitHub Actions cada semana.
 
+## SEO y lectura por LLMs
+
+Todo el contenido vive en `src/content/site.ts`. En el build, `vite-plugins/seoContent.ts` genera a partir de ese archivo:
+
+- **HTML estático dentro de `#root`**, para buscadores y agentes que no ejecutan JavaScript. React lo reemplaza al montar. Mientras tanto queda oculto a la vista pero es accesible; sin JavaScript, `public/noscript.css` lo muestra.
+- **JSON-LD** (`ProfilePage`, `Person`, `WebSite`) para resultados enriquecidos.
+- **`/llms.txt`** ([llmstxt.org](https://llmstxt.org), v2) e **`/index.md`**, la página completa en Markdown. Se anuncian con `<link rel="describedby">`, con `<link rel="alternate" type="text/markdown">` y con la cabecera `Link`.
+- **`/sitemap.xml`**, con la fecha del build.
+
+Para cambiar textos, proyectos o enlaces, edita `src/content/site.ts`. El texto de "Sobre mí" también está en `components/ui/AboutText.tsx` con su formato; `AboutText.test.tsx` avisa si las dos versiones dejan de coincidir.
+
+**Buscadores (una sola vez):**
+
+1. En [Google Search Console](https://search.google.com/search-console), agrega la propiedad con prefijo de URL, elige _Etiqueta HTML_ y pega el código en el comentario preparado en `index.html`. Despliega, verifica y envía `sitemap.xml`.
+2. En [Bing Webmaster Tools](https://www.bing.com/webmasters), usa _Import from Google Search Console_: importa el sitio ya verificado y su sitemap.
+
 ## Seguridad
 
 - **Cabeceras** (`vercel.json`): CSP estricta (solo los orígenes en uso), HSTS, `nosniff`, bloqueo de iframes, `Referrer-Policy`, `Permissions-Policy` y COOP. `vite preview` sirve las mismas cabeceras, así que los E2E prueban la política real.
@@ -63,11 +79,13 @@ src/
     shared/        Navbar, Header, Footer
     ui/            Secciones y componentes (proyectos, tecnologías, IA, contacto)
   hooks/           useIsMobile, usePauseOffscreenAnimations
-  utils/           Datos (proyectos, tecnologías), validación y envío del formulario,
+  content/         Fuente única del contenido (app, HTML estático, llms.txt, index.md)
+  utils/           Tecnologías, validación y envío del formulario,
                    visibilidad de secciones
   test/            Setup de Vitest y simulaciones de APIs del navegador
+vite-plugins/      seoContent: genera HTML estático, JSON-LD, llms.txt, index.md y sitemap
 e2e/               Tests de Playwright (portafolio, contacto, seguridad y accesibilidad)
-vercel.json        Cabeceras de seguridad de producción
+vercel.json        Cabeceras de producción (seguridad, llms.txt, index.md)
 ```
 
 ## Rendimiento
