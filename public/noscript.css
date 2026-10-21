@@ -51,7 +51,7 @@ body {
 /* Sin JavaScript no hay preferencia guardada: se sigue al sistema */
 @media (prefers-color-scheme: light) {
   body {
-    background: #faf7ff;
+    background: #f4effc;
   }
   #root .static-content {
     color: #2e2640;

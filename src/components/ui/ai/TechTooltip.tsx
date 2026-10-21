@@ -40,7 +40,7 @@ export const TechTooltip = () => {
             isVisible && (
               <motion.button
                 onClick={handleButtonClick}
-                className="flex cursor-pointer items-center justify-center rounded-full border-2 border-cbpviolet-500 bg-cbpviolet-500 shadow-[0_0_20px_rgba(139,92,246,1)] transition-all duration-300 hover:border-cbpviolet-600 hover:bg-cbpviolet-600"
+                className="flex cursor-pointer items-center justify-center rounded-full border-2 border-cbpviolet-500 bg-cbpviolet-500 shadow-[0_0_20px_rgba(139,92,246,1)] transition-all duration-300 hover:border-cbpviolet-600 hover:bg-cbpviolet-600 light:shadow-[0_4px_12px_-4px_rgba(90,24,154,0.45)]"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Mostrar información"

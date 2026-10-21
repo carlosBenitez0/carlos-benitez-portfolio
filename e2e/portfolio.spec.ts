@@ -263,7 +263,7 @@ test.describe("tema claro y oscuro", () => {
     );
 
   for (const [scheme, background] of [
-    ["light", "rgb(250, 247, 255)"],
+    ["light", "rgb(244, 239, 252)"],
     ["dark", "rgb(5, 0, 16)"],
   ] as const) {
     test.describe(`sistema en ${scheme}`, () => {
@@ -296,13 +296,13 @@ test.describe("tema claro y oscuro", () => {
     ).toBeVisible();
     await expect(
       page.locator('meta[name="theme-color"]').first(),
-    ).toHaveAttribute("content", "#faf7ff");
+    ).toHaveAttribute("content", "#f4effc");
 
     // El sistema sigue en oscuro, pero manda la elección guardada
     await page.reload({ waitUntil: "domcontentloaded" });
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    expect(await backgroundOf(page)).toBe("rgb(250, 247, 255)");
+    expect(await backgroundOf(page)).toBe("rgb(244, 239, 252)");
   });
 });
 

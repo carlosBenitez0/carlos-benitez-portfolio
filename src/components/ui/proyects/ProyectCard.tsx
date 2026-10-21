@@ -68,7 +68,7 @@ export const ProyectCard = ({
   return (
     <div
       // ref={proyectCardRef}
-      className={`proyect-card-anim grid-areas-[image_text] relative grid h-full grid-rows-[auto_1fr] border-cbpbg-400 bg-cbpbg-700 text-center ${isMobile ? "rounded-xl border-2" : "rounded-2xl border-4"}`}
+      className={`proyect-card-anim project-card grid-areas-[image_text] relative grid h-full grid-rows-[auto_1fr] border-cbpbg-400 bg-cbpbg-700 text-center ${isMobile ? "rounded-xl border-2" : "rounded-2xl border-4"}`}
     >
       {/* Marco: borde con degradado animado en los colores de la captura
           (.project-frame), vidrio esmerilado encima y la captura con sombra */}
@@ -77,7 +77,7 @@ export const ProyectCard = ({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Ver el proyecto ${name} (${state})`}
-        className={`grid-area-image project-frame relative z-10 block ${isMobile ? "m-1.5 rounded-lg p-px" : "m-3 rounded-xl p-[2px]"}`}
+        className={`grid-area-image project-frame relative z-10 block ${isMobile ? "m-1.5 rounded-[10px] p-[3px]" : "m-3 rounded-2xl p-[5px]"}`}
         style={
           {
             "--frame-c1": palette[0],
@@ -87,7 +87,7 @@ export const ProyectCard = ({
         }
       >
         <span
-          className={`project-frame-glass block ${isMobile ? "rounded-[7px] p-1" : "rounded-[10px] p-2"}`}
+          className={`project-frame-glass block ${isMobile ? "rounded-[7px] p-1" : "rounded-[11px] p-2"}`}
         >
           <span
             className={`project-frame-shot relative block overflow-hidden ${isMobile ? "rounded-[5px]" : "rounded-lg"}`}

@@ -24,7 +24,7 @@
       metas[i].removeAttribute("media");
       metas[i].setAttribute(
         "content",
-        theme === "light" ? "#faf7ff" : "#050010",
+        theme === "light" ? "#f4effc" : "#050010",
       );
     }
   }
