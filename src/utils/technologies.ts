@@ -2,89 +2,90 @@ export const technologies = {
   frontend: [
     {
       name: "Next.js",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595378/nextjs-_1__x5jj0z.webp",
+      logo: "/tech/nextjs.svg",
+      invertInLight: true,
       url: "https://nextjs.org/",
     },
     {
       name: "React",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595376/react-removebg-preview_izfqen.webp",
+      logo: "/tech/react.svg",
       url: "https://reactjs.org/",
     },
     {
       name: "TypeScript",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595380/ts_xcnazx.webp",
+      logo: "/tech/typescript.svg",
       url: "https://typescriptlang.org/",
     },
     {
       name: "JavaScript",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595372/js_daecll.webp",
+      logo: "/tech/javascript.svg",
       url: "https://javascript.com/",
     },
     {
       name: "HTML",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595373/html_sd3kys.webp",
+      logo: "/tech/html.svg",
       url: "https://developer.mozilla.org/es/docs/Web/HTML",
     },
     {
       name: "CSS",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595374/css_1_m8dlvi.webp",
+      logo: "/tech/css.svg",
       url: "https://developer.mozilla.org/es/docs/Web/CSS",
     },
     {
       name: "Tailwind CSS",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595375/tailwind_1_qtexec.webp",
+      logo: "/tech/tailwindcss.svg",
       url: "https://tailwindcss.com/",
     },
     {
       name: "Zustand",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595372/zustad-removebg-preview_fesqhw.webp",
+      logo: "/tech/zustand.webp",
       url: "https://zustand-demo.pmnd.rs/",
     },
     {
       name: "Motion",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595377/Motion-removebg-preview_djimlg.webp",
+      logo: "/tech/motion.svg",
       url: "https://motion.dev/",
     },
     {
       name: "GSAP",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595379/gsap-removebg-preview_rhmi8f.webp",
+      logo: "/tech/gsap.webp",
       url: "https://greensock.com/",
     },
     {
       name: "React Icons",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752767595/react-icons_mkuggt.webp",
+      logo: "/tech/react-icons.svg",
       url: "https://react-icons.github.io/react-icons/",
     },
     {
       name: "React Bits",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752767658/Screenshot_2025-07-17_094603-removebg-preview_hpmkce.webp",
+      logo: "/tech/react-bits.webp",
       url: "https://reactbits.dev/",
     },
   ],
   backend: [
     {
       name: "Python",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752591921/python-removebg-preview_h1meky.png",
+      logo: "/tech/python.svg",
       url: "https://www.python.org/",
     },
     {
       name: "FastAPI",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752591921/fastapi-removebg-preview_aei1sz.png",
+      logo: "/tech/fastapi.svg",
       url: "https://fastapi.tiangolo.com/",
     },
     {
       name: "PHP",
-      logo: "https://www.php.net/images/logos/new-php-logo.svg",
+      logo: "/tech/php.svg",
       url: "https://www.php.net/",
     },
     {
       name: "Firebase",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752591921/firebase-removebg-preview_xexbtb.png",
+      logo: "/tech/firebase.svg",
       url: "https://firebase.google.com/?gad_source=1&gad_campaignid=12302357971&gbraid=0AAAAADpUDOg6MI-sYMvQA9T7oKRHTdrfU&gclid=Cj0KCQjw-NfDBhDyARIsAD-ILeDschk-NyfhmC6BJxyS_AD1yBUc8hbQjk56UltdY_fk-g_RwqtjJAgaAm7uEALw_wcB&gclsrc=aw.ds&hl=es-419",
     },
     {
       name: "MySQL",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752592236/mysql_qiqkye.png",
+      logo: "/tech/mysql.svg",
       url: "https://www.mysql.com/",
     },
     // Logos locales (public/tech): la CSP solo permite imágenes propias y
@@ -110,39 +111,40 @@ export const technologies = {
   learning: [
     {
       name: "Docker",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595840/docker-removebg-preview_emgyto.png",
+      logo: "/tech/docker.svg",
       url: "https://www.docker.com/",
     },
     {
       name: "AWS",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595841/aws_wm6xcq.png",
+      logo: "/tech/aws.svg",
       url: "https://aws.amazon.com/es/free/?trk=8fa18207-f2c2-4587-81a1-f2a3648571b3&sc_channel=ps&ef_id=Cj0KCQjw-NfDBhDyARIsAD-ILeBZtjIe_wRekhY3dR-KcCwtxIHRSKVP5bPQwbZqppinc4v2dq-QISIaAgKOEALw_wcB:G:s&s_kwcid=AL!4422!3!647999789205!e!!g!!aws!19685287144!146461596896&gad_campaignid=19685287144&gbraid=0AAAAADjHtp_AsCOnQfE2LCnNpHXe20rkt&gclid=Cj0KCQjw-NfDBhDyARIsAD-ILeBZtjIe_wRekhY3dR-KcCwtxIHRSKVP5bPQwbZqppinc4v2dq-QISIaAgKOEALw_wcB&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all",
     },
   ],
   tools: [
     {
       name: "VSCode",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596040/vscode_p5tyvm.webp",
+      logo: "/tech/vscode.svg",
       url: "https://code.visualstudio.com/",
     },
     {
       name: "Git",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596036/git_1_dicrib.webp",
+      logo: "/tech/git.svg",
       url: "https://git-scm.com/",
     },
     {
       name: "GitHub",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596598/github_lqzzzk.webp",
+      logo: "/tech/github.svg",
+      invertInLight: true,
       url: "https://github.com/",
     },
     {
       name: "npm",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596028/npm_sjlund.webp",
+      logo: "/tech/npm.svg",
       url: "https://www.npmjs.com/",
     },
     {
       name: "Terminal",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752601285/comandos-terminal_zlk2fv.webp",
+      logo: "/tech/terminal.svg",
       url: "https://learn.microsoft.com/es-es/windows-server/administration/windows-commands/cmd",
     },
     {
@@ -163,47 +165,49 @@ export const technologies = {
     },
     {
       name: "Windsurf",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596597/windsurf-removebg-preview_zz1xbq.webp",
+      logo: "/tech/windsurf.svg",
+      invertInLight: true,
       url: "https://windsurf.com/editor",
     },
     {
       name: "odoo",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Odoo_Official_Logo.png",
+      logo: "/tech/odoo.svg",
       url: "https://www.odoo.com/",
     },
     {
       name: "Figma",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752595374/figma_usw2oj.webp",
+      logo: "/tech/figma.svg",
       url: "https://www.figma.com/",
     },
     {
       name: "Postman",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596032/postman_pzyunt.webp",
+      logo: "/tech/postman.svg",
       url: "https://www.postman.com/",
     },
     {
       name: "Insomnia",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596291/insomnia-removebg-preview_ongwir.webp",
+      logo: "/tech/insomnia.svg",
       url: "https://insomnia.rest/",
     },
     {
       name: "Vercel",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596035/vercel_plfspr.webp",
+      logo: "/tech/vercel.svg",
+      invertInLight: true,
       url: "https://vercel.com/",
     },
     {
       name: "Netlify",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596293/netlify-removebg-preview_vhjebj.webp",
+      logo: "/tech/netlify.svg",
       url: "https://www.netlify.com/",
     },
     {
       name: "Cloudinary",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596034/cloudinary_hwkzpg.webp",
+      logo: "/tech/cloudinary.svg",
       url: "https://console.cloudinary.com/",
     },
     {
       name: "Notion",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596029/notion_bnadgu.webp",
+      logo: "/tech/notion.svg",
       url: "https://www.notion.com/",
     },
     {
@@ -213,7 +217,7 @@ export const technologies = {
     },
     {
       name: "Responsively",
-      logo: "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752596027/responsively_s0vuun.webp",
+      logo: "/tech/responsively.webp",
       url: "https://responsively.app/",
     },
   ],
