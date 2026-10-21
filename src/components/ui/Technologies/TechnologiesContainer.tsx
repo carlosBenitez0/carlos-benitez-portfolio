@@ -81,6 +81,7 @@ export const TechnologiesContainer = ({
               name={technology.name}
               logo={technology.logo}
               url={technology.url}
+              invertInLight={technology.invertInLight}
             />
           );
         })}

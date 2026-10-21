@@ -5,6 +5,8 @@ interface TechnologyProps {
   logo: string;
   url: string;
   classNames?: string;
+  // Para logos blancos, que desaparecen sobre el fondo claro
+  invertInLight?: boolean;
 }
 
 export const Technology = ({
@@ -12,6 +14,7 @@ export const Technology = ({
   logo,
   url,
   classNames,
+  invertInLight,
 }: TechnologyProps) => {
   const { isMobile } = useIsMobile();
   return (
@@ -25,7 +28,7 @@ export const Technology = ({
       <img
         src={logo}
         alt=""
-        className="fx-icon fx-lift aspect-square w-10 object-contain"
+        className={`fx-icon fx-lift aspect-square w-10 object-contain ${invertInLight ? "light:invert" : ""}`}
       />
       {/* Halo del color del fondo: las manchas de colores pasan por detrás; con el halo el
           texto mantiene contraste AA esté donde esté la mancha. */}
