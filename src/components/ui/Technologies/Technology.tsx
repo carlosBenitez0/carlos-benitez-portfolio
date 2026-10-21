@@ -27,10 +27,10 @@ export const Technology = ({
         alt=""
         className="fx-icon fx-lift aspect-square w-10 object-contain"
       />
-      {/* Halo oscuro: las manchas de colores pasan por detrás; con el halo el
+      {/* Halo del color del fondo: las manchas de colores pasan por detrás; con el halo el
           texto mantiene contraste AA esté donde esté la mancha. */}
       <p
-        className={`[text-shadow:0_0_2px_#050010,0_0_2px_#050010,0_0_4px_#050010] ${isMobile ? "text-[12px]" : ""}`}
+        className={`[text-shadow:0_0_2px_var(--color-cbpbg-900),0_0_2px_var(--color-cbpbg-900),0_0_4px_var(--color-cbpbg-900)] ${isMobile ? "text-[12px]" : ""}`}
       >
         {name}
       </p>

@@ -46,7 +46,7 @@ export const AIToolCard = ({
       className={`h-full transition-[opacity,translate] duration-500 ease-out motion-reduce:translate-y-0 ${revealed ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"}`}
     >
       {/* Efecto al pasar el mouse: sube 5px, sombra y borde violeta */}
-      <div className="group fx-trigger relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-700 bg-gray-800/80 p-4 transition-[translate,box-shadow,border-color] duration-200 ease-out hover:-translate-y-[5px] hover:border-[rgba(139,92,246,0.5)] hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_10px_10px_-5px_rgba(0,0,0,0.04)] motion-reduce:hover:translate-y-0 md:p-6">
+      <div className="group fx-trigger relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-700 bg-gray-800/80 p-4 transition-[translate,box-shadow,border-color] duration-200 ease-out hover:-translate-y-[5px] hover:border-[rgba(139,92,246,0.5)] hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_10px_10px_-5px_rgba(0,0,0,0.04)] motion-reduce:hover:translate-y-0 md:p-6 light:border-cbpgray-700 light:bg-cbpgray-950/80">
         {/* Efecto de gradiente que aparece al pasar el mouse */}
         <div className="absolute inset-0 bg-gradient-to-br from-cbpviolet-900/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 

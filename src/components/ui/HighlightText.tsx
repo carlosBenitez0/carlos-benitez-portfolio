@@ -10,7 +10,7 @@ const HighlightText = ({ children, shadowOpacity = 1 }: HighlightTextProps) => (
   <span
     className="text-cbpviolet-200"
     style={{
-      filter: `drop-shadow(0 0 5px rgba(157, 78, 221, ${shadowOpacity}))`,
+      filter: `drop-shadow(0 0 5px color-mix(in srgb, var(--highlight-glow) ${shadowOpacity * 100}%, transparent))`,
     }}
   >
     {children}

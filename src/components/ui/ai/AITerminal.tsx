@@ -212,7 +212,7 @@ const LineView = ({ item, typed }: { item: Line; typed?: string }) => {
       );
     case "add":
       return (
-        <div className="ml-5 bg-green-500/10 pl-2 text-green-300">
+        <div className="ml-5 bg-green-500/10 pl-2 text-green-300 light:text-green-800">
           <span className="mr-2 select-none">+</span>
           {text}
         </div>
@@ -226,7 +226,7 @@ const LineView = ({ item, typed }: { item: Line; typed?: string }) => {
       );
     case "ok":
       return (
-        <div className="mt-1 pl-5 text-green-400">
+        <div className="mt-1 pl-5 text-green-400 light:text-green-700">
           <span className="mr-2">✓</span>
           {text}
         </div>

@@ -52,8 +52,17 @@
    componentes. Las excepciones usan la variante light:. */
 @custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
+/* Colores de efectos que no son clases de Tailwind */
 :root {
   color-scheme: dark;
+
+  --hover-glow: rgb(255 255 255 / 0.1);
+  --hover-glow-strong: rgb(255 255 255 / 0.15);
+  --shiny-color: #b5b5b5b8;
+  --shiny-shine: rgb(255 255 255 / 0.8);
+  --highlight-glow: #9d4edd;
+  --state-done: #b5f2b5a5;
+  --state-wip: #feb555a5;
 }
 
 :root[data-theme="light"] {
@@ -95,18 +104,34 @@
   --color-cbpgray-50: #1a1428;
 
   --color-ink: #1a0b2e;
+
+  --hover-glow: rgb(123 44 191 / 0.1);
+  --hover-glow-strong: rgb(123 44 191 / 0.14);
+  --shiny-color: rgb(90 24 154 / 0.9);
+  --shiny-shine: rgb(255 255 255 / 0.9);
+  --highlight-glow: rgb(157 78 221 / 0.35);
+  --state-done: #1d7a3e;
+  --state-wip: #a3570a;
 }
 
 /* Píldoras del navbar. Colores en rgb (no color-mix) para que GSAP pueda
    interpolar el destello de entrada hasta ellos. */
 .navbar-pill {
-  --navbar-glow: rgb(255 255 255 / 0.1);
   background-color: rgb(10 14 26 / 0.7);
 }
 
 [data-theme="light"] .navbar-pill {
-  --navbar-glow: rgb(123 44 191 / 0.12);
   background-color: rgb(253 251 255 / 0.75);
+}
+
+/* Etiquetas de tecnología: el color de marca va en --tech. En claro se
+   oscurece para que el texto tenga contraste sobre fondo claro. */
+.tech-label {
+  color: var(--tech);
+}
+
+[data-theme="light"] .tech-label {
+  color: color-mix(in oklab, var(--tech) 50%, black);
 }
 
 @keyframes shine {
@@ -1622,6 +1647,117 @@
   .agent-flow .flow-progress {
     animation-duration: 0.01s !important;
   }
+}
+
+/* ================= Modo claro de los efectos en CSS =================
+   Mismas piezas que arriba, con sombras y rellenos pensados para fondo
+   claro (las sombras negras y los rellenos casi negros no funcionan ahí). */
+[data-theme="light"] .holo-face {
+  border-color: rgb(123 44 191 / 0.2);
+  box-shadow:
+    0 20px 40px -12px rgb(60 9 108 / 0.3),
+    0 0 40px -8px rgb(157 78 221 / 0.3);
+}
+
+[data-theme="light"] .holo-card:hover .holo-face {
+  box-shadow:
+    0 30px 50px -12px rgb(60 9 108 / 0.35),
+    0 0 60px -6px rgb(157 78 221 / 0.45);
+}
+
+[data-theme="light"] .holo-face--back {
+  background:
+    radial-gradient(
+      120% 90% at 100% 0%,
+      rgb(185 110 223 / 0.3),
+      transparent 60%
+    ),
+    radial-gradient(
+      90% 70% at 0% 100%,
+      rgb(224 170 255 / 0.45),
+      transparent 60%
+    ),
+    linear-gradient(rgb(60 9 108 / 0.05) 1px, transparent 1px) 0 0 / 100% 18px,
+    var(--color-cbpbg-700);
+}
+
+[data-theme="light"] .glass-sphere {
+  background:
+    radial-gradient(
+      circle at 50% 118%,
+      rgb(185 110 223 / 0.35),
+      transparent 52%
+    ),
+    radial-gradient(circle at 32% 24%, rgb(224 170 255 / 0.5), transparent 58%),
+    radial-gradient(
+      circle at 50% 45%,
+      rgb(242 217 255 / 0.4),
+      rgb(185 110 223 / 0.45) 100%
+    );
+}
+
+[data-theme="light"] .agent-flow {
+  --flow-idle: rgb(190 180 210);
+  --flow-violet: #7b2cbf;
+  --flow-violet-soft: rgb(123 44 191 / 0.45);
+  --flow-green: #16a34a;
+}
+[data-theme="light"] .agent-flow .flow-edge[data-state="ok"] {
+  stroke: rgb(22 163 74 / 0.6);
+}
+[data-theme="light"] .agent-flow .flow-node .card {
+  fill: rgb(255 255 255 / 0.92);
+}
+[data-theme="light"] .agent-flow .flow-node[data-state="active"] .card {
+  fill: rgb(242 217 255 / 0.9);
+  filter: drop-shadow(0 0 8px rgb(157 78 221 / 0.35));
+}
+[data-theme="light"] .agent-flow .flow-node[data-state="ok"] .card {
+  fill: rgb(220 252 231 / 0.9);
+  filter: drop-shadow(0 0 6px rgb(22 163 74 / 0.25));
+}
+[data-theme="light"] .agent-flow .title,
+[data-theme="light"] .agent-flow .caption {
+  fill: rgb(100 90 125);
+}
+[data-theme="light"] .agent-flow .flow-node:not([data-state="idle"]) .title {
+  fill: #2a0a4f;
+}
+[data-theme="light"] .agent-flow .flow-node[data-state="ok"] .title {
+  fill: #14532d;
+}
+[data-theme="light"] .agent-flow .flow-subtask text,
+[data-theme="light"] .agent-flow .flow-packet text {
+  fill: #ffffff;
+}
+[data-theme="light"] .agent-flow .flow-packet circle {
+  filter: drop-shadow(0 0 4px rgb(123 44 191 / 0.6));
+}
+[data-theme="light"] .agent-flow .flow-packet--ok circle {
+  filter: drop-shadow(0 0 4px rgb(22 163 74 / 0.6));
+}
+[data-theme="light"] .agent-flow .flow-tool rect {
+  fill: rgb(59 130 246 / 0.06);
+  stroke: rgb(59 130 246 / 0.3);
+}
+[data-theme="light"] .agent-flow .flow-tool text {
+  fill: rgb(29 78 216 / 0.75);
+}
+[data-theme="light"] .agent-flow .flow-tool[data-state="active"] rect {
+  fill: rgb(59 130 246 / 0.15);
+  stroke: rgb(37 99 235 / 0.8);
+}
+[data-theme="light"] .agent-flow .flow-tool[data-state="active"] text {
+  fill: #1e3a8a;
+}
+[data-theme="light"] .agent-flow .flow-tool[data-state="done"] text {
+  fill: rgb(29 78 216 / 0.85);
+}
+[data-theme="light"] .agent-flow .flow-track {
+  fill: rgb(26 11 46 / 0.08);
+}
+[data-theme="light"] .agent-flow .flow-check-mark {
+  stroke: #ffffff;
 }
 
 /* Contenido estático que el build pone en #root para buscadores y agentes

@@ -119,7 +119,7 @@ export const Header = () => {
       className={`relative min-h-screen ${isMobile ? "mt-0 flex flex-col items-center justify-center" : "mt-24"}`}
     >
       <div
-        className={`mx-auto grid w-full gap-6 text-white lg:max-w-[950px] ${isMobile ? "relative top-15 h-[calc(20vh)] grid-cols-1 grid-rows-2 text-center" : "h-[calc(100vh-80px)] grid-cols-2 grid-rows-1 pb-16"}`}
+        className={`mx-auto grid w-full gap-6 text-ink lg:max-w-[950px] ${isMobile ? "relative top-15 h-[calc(20vh)] grid-cols-1 grid-rows-2 text-center" : "h-[calc(100vh-80px)] grid-cols-2 grid-rows-1 pb-16"}`}
       >
         <div
           className={`col-span-1 flex flex-col justify-center ${isMobile ? "row-start-2 row-end-3" : ""}`}

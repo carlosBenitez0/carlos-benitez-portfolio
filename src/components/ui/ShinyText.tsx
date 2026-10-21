@@ -22,11 +22,11 @@ const ShinyText: React.FC<ShinyTextProps> = ({
       className={`inline-block bg-clip-text ${disabled ? "" : "shiny-text"} ${className}`}
       style={{
         backgroundImage:
-          "linear-gradient(120deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 60%)",
+          "linear-gradient(120deg, transparent 40%, var(--shiny-shine) 50%, transparent 60%)",
         backgroundSize: "200% 100%",
         WebkitBackgroundClip: "text",
         animationDuration: animationDuration,
-        color: color ? color : "#b5b5b5b8",
+        color: color ? color : "var(--shiny-color)",
       }}
     >
       {text}

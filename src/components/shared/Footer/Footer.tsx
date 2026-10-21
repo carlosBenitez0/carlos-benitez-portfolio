@@ -68,7 +68,7 @@ export const Footer = () => (
                   alt=""
                   className="fx-icon fx-lift aspect-square w-9 object-contain"
                 />
-                <span className="text-xs whitespace-nowrap text-cbpgray-300 transition-colors group-hover:text-white">
+                <span className="text-xs whitespace-nowrap text-cbpgray-300 transition-colors group-hover:text-ink">
                   {technology.name}
                 </span>
               </a>
