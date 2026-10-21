@@ -1,4 +1,5 @@
-/* Página 404: mismos colores y tipografía que el portafolio */
+/* Página 404: mismos colores y tipografía que el portafolio (oscuro por
+   defecto; claro con data-theme="light", que fija /theme-init.js) */
 *,
 *::before,
 *::after {
@@ -86,4 +87,42 @@ h1 {
 ::selection {
   background: #7b2cbf;
   color: #fff;
+}
+
+[data-theme="light"] body {
+  background:
+    radial-gradient(
+      ellipse 60% 45% at 50% 0%,
+      rgba(185, 110, 223, 0.25),
+      transparent 70%
+    ),
+    #faf7ff;
+  color: #2e2640;
+}
+
+[data-theme="light"] .code {
+  color: #7b2cbf;
+}
+
+[data-theme="light"] h1 {
+  color: #240046;
+}
+
+[data-theme="light"] .text {
+  color: #3f3653;
+}
+
+[data-theme="light"] .home {
+  border-color: #7b2cbf;
+  background: rgba(224, 170, 255, 0.35);
+  color: #3c096c;
+}
+
+[data-theme="light"] .home:hover {
+  background: rgba(224, 170, 255, 0.6);
+  border-color: #5a189a;
+}
+
+[data-theme="light"] .home:focus-visible {
+  outline-color: #7b2cbf;
 }

@@ -133,25 +133,31 @@ test.describe("enlaces y embebido", () => {
 });
 
 test.describe("accesibilidad", () => {
-  test("sin violaciones graves de WCAG 2.1 AA", async ({ page }) => {
-    await page.goto("/");
-    // Esperar la intro del navbar (los links aparecen tras ~7 s)
-    await expect(
-      page.getByRole("link", { name: "Proyectos", exact: true }),
-    ).toBeVisible({
-      timeout: 15_000,
+  for (const scheme of ["dark", "light"] as const) {
+    test.describe(`tema ${scheme}`, () => {
+      test.use({ colorScheme: scheme });
+
+      test("sin violaciones graves de WCAG 2.1 AA", async ({ page }) => {
+        await page.goto("/");
+        // Esperar la intro del navbar (los links aparecen tras ~7 s)
+        await expect(
+          page.getByRole("link", { name: "Proyectos", exact: true }),
+        ).toBeVisible({
+          timeout: 15_000,
+        });
+        await visitAllSections(page);
+
+        const results = await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+          .analyze();
+        const serious = results.violations
+          .filter((v) => v.impact === "serious" || v.impact === "critical")
+          .map((v) => `${v.id} (${v.nodes.length}): ${v.help}`);
+
+        expect(serious).toEqual([]);
+      });
     });
-    await visitAllSections(page);
-
-    const results = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-      .analyze();
-    const serious = results.violations
-      .filter((v) => v.impact === "serious" || v.impact === "critical")
-      .map((v) => `${v.id} (${v.nodes.length}): ${v.help}`);
-
-    expect(serious).toEqual([]);
-  });
+  }
 });
 
 test.describe("página 404", () => {
@@ -183,6 +189,19 @@ test.describe("página 404", () => {
 
     expect(await getViolations()).toEqual([]);
     expect(errors).toEqual([]);
+  });
+
+  test.describe("con el sistema en claro", () => {
+    test.use({ colorScheme: "light" });
+
+    test("usa la paleta clara", async ({ page }) => {
+      await page.goto("/404.html");
+      await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+      await expect(page.locator("body")).toHaveCSS(
+        "background-color",
+        "rgb(250, 247, 255)",
+      );
+    });
   });
 
   test("no tiene problemas graves de accesibilidad", async ({ page }) => {

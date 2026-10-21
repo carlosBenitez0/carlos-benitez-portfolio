@@ -47,3 +47,21 @@ body {
   list-style: disc;
   padding-left: 1.25em;
 }
+
+/* Sin JavaScript no hay preferencia guardada: se sigue al sistema */
+@media (prefers-color-scheme: light) {
+  body {
+    background: #faf7ff;
+  }
+  #root .static-content {
+    color: #2e2640;
+  }
+  #root .static-content a {
+    color: #5a189a;
+  }
+  #root .static-content h1,
+  #root .static-content h2,
+  #root .static-content h3 {
+    color: #1a0b2e;
+  }
+}
