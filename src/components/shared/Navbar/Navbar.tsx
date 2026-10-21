@@ -258,7 +258,7 @@ export const Navbar = () => {
             height: isMobile ? 40 : 50,
             paddingBlock: isMobile ? 6 : 16,
           }}
-          className={`fade-in-menu navbar-pill relative flex items-center justify-center rounded-full border border-ink/7 backdrop-blur-sm ${isMobile ? "gap-2 px-3 py-0" : "gap-5 px-6 py-4"} ${!isMobile ? "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-full before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),var(--hover-glow)_0%,transparent_10%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1]" : ""}`}
+          className={`fade-in-menu navbar-pill relative flex items-center justify-center rounded-full border border-ink/7 backdrop-blur-sm ${isMobile ? "gap-2 px-3 py-0" : "gap-4 px-6 py-4"} ${!isMobile ? "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-full before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),var(--hover-glow)_0%,transparent_10%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1]" : ""}`}
         >
           {links.map((link) => (
             <li key={link.label}>
@@ -277,7 +277,7 @@ export const Navbar = () => {
       <div
         ref={socialMenuRef}
         style={{ height: isMobile ? 40 : 50, paddingBlock: isMobile ? 6 : 16 }}
-        className={`fade-in-menu navbar-pill relative flex items-center rounded-full border border-ink/7 backdrop-blur-sm ${isMobile ? "justify-center gap-1 px-2" : "gap-5 px-6 py-4"} ${!isMobile ? "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-full before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),var(--hover-glow)_0%,transparent_10%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-100" : ""}`}
+        className={`fade-in-menu navbar-pill relative flex items-center rounded-full border border-ink/7 backdrop-blur-sm ${isMobile ? "justify-center gap-1 px-2" : "gap-3 px-4 py-4"} ${!isMobile ? "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-full before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),var(--hover-glow)_0%,transparent_10%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-100" : ""}`}
       >
         <a
           href={siteLinks.linkedin}
