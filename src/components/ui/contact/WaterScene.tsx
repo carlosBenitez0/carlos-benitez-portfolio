@@ -109,11 +109,11 @@ const Wing = ({ side }: { side: "left" | "right" }) => (
   <div className={`bird-wing bird-wing-${side}`}>
     <div className="bird-wing-inner">
       <svg viewBox="0 0 100 24" preserveAspectRatio="none">
-        <path d="M100 5 Q50 -2 0 4 L0 13 Q50 14 100 19 Z" fill="#e0aaff" />
+        <path d="M100 5 Q50 -2 0 4 L0 13 Q50 14 100 19 Z" fill="currentColor" />
       </svg>
       <div className="bird-wing-outer">
         <svg viewBox="0 0 100 24" preserveAspectRatio="none">
-          <path d="M100 4 Q55 -1 0 13 Q55 12 100 13 Z" fill="#e0aaff" />
+          <path d="M100 4 Q55 -1 0 13 Q55 12 100 13 Z" fill="currentColor" />
         </svg>
       </div>
     </div>

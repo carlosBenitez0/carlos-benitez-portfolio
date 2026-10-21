@@ -507,6 +507,8 @@
    codo; la punta va desfasada. Tamaño y ritmo de aleteo: --bird-size y
    --bird-flap (WaterScene.tsx). Solo transform. */
 .contact-bird {
+  /* Color del cuerpo y las alas (currentColor) */
+  color: #e0aaff;
   position: absolute;
   left: 0;
   width: var(--bird-size);
@@ -529,7 +531,7 @@
   width: calc(var(--bird-size) * 0.1);
   height: calc(var(--bird-size) * 0.07);
   border-radius: 9999px;
-  background: #e0aaff;
+  background: currentColor;
   transform: translate(-50%, -30%);
 }
 
@@ -1679,6 +1681,23 @@
     ),
     linear-gradient(rgb(60 9 108 / 0.05) 1px, transparent 1px) 0 0 / 100% 18px,
     var(--color-cbpbg-700);
+}
+
+/* Sobre el cielo claro, pájaros violeta para que se vean */
+[data-theme="light"] .contact-bird {
+  color: #9d4edd;
+}
+
+/* Manchas de color de fondo: más tenues en claro, y la "negra" pasa a lila
+   (una mancha negra difuminada se ve gris sucio sobre fondo claro) */
+.bg-dot {
+  --dot-black: #000000;
+  opacity: var(--dot-opacity);
+}
+
+[data-theme="light"] .bg-dot {
+  --dot-black: #e0aaff;
+  opacity: calc(var(--dot-opacity) * 0.6);
 }
 
 [data-theme="light"] .glass-sphere {
