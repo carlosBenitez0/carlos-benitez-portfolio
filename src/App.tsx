@@ -93,7 +93,7 @@ function App() {
 
       <div
         id="start"
-        className={`mx-auto h-full w-full text-white ${isMobile ? "" : "max-w-[950px]"}`}
+        className={`mx-auto h-full w-full text-ink ${isMobile ? "" : "max-w-[950px]"}`}
       >
         <Navbar />
 

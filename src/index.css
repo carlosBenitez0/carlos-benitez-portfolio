@@ -43,42 +43,58 @@
   --color-cbpgray-100: #f3f4f6;
   --color-cbpgray-50: #f9fafb;
 
-  /* Gradientes principales */
-  --cbp-gradient-violet-dark: linear-gradient(
-    135deg,
-    var(--cbpviolet-900) 0%,
-    var(--cbpviolet-700) 50%,
-    var(--cbpviolet-600) 100%
-  );
+  /* Texto y bordes de máximo contraste: blanco en oscuro, tinta en claro */
+  --color-ink: #ffffff;
+}
 
-  --cbp-gradient-violet-neon: linear-gradient(
-    to right,
-    var(--cbpviolet-600) 0%,
-    var(--cbpviolet-400) 50%,
-    var(--cbpviolet-200) 100%
-  );
+/* Modo claro (lavanda): las escalas se invierten para que cada clase conserve
+   su papel (900 = fondo, 200-300 = texto principal) sin tocar los
+   componentes. Las excepciones usan la variante light:. */
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
-  --cbp-gradient-violet-mesh: radial-gradient(
-    circle at 30% 60%,
-    var(--cbpviolet-700) 0%,
-    var(--cbpviolet-800) 30%,
-    var(--cbpviolet-900) 70%
-  );
+:root {
+  color-scheme: dark;
+}
 
-  /* Gradientes para efectos especiales */
-  --cbp-gradient-violet-hover: linear-gradient(
-    to bottom right,
-    transparent 0%,
-    var(--cbpviolet-800) 30%,
-    var(--cbpviolet-400) 100%
-  );
+:root[data-theme="light"] {
+  color-scheme: light;
 
-  --cbp-gradient-violet-text: linear-gradient(
-    to right,
-    var(--cbpviolet-200),
-    var(--cbpviolet-100),
-    var(--cbpviolet-200)
-  );
+  --color-cbpbg-900: #faf7ff;
+  --color-cbpbg-800: #f5effe;
+  --color-cbpbg-700: #efe6fd;
+  --color-cbpbg-600: #e9ddfb;
+  --color-cbpbg-500: #e3d4fa;
+  --color-cbpbg-400: #dccaf8;
+  --color-cbpbg-300: #d5c0f5;
+  --color-cbpbg-200: #cdb5f2;
+  --color-cbpbg-100: #c5aaee;
+  --color-cbpbg-50: #bd9fea;
+
+  --color-cbpviolet-900: #f7ecff;
+  --color-cbpviolet-800: #f2d9ff;
+  --color-cbpviolet-700: #e0aaff;
+  --color-cbpviolet-600: #b96edf;
+  --color-cbpviolet-500: #7b2cbf;
+  --color-cbpviolet-400: #6a1fb0;
+  --color-cbpviolet-300: #5a189a;
+  --color-cbpviolet-200: #3c096c;
+  --color-cbpviolet-100: #240046;
+
+  --color-cbpgray-950: #ffffff;
+  --color-cbpgray-900: #fdfbff;
+  --color-cbpgray-850: #f7f3fc;
+  --color-cbpgray-800: #efe9f7;
+  --color-cbpgray-750: #e6def0;
+  --color-cbpgray-700: #d6cce3;
+  --color-cbpgray-600: #8a809b;
+  --color-cbpgray-500: #6b6480;
+  --color-cbpgray-400: #574e6a;
+  --color-cbpgray-300: #3f3653;
+  --color-cbpgray-200: #2e2640;
+  --color-cbpgray-100: #221a33;
+  --color-cbpgray-50: #1a1428;
+
+  --color-ink: #1a0b2e;
 }
 
 @keyframes shine {
