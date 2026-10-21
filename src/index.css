@@ -97,6 +97,18 @@
   --color-ink: #1a0b2e;
 }
 
+/* Píldoras del navbar. Colores en rgb (no color-mix) para que GSAP pueda
+   interpolar el destello de entrada hasta ellos. */
+.navbar-pill {
+  --navbar-glow: rgb(255 255 255 / 0.1);
+  background-color: rgb(10 14 26 / 0.7);
+}
+
+[data-theme="light"] .navbar-pill {
+  --navbar-glow: rgb(123 44 191 / 0.12);
+  background-color: rgb(253 251 255 / 0.75);
+}
+
 @keyframes shine {
   0% {
     background-position: 100%;
