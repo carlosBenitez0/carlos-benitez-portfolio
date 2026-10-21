@@ -152,7 +152,7 @@ export const buildJsonLd = () => {
     jobTitle: profile.jobTitle,
     description: profile.summary,
     url: SITE_URL,
-    image: profile.photo,
+    image: absolute(profile.photo),
     address: { "@type": "PostalAddress", addressCountry: "SV" },
     knowsLanguage: "es",
     sameAs: [links.linkedin, links.github],

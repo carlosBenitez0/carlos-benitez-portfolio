@@ -344,10 +344,12 @@ export const MyPicture = () => {
         )}
       </div>
       <figure
-        className={`my-picture absolute object-cover ${isMobile ? "top-[-120px] w-[150px]" : "top-[-180px] w-[225px]"}`}
+        // Centrada sobre la burbuja: mismo centro que bubbleBox (en escritorio,
+        // left 75px + 150px de radio - 112.5px de media foto)
+        className={`my-picture absolute object-cover ${isMobile ? "top-[-75px] w-[150px]" : "top-[-113px] left-[113px] w-[225px]"}`}
       >
         <img
-          src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751572816/carlos-benitez-foto_mamqno.png"
+          src="/images/carlos-benitez.webp"
           alt="Carlos Benitez"
           className="mask-radial-from-50% mask-radial-to-70% mask-radial-at-center"
         />
