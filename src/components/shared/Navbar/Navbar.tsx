@@ -242,7 +242,7 @@ export const Navbar = () => {
   return (
     <div
       ref={navbarRef}
-      className={`fixed inset-x-0 top-0 z-40 mx-auto flex w-full items-center lg:max-w-[950px] ${isMobile ? "justify-between p-4" : "justify-between px-4 lg:px-0"}`}
+      className={`fixed inset-x-[var(--scrollbar-gutter,0px)] top-0 z-40 mx-auto flex items-center ${isMobile ? "justify-between p-4" : "max-w-[950px] justify-between"}`}
     >
       <figure>
         <img
@@ -251,7 +251,9 @@ export const Navbar = () => {
           className={`cb-logo ${isMobile ? "w-10 max-w-10" : "w-12 min-w-12"}`}
         />
       </figure>
-      <nav className="nav-padding p-5">
+      {/* En móvil, poco relleno lateral: así las dos píldoras no se tocan en
+          pantallas angostas (375px) */}
+      <nav className={`nav-padding ${isMobile ? "px-1.5 py-5" : "p-5"}`}>
         <ul
           ref={menuRef}
           style={{

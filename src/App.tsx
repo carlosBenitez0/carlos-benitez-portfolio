@@ -32,8 +32,29 @@ function App() {
   const { isMobile } = useIsMobile();
 
   const technologiesRef = useRef<HTMLElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
   usePauseOffscreenAnimations();
   useEffect(() => preloadDeferredComponents(), []);
+
+  // El navbar es fixed (se mide contra la ventana) y el contenido vive dentro
+  // de este div con scroll, cuyo scrollbar-gutter reserva el ancho de la barra
+  // a cada lado. --scrollbar-gutter le pasa ese margen al navbar para que sus
+  // bordes coincidan con los del contenido (0 en móviles: la barra flota).
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller || typeof ResizeObserver === "undefined") return;
+    const update = () => {
+      const gutter = (scroller.offsetWidth - scroller.clientWidth) / 2;
+      document.documentElement.style.setProperty(
+        "--scrollbar-gutter",
+        `${gutter}px`,
+      );
+    };
+    const observer = new ResizeObserver(update);
+    observer.observe(scroller);
+    update();
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const technologiesSection = technologiesRef.current;
@@ -84,6 +105,7 @@ function App() {
     // barra en ambos lados: así el contenido queda centrado en la ventana,
     // igual que el navbar (fixed), y no 7,5px a la izquierda.
     <div
+      ref={scrollerRef}
       className={`relative z-40 h-screen overflow-x-hidden bg-cbpbg-900 font-poppins [scrollbar-gutter:stable_both-edges] ${isMobile ? "" : "w-full"}`}
     >
       {/* Tech Tooltip - componente que muestra información sobre las tecnologías */}
