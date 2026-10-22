@@ -12,5 +12,6 @@ installIntersectionObserver();
 
 afterEach(() => {
   cleanup();
+  localStorage.clear();
   resetBrowserMocks();
 });

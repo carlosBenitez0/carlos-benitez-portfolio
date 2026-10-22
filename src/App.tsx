@@ -231,7 +231,7 @@ function App() {
 
               <img
                 src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1752513118/320_1x_shots_so_sf9nou.png"
-                alt=""
+                alt="Foto de Carlos Benítez"
                 className={`object-cover w-64 h-full p-1 rotate-3 lg:p-2 lg:w-72 aspect-square rounded-2xl proyect-card-anim ${isMobile ? "order-1 w-3xl" : ""}`}
               />
             </div>

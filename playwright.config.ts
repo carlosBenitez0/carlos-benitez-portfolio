@@ -8,11 +8,18 @@ export default defineConfig({
   testDir: "e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 1 : 0,
+  // Un reintento: un test que pasa al reintentar se reporta como "flaky"
+  // (visible en la salida), no se oculta.
+  retries: 1,
+  // Las animaciones dependen de tiempo real: con todos los núcleos ocupados la
+  // máquina se satura y los tiempos se disparan.
+  workers: process.env.CI ? 2 : "50%",
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL: `http://127.0.0.1:${PORT}`,
-    trace: "retain-on-failure",
+    // Grabar traza en cada test con muchos workers corrompía el zip en
+    // Windows; se graba solo en el reintento, que es cuando hace falta.
+    trace: "on-first-retry",
   },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },

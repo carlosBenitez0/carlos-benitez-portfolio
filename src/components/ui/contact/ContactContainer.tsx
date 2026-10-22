@@ -11,24 +11,24 @@ import { ErrorComponent } from "./ErrorComponent";
 import { IoLocationOutline } from "react-icons/io5";
 import { CiLinkedin } from "react-icons/ci";
 import ShinyText from "../ShinyText";
-import emailjs from "@emailjs/browser";
 import { SendedComponent } from "./SendedComponent";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import {
   pauseTweensWhileOffscreen,
   prefersReducedMotion,
 } from "../../../utils/visibility";
-
-interface UserData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
+import {
+  getCooldownRemaining,
+  isHoneypotFilled,
+  markContactSent,
+  MAX_LENGTHS,
+  validateContact,
+  type ContactData,
+} from "../../../utils/contactForm";
+import { sendContactMessage } from "../../../utils/sendContact";
 
 export const ContactContainer = () => {
   const { isMobile } = useIsMobile();
-  const form = useRef<HTMLFormElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
@@ -36,7 +36,9 @@ export const ContactContainer = () => {
     error: "",
   });
   const [sended, setSended] = useState<boolean>(false);
-  const [userData, setUserData] = useState<UserData>({
+  // Campo trampa para bots (ver isHoneypotFilled)
+  const [company, setCompany] = useState("");
+  const [userData, setUserData] = useState<ContactData>({
     name: "",
     email: "",
     subject: "",
@@ -52,154 +54,58 @@ export const ContactContainer = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return;
     setSended(false);
     setError({ name: "", error: "" });
 
     // Validaciones
-    if (userData.name === "") {
-      setError({ name: "name", error: "El nombre es requerido" });
+    const validationError = validateContact(userData);
+    if (validationError) {
+      setError(validationError);
       return;
     }
 
-    if (userData.name.length < 3) {
+    const cooldown = getCooldownRemaining();
+    if (cooldown > 0) {
       setError({
-        name: "name",
-        error: "El nombre debe tener al menos 3 caracteres",
-      });
-      return;
-    }
-
-    if (userData.email === "") {
-      setError({ name: "email", error: "El email es requerido" });
-      return;
-    }
-
-    if (
-      !/^\w+([/.-]?\w+)@\w+([/.-]?\w+)\.[a-zA-Z]{2,3}$/.test(userData.email)
-    ) {
-      setError({ name: "email", error: "El email es invalido" });
-      return;
-    }
-
-    if (userData.subject === "") {
-      setError({ name: "subject", error: "El asunto es requerido" });
-      return;
-    }
-
-    if (userData.subject.length < 3) {
-      setError({
-        name: "subject",
-        error: "El asunto debe tener al menos 3 caracteres",
-      });
-      return;
-    }
-
-    if (userData.message === "") {
-      setError({ name: "message", error: "El mensaje es requerido" });
-      return;
-    }
-
-    if (userData.message.length < 10) {
-      setError({
-        name: "message",
-        error: "El mensaje debe tener al menos 10 caracteres",
+        name: "formError",
+        error: `Espera ${Math.ceil(cooldown / 1000)} s para enviar otro mensaje`,
       });
       return;
     }
 
     // Si pasa todas las validaciones
     setLoading(true);
-
-    // Enviar el formulario
-    /* setTimeout(() => {
-      setLoading(false);
-      emailjs
-        .sendForm(
-          "service_3wblnba",
-          "template_vx2h6qt",
-          form.current as HTMLFormElement,
-          {
-            publicKey: "p1-mlOCmCgRp2jNnJ",
-          },
-        )
-        .then(
-          () => {
-            setSended(true);
-          },
-          () => {
-            setError({
-              name: "formError",
-              error: "No se pudo enviar el mensaje",
-            });
-          },
-        );
-
+    try {
+      // A un bot se le muestra éxito sin enviar nada, para no darle pistas
+      if (!isHoneypotFilled(company)) await sendContactMessage(userData);
+      markContactSent();
+      setSended(true);
+      // Solo se vacía si se envió: si falla, el visitante conserva su texto
       setUserData({
         name: "",
         email: "",
         subject: "",
         message: "",
       });
-
-      // Reset después de mostrar el mensaje de éxito
-      setTimeout(() => {
-        setSended(false);
-      }, 3000);
-    }, 3000); */
-
-    emailjs
-      .sendForm(
-        "service_3wblnba",
-        "template_vx2h6qt",
-        form.current as HTMLFormElement,
-        {
-          publicKey: "p1-mlOCmCgRp2jNnJ",
-        },
-      )
-      .then(
-        () => {
-          setLoading(false);
-          setSended(true);
-        },
-        () => {
-          setLoading(false);
-          setError({
-            name: "formError",
-            error: "No se pudo enviar el mensaje",
-          });
-        },
-      );
-
-    emailjs
-      .sendForm(
-        "service_3wblnba",
-        "template_32ukwf4",
-        form.current as HTMLFormElement,
-        {
-          publicKey: "p1-mlOCmCgRp2jNnJ",
-        },
-      )
-      .then(
-        () => {
-          setSended(true);
-        },
-        () => {
-          console.log("No se pudo enviar el mensaje");
-        },
-      );
-
-    setTimeout(() => {
-      setSended(false);
-    }, 10000);
-    setUserData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
+    } catch {
+      setError({
+        name: "formError",
+        error: "No se pudo enviar el mensaje",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // El aviso de éxito desaparece a los 10 s
+  useEffect(() => {
+    if (!sended) return;
+    const timer = setTimeout(() => setSended(false), 10000);
+    return () => clearTimeout(timer);
+  }, [sended]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -304,7 +210,6 @@ export const ContactContainer = () => {
       </div>
 
       <form
-        ref={form}
         onSubmit={handleSubmit}
         className={`z-50 grid grid-cols-2 gap-6 rounded-xl ${isMobile ? "pb-5 px-5" : "p-8"}
         [&>div]:flex [&>div]:items-center [&>div]:w-full [&>div]:pl-2 [&>div,&>span>textarea]:border [&>div,&>span>textarea]:border-white/15 [&>div,&>span>textarea]:rounded-lg
@@ -325,6 +230,9 @@ export const ContactContainer = () => {
       >
         <div className={` ${isMobile ? "col-span-2" : ""}`}>
           <FaRegUser className={`form-icon min-w-4 min-h-4 `} />
+          <label htmlFor="contact-name" className="sr-only">
+            Nombre
+          </label>
           <input
             type="text"
             value={userData.name}
@@ -332,38 +240,72 @@ export const ContactContainer = () => {
             autoComplete="off"
             className={``}
             name="name"
+            id="contact-name"
+            aria-invalid={error.name === "name"}
+            aria-describedby={
+              error.name === "name" ? "contact-error" : undefined
+            }
+            maxLength={MAX_LENGTHS.name}
             onChange={handleChange}
           />
         </div>
         <div className={` ${isMobile ? "col-span-2" : ""}`}>
           <MdOutlineEmail className="form-icon min-w-4 min-h-4" />
+          <label htmlFor="contact-email" className="sr-only">
+            Email
+          </label>
           <input
             type="text"
             value={userData.email}
             placeholder="Email"
+            inputMode="email"
             autoComplete="off"
             name="email"
+            id="contact-email"
+            aria-invalid={error.name === "email"}
+            aria-describedby={
+              error.name === "email" ? "contact-error" : undefined
+            }
+            maxLength={MAX_LENGTHS.email}
             onChange={handleChange}
           />
         </div>
         <div className="col-span-2">
           <MdOutlineSubject className="form-icon min-w-4 min-h-4" />
+          <label htmlFor="contact-subject" className="sr-only">
+            Asunto
+          </label>
           <input
             type="text"
             value={userData.subject}
             placeholder="Asunto"
             autoComplete="off"
             name="subject"
+            id="contact-subject"
+            aria-invalid={error.name === "subject"}
+            aria-describedby={
+              error.name === "subject" ? "contact-error" : undefined
+            }
+            maxLength={MAX_LENGTHS.subject}
             onChange={handleChange}
           />
         </div>
         <span className="col-span-2 ">
+          <label htmlFor="contact-message" className="sr-only">
+            Mensaje
+          </label>
           <textarea
             className="p-2 h-30 mb-2 resize-none"
             value={userData.message}
             placeholder="Mensaje"
             autoComplete="off"
             name="message"
+            id="contact-message"
+            aria-invalid={error.name === "message"}
+            aria-describedby={
+              error.name === "message" ? "contact-error" : undefined
+            }
+            maxLength={MAX_LENGTHS.message}
             onChange={handleChange}
           ></textarea>
           {error.name && error.error && (
@@ -380,15 +322,35 @@ export const ContactContainer = () => {
                 )
               }
               error={error.error}
+              id="contact-error"
             />
           )}
           {sended && (
             <SendedComponent message="Revisa tu correo, te dejé un mensaje 😁✌️" />
           )}
         </span>
+        {/* Honeypot: fuera de pantalla (no display:none, que algunos bots
+            detectan), fuera del orden de tabulación y oculto a lectores. */}
+        <span
+          aria-hidden="true"
+          className="absolute -left-[9999px] h-px w-px overflow-hidden"
+        >
+          <label>
+            Empresa
+            <input
+              type="text"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+            />
+          </label>
+        </span>
         <button
           type="submit"
-          className="flex gap-2 items-center justify-center col-span-2 cursor-pointer w-fit border border-cbpbg-50 bg-cbpbg-500/50 hover:bg-cbpbg-500/75 py-2 px-4 rounded-md
+          disabled={loading}
+          className="disabled:cursor-wait flex gap-2 items-center justify-center col-span-2 cursor-pointer w-fit border border-cbpbg-50 bg-cbpbg-500/50 hover:bg-cbpbg-500/75 py-2 px-4 rounded-md
           transition duration-300
            [&:hover>.send-icon]:-rotate-35
            shadow-[inset_0px_0px_10px_rgba(255,255,255,0.1)]"
@@ -443,6 +405,7 @@ export const ContactContainer = () => {
                 href="https://www.linkedin.com/in/carlos-benitez-profile/"
                 className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[34px]"
                 target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Linkedin"
               >
                 <CiLinkedin />
@@ -450,6 +413,7 @@ export const ContactContainer = () => {
               <a
                 href="https://github.com/carlosBenitez0"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="blur-text-git text-cbpgray-300/70 hover:text-cbpgray-300 text-[28px]"
                 aria-label="Github"
               >

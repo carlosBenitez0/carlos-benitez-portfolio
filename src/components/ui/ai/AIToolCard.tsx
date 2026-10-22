@@ -67,7 +67,10 @@ export const AIToolCard = ({
         {/* Encabezado con nombre de la herramienta */}
         <div className="flex items-center gap-3 mb-4">
           {/* Contenedor del icono con efecto hover */}
-          <div className="p-2 rounded-lg bg-cbpviolet-900/50 text-cbpviolet-300 group-hover:bg-cbpviolet-800/70 transition-colors">
+          <div
+            aria-hidden="true"
+            className="p-2 rounded-lg bg-cbpviolet-900/50 text-cbpviolet-300 group-hover:bg-cbpviolet-800/70 transition-colors"
+          >
             {icono}
           </div>
           <h4 className="text-lg font-semibold text-cbpgray-100">{nombre}</h4>

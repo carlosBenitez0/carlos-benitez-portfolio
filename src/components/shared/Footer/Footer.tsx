@@ -28,6 +28,7 @@ export const Footer = () => {
           className={`flex ${isMobile ? " flex-col" : " items-center"} gap-4`}
         >
           <figure>
+            {/* Decorativo: el nombre ya aparece en texto justo al lado */}
             <img
               src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751309549/cb-logo2_kowmru.png"
               alt=""
@@ -56,13 +57,14 @@ export const Footer = () => {
           {technologies &&
             technologiesFilter &&
             technologiesFilter.map((technology) => (
-              <Technology
-                key={technology.name}
-                name={technology.name}
-                logo={technology.logo}
-                url={technology.url}
-                classNames="w-10 h-10 text-[12px]"
-              />
+              <li key={technology.name}>
+                <Technology
+                  name={technology.name}
+                  logo={technology.logo}
+                  url={technology.url}
+                  classNames="w-10 h-10 text-[12px]"
+                />
+              </li>
             ))}
         </ul>
       </div>

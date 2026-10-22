@@ -118,6 +118,10 @@ Como desarrollador web, ¿cómo puedo aprovechar la IA en mi flujo de trabajo ac
           >
             <div
               ref={terminalRef}
+              // Región con scroll: alcanzable y desplazable con el teclado
+              tabIndex={0}
+              role="region"
+              aria-label="Ejemplo de prompt y respuesta de IA"
               className="max-h-96 overflow-y-auto p-4 font-mono text-sm"
             >
               {/* Input */}
@@ -140,7 +144,12 @@ Como desarrollador web, ¿cómo puedo aprovechar la IA en mi flujo de trabajo ac
                 <div className="mb-2 text-xs font-medium text-cbpgray-400">
                   Ejemplo de respuesta de IA:
                 </div>
-                <pre className="mt-2 overflow-x-auto rounded bg-cbpgray-900/50 p-4 text-cbpgray-100">
+                <pre
+                  tabIndex={0}
+                  role="region"
+                  aria-label="Código de la respuesta de IA"
+                  className="mt-2 overflow-x-auto rounded bg-cbpgray-900/50 p-4 text-cbpgray-100"
+                >
                   <code>
                     {activeCommand.response
                       .replace(/```[\w]*\n?|```$/g, "")

@@ -1,27 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-
-const SECTIONS = ["projects", "about", "technologies", "ai", "contact"];
-
-// Errores de recursos externos (Cloudinary, Google Fonts) no dependen del
-// código: solo cuentan los errores de la propia página.
-const collectPageErrors = (page: Page) => {
-  const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
-  page.on("console", (message) => {
-    if (
-      message.type() === "error" &&
-      !message.text().startsWith("Failed to load resource")
-    ) {
-      errors.push(message.text());
-    }
-  });
-  return errors;
-};
-
-const scrollToSection = (page: Page, id: string) =>
-  page.evaluate((id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "instant" });
-  }, id);
+import { collectPageErrors, scrollToSection, SECTIONS } from "./helpers";
 
 // Valor de `transform` de un elemento en dos momentos separados por `ms`.
 const transformsOver = (page: Page, selector: string, ms: number) =>
