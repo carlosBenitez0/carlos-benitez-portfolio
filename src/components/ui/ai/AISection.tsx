@@ -61,6 +61,9 @@ export const AISection = () => {
         <SectionTitle
           title="Inteligencia artificial"
           icon={<FaRobot className="fx-icon fx-beep" />}
+          // Las tarjetas aparecen con su propia animación al entrar en
+          // pantalla: el encabezado va sin revelado para no desfasarse
+          revealOnScroll={false}
         />
 
         {/* Descripción de la sección */}
