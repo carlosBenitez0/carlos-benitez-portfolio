@@ -80,8 +80,11 @@ function App() {
   }, []);
 
   return (
+    // Este div es el que hace scroll. scrollbar-gutter reserva el ancho de la
+    // barra en ambos lados: así el contenido queda centrado en la ventana,
+    // igual que el navbar (fixed), y no 7,5px a la izquierda.
     <div
-      className={`relative z-40 h-screen overflow-x-hidden bg-cbpbg-900 font-poppins ${isMobile ? "" : "w-full"}`}
+      className={`relative z-40 h-screen overflow-x-hidden bg-cbpbg-900 font-poppins [scrollbar-gutter:stable_both-edges] ${isMobile ? "" : "w-full"}`}
     >
       {/* Tech Tooltip - componente que muestra información sobre las tecnologías */}
       <SiteAnalytics />
@@ -102,7 +105,7 @@ function App() {
           <section
             id="projects"
             data-pause-offscreen
-            className={`mt-30 mb-20 ${isMobile ? "px-3 py-4" : ""}`}
+            className={`mt-30 mb-20 ${isMobile ? "px-4 py-4" : ""}`}
           >
             <SectionTitle
               title="Proyectos"
