@@ -63,8 +63,8 @@ export const AISection = () => {
           icon={<FaRobot className="fx-icon fx-beep" />}
         />
 
-        {/* Descripción de la sección */}
-        <p className="mb-12 text-cbpgray-300">{ai.intro}</p>
+        {/* Descripción: misma entrada al hacer scroll que el título */}
+        <p className="anim-about-text mb-12 text-cbpgray-300">{ai.intro}</p>
 
         {/* Grid de herramientas de IA */}
         <div className="mb-16 grid grid-cols-2 gap-3 md:gap-6">
