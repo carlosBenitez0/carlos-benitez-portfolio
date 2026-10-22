@@ -69,7 +69,7 @@ Como desarrollador web, ¿cómo puedo aprovechar la IA en mi flujo de trabajo ac
   const activeCommand = commands[activeTab];
 
   return (
-    <div className="overflow-hidden rounded-lg border border-cbpgray-700/50 bg-cbpgray-800/50 backdrop-blur-sm">
+    <div className="overflow-hidden rounded-lg border border-cbpgray-700/50 bg-cbpgray-800/50">
       {/* Terminal header */}
       <div
         className="flex cursor-pointer items-center justify-between bg-cbpgray-800/80 px-4 py-2.5"

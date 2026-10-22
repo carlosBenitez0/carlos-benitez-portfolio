@@ -16,6 +16,7 @@ export const Navbar = () => {
   const [optionSelected, setOptionSelected] = useState("start");
   const menuRef = useRef<HTMLUListElement>(null);
   const socialMenuRef = useRef<HTMLDivElement>(null);
+  const navbarRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useIsMobile();
   const sectionRefs = useRef<{
     [key: string]: IntersectionObserverEntry | null;
@@ -151,91 +152,99 @@ export const Navbar = () => {
   }, []);
 
   //animacion de gsap blurText para cada link con un delay de .3s
+  // Solo transform/opacity/clip-path: nada de width/height/padding, que
+  // obligaban a recalcular el layout de la página en cada frame.
   useEffect(() => {
-    const links = document.querySelectorAll(".blur-text");
-    const linksInGit = document.querySelectorAll(".blur-text-git");
-    const menu = document.querySelectorAll(".fade-in-menu");
-    const nav = document.querySelectorAll(".nav-padding");
-    const logo = document.querySelector(".cb-logo");
-    const tl = gsap.timeline();
+    const root = navbarRef.current;
+    if (!root) return;
 
-    tl.fromTo(
-      logo,
-      {
-        autoAlpha: 0,
-        y: 10,
-        filter: "blur(5px)",
-      },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.4,
-        filter: "blur(0px)",
-        ease: "power3.out",
-      },
-    );
+    const ctx = gsap.context(() => {
+      const links = root.querySelectorAll(".blur-text");
+      const linksInGit = root.querySelectorAll(".blur-text-git");
+      const menu = root.querySelectorAll(".fade-in-menu");
+      const logo = root.querySelector(".cb-logo");
+      const tl = gsap.timeline();
 
-    menu.forEach((menu) => {
       tl.fromTo(
-        menu,
+        logo,
         {
           autoAlpha: 0,
-          width: 0,
-          background: "purple",
-          height: 0,
-          paddingTop: 0,
-          paddingBottom: 0,
+          y: 10,
+          filter: "blur(5px)",
         },
-        {
-          autoAlpha: 1,
-          width: "auto",
-          background: "rgba(10, 14, 26, 0.7)",
-          height: isMobile ? "40px" : "50px",
-          paddingTop: isMobile ? 6 : 16,
-          paddingBottom: isMobile ? 6 : 16,
-          duration: 1.5,
-          ease: "power3.out",
-        },
-      );
-    });
-
-    tl.fromTo(
-      nav,
-      { padding: isMobile ? 50 : 100 },
-      { padding: 20, duration: 1.5, ease: "power3.out" },
-    );
-
-    links.forEach((link) => {
-      tl.fromTo(
-        link,
-        { autoAlpha: 0, y: 10, filter: "blur(5px)" },
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.25,
-          filter: "blur(0px)",
-          ease: "power1.inOut",
-        },
-      );
-    });
-
-    linksInGit.forEach((link) => {
-      tl.fromTo(
-        link,
-        { autoAlpha: 0, y: 10, filter: "blur(5px)" },
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.3,
+          duration: 0.4,
           filter: "blur(0px)",
           ease: "power3.out",
         },
       );
-    });
+
+      // La píldora "crece" desde su centro recortándose, en lugar de animar
+      // su tamaño real.
+      menu.forEach((menu) => {
+        tl.fromTo(
+          menu,
+          {
+            autoAlpha: 0,
+            clipPath: "inset(50% 50% round 9999px)",
+            background: "purple",
+          },
+          {
+            autoAlpha: 1,
+            clipPath: "inset(0% 0% round 9999px)",
+            background: "rgba(10, 14, 26, 0.7)",
+            duration: 1.5,
+            ease: "power3.out",
+            clearProps: "clipPath",
+          },
+        );
+      });
+
+      // Equivale al antiguo padding 100px -> 20px del nav: la barra entra
+      // desplazada hacia abajo y sube a su sitio.
+      tl.fromTo(
+        root,
+        { y: isMobile ? 30 : 80 },
+        { y: 0, duration: 1.5, ease: "power3.out", clearProps: "transform" },
+      );
+
+      links.forEach((link) => {
+        tl.fromTo(
+          link,
+          { autoAlpha: 0, y: 10, filter: "blur(5px)" },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.25,
+            filter: "blur(0px)",
+            ease: "power1.inOut",
+          },
+        );
+      });
+
+      linksInGit.forEach((link) => {
+        tl.fromTo(
+          link,
+          { autoAlpha: 0, y: 10, filter: "blur(5px)" },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.3,
+            filter: "blur(0px)",
+            ease: "power3.out",
+          },
+        );
+      });
+    }, root);
+
+    return () => ctx.revert();
   }, [isMobile]);
 
   return (
     <div
+      ref={navbarRef}
       className={`z-40 flex items-center fixed top-0 mx-auto w-full lg:max-w-[950px] ${isMobile ? "justify-between p-4 " : "justify-between"}`}
     >
       {/* <div className="from-cbpviolet-400 via-cbpviolet-600 to-cbpviolet-500 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
@@ -249,9 +258,10 @@ export const Navbar = () => {
           className={`cb-logo  ${isMobile ? "w-10 max-w-10" : "min-w-12 w-12"}`}
         />
       </figure>
-      <nav className="nav-padding">
+      <nav className="nav-padding p-5">
         <ul
           ref={menuRef}
+          style={{ height: isMobile ? 40 : 50, paddingBlock: isMobile ? 6 : 16 }}
           className={`fade-in-menu relative border-white/7 flex items-center justify-center rounded-full border backdrop-blur-sm ${isMobile ? "px-3 py-0 gap-2" : "gap-5 px-6 py-4"}
          ${!isMobile ? "before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-[1] before:z-[-1] before:pointer-events-none before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]" : ""}`}
         >
@@ -270,6 +280,7 @@ export const Navbar = () => {
       </nav>
       <div
         ref={socialMenuRef}
+        style={{ height: isMobile ? 40 : 50, paddingBlock: isMobile ? 6 : 16 }}
         className={`fade-in-menu relative border-white/7 flex items-center rounded-full border  backdrop-blur-sm ${isMobile ? "justify-center gap-1 px-2" : "gap-5 px-6 py-4"}
      ${!isMobile ? "before:content-[''] before:absolute before:inset-0 before:rounded-full before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 before:z-[-1] before:pointer-events-none before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_10%)]" : ""}`}
       >

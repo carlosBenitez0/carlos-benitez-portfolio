@@ -3,6 +3,13 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Con "reducir movimiento" los saltos de sección son instantáneos */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 /* Add scroll margin to all section elements */
 section {
   scroll-margin-top: 100px; /* This creates the 100px offset for all sections */

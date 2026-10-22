@@ -57,7 +57,7 @@ export const AIToolCard = ({
         },
       }}
       // Clases de Tailwind para el estilo de la tarjeta
-      className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-700 bg-gray-800/80 p-6 backdrop-blur-sm transition-all duration-300 hover:border-cbpviolet/30"
+      className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-700 bg-gray-800/80 p-6"
     >
       {/* Efecto de gradiente que aparece al pasar el mouse */}
       <div className="absolute inset-0 bg-gradient-to-br from-cbpviolet-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

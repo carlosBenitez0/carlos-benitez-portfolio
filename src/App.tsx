@@ -18,24 +18,29 @@ import { TechnologiesContainer } from "./components/ui/Technologies/Technologies
 import { BgDotGradient } from "./components/ui/BgDotGradient";
 import { ContactContainer } from "./components/ui/contact/ContactContainer";
 import { AISection } from "./components/ui/ai/AISection";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useIsMobile } from "./hooks/useIsMobile";
 import { TechTooltip } from "./components/ui/ai/TechTooltip";
+import { usePauseOffscreenAnimations } from "./hooks/usePauseOffscreenAnimations";
+import {
+  pauseTweensWhileOffscreen,
+  prefersReducedMotion,
+} from "./utils/visibility";
 
 function App() {
   const proyects = useProyects();
   const technologies = useTechnologies();
-  const { isMobile, viewSize } = useIsMobile();
-  const maxW = "max-w-[" + (viewSize - 40) + "px]";
+  const { isMobile } = useIsMobile();
+
+  const technologiesRef = useRef<HTMLElement>(null);
+  usePauseOffscreenAnimations();
 
   useEffect(() => {
-    const dots_technologies = document.querySelectorAll(".dot-technologies");
-    const technologiesSection = document.querySelector("section.relative"); // Seleccionamos la sección de tecnologías
-
-    if (!technologiesSection) return;
-
-    const tl = gsap.timeline();
+    const technologiesSection = technologiesRef.current;
+    if (!technologiesSection || prefersReducedMotion()) return;
+    const dots_technologies =
+      technologiesSection.querySelectorAll(".dot-technologies");
 
     // Función para generar movimiento aleatorio dentro del contenedor
     const generateRandomMovement = () => {
@@ -62,16 +67,22 @@ function App() {
       moveDot(); // Iniciar el movimiento
     });
 
+    // Sin animar mientras la sección no se ve
+    const stopPausing = pauseTweensWhileOffscreen(
+      technologiesSection,
+      dots_technologies,
+    );
+
     return () => {
       // Limpiar todas las animaciones al desmontar
-      tl.kill();
+      stopPausing();
       gsap.killTweensOf(dots_technologies);
     };
   }, []);
 
   return (
     <div
-      className={`font-poppins bg-cbpbg-900 relative z-40 h-screen  overflow-x-hidden ${isMobile ? maxW : "w-full"}`}
+      className={`font-poppins bg-cbpbg-900 relative z-40 h-screen  overflow-x-hidden ${isMobile ? "" : "w-full"}`}
     >
       {/* Tech Tooltip - componente que muestra información sobre las tecnologías */}
       <TechTooltip />
@@ -83,7 +94,7 @@ function App() {
 
       <div
         id="start"
-        className={`mx-auto h-full w-full text-white ${isMobile ? maxW : "max-w-[950px]"}`}
+        className={`mx-auto h-full w-full text-white ${isMobile ? "" : "max-w-[950px]"}`}
       >
         <Navbar />
 
@@ -91,6 +102,7 @@ function App() {
         <main>
           <section
             id="projects"
+            data-pause-offscreen
             className={`mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
           >
             <SectionTitle title="Proyectos" icon={<IoCodeWorkingOutline />} />
@@ -112,6 +124,7 @@ function App() {
           </section>
           <section
             id="about"
+            data-pause-offscreen
             className={`mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
           >
             <SectionTitle
@@ -225,9 +238,11 @@ function App() {
           </section>
           <section
             id="technologies"
+            ref={technologiesRef}
+            data-pause-offscreen
             className={`relative mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
           >
-            <div className="dot-technologies absolute flex items-center justify-center">
+            <div className="dot-technologies absolute flex items-center justify-center will-change-transform">
               <BgDotGradient
                 size="2xl"
                 colors={["accent", "violet"]}
@@ -235,7 +250,7 @@ function App() {
                 position={{ left: 100, top: 100 }}
               />
             </div>
-            <div className="dot-technologies absolute flex items-center justify-center">
+            <div className="dot-technologies absolute flex items-center justify-center will-change-transform">
               <BgDotGradient
                 size="3xl"
                 colors={["black", "pink"]}
@@ -243,7 +258,7 @@ function App() {
                 position={{ left: 600, top: 200 }}
               />
             </div>
-            <div className="dot-technologies absolute flex items-center justify-center">
+            <div className="dot-technologies absolute flex items-center justify-center will-change-transform">
               <BgDotGradient
                 size="5xl"
                 colors={["accent", "blue"]}
@@ -251,7 +266,7 @@ function App() {
                 position={{ left: 300, top: 400 }}
               />
             </div>
-            <div className="dot-technologies absolute flex items-center justify-center">
+            <div className="dot-technologies absolute flex items-center justify-center will-change-transform">
               <BgDotGradient
                 size="xl"
                 colors={["yellow", "green"]}
@@ -278,6 +293,7 @@ function App() {
           <AISection />
           <section
             id="contact"
+            data-pause-offscreen
             className={`mb-20 mt-30 ${isMobile ? "p-4" : ""}`}
           >
             <SectionTitle
