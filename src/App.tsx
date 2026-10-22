@@ -17,10 +17,12 @@ import { TechnologiesContainer } from "./components/ui/Technologies/Technologies
 import { BgDotGradient } from "./components/ui/BgDotGradient";
 import { ContactContainer } from "./components/ui/contact/ContactContainer";
 import { AISection } from "./components/ui/ai/AISection";
+import { HoloPhotoCard } from "./components/ui/HoloPhotoCard";
 import { Suspense, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useIsMobile } from "./hooks/useIsMobile";
 import { TechTooltip } from "./components/deferred";
+import { SiteAnalytics } from "./components/SiteAnalytics";
 import { preloadDeferredComponents } from "./utils/preloadDeferred";
 import { usePauseOffscreenAnimations } from "./hooks/usePauseOffscreenAnimations";
 import {
@@ -86,6 +88,7 @@ function App() {
       className={`relative z-40 h-screen overflow-x-hidden bg-cbpbg-900 font-poppins ${isMobile ? "" : "w-full"}`}
     >
       {/* Tech Tooltip - componente que muestra información sobre las tecnologías */}
+      <SiteAnalytics />
       <Suspense fallback={null}>
         <TechTooltip />
       </Suspense>
@@ -103,10 +106,13 @@ function App() {
           <section
             id="projects"
             data-pause-offscreen
-            className={`mt-30 mb-20 ${isMobile ? "p-4" : ""}`}
+            className={`mt-30 mb-20 ${isMobile ? "px-3 py-4" : ""}`}
           >
-            <SectionTitle title="Proyectos" icon={<IoCodeWorkingOutline />} />
-            <div className="cardsContainer grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <SectionTitle
+              title="Proyectos"
+              icon={<IoCodeWorkingOutline className="fx-icon fx-stretch" />}
+            />
+            <div className="cardsContainer grid w-full grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3">
               {proyects.map((proyect, index) => (
                 <div key={proyect.name + index} className="relative">
                   <ProyectCard
@@ -129,7 +135,9 @@ function App() {
           >
             <SectionTitle
               title="Sobre mí"
-              icon={<IoIosInformationCircleOutline />}
+              icon={
+                <IoIosInformationCircleOutline className="fx-icon fx-swing" />
+              }
             />
 
             <div
@@ -140,15 +148,15 @@ function App() {
               >
                 <p className="anim-about-text">
                   ¡Hola de nuevo! 👋 Soy Carlos Benítez,{" "}
-                  <ShinyText text="Desarrollador web" /> con formación en{" "}
-                  <ShinyText text="Ingeniería de Sistemas y Computación." />{" "}
-                  Especializado en crear{" "}
-                  <ShinyText text="aplicaciones web modernas" /> que combinen{" "}
-                  <ShinyText text="diseño atractivo" /> con{" "}
-                  <ShinyText text="arquitecturas sólidas." />
+                  <ShinyText text="desarrollador web" /> con formación en{" "}
+                  <ShinyText text="Ingeniería de Sistemas y Computación." /> Me
+                  centro en construir{" "}
+                  <ShinyText text="aplicaciones web modernas" /> que combinan un{" "}
+                  <ShinyText text="diseño cuidado" /> con una{" "}
+                  <ShinyText text="arquitectura sólida." />
                 </p>
                 <p className="anim-about-text">
-                  Mi expertise abarca desde el desarrollo de{" "}
+                  Mi experiencia abarca desde el desarrollo de{" "}
                   <ShinyText
                     text="interfaces
                   dinámicas"
@@ -178,62 +186,90 @@ function App() {
                     fitContent={true}
                   />{" "}
                   /{" "}
-                  <TechnologyLabel
-                    name={technologies[11].name}
-                    icon={technologies[11].icon}
-                    color={technologies[11].color}
-                    url={technologies[11].url}
-                    fitContent={true}
-                  />
-                  . Disfruto especialmente optimizando la interacción entre{" "}
+                  <span className="whitespace-nowrap">
+                    <TechnologyLabel
+                      name={technologies[11].name}
+                      icon={technologies[11].icon}
+                      color={technologies[11].color}
+                      url={technologies[11].url}
+                      fitContent={true}
+                    />
+                    .
+                  </span>{" "}
+                  Me interesa especialmente la integración entre{" "}
                   <ShinyText text="frontend" /> y <ShinyText text="backend" />{" "}
-                  para crear experiencias fluidas.
+                  para ofrecer experiencias fluidas.
+                </p>
+                <p className="anim-about-text">
+                  Hoy gran parte de mi trabajo es{" "}
+                  <ShinyText text="desarrollo agéntico:" /> programo junto a{" "}
+                  <ShinyText text="agentes de IA" /> y elijo la herramienta
+                  adecuada para cada tarea. Con{" "}
+                  <ShinyText text="harness engineering" /> les doy el{" "}
+                  <ShinyText text="contexto adecuado" /> (reglas, memoria y
+                  skills), los conecto a herramientas con{" "}
+                  <ShinyText text="MCP" /> y verifico cada cambio con{" "}
+                  <ShinyText text="tests automáticos." /> Así optimicé este
+                  portafolio, que hoy cuenta con más de 150 tests.
                 </p>
                 <div className="anim-about-text space-y-3">
-                  <p className="font-medium">
-                    Entre mis logros destacados están:
-                  </p>
+                  <p className="font-medium">Logros destacados</p>
                   <ul className="list-none space-y-2">
-                    <li className="anim-achievement-text flex items-start">
-                      <FaCheck className="mr-2 text-cbpviolet-500" />
+                    <li className="anim-achievement-text fx-trigger flex items-start">
+                      <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
                       <span>
-                        Desarrollo de soluciones full-stack para{" "}
-                        <ShinyText text="automatización" /> de procesos
+                        Motor de cálculo y validación de{" "}
+                        <ShinyText text="créditos automotrices," /> con análisis
+                        de riesgo apoyado en IA
                       </span>
                     </li>
-                    <li className="anim-achievement-text flex items-start">
-                      <FaCheck className="mr-2 text-cbpviolet-500" />
+                    <li className="anim-achievement-text fx-trigger flex items-start">
+                      <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
                       <span>
-                        Implementación de interfaces modernas con{" "}
-                        <ShinyText text="React" /> y{" "}
-                        <ShinyText text="Next.js" />
+                        <ShinyText text="E-commerce con subastas en tiempo real:" />{" "}
+                        ofertas concurrentes, cierres automáticos y checkout con
+                        geolocalización
                       </span>
                     </li>
-                    <li className="anim-achievement-text flex items-start">
-                      <FaCheck className="mr-2 text-cbpviolet-500" />
+                    <li className="anim-achievement-text fx-trigger flex items-start">
+                      <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
                       <span>
-                        Creación de APIs eficientes con{" "}
-                        <ShinyText text="Python" /> y{" "}
-                        <ShinyText text="FastAPI" />
+                        <ShinyText text="Automatización" /> de facturas y
+                        liquidaciones con Python, eliminando procesos manuales
                       </span>
                     </li>
-
-                    <li className="anim-achievement-text flex items-start">
-                      <FaCheck className="mr-2 text-cbpviolet-500" />
+                    <li className="anim-achievement-text fx-trigger flex items-start">
+                      <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
                       <span>
-                        Transferencia de conocimiento técnico mediante{" "}
-                        <ShinyText text="mentorías" />
+                        Conversión automática de imágenes a WebP y carga en{" "}
+                        <ShinyText text="AWS S3" /> para acelerar la carga del
+                        sitio
+                      </span>
+                    </li>
+                    <li className="anim-achievement-text fx-trigger flex items-start">
+                      <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
+                      <span>
+                        <ShinyText text="Desarrollo agéntico" /> con distintos
+                        agentes de IA, apoyado en MCP, subagentes y skills a
+                        medida
+                      </span>
+                    </li>
+                    <li className="anim-achievement-text fx-trigger flex items-start">
+                      <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
+                      <span>
+                        <ShinyText text="Tutor de desarrollo web" /> en la UNAB:
+                        JavaScript, C#, HTML/CSS y MySQL
                       </span>
                     </li>
                   </ul>
                 </div>
               </div>
 
-              <img
-                src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1752513118/320_1x_shots_so_sf9nou.png"
-                alt="Foto de Carlos Benítez"
-                className={`proyect-card-anim aspect-square h-full w-64 rotate-3 rounded-2xl object-cover p-1 lg:w-72 lg:p-2 ${isMobile ? "order-1 w-3xl" : ""}`}
-              />
+              <div
+                className={`proyect-card-anim shrink-0 ${isMobile ? "order-1 mx-auto w-full max-w-xs" : "w-64 lg:w-72"}`}
+              >
+                <HoloPhotoCard className="rotate-3" />
+              </div>
             </div>
           </section>
           <section
@@ -275,7 +311,10 @@ function App() {
               />
             </div>
 
-            <SectionTitle title="Tecnologías" icon={<IoCodeSlashOutline />} />
+            <SectionTitle
+              title="Tecnologías"
+              icon={<IoCodeSlashOutline className="fx-icon fx-glitch" />}
+            />
             <div
               className={`grid ${isMobile ? "" : "grid-cols-3 grid-rows-2"} w-full gap-4`}
             >
@@ -298,7 +337,9 @@ function App() {
           >
             <SectionTitle
               title="Contáctame"
-              icon={<MdOutlineConnectWithoutContact />}
+              icon={
+                <MdOutlineConnectWithoutContact className="fx-icon fx-ring" />
+              }
             />
             <ContactContainer />
           </section>

@@ -50,16 +50,16 @@ export const TechnologiesContainer = ({
   return (
     <div
       ref={techContainerRef}
-      className={`${!isMobile ? (title === "tools" ? "col-span-2" : title === "learning" || title === "backend" ? "col-span-1" : "col-span-2") : ""} ${title === "frontend" && !isMobile ? "col-span-2" : ""} border-4 border-white/5 p-4 backdrop-blur-2xl before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.15)_0%,transparent_20%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1] ${title === "tools" || title === "backend" ? "technologies-container-right" : "technologies-container-left"}`}
+      className={`${!isMobile ? (title === "tools" ? "col-span-2" : title === "learning" || title === "backend" ? "col-span-1" : "col-span-2") : ""} ${title === "frontend" && !isMobile ? "col-span-2" : ""} fx-trigger border-4 border-white/5 p-4 backdrop-blur-2xl before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.15)_0%,transparent_20%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1] ${title === "tools" || title === "backend" ? "technologies-container-right" : "technologies-container-left"}`}
     >
       {title === "frontend" ? (
-        <BsBorderStyle className="h-8 w-8 text-cbpviolet-200" />
+        <BsBorderStyle className="fx-icon fx-stretch h-8 w-8 text-cbpviolet-200" />
       ) : title === "backend" ? (
-        <LuSquareDashedBottomCode className="h-8 w-8 text-cbpviolet-200" />
+        <LuSquareDashedBottomCode className="fx-icon fx-glitch h-8 w-8 text-cbpviolet-200" />
       ) : title === "learning" ? (
-        <PiStudent className="h-8 w-8 text-cbpviolet-200" />
+        <PiStudent className="fx-icon fx-hop h-8 w-8 text-cbpviolet-200" />
       ) : (
-        <VscTools className="h-8 w-8 text-cbpviolet-200" />
+        <VscTools className="fx-icon fx-swing h-8 w-8 text-cbpviolet-200" />
       )}
       <div>
         <h2 className="mb-8 bg-gradient-to-r from-cbpviolet-400 to-cbpviolet-100 bg-clip-text text-center text-2xl text-transparent">

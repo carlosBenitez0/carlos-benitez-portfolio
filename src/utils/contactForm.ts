@@ -36,27 +36,25 @@ export const validateContact = (data: ContactData): ContactError | null => {
   const subject = data.subject.trim();
   const message = data.message.trim();
 
-  if (name === "") return { name: "name", error: "El nombre es requerido" };
+  if (name === "") return { name: "name", error: "Escribe tu nombre" };
   if (name.length < 3)
     return {
       name: "name",
       error: "El nombre debe tener al menos 3 caracteres",
     };
 
-  if (email === "") return { name: "email", error: "El email es requerido" };
+  if (email === "") return { name: "email", error: "Escribe tu email" };
   if (!isValidEmail(email))
-    return { name: "email", error: "El email es invalido" };
+    return { name: "email", error: "Introduce un email válido" };
 
-  if (subject === "")
-    return { name: "subject", error: "El asunto es requerido" };
+  if (subject === "") return { name: "subject", error: "Escribe el asunto" };
   if (subject.length < 3)
     return {
       name: "subject",
       error: "El asunto debe tener al menos 3 caracteres",
     };
 
-  if (message === "")
-    return { name: "message", error: "El mensaje es requerido" };
+  if (message === "") return { name: "message", error: "Escribe tu mensaje" };
   if (message.length < 10)
     return {
       name: "message",

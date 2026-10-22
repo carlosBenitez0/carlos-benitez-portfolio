@@ -149,3 +149,47 @@ test.describe("accesibilidad", () => {
     expect(serious).toEqual([]);
   });
 });
+
+test.describe("página 404", () => {
+  test("se ve con su estilo, cumple la CSP y vuelve al inicio", async ({
+    page,
+  }) => {
+    const getViolations = await recordCspViolations(page);
+    const errors = collectPageErrors(page);
+    const response = await page.goto("/404.html");
+    expect(response?.headers()["content-security-policy"]).toBeTruthy();
+
+    await expect(page).toHaveTitle(/no encontrada/);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      "Esta página no existe",
+    );
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      "content",
+      "noindex",
+    );
+    // La hoja de estilos externa se aplicó (fondo oscuro del sitio)
+    await expect(page.locator("body")).toHaveCSS(
+      "background-color",
+      "rgb(5, 0, 16)",
+    );
+
+    await page.getByRole("link", { name: "Volver al portafolio" }).click();
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Hola");
+
+    expect(await getViolations()).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+
+  test("no tiene problemas graves de accesibilidad", async ({ page }) => {
+    await page.goto("/404.html");
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
+    expect(
+      results.violations
+        .filter((v) => v.impact === "serious" || v.impact === "critical")
+        .map((v) => v.id),
+    ).toEqual([]);
+  });
+});

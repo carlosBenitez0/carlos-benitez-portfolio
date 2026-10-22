@@ -11,8 +11,13 @@ import {
   prefersReducedMotion,
 } from "../../utils/visibility";
 
+const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  e.preventDefault();
+  document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+};
+
 export const Header = () => {
-  const arrowRef = useRef<HTMLDivElement>(null);
+  const arrowRef = useRef<HTMLAnchorElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const { isMobile } = useIsMobile();
 
@@ -35,8 +40,13 @@ export const Header = () => {
         return;
       }
 
-      // Sin filter: blur aquí: a scale 40 la flecha mide más de 1000px y el
-      // desenfoque se recalculaba en cada frame durante 5 segundos.
+      // El blur se calcula en cada frame a partir de lo que le falta por
+      // caer. El filtro se aplica antes del scale (1px a scale 40 se ve como
+      // 40px), así que se divide entre la escala actual para que el
+      // desenfoque *visible* dependa solo de la altura: arriba muy difusa,
+      // nítida al llegar. Al terminar se quita el filter para que el rebote
+      // infinito no siga pagando su coste.
+      const MAX_VISIBLE_BLUR = 48;
       gsap.fromTo(
         arrow,
         {
@@ -50,9 +60,19 @@ export const Header = () => {
           opacity: 1,
           scale: 1,
           rotation: 0,
-          duration: 5,
+          duration: 2.2,
+          // Cae cuando el texto ya está casi listo, para no coincidir con
+          // los desenfoques de la entrada
+          delay: 0.8,
           ease: "power1.out",
+          onUpdate: function (this: gsap.core.Tween) {
+            const remaining = Math.pow(1 - this.ratio, 0.7);
+            const scale = Number(gsap.getProperty(arrow, "scale")) || 1;
+            const blur = (MAX_VISIBLE_BLUR * remaining) / scale;
+            arrow.style.filter = `blur(${blur.toFixed(3)}px)`;
+          },
           onComplete: () => {
+            gsap.set(arrow, { clearProps: "filter" });
             ctx.add(() => {
               gsap.to(arrow, {
                 y: -10,
@@ -70,12 +90,15 @@ export const Header = () => {
         appearText,
         { opacity: 0, filter: "blur(5px)", translateY: 50 },
         {
+          // Título, subtítulo y párrafo listos en ~1,9 s (antes ~7 s)
           opacity: 1,
-          duration: 4.5,
+          delay: 0.2,
+          duration: 1.1,
           ease: "power3.out",
           filter: "blur(0px)",
           translateY: 0,
-          stagger: 1.5,
+          stagger: 0.3,
+          clearProps: "filter",
         },
       );
     }, header);
@@ -124,45 +147,27 @@ export const Header = () => {
             >
               Construyo{" "}
               <HighlightText shadowOpacity={1}>
-                {" "}
-                <ShinyText
-                  text="soluciones web"
-                  disabled={false}
-                  speed={3}
-                />{" "}
+                <ShinyText text="soluciones web" disabled={false} speed={3} />
               </HighlightText>{" "}
               robustas, fusionando{" "}
               <HighlightText shadowOpacity={1}>
-                {" "}
-                <ShinyText
-                  text="código eficiente"
-                  disabled={false}
-                  speed={3}
-                />{" "}
+                <ShinyText text="código eficiente" disabled={false} speed={3} />
               </HighlightText>{" "}
-              con
+              con{" "}
               <HighlightText shadowOpacity={1}>
-                {" "}
-                <ShinyText
-                  text="diseño intuitivo"
-                  disabled={false}
-                  speed={3}
-                />{" "}
+                <ShinyText text="diseño intuitivo" disabled={false} speed={3} />
               </HighlightText>{" "}
               y{" "}
               <HighlightText shadowOpacity={1}>
-                {" "}
-                <ShinyText text="creativo. " disabled={false} speed={3} />
+                <ShinyText text="creativo." disabled={false} speed={3} />
               </HighlightText>{" "}
               Creo que la programación va más allá de la lógica: es un espacio
               para{" "}
               <HighlightText shadowOpacity={1}>
-                {" "}
-                <ShinyText text="innovar" disabled={false} speed={3} />{" "}
+                <ShinyText text="innovar" disabled={false} speed={3} />
               </HighlightText>{" "}
-              y resolver problemas con
+              y resolver problemas con{" "}
               <HighlightText shadowOpacity={1}>
-                {" "}
                 <ShinyText
                   text="soluciones ingeniosas."
                   disabled={false}
@@ -177,12 +182,19 @@ export const Header = () => {
         </div>
       </div>
 
-      <div
+      <a
         ref={arrowRef}
-        className={`absolute left-1/2 -translate-x-1/2 ${isMobile ? "bottom-16" : "bottom-22"}`}
+        href="#projects"
+        aria-label="Ir a la sección de proyectos"
+        title="Ver proyectos"
+        onClick={scrollToProjects}
+        className={`absolute left-1/2 -translate-x-1/2 cursor-pointer rounded-full p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400 ${isMobile ? "bottom-14" : "bottom-20"}`}
       >
-        <IoIosArrowDown className="h-8 w-8 text-cbpviolet-400" />
-      </div>
+        <IoIosArrowDown
+          aria-hidden="true"
+          className="h-8 w-8 text-cbpviolet-400 transition-colors duration-300 hover:text-cbpviolet-300"
+        />
+      </a>
     </header>
   );
 };

@@ -49,7 +49,7 @@ export const TechTooltip = () => {
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                <FaInfoCircle className="text-2xl" />
+                <FaInfoCircle className="fx-icon fx-swing text-2xl" />
               </motion.button>
             )
           ) : (
@@ -63,10 +63,10 @@ export const TechTooltip = () => {
               <div className="relative max-w-xs p-5">
                 <button
                   onClick={handleClose}
-                  className="absolute top-3 right-3 cursor-pointer text-cbpgray-400 transition-colors hover:text-white"
+                  className="fx-trigger absolute top-3 right-3 cursor-pointer text-cbpgray-400 transition-colors hover:text-white"
                   aria-label="Cerrar"
                 >
-                  <FaTimes />
+                  <FaTimes className="fx-icon fx-turn" />
                 </button>
 
                 <div className="mb-4 flex items-center">
@@ -74,7 +74,7 @@ export const TechTooltip = () => {
                     <FaInfoCircle className="rounded-full text-xl text-cbpviolet-300 shadow-[0_0_20px_rgba(139,92,246,1)]" />
                   </div>
                   <h3 className="bg-gradient-to-r from-cbpviolet-300 to-cbpviolet-400 bg-clip-text text-center text-lg font-semibold text-transparent">
-                    ¡Tecnologías Interactivas!
+                    ¡Tecnologías interactivas!
                   </h3>
                 </div>
 

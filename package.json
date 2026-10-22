@@ -20,6 +20,7 @@
     "@emailjs/browser": "^4.4.1",
     "@midudev/tailwind-animations": "^0.2.0",
     "@tailwindcss/vite": "^4.1.11",
+    "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.23.0",
     "gsap": "^3.13.0",
     "react": "^19.3.0",

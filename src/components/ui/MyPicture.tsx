@@ -1,4 +1,11 @@
-import { useEffect, useRef } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { BgDotGradient } from "./BgDotGradient";
 import gsap from "gsap";
 import { useIsMobile } from "../../hooks/useIsMobile";
@@ -7,9 +14,21 @@ import {
   prefersReducedMotion,
 } from "../../utils/visibility";
 
+// Orbe 3D (Three.js) en su propio chunk: la burbuja CSS se ve mientras carga
+// y se queda si el navegador no tiene WebGL
+const HeroOrb = lazy(() => import("./HeroOrb"));
+const supportsWebGL = () =>
+  typeof window !== "undefined" && "WebGLRenderingContext" in window;
+
 export const MyPicture = () => {
   const { isMobile } = useIsMobile();
   const rootRef = useRef<HTMLDivElement>(null);
+  const [orbReady, setOrbReady] = useState(false);
+  const [withOrb] = useState(supportsWebGL);
+  // El orbe se monta cuando termina la entrada: iniciar WebGL a la vez que
+  // las animaciones congelaba la pantalla al cargar
+  const [loadOrb, setLoadOrb] = useState(false);
+  const handleOrbReady = useCallback(() => setOrbReady(true), []);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -25,39 +44,22 @@ export const MyPicture = () => {
       tl = gsap.timeline();
     });
 
-    const generateRandomPosition = () => {
-      if (isMobile) {
-        return {
-          x: Math.random() * 100 - 50,
-          y: Math.random() * 100 - 50,
-        };
-      }
-      return {
-        x: Math.random() * 200 - 100,
-        y: Math.random() * 200 - 100,
-      };
-    };
-
-    const finalPositions = Array.from(
-      { length: dots.length },
-      generateRandomPosition,
-    );
-
     tl.fromTo(
       bubble,
+      // Sin blur: desenfocar un elemento tan grande a la vez que el resto de
+      // la entrada daba tirones; escala y opacidad bastan
       {
         opacity: 0,
         y: isMobile ? 50 : 100,
         scale: 0,
-        filter: "blur(20px)",
       },
       {
-        delay: 3.2,
+        // La foto entra junto con el texto (antes esperaba 3,2 s)
+        delay: 0.4,
         opacity: 1,
         y: 0,
         scale: 1,
-        filter: "blur(0px)",
-        duration: 2,
+        duration: 1.2,
         ease: "power3.out",
       },
     );
@@ -67,91 +69,209 @@ export const MyPicture = () => {
         opacity: 0,
         y: isMobile ? 50 : 100,
         scale: 0,
-        filter: "blur(20px)",
+        filter: "blur(8px)",
       },
       {
         opacity: 1,
         y: 0,
         scale: 1,
-        duration: 2,
+        duration: 1.2,
         ease: "power3.out",
       },
-      "<1",
+      "<0.25",
     );
     tl.to(
       picture,
       {
         filter: "blur(0px)",
-        duration: 2,
+        duration: 1,
         ease: "power3.out",
       },
       "<0.2",
     );
+    // Al terminar se quita el filter: aunque valga blur(0px), obliga a pintar
+    // la esfera y la foto en una capa aparte y se ven menos nítidas.
+    tl.set([bubble, picture], { clearProps: "filter" });
+    // Cuando la entrada (y la flecha) terminan, el orbe se carga en un
+    // momento libre del navegador
+    let orbTimer = 0;
+    let orbIdle = 0;
+    tl.call(() => {
+      orbTimer = window.setTimeout(() => {
+        const start = () => setLoadOrb(true);
+        if ("requestIdleCallback" in window) {
+          orbIdle = window.requestIdleCallback(start, { timeout: 1500 });
+        } else {
+          start();
+        }
+      }, 1200);
+    });
 
-    // Posiciones iniciales aleatorias fuera de pantalla
+    // Cada mancha recorre su propia órbita elíptica alrededor de la foto,
+    // con un segundo armónico que la deforma (trayectoria orgánica, no un
+    // círculo perfecto) y una "respiración" de escala. Todo sale de un único
+    // ángulo, así que la vuelta es continua: sin paradas ni cambios bruscos.
+    const reduceMotion = prefersReducedMotion();
+    const radius = isMobile ? [35, 75] : [70, 165];
+    const orbits = Array.from(dots, (_, index) => ({
+      rx: gsap.utils.random(radius[0], radius[1]),
+      ry: gsap.utils.random(radius[0], radius[1]) * 0.75,
+      wobble: gsap.utils.random(8, isMobile ? 14 : 28),
+      phase: (index / dots.length) * Math.PI * 2 + gsap.utils.random(-0.4, 0.4),
+      direction: index % 2 === 0 ? 1 : -1,
+      period: gsap.utils.random(14, 26),
+      baseScale: gsap.utils.random(0.85, 1.15),
+      breath: gsap.utils.random(0.08, 0.18),
+      depth: gsap.utils.random(0.4, 1) * (index % 2 === 0 ? 1 : -1),
+    }));
+
+    const orbitPoint = (orbit: (typeof orbits)[number], angle: number) => ({
+      x: orbit.rx * Math.cos(angle) + orbit.wobble * Math.cos(2 * angle + 1),
+      y: orbit.ry * Math.sin(angle) + orbit.wobble * Math.sin(3 * angle),
+      scale: orbit.baseScale + orbit.breath * Math.sin(2 * angle),
+    });
+
+    // Entrada: las manchas nacen detrás de la burbuja ya girando. No hay un
+    // tween de posición aparte (frenaba hasta quedarse quieta antes de que
+    // empezara la órbita): la órbita arranca desde el primer frame y solo su
+    // radio y su escala crecen de 0 a 1, así que nunca dejan de moverse.
+    const intros = orbits.map(() => ({ grow: reduceMotion ? 1 : 0 }));
     dots.forEach((dot, index) => {
-      const startX = isMobile
-        ? (Math.random() > 0.5 ? 1 : -1) * (50 + Math.random() * 50)
-        : (Math.random() > 0.5 ? 1 : -1) * (100 + Math.random() * 100);
-      const startY = isMobile
-        ? (Math.random() > 0.5 ? 1 : -1) * (50 + Math.random() * 50)
-        : (Math.random() > 0.5 ? 1 : -1) * (100 + Math.random() * 100);
-
+      const start = orbitPoint(orbits[index], orbits[index].phase);
+      if (reduceMotion) {
+        gsap.set(dot, { x: start.x, y: start.y, scale: start.scale });
+      } else {
+        gsap.set(dot, { x: 0, y: 0, scale: 0 });
+      }
       tl.fromTo(
         dot,
-        {
-          opacity: 0,
-          x: startX,
-          y: startY,
-        },
+        { opacity: 0 },
         {
           opacity: 1,
-          x: finalPositions[index].x,
-          y: finalPositions[index].y,
-          duration: 0.5,
-          ease: "power1.inOut",
-          delay: index * 0.01, // Espaciado entre dots
+          duration: reduceMotion ? 0.6 : 1.2,
+          ease: "power1.out",
+          onStart: reduceMotion ? undefined : () => orbit(dot, index),
         },
-        "<0.2", // Comienza 0.5s después del inicio de la timeline
+        index === 0 ? "<0.2" : "<0.08",
       );
     });
 
-    //generar movimiento aleatorio constante:
-    const generateRandomMovement = () => {
-      const randomValue =
-        Math.random() * (isMobile ? 100 : 300) - (isMobile ? 50 : 150);
-      return randomValue;
+    // Parallax con el puntero (solo con ratón): cada mancha se desplaza según
+    // su profundidad y el valor se suaviza dentro del propio tween de órbita.
+    const pointer = { x: 0, y: 0 };
+    const finePointer = window.matchMedia?.("(pointer: fine)").matches ?? false;
+    const onPointerMove = (event: PointerEvent) => {
+      pointer.x = (event.clientX / window.innerWidth - 0.5) * 2;
+      pointer.y = (event.clientY / window.innerHeight - 0.5) * 2;
+    };
+    if (finePointer && !reduceMotion) {
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+    }
+
+    // Un único tween infinito por mancha: anima una variable CSS de 0 a 1 y
+    // en cada frame convierte ese progreso en ángulo → posición y escala.
+    // Las órbitas nacen en callbacks (fuera del context), así que se guardan
+    // aparte; "disposed" evita que un onStart tardío cree otra tras desmontar.
+    let disposed = false;
+    const orbitTweens: gsap.core.Tween[] = [];
+    const orbit = (dot: HTMLElement, index: number) => {
+      if (disposed) return;
+      const config = orbits[index];
+      const setX = gsap.quickSetter(dot, "x", "px");
+      const setY = gsap.quickSetter(dot, "y", "px");
+      // quickSetter no entiende el alias "scale": hay que fijar cada eje.
+      const setScaleX = gsap.quickSetter(dot, "scaleX");
+      const setScaleY = gsap.quickSetter(dot, "scaleY");
+      const parallax = { x: 0, y: 0 };
+      const strength = isMobile ? 0 : 30;
+      const intro = intros[index];
+
+      orbitTweens.push(
+        gsap.to(intro, { grow: 1, duration: 1.6, ease: "power2.out" }),
+      );
+
+      const orbitTween = gsap.fromTo(
+        dot,
+        { "--orbit": 0 },
+        {
+          "--orbit": 1,
+          duration: config.period,
+          repeat: -1,
+          ease: "none",
+          onUpdate: function (this: gsap.core.Tween) {
+            const angle =
+              config.phase + config.direction * this.progress() * Math.PI * 2;
+            const point = orbitPoint(config, angle);
+            parallax.x +=
+              (pointer.x * strength * config.depth - parallax.x) * 0.05;
+            parallax.y +=
+              (pointer.y * strength * config.depth - parallax.y) * 0.05;
+            setX(point.x * intro.grow + parallax.x);
+            setY(point.y * intro.grow + parallax.y);
+            setScaleX(point.scale * intro.grow);
+            setScaleY(point.scale * intro.grow);
+          },
+        },
+      );
+      orbitTweens.push(orbitTween);
     };
 
-    const generateRandomSize = () => {
-      const randomValue = Math.random() * (isMobile ? 1.2 : 1.3);
-      return randomValue;
+    // Profundidad: con el ratón, la foto se desplaza más que la burbuja (parece
+    // flotar delante). En 2D y en píxeles enteros: girar en 3D o mover a
+    // medio píxel obliga a reescalar la imagen y la foto pierde nitidez.
+    // Se usa la propiedad CSS "translate", que se suma a los transform de GSAP
+    // de la entrada sin pisarlos.
+    const bubbleEl = bubble as HTMLElement | null;
+    const pictureEl = picture as HTMLElement | null;
+    const depth = { x: 0, y: 0 };
+    const applyDepth = () => {
+      if (bubbleEl) {
+        bubbleEl.style.translate = `${Math.round(depth.x * 8)}px ${Math.round(depth.y * 8)}px`;
+      }
+      if (pictureEl) {
+        pictureEl.style.translate = `${Math.round(depth.x * 18)}px ${Math.round(depth.y * 14)}px`;
+      }
     };
-    // Deriva continua: cada dot tiene un único tween vivo que, al terminar,
-    // encadena el siguiente hacia una posición aleatoria nueva. Antes un
-    // setInterval añadía 6 tweens infinitos por segundo sin liberarlos nunca.
-    const drift = (dot: HTMLElement, index: number) => {
-      gsap.to(dot, {
-        x: generateRandomMovement(),
-        y: generateRandomMovement(),
-        scale: generateRandomSize(),
-        duration: 3,
-        delay: index * 0.1,
-        ease: "power1.inOut",
-        onComplete: () => drift(dot, 0),
-      });
+    const depthX = gsap.quickTo(depth, "x", {
+      duration: 0.9,
+      ease: "power3.out",
+      onUpdate: applyDepth,
+    });
+    const depthY = gsap.quickTo(depth, "y", {
+      duration: 0.9,
+      ease: "power3.out",
+      onUpdate: applyDepth,
+    });
+    const onDepthMove = () => {
+      depthX(pointer.x);
+      depthY(pointer.y);
     };
-    if (!prefersReducedMotion()) tl.call(() => dots.forEach(drift));
+    if (finePointer && !reduceMotion) {
+      window.addEventListener("pointermove", onDepthMove, { passive: true });
+    }
 
     // La deriva se congela cuando el hero sale de pantalla
     const stopPausing = pauseTweensWhileOffscreen(root, dots);
 
     return () => {
+      disposed = true;
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointermove", onDepthMove);
+      window.clearTimeout(orbTimer);
+      if (orbIdle) window.cancelIdleCallback(orbIdle);
+      gsap.killTweensOf(depth);
       stopPausing();
       ctx.revert();
+      orbitTweens.forEach((tween) => tween.kill());
       gsap.killTweensOf(dots);
+      gsap.killTweensOf(intros);
     };
   }, [isMobile]);
+
+  // Tamaño y posición de la burbuja
+  const bubbleBox = isMobile
+    ? "h-[200px] w-[200px]"
+    : "left-[75px] h-[300px] w-[300px]";
 
   return (
     <div
@@ -207,12 +327,22 @@ export const MyPicture = () => {
         </div>
       </div>
       <div
-        className={`picture-bubble absolute ${
-          !isMobile
-            ? "shadow-[inset_8px_8px_16px_rgba(54,26,111,0.5),inset_-8px_-8px_16px_rgba(175,55,239,0.4),0px_0px_5px_rgba(140,55,200,0.3),0px_0px_25px_rgba(140,55,200,0.3),0px_0px_50px_rgba(140,55,200,0.3),0px_0px_100px_rgba(140,55,200,0.3)]"
-            : "shadow-[inset_4px_4px_8px_rgba(54,26,111,0.5),inset_-4px_-4px_8px_rgba(175,55,239,0.4),0px_0px_2px_rgba(140,55,200,0.3),0px_0px_10px_rgba(140,55,200,0.3),0px_0px_20px_rgba(140,55,200,0.3),0px_0px_40px_rgba(140,55,200,0.3)]"
-        } rounded-full bg-gradient-to-b from-cbpviolet-500/30 to-cbpviolet-900/50 ${isMobile ? "h-[200px] w-[200px]" : "left-[75px] h-[300px] w-[300px]"} `}
-      ></div>
+        className={`picture-bubble absolute rounded-full ${bubbleBox} ${
+          orbReady
+            ? ""
+            : `glass-sphere ${
+                !isMobile
+                  ? "shadow-[inset_8px_8px_16px_rgba(54,26,111,0.5),inset_-8px_-8px_16px_rgba(175,55,239,0.4),0px_0px_5px_rgba(140,55,200,0.3),0px_0px_25px_rgba(140,55,200,0.3),0px_0px_50px_rgba(140,55,200,0.3),0px_0px_100px_rgba(140,55,200,0.3)]"
+                  : "shadow-[inset_4px_4px_8px_rgba(54,26,111,0.5),inset_-4px_-4px_8px_rgba(175,55,239,0.4),0px_0px_2px_rgba(140,55,200,0.3),0px_0px_10px_rgba(140,55,200,0.3),0px_0px_20px_rgba(140,55,200,0.3),0px_0px_40px_rgba(140,55,200,0.3)]"
+              }`
+        }`}
+      >
+        {withOrb && loadOrb && (
+          <Suspense fallback={null}>
+            <HeroOrb onReady={handleOrbReady} />
+          </Suspense>
+        )}
+      </div>
       <figure
         className={`my-picture absolute object-cover ${isMobile ? "top-[-120px] w-[150px]" : "top-[-180px] w-[225px]"}`}
       >

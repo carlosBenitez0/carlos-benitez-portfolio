@@ -4,18 +4,19 @@ import { SectionTitle } from "../SectionTitle";
 import { AIToolCard } from "./AIToolCard";
 // Importación del componente de terminal interactivo
 import { AITerminal } from "./AITerminal";
+import { AgentOrbitPanel } from "./AgentOrbitPanel";
 // Importación de iconos de la biblioteca react-icons
-import { FaRobot, FaTerminal, FaCode, FaBrain } from "react-icons/fa";
+import { FaRobot, FaCode, FaBrain } from "react-icons/fa";
+import { LuBot } from "react-icons/lu";
+import { FaVialCircleCheck } from "react-icons/fa6";
 import {
-  SiGithub,
-  SiOpenai,
-  SiGoogle,
-  SiClaude,
-  SiCodeium,
-} from "react-icons/si";
-import { LuBrainCircuit } from "react-icons/lu";
-import { BiLogoVisualStudio } from "react-icons/bi";
-import { FaBolt } from "react-icons/fa6";
+  ClaudeCodeIcon,
+  ClaudeIcon,
+  CodexIcon,
+  GeminiIcon,
+  GithubCopilotIcon,
+  OpenAIIcon,
+} from "./brandIcons";
 
 /**
  * Componente AISection
@@ -27,107 +28,72 @@ import { FaBolt } from "react-icons/fa6";
 export const AISection = () => {
   // Datos de las herramientas de IA que se mostrarán en las tarjetas
   const herramientas = [
+    // Solo las de más peso en el mercado. Orden por importancia: primero los
+    // agentes de programación, encabezados por Claude; después asistentes.
     {
-      nombre: "ChatGPT",
-      icono: <SiOpenai className="text-2xl" />,
+      nombre: "Claude Code",
+      icono: <ClaudeCodeIcon className="text-2xl" />,
       descripcion:
-        "Modelo de lenguaje avanzado para generación de código, resolución de problemas y asistencia en programación.",
+        "Agente de programación de Anthropic que trabaja desde la terminal: comprende el repositorio, edita código, ejecuta pruebas y prepara commits.",
       beneficios: [
-        "Respuestas detalladas y contextuales",
-        "Soporte para múltiples lenguajes de programación",
-        "Útil para depuración y explicación de conceptos",
+        "Tareas de varios pasos sobre todo el proyecto",
+        "Reglas, memoria y skills por proyecto",
+        "Integración con MCP, Git y GitHub",
+      ],
+    },
+    {
+      nombre: "Claude",
+      icono: <ClaudeIcon className="text-2xl" />,
+      descripcion:
+        "Asistente de IA de Anthropic orientado al razonamiento y al análisis de problemas complejos.",
+      beneficios: [
+        "Análisis y explicación de código",
+        "Respuestas estructuradas para tareas complejas",
+        "Apoyo en arquitectura y refactorización",
+      ],
+    },
+    {
+      nombre: "Codex",
+      icono: <CodexIcon className="text-2xl" />,
+      descripcion:
+        "Agente de programación de OpenAI, disponible en la terminal y en la nube, que implementa cambios y revisa código.",
+      beneficios: [
+        "Implementación de cambios de principio a fin",
+        "Revisión de código con propuestas de mejora",
+        "Trabajo en paralelo sobre varias tareas",
       ],
     },
     {
       nombre: "GitHub Copilot",
-      icono: <SiGithub className="text-2xl" />,
+      icono: <GithubCopilotIcon className="text-2xl" />,
       descripcion:
-        "Asistente de programación en pares impulsado por IA para sugerencias de código en tiempo real.",
+        "Asistente de programación integrado en el editor, con sugerencias de código en tiempo real.",
       beneficios: [
-        "Sugerencias de código en tiempo real",
-        "Integración con editores populares",
-        "Aprendizaje automático contextual",
+        "Autocompletado de código según el contexto",
+        "Integración con los editores más usados",
+        "Chat y modo agente dentro del editor",
       ],
     },
     {
-      nombre: "ClaudeAI",
-      icono: <SiClaude className="text-2xl" />,
+      nombre: "ChatGPT",
+      icono: <OpenAIIcon className="text-2xl" />,
       descripcion:
-        "Asistente de IA enfocado en razonamiento, análisis y generación de soluciones de código con alto contexto.",
+        "Asistente de IA de OpenAI para generar código, resolver problemas y explicar conceptos.",
       beneficios: [
-        "Excelente análisis y explicación de código",
-        "Respuestas estructuradas para tareas complejas",
-        "Buen soporte para arquitectura y refactorización",
+        "Respuestas detalladas y contextuales",
+        "Soporte para múltiples lenguajes de programación",
+        "Apoyo en depuración y aprendizaje",
       ],
     },
     {
       nombre: "Gemini",
-      icono: <SiGoogle className="text-2xl" />,
+      icono: <GeminiIcon className="text-2xl" />,
       descripcion:
-        "Modelo multimodal de Google capaz de entender y generar texto, código e imágenes de manera integrada.",
+        "Modelo multimodal de Google que comprende y genera texto, código e imágenes.",
       beneficios: [
-        "Capacidades multimodales avanzadas",
-        "Integración con herramientas de Google",
-        "Buen rendimiento en tareas de programación",
-      ],
-    },
-    {
-      nombre: "DeepSeek",
-      icono: <LuBrainCircuit className="text-2xl" />,
-      descripcion:
-        "Modelo de IA avanzado para comprensión y generación de código con gran contexto.",
-      experiencia: "6+ meses",
-      beneficios: [
-        "Gran capacidad de contexto",
-        "Precisión en generación de código",
-        "Soporte para múltiples lenguajes",
-      ],
-    },
-    {
-      nombre: "Windsurf",
-      icono: <SiCodeium className="text-2xl" />,
-      descripcion:
-        "Asistente de desarrollo de IA que entiende el contexto de tu código y flujo de trabajo.",
-      experiencia: "1+ año",
-      beneficios: [
-        "Análisis de código en tiempo real",
-        "Soporte para múltiples lenguajes",
-        "Integración con el flujo de desarrollo",
-      ],
-    },
-    {
-      nombre: "Bolt.new",
-      icono: <FaBolt className="text-2xl" />,
-      descripcion:
-        "Plataforma para generar proyectos completos usando indicaciones en lenguaje natural.",
-      beneficios: [
-        "Creación de proyectos desde cero con prompts",
-        "Asistencia con IA para estructurar código y archivos",
-        "Compatible con varios lenguajes de programación",
-      ],
-    },
-    {
-      nombre: "Antigravity",
-      icono: <FaRobot className="text-2xl" />,
-      descripcion:
-        "Asistente de IA orientado a productividad para acelerar tareas repetitivas y flujo de desarrollo.",
-      beneficios: [
-        "Automatización de tareas frecuentes",
-        "Mejora de productividad en el ciclo de desarrollo",
-        "Soporte para trabajo asistido con IA",
-      ],
-    },
-
-    {
-      nombre: "Editores de Código",
-      icono: <BiLogoVisualStudio className="text-2xl" />,
-      descripcion:
-        "Herramientas esenciales potenciadas con IA para desarrollo de software.",
-      experiencia: "3+ años",
-      beneficios: [
-        "Soporte para extensiones de IA",
-        "Autocompletado inteligente",
-        "Depuración asistida",
+        "Capacidades multimodales",
+        "Integración con el ecosistema de Google",
+        "Amplia ventana de contexto",
       ],
     },
   ];
@@ -135,19 +101,16 @@ export const AISection = () => {
   // Áreas de estudio actuales
   const areasDeEstudio = [
     {
-      nombre: "Prompt Engineering",
-      icono: <FaTerminal />,
-      descripcion: "Diseño de prompts efectivos para modelos de IA",
+      nombre: "Agentes de IA",
+      icono: <LuBot />,
+      descripcion:
+        "Agentes que planifican, editan código y ejecutan tareas de varios pasos",
     },
     {
       nombre: "Context Engineering",
       icono: <FaCode />,
-      descripcion: "Optimización del contexto para mejorar respuestas de IA",
-    },
-    {
-      nombre: "Vibecoding",
-      icono: <FaRobot />,
-      descripcion: "Técnicas de programación guiadas por IA",
+      descripcion:
+        "Reglas, memoria y skills: el contexto adecuado para la IA en cada paso",
     },
     {
       nombre: "MCP",
@@ -155,23 +118,33 @@ export const AISection = () => {
       descripcion:
         "Model Context Protocol: conectar modelos de IA con herramientas y datos",
     },
+    {
+      nombre: "Evals y verificación",
+      icono: <FaVialCircleCheck />,
+      descripcion:
+        "Pruebas y evaluaciones que comprueban que el código generado funciona",
+    },
   ];
 
   return (
     <section id="ai" data-pause-offscreen className="bg-cbpgray-900 py-8">
-      <div className="container mx-auto px-8">
+      <div className="container mx-auto px-4 md:px-8">
         {/* Título principal de la sección */}
-        <SectionTitle title="Inteligencia Artificial" icon={<FaRobot />} />
+        <SectionTitle
+          title="Inteligencia artificial"
+          icon={<FaRobot className="fx-icon fx-beep" />}
+        />
 
         {/* Descripción de la sección */}
         <p className="mb-12 text-cbpgray-300">
-          Utilizo herramientas de IA avanzadas para mejorar la calidad y
-          eficiencia del desarrollo de software. Estas son algunas de las
-          tecnologías que integro en mi flujo de trabajo diario.
+          La IA es parte central de mi forma de desarrollar: trabajo con agentes
+          de programación que planifican, editan código y ejecutan tests, y con
+          asistentes para investigar, diseñar y revisar. Estas son las
+          herramientas que uso en mi día a día.
         </p>
 
         {/* Grid de herramientas de IA */}
-        <div className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="mb-16 grid grid-cols-2 gap-3 md:gap-6">
           {herramientas.map((herramienta, index) => (
             <AIToolCard
               key={herramienta.nombre}
@@ -185,31 +158,34 @@ export const AISection = () => {
         </div>
 
         {/* Terminal interactiva */}
-        <div className="mb-16">
+        <div className="mb-16 space-y-6">
           <AITerminal />
+          <AgentOrbitPanel />
         </div>
 
         {/* Sección de estudios actuales */}
         <div className="mt-20">
           <h3 className="mb-8 flex items-center justify-center text-2xl font-bold text-white">
-            <span className="text-cbpgray-300">Áreas de Estudio Actuales</span>
+            <span className="text-cbpgray-300">Áreas de estudio actuales</span>
           </h3>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
             {areasDeEstudio.map((area) => (
               <div
                 key={area.nombre}
-                className="rounded-lg border border-cbpgray-700/50 bg-cbpgray-800/50 p-5 transition-colors hover:border-cbpviolet-500/30"
+                className="fx-trigger rounded-lg border border-cbpgray-700/50 bg-cbpgray-800/50 p-4 transition-[border-color,translate] duration-300 hover:-translate-y-1 hover:border-cbpviolet-500/30 motion-reduce:hover:translate-y-0 md:p-5"
               >
-                <div className="mb-3 flex items-center">
-                  <div className="mr-3 rounded-lg bg-cbpviolet-500/10 p-2 text-cbpviolet-400">
+                <div className="mb-3 flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-0">
+                  <div className="fx-icon fx-tilt rounded-lg bg-cbpviolet-500/10 p-2 text-cbpviolet-400 md:mr-3">
                     {area.icono}
                   </div>
-                  <h4 className="text-lg font-semibold text-white">
+                  <h4 className="text-sm leading-tight font-semibold text-white md:text-lg">
                     {area.nombre}
                   </h4>
                 </div>
-                <p className="text-sm text-cbpgray-300">{area.descripcion}</p>
+                <p className="text-xs text-cbpgray-300 md:text-sm">
+                  {area.descripcion}
+                </p>
               </div>
             ))}
           </div>

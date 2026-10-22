@@ -76,7 +76,7 @@ test.describe("formulario de contacto", () => {
     await submit(page);
 
     await expect(page.getByRole("alert")).toHaveText(
-      "No se pudo enviar el mensaje",
+      "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.",
       { timeout: 10_000 },
     );
     await expect(page.getByRole("status")).toHaveCount(0);
@@ -137,7 +137,7 @@ test.describe("formulario de contacto", () => {
     await submit(page);
 
     await expect(page.getByRole("alert")).toContainText(
-      /Espera \d+ s para enviar otro mensaje/,
+      /Espera \d+ s antes de enviar otro mensaje/,
       { timeout: 10_000 },
     );
     expect(calls.filter((c) => c.template_id === NOTIFY_TEMPLATE)).toHaveLength(
@@ -151,9 +151,12 @@ test.describe("formulario de contacto", () => {
     await fillForm(page, { Email: "no-es-email" });
     await submit(page);
 
-    await expect(page.getByRole("alert")).toHaveText("El email es invalido", {
-      timeout: 10_000,
-    });
+    await expect(page.getByRole("alert")).toHaveText(
+      "Introduce un email válido",
+      {
+        timeout: 10_000,
+      },
+    );
     await expect(page.getByLabel("Email", { exact: true })).toHaveAttribute(
       "aria-invalid",
       "true",

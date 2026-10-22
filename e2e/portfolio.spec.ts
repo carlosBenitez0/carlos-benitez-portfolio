@@ -61,6 +61,32 @@ test.describe("navbar", () => {
     await expect(pill).toHaveCSS("clip-path", "none");
   });
 
+  test("cabe en pantalla y cada link ocupa una sola línea", async ({
+    page,
+  }) => {
+    for (const width of [768, 1000, 1024, 1366]) {
+      await page.setViewportSize({ width, height: 700 });
+      await page.goto("/", { waitUntil: "domcontentloaded" });
+      await expect(page.locator('nav a[aria-label="Contáctame"]')).toBeVisible({
+        timeout: 15_000,
+      });
+      const layout = await page.evaluate(() => {
+        const bar = document.querySelector("nav")!.parentElement!;
+        const items = [...bar.children].map((c) => c.getBoundingClientRect());
+        return {
+          fits: items.every((r) => r.left >= 0 && r.right <= innerWidth + 0.5),
+          singleLine: [...document.querySelectorAll("nav ul a")].every(
+            (a) => a.getBoundingClientRect().height < 26,
+          ),
+        };
+      });
+      expect(layout, `ancho ${width}px`).toEqual({
+        fits: true,
+        singleLine: true,
+      });
+    }
+  });
+
   test("los links llevan a cada sección", async ({ page }) => {
     await page.goto("/");
     for (const [name, id] of [
@@ -188,6 +214,20 @@ test.describe("reducir movimiento", () => {
       "animation-name",
       "none",
     );
+    await expect(page.locator(".contact-canoe")).toHaveCSS(
+      "animation-name",
+      "none",
+    );
+    await expect(page.locator(".canoe-paddle")).toHaveCSS(
+      "animation-name",
+      "none",
+    );
+    await expect(page.locator(".contact-bird").first()).toBeHidden();
+    // La bandera queda quieta: su trazo no cambia
+    const outline = page.locator('.waving-flag path[data-shape="outline"]');
+    const before = await outline.getAttribute("d");
+    await page.waitForTimeout(400);
+    expect(await outline.getAttribute("d")).toBe(before);
     await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
   });
 
@@ -282,5 +322,171 @@ test.describe("SEO", () => {
     const sitemap = await request.get("/sitemap.xml");
     expect(sitemap.ok()).toBe(true);
     expect(await sitemap.text()).toContain(`<loc>${SITE}</loc>`);
+  });
+});
+
+test.describe("sección de IA", () => {
+  test("muestra los agentes de programación y las áreas de estudio actuales", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const ai = page.locator("#ai");
+
+    for (const tool of ["Claude Code", "Codex", "GitHub Copilot"]) {
+      await expect(
+        ai.getByRole("heading", { level: 4, name: tool, exact: true }),
+      ).toBeAttached();
+    }
+    for (const area of [
+      "Agentes de IA",
+      "Context Engineering",
+      "MCP",
+      "Evals y verificación",
+    ]) {
+      await expect(
+        ai.getByRole("heading", { level: 4, name: area, exact: true }),
+      ).toBeAttached();
+    }
+    // Orden por importancia: primero los agentes de programación de Claude
+    // Las tarjetas de herramientas van antes que las áreas de estudio
+    const tools = await ai.locator("h4").allTextContents();
+    expect(tools.slice(0, 6)).toEqual([
+      "Claude Code",
+      "Claude",
+      "Codex",
+      "GitHub Copilot",
+      "ChatGPT",
+      "Gemini",
+    ]);
+
+    // Áreas reemplazadas
+    await expect(ai.getByText("Vibecoding")).toHaveCount(0);
+    await expect(ai.getByText("Prompt Engineering")).toHaveCount(0);
+    await expect(ai.getByText("Editores de Código")).toHaveCount(0);
+  });
+});
+
+test.describe("canoa del formulario de contacto", () => {
+  test("navega sincronizada con la ola y se pausa fuera de pantalla", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, "en móvil la canoa no se muestra");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const canoe = page.locator(".contact-canoe");
+    await expect(canoe).toHaveCSS("animation-name", "contact-canoe");
+    // Misma duración que la ola delantera que acompaña
+    await expect(canoe).toHaveCSS("animation-duration", "6s");
+    await expect(page.locator(".contact-wave-c")).toHaveCSS(
+      "animation-duration",
+      "6s",
+    );
+    await expect(canoe).toHaveCSS("animation-play-state", "paused");
+
+    await scrollToSection(page, "contact");
+    await expect(canoe).toHaveCSS("animation-play-state", "running", {
+      timeout: 10_000,
+    });
+  });
+
+  test("el remero rema y los pájaros aletean mientras se ve la sección", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, "en móvil la canoa no se muestra");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const paddle = page.locator(".canoe-paddle");
+    const wing = page.locator(".bird-wing-inner").first();
+    await expect(page.locator(".contact-bird")).toHaveCount(3);
+    await expect(paddle).toHaveCSS("animation-name", "canoe-stroke");
+    await expect(wing).toHaveCSS("animation-name", "bird-wing-inner");
+    await expect(paddle).toHaveCSS("animation-play-state", "paused");
+    await expect(wing).toHaveCSS("animation-play-state", "paused");
+
+    await scrollToSection(page, "contact");
+    await expect(paddle).toHaveCSS("animation-play-state", "running", {
+      timeout: 10_000,
+    });
+    await expect(wing).toHaveCSS("animation-play-state", "running");
+  });
+
+  test("la bandera ondea solo mientras se ve la sección", async ({ page }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const flag = page.getByRole("img", { name: "Bandera de El Salvador" });
+    await expect(flag).toBeAttached();
+    const outline = page.locator('.waving-flag path[data-shape="outline"]');
+    const d = () => outline.getAttribute("d");
+
+    // Fuera de pantalla: quieta
+    const offA = await d();
+    await page.waitForTimeout(400);
+    expect(await d()).toBe(offA);
+
+    // En pantalla: el trazo cambia cuadro a cuadro
+    await scrollToSection(page, "contact");
+    const onA = await d();
+    await expect.poll(d, { timeout: 10_000 }).not.toBe(onA);
+  });
+
+  test("en móvil no tapa el formulario", async ({ page, isMobile }) => {
+    test.skip(!isMobile, "solo aplica a móvil");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await scrollToSection(page, "contact");
+    // En móvil las olas van bajo el formulario: la canoa se ve, pero ningún
+    // campo ni el botón quedan debajo de ella
+    const overlaps = await page.evaluate(() => {
+      const canoe = document
+        .querySelector(".contact-canoe")!
+        .getBoundingClientRect();
+      return [
+        ...document.querySelectorAll(
+          "#contact form input, #contact form textarea, #contact form button",
+        ),
+      ]
+        .map((field) => field.getBoundingClientRect())
+        .some(
+          (f) =>
+            f.bottom > canoe.top &&
+            f.top < canoe.bottom &&
+            f.right > canoe.left &&
+            f.left < canoe.right,
+        );
+    });
+    expect(overlaps).toBe(false);
+  });
+});
+
+test.describe("footer", () => {
+  test("muestra las tecnologías ordenadas y vuelve arriba", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const footer = page.getByRole("contentinfo");
+    await footer.scrollIntoViewIfNeeded();
+
+    const names = footer.locator("li span");
+    await expect(names).toHaveText([
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Motion",
+      "GSAP",
+      "React Icons",
+      "React Bits",
+    ]);
+    // Cada nombre en una sola línea
+    for (const box of await names.evaluateAll((els) =>
+      els.map((e) => e.getBoundingClientRect().height),
+    )) {
+      expect(box).toBeLessThan(20);
+    }
+    await expect(footer).toContainText(
+      `© ${new Date().getFullYear()} Carlos Benítez`,
+    );
+
+    await footer.getByRole("button", { name: "Volver arriba" }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toBeInViewport({
+      timeout: 5_000,
+    });
   });
 });

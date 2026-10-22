@@ -59,18 +59,18 @@ describe("validateContact", () => {
   });
 
   it.each<[Partial<ContactData>, string, string]>([
-    [{ name: "" }, "name", "El nombre es requerido"],
-    [{ name: "   " }, "name", "El nombre es requerido"],
+    [{ name: "" }, "name", "Escribe tu nombre"],
+    [{ name: "   " }, "name", "Escribe tu nombre"],
     [{ name: "Al" }, "name", "El nombre debe tener al menos 3 caracteres"],
-    [{ email: "" }, "email", "El email es requerido"],
-    [{ email: "no-es-email" }, "email", "El email es invalido"],
-    [{ subject: "" }, "subject", "El asunto es requerido"],
+    [{ email: "" }, "email", "Escribe tu email"],
+    [{ email: "no-es-email" }, "email", "Introduce un email válido"],
+    [{ subject: "" }, "subject", "Escribe el asunto"],
     [
       { subject: "Hi" },
       "subject",
       "El asunto debe tener al menos 3 caracteres",
     ],
-    [{ message: "" }, "message", "El mensaje es requerido"],
+    [{ message: "" }, "message", "Escribe tu mensaje"],
     [
       { message: "Corto" },
       "message",
