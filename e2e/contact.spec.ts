@@ -1,10 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import {
-  AUTO_REPLY_TEMPLATE,
-  mockEmailJs,
-  NOTIFY_TEMPLATE,
-  scrollToSection,
-} from "./helpers";
+import { mockContactApi, scrollToSection } from "./helpers";
 
 // El formulario no depende de imágenes ni fuentes externas: esperar al evento
 // "load" (Cloudinary, Google Fonts) solo añade latencia de terceros. Con
@@ -29,10 +24,10 @@ const submit = (page: Page) =>
   page.getByRole("button", { name: /enviar/i }).click();
 
 test.describe("formulario de contacto", () => {
-  test("con éxito: un único mensaje y el formulario se vacía", async ({
+  test("con éxito: un único envío y el formulario se vacía", async ({
     page,
   }) => {
-    const calls = await mockEmailJs(page);
+    const posts = await mockContactApi(page);
     await page.goto("/", READY);
     await fillForm(page);
     await submit(page);
@@ -42,35 +37,42 @@ test.describe("formulario de contacto", () => {
     });
     await expect(page.getByRole("alert")).toHaveCount(0);
     await expect(page.getByLabel("Mensaje", { exact: true })).toHaveValue("");
-    await expect.poll(() => calls.length).toBe(2);
-    expect(calls.map((c) => c.template_id)).toEqual([
-      NOTIFY_TEMPLATE,
-      AUTO_REPLY_TEMPLATE,
-    ]);
+    expect(posts).toHaveLength(1);
   });
 
-  test("solo envía los cuatro campos, nunca el honeypot", async ({ page }) => {
-    const calls = await mockEmailJs(page);
+  test("envía al servidor propio los campos, el honeypot y el token", async ({
+    page,
+  }) => {
+    const posts = await mockContactApi(page);
+    const external: string[] = [];
+    page.on("request", (request) => {
+      if (request.url().includes("emailjs")) external.push(request.url());
+    });
     await page.goto("/", READY);
     await fillForm(page);
     await submit(page);
 
-    // EmailJS se descarga al enviar: esperar el resultado, no un tiempo fijo
     await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
       timeout: 10_000,
     });
-    expect(calls[0].template_params).toEqual({
+    expect(posts[0]).toEqual({
       name: VALID.Nombre,
       email: VALID.Email,
       subject: VALID.Asunto,
       message: VALID.Mensaje,
+      company: "",
+      token: "e2e-token",
     });
+    // El navegador nunca habla directo con EmailJS
+    expect(external).toEqual([]);
   });
 
-  test("si falla el envío principal: solo el error y se conserva el texto", async ({
+  test("si falla el envío: solo el error y se conserva el texto", async ({
     page,
   }) => {
-    const calls = await mockEmailJs(page, { failTemplates: [NOTIFY_TEMPLATE] });
+    await mockContactApi(page, {
+      replies: [{ status: 502, body: { error: "send_failed" } }],
+    });
     await page.goto("/", READY);
     await fillForm(page);
     await submit(page);
@@ -83,28 +85,26 @@ test.describe("formulario de contacto", () => {
     await expect(page.getByLabel("Mensaje", { exact: true })).toHaveValue(
       VALID.Mensaje,
     );
-    // Sin mensaje principal no se manda la respuesta automática
-    expect(calls.map((c) => c.template_id)).toEqual([NOTIFY_TEMPLATE]);
   });
 
-  test("si solo falla la respuesta automática, el visitante ve éxito", async ({
-    page,
-  }) => {
-    await mockEmailJs(page, { failTemplates: [AUTO_REPLY_TEMPLATE] });
+  test("con rate limit del servidor dice cuánto esperar", async ({ page }) => {
+    await mockContactApi(page, {
+      replies: [
+        { status: 429, body: { error: "rate_limited", retryAfter: 120 } },
+      ],
+    });
     await page.goto("/", READY);
     await fillForm(page);
     await submit(page);
 
-    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
-      timeout: 10_000,
-    });
-    await expect(page.getByRole("alert")).toHaveCount(0);
+    await expect(page.getByRole("alert")).toHaveText(
+      "Demasiados envíos seguidos. Inténtalo de nuevo en 2 min",
+      { timeout: 10_000 },
+    );
   });
 
-  test("con el honeypot lleno no se hace ninguna petición", async ({
-    page,
-  }) => {
-    const calls = await mockEmailJs(page);
+  test("con el honeypot lleno no se envía nada", async ({ page }) => {
+    const posts = await mockContactApi(page);
     await page.goto("/", READY);
     await fillForm(page);
     await page.locator('input[name="company"]').fill("ACME", { force: true });
@@ -114,7 +114,7 @@ test.describe("formulario de contacto", () => {
       timeout: 10_000,
     });
     await page.waitForTimeout(500);
-    expect(calls).toHaveLength(0);
+    expect(posts).toHaveLength(0);
   });
 
   test("el cooldown bloquea un segundo envío, también tras recargar", async ({
@@ -123,7 +123,7 @@ test.describe("formulario de contacto", () => {
     // Dos cargas completas de la página en un mismo test: con la máquina
     // cargada supera los 30 s por defecto.
     test.slow();
-    const calls = await mockEmailJs(page);
+    const posts = await mockContactApi(page);
     await page.goto("/", READY);
     await fillForm(page);
     await submit(page);
@@ -140,13 +140,11 @@ test.describe("formulario de contacto", () => {
       /Espera \d+ s antes de enviar otro mensaje/,
       { timeout: 10_000 },
     );
-    expect(calls.filter((c) => c.template_id === NOTIFY_TEMPLATE)).toHaveLength(
-      1,
-    );
+    expect(posts).toHaveLength(1);
   });
 
   test("valida el email y marca el campo inválido", async ({ page }) => {
-    const calls = await mockEmailJs(page);
+    const posts = await mockContactApi(page);
     await page.goto("/", READY);
     await fillForm(page, { Email: "no-es-email" });
     await submit(page);
@@ -161,7 +159,7 @@ test.describe("formulario de contacto", () => {
       "aria-invalid",
       "true",
     );
-    expect(calls).toHaveLength(0);
+    expect(posts).toHaveLength(0);
   });
 
   test("los campos tienen longitud máxima", async ({ page }) => {

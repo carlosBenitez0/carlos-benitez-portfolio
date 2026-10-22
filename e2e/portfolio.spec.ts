@@ -52,7 +52,10 @@ test.describe("navbar", () => {
     isMobile,
   }) => {
     await page.goto("/");
-    const projectsLink = page.getByRole("link", { name: "Proyectos" });
+    const projectsLink = page.getByRole("link", {
+      name: "Proyectos",
+      exact: true,
+    });
     await expect(projectsLink).toBeVisible({ timeout: 15_000 });
 
     const pill = page.locator("nav ul.fade-in-menu");

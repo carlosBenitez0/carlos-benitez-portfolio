@@ -1,11 +1,15 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { sendContactMessage } from "../../../utils/sendContact";
+import {
+  ContactRequestError,
+  sendContactMessage,
+} from "../../../utils/sendContact";
 import { ContactContainer } from "./ContactContainer";
 
-vi.mock("../../../utils/sendContact", () => ({
+vi.mock("../../../utils/sendContact", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("../../../utils/sendContact")>()),
   sendContactMessage: vi.fn(),
-  preloadEmailJs: vi.fn(),
+  prepareContact: vi.fn(),
 }));
 const send = vi.mocked(sendContactMessage);
 
@@ -145,6 +149,50 @@ describe("ContactContainer anti-abuso", () => {
       "maxlength",
       "2000",
     );
+  });
+});
+
+describe("ContactContainer errores del servidor", () => {
+  it("un error de validación del servidor marca el campo", async () => {
+    send.mockRejectedValue(
+      new ContactRequestError({
+        kind: "invalid",
+        field: "message",
+        message: "El mensaje no puede tener más de 3 enlaces",
+      }),
+    );
+    render(<ContactContainer />);
+    fill();
+    await submit();
+
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "El mensaje no puede tener más de 3 enlaces",
+    );
+    expect(screen.getByLabelText("Mensaje")).toHaveAttribute(
+      "aria-invalid",
+      "true",
+    );
+  });
+
+  it("con rate limit dice cuántos minutos esperar", async () => {
+    send.mockRejectedValue(
+      new ContactRequestError({ kind: "rate_limited", retryAfter: 125 }),
+    );
+    render(<ContactContainer />);
+    fill();
+    await submit();
+
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Demasiados envíos seguidos. Inténtalo de nuevo en 3 min",
+    );
+  });
+
+  it("manda el honeypot vacío junto con los datos", async () => {
+    send.mockResolvedValue(undefined);
+    render(<ContactContainer />);
+    fill();
+    await submit();
+    expect(send).toHaveBeenCalledWith(expect.any(Object), "");
   });
 });
 

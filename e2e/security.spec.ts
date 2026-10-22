@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import {
   collectPageErrors,
-  mockEmailJs,
+  mockContactApi,
   recordCspViolations,
   scrollToSection,
   visitAllSections,
@@ -21,6 +21,8 @@ test.describe("cabeceras de seguridad", () => {
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
+      // El formulario envía a /api/contact: ningún origen externo
+      "connect-src 'self';",
     ]) {
       expect(csp).toContain(directive);
     }
@@ -50,11 +52,11 @@ test.describe("CSP en uso real", () => {
   }) => {
     const getViolations = await recordCspViolations(page);
     const errors = collectPageErrors(page);
-    await mockEmailJs(page);
+    await mockContactApi(page);
     await page.goto("/");
     await visitAllSections(page);
 
-    // Tooltip de tecnologías (framer-motion) y envío del formulario (EmailJS)
+    // Tooltip de tecnologías (framer-motion) y envío del formulario (/api/contact)
     await page.getByRole("button", { name: "Mostrar información" }).click();
     await scrollToSection(page, "contact");
     await page.getByLabel("Nombre", { exact: true }).fill("Carlos");
@@ -134,7 +136,9 @@ test.describe("accesibilidad", () => {
   test("sin violaciones graves de WCAG 2.1 AA", async ({ page }) => {
     await page.goto("/");
     // Esperar la intro del navbar (los links aparecen tras ~7 s)
-    await expect(page.getByRole("link", { name: "Proyectos" })).toBeVisible({
+    await expect(
+      page.getByRole("link", { name: "Proyectos", exact: true }),
+    ).toBeVisible({
       timeout: 15_000,
     });
     await visitAllSections(page);
