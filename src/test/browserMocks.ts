@@ -1,17 +1,20 @@
 // jsdom no implementa matchMedia ni IntersectionObserver: estas versiones
-// controlables permiten simular el ancho de pantalla, "reducir movimiento" y
-// qué elementos están visibles.
+// controlables permiten simular el ancho de pantalla, "reducir movimiento",
+// el tema del sistema y qué elementos están visibles.
 
 // --- matchMedia -----------------------------------------------------------
 
 let viewportWidth = 1024;
 let reducedMotion = false;
+let systemColorScheme: "light" | "dark" = "dark";
 const mediaLists = new Map<string, FakeMediaQueryList>();
 
 const evaluate = (query: string) => {
   const maxWidth = query.match(/max-width:\s*(\d+)px/);
   if (maxWidth) return viewportWidth <= Number(maxWidth[1]);
   if (query.includes("prefers-reduced-motion: reduce")) return reducedMotion;
+  const scheme = query.match(/prefers-color-scheme:\s*(light|dark)/);
+  if (scheme) return systemColorScheme === scheme[1];
   return false;
 };
 
@@ -60,6 +63,11 @@ export const setViewportWidth = (width: number) => {
 
 export const setReducedMotion = (value: boolean) => {
   reducedMotion = value;
+  mediaLists.forEach((list) => list.refresh());
+};
+
+export const setSystemColorScheme = (scheme: "light" | "dark") => {
+  systemColorScheme = scheme;
   mediaLists.forEach((list) => list.refresh());
 };
 
@@ -117,6 +125,7 @@ export const installIntersectionObserver = () => {
 export const resetBrowserMocks = () => {
   viewportWidth = 1024;
   reducedMotion = false;
+  systemColorScheme = "dark";
   mediaLists.forEach((list) => list.refresh());
   // Los observers no se borran: utils/visibility guarda el suyo a nivel de
   // módulo y debe seguir recibiendo eventos entre tests.

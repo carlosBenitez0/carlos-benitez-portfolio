@@ -56,7 +56,18 @@
     />
     <meta name="twitter:image:alt" content="Foto de Carlos Benítez" />
     <link rel="canonical" href="https://carlos-benitez-portfolio.vercel.app/" />
-    <meta name="theme-color" content="#050010" />
+    <meta
+      name="theme-color"
+      content="#050010"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="theme-color"
+      content="#faf7ff"
+      media="(prefers-color-scheme: light)"
+    />
+    <!-- Antes de los estilos: fija data-theme sin destello del otro tema -->
+    <script src="/theme-init.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://res.cloudinary.com" />
@@ -64,7 +75,9 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
     />
-    <title>Carlos Benítez | Desarrollador Web y Desarrollo Agéntico con IA</title>
+    <title>
+      Carlos Benítez | Desarrollador Web y Desarrollo Agéntico con IA
+    </title>
     <noscript><link rel="stylesheet" href="/noscript.css" /></noscript>
   </head>
 

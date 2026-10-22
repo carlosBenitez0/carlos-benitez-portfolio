@@ -24,6 +24,9 @@ export default defineConfig({
     // Grabar traza en cada test con muchos workers corrompía el zip en
     // Windows; se graba solo en el reintento, que es cuando hace falta.
     trace: "on-first-retry",
+    // El sitio sigue el tema del sistema y Playwright emula claro por
+    // defecto: los tests corren en oscuro y el claro se prueba aparte.
+    colorScheme: "dark",
   },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },

@@ -43,42 +43,95 @@
   --color-cbpgray-100: #f3f4f6;
   --color-cbpgray-50: #f9fafb;
 
-  /* Gradientes principales */
-  --cbp-gradient-violet-dark: linear-gradient(
-    135deg,
-    var(--cbpviolet-900) 0%,
-    var(--cbpviolet-700) 50%,
-    var(--cbpviolet-600) 100%
-  );
+  /* Texto y bordes de máximo contraste: blanco en oscuro, tinta en claro */
+  --color-ink: #ffffff;
+}
 
-  --cbp-gradient-violet-neon: linear-gradient(
-    to right,
-    var(--cbpviolet-600) 0%,
-    var(--cbpviolet-400) 50%,
-    var(--cbpviolet-200) 100%
-  );
+/* Modo claro (lavanda): las escalas se invierten para que cada clase conserve
+   su papel (900 = fondo, 200-300 = texto principal) sin tocar los
+   componentes. Las excepciones usan la variante light:. */
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
-  --cbp-gradient-violet-mesh: radial-gradient(
-    circle at 30% 60%,
-    var(--cbpviolet-700) 0%,
-    var(--cbpviolet-800) 30%,
-    var(--cbpviolet-900) 70%
-  );
+/* Colores de efectos que no son clases de Tailwind */
+:root {
+  color-scheme: dark;
 
-  /* Gradientes para efectos especiales */
-  --cbp-gradient-violet-hover: linear-gradient(
-    to bottom right,
-    transparent 0%,
-    var(--cbpviolet-800) 30%,
-    var(--cbpviolet-400) 100%
-  );
+  --hover-glow: rgb(255 255 255 / 0.1);
+  --hover-glow-strong: rgb(255 255 255 / 0.15);
+  --shiny-color: #b5b5b5b8;
+  --shiny-shine: rgb(255 255 255 / 0.8);
+  --highlight-glow: #9d4edd;
+  --state-done: #b5f2b5a5;
+  --state-wip: #feb555a5;
+}
 
-  --cbp-gradient-violet-text: linear-gradient(
-    to right,
-    var(--cbpviolet-200),
-    var(--cbpviolet-100),
-    var(--cbpviolet-200)
-  );
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --color-cbpbg-900: #faf7ff;
+  --color-cbpbg-800: #f5effe;
+  --color-cbpbg-700: #efe6fd;
+  --color-cbpbg-600: #e9ddfb;
+  --color-cbpbg-500: #e3d4fa;
+  --color-cbpbg-400: #dccaf8;
+  --color-cbpbg-300: #d5c0f5;
+  --color-cbpbg-200: #cdb5f2;
+  --color-cbpbg-100: #c5aaee;
+  --color-cbpbg-50: #bd9fea;
+
+  --color-cbpviolet-900: #f7ecff;
+  --color-cbpviolet-800: #f2d9ff;
+  --color-cbpviolet-700: #e0aaff;
+  --color-cbpviolet-600: #b96edf;
+  --color-cbpviolet-500: #7b2cbf;
+  --color-cbpviolet-400: #6a1fb0;
+  --color-cbpviolet-300: #5a189a;
+  --color-cbpviolet-200: #3c096c;
+  --color-cbpviolet-100: #240046;
+
+  --color-cbpgray-950: #ffffff;
+  --color-cbpgray-900: #fdfbff;
+  --color-cbpgray-850: #f7f3fc;
+  --color-cbpgray-800: #efe9f7;
+  --color-cbpgray-750: #e6def0;
+  --color-cbpgray-700: #d6cce3;
+  --color-cbpgray-600: #8a809b;
+  --color-cbpgray-500: #6b6480;
+  --color-cbpgray-400: #574e6a;
+  --color-cbpgray-300: #3f3653;
+  --color-cbpgray-200: #2e2640;
+  --color-cbpgray-100: #221a33;
+  --color-cbpgray-50: #1a1428;
+
+  --color-ink: #1a0b2e;
+
+  --hover-glow: rgb(123 44 191 / 0.1);
+  --hover-glow-strong: rgb(123 44 191 / 0.14);
+  --shiny-color: rgb(90 24 154 / 0.9);
+  --shiny-shine: rgb(255 255 255 / 0.9);
+  --highlight-glow: rgb(157 78 221 / 0.35);
+  --state-done: #1d7a3e;
+  --state-wip: #a3570a;
+}
+
+/* Píldoras del navbar. Colores en rgb (no color-mix) para que GSAP pueda
+   interpolar el destello de entrada hasta ellos. */
+.navbar-pill {
+  background-color: rgb(10 14 26 / 0.7);
+}
+
+[data-theme="light"] .navbar-pill {
+  background-color: rgb(253 251 255 / 0.75);
+}
+
+/* Etiquetas de tecnología: el color de marca va en --tech. En claro se
+   oscurece para que el texto tenga contraste sobre fondo claro. */
+.tech-label {
+  color: var(--tech);
+}
+
+[data-theme="light"] .tech-label {
+  color: color-mix(in oklab, var(--tech) 50%, black);
 }
 
 @keyframes shine {
@@ -454,6 +507,8 @@
    codo; la punta va desfasada. Tamaño y ritmo de aleteo: --bird-size y
    --bird-flap (WaterScene.tsx). Solo transform. */
 .contact-bird {
+  /* Color del cuerpo y las alas (currentColor) */
+  color: #e0aaff;
   position: absolute;
   left: 0;
   width: var(--bird-size);
@@ -476,7 +531,7 @@
   width: calc(var(--bird-size) * 0.1);
   height: calc(var(--bird-size) * 0.07);
   border-radius: 9999px;
-  background: #e0aaff;
+  background: currentColor;
   transform: translate(-50%, -30%);
 }
 
@@ -1594,6 +1649,134 @@
   .agent-flow .flow-progress {
     animation-duration: 0.01s !important;
   }
+}
+
+/* ================= Modo claro de los efectos en CSS =================
+   Mismas piezas que arriba, con sombras y rellenos pensados para fondo
+   claro (las sombras negras y los rellenos casi negros no funcionan ahí). */
+[data-theme="light"] .holo-face {
+  border-color: rgb(123 44 191 / 0.2);
+  box-shadow:
+    0 20px 40px -12px rgb(60 9 108 / 0.3),
+    0 0 40px -8px rgb(157 78 221 / 0.3);
+}
+
+[data-theme="light"] .holo-card:hover .holo-face {
+  box-shadow:
+    0 30px 50px -12px rgb(60 9 108 / 0.35),
+    0 0 60px -6px rgb(157 78 221 / 0.45);
+}
+
+[data-theme="light"] .holo-face--back {
+  background:
+    radial-gradient(
+      120% 90% at 100% 0%,
+      rgb(185 110 223 / 0.3),
+      transparent 60%
+    ),
+    radial-gradient(
+      90% 70% at 0% 100%,
+      rgb(224 170 255 / 0.45),
+      transparent 60%
+    ),
+    linear-gradient(rgb(60 9 108 / 0.05) 1px, transparent 1px) 0 0 / 100% 18px,
+    var(--color-cbpbg-700);
+}
+
+/* Sobre el cielo claro, pájaros violeta para que se vean */
+[data-theme="light"] .contact-bird {
+  color: #9d4edd;
+}
+
+/* Manchas de color de fondo: más tenues en claro, y la "negra" pasa a lila
+   (una mancha negra difuminada se ve gris sucio sobre fondo claro) */
+.bg-dot {
+  --dot-black: #000000;
+  opacity: var(--dot-opacity);
+}
+
+[data-theme="light"] .bg-dot {
+  --dot-black: #e0aaff;
+  opacity: calc(var(--dot-opacity) * 0.6);
+}
+
+[data-theme="light"] .glass-sphere {
+  background:
+    radial-gradient(
+      circle at 50% 118%,
+      rgb(185 110 223 / 0.35),
+      transparent 52%
+    ),
+    radial-gradient(circle at 32% 24%, rgb(224 170 255 / 0.5), transparent 58%),
+    radial-gradient(
+      circle at 50% 45%,
+      rgb(242 217 255 / 0.4),
+      rgb(185 110 223 / 0.45) 100%
+    );
+}
+
+[data-theme="light"] .agent-flow {
+  --flow-idle: rgb(190 180 210);
+  --flow-violet: #7b2cbf;
+  --flow-violet-soft: rgb(123 44 191 / 0.45);
+  --flow-green: #16a34a;
+}
+[data-theme="light"] .agent-flow .flow-edge[data-state="ok"] {
+  stroke: rgb(22 163 74 / 0.6);
+}
+[data-theme="light"] .agent-flow .flow-node .card {
+  fill: rgb(255 255 255 / 0.92);
+}
+[data-theme="light"] .agent-flow .flow-node[data-state="active"] .card {
+  fill: rgb(242 217 255 / 0.9);
+  filter: drop-shadow(0 0 8px rgb(157 78 221 / 0.35));
+}
+[data-theme="light"] .agent-flow .flow-node[data-state="ok"] .card {
+  fill: rgb(220 252 231 / 0.9);
+  filter: drop-shadow(0 0 6px rgb(22 163 74 / 0.25));
+}
+[data-theme="light"] .agent-flow .title,
+[data-theme="light"] .agent-flow .caption {
+  fill: rgb(100 90 125);
+}
+[data-theme="light"] .agent-flow .flow-node:not([data-state="idle"]) .title {
+  fill: #2a0a4f;
+}
+[data-theme="light"] .agent-flow .flow-node[data-state="ok"] .title {
+  fill: #14532d;
+}
+[data-theme="light"] .agent-flow .flow-subtask text,
+[data-theme="light"] .agent-flow .flow-packet text {
+  fill: #ffffff;
+}
+[data-theme="light"] .agent-flow .flow-packet circle {
+  filter: drop-shadow(0 0 4px rgb(123 44 191 / 0.6));
+}
+[data-theme="light"] .agent-flow .flow-packet--ok circle {
+  filter: drop-shadow(0 0 4px rgb(22 163 74 / 0.6));
+}
+[data-theme="light"] .agent-flow .flow-tool rect {
+  fill: rgb(59 130 246 / 0.06);
+  stroke: rgb(59 130 246 / 0.3);
+}
+[data-theme="light"] .agent-flow .flow-tool text {
+  fill: rgb(29 78 216 / 0.75);
+}
+[data-theme="light"] .agent-flow .flow-tool[data-state="active"] rect {
+  fill: rgb(59 130 246 / 0.15);
+  stroke: rgb(37 99 235 / 0.8);
+}
+[data-theme="light"] .agent-flow .flow-tool[data-state="active"] text {
+  fill: #1e3a8a;
+}
+[data-theme="light"] .agent-flow .flow-tool[data-state="done"] text {
+  fill: rgb(29 78 216 / 0.85);
+}
+[data-theme="light"] .agent-flow .flow-track {
+  fill: rgb(26 11 46 / 0.08);
+}
+[data-theme="light"] .agent-flow .flow-check-mark {
+  stroke: #ffffff;
 }
 
 /* Contenido estático que el build pone en #root para buscadores y agentes

@@ -254,24 +254,55 @@ test.describe("reducir movimiento", () => {
   });
 });
 
-test.describe("esquema de color del sistema", () => {
-  // El sitio es siempre oscuro: el modo claro del sistema no debe cambiar
-  // ningún color de texto.
-  test("el modo claro del sistema no altera los textos", async ({
-    browser,
+test.describe("tema claro y oscuro", () => {
+  const backgroundOf = (page: Page) =>
+    page.evaluate(
+      () =>
+        getComputedStyle(document.querySelector("#start")!.parentElement!)
+          .backgroundColor,
+    );
+
+  for (const [scheme, background] of [
+    ["light", "rgb(250, 247, 255)"],
+    ["dark", "rgb(5, 0, 16)"],
+  ] as const) {
+    test.describe(`sistema en ${scheme}`, () => {
+      test.use({ colorScheme: scheme });
+
+      test("sin preferencia guardada sigue al sistema", async ({ page }) => {
+        await page.goto("/", { waitUntil: "domcontentloaded" });
+        // El tema ya está fijado al terminar de parsear el HTML: sin destello
+        await expect(page.locator("html")).toHaveAttribute(
+          "data-theme",
+          scheme,
+        );
+        await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+        expect(await backgroundOf(page)).toBe(background);
+      });
+    });
+  }
+
+  test("el botón cambia el tema y la elección se mantiene al recargar", async ({
+    page,
   }) => {
-    const colorsIn = async (colorScheme: "light" | "dark") => {
-      const page = await browser.newPage({ colorScheme });
-      await page.goto("/", { waitUntil: "domcontentloaded" });
-      const colors = await page.evaluate(() =>
-        [...document.querySelectorAll("p, span, h1, h2, h3, h4, a, li")].map(
-          (el) => getComputedStyle(el).color,
-        ),
-      );
-      await page.close();
-      return colors;
-    };
-    expect(await colorsIn("light")).toEqual(await colorsIn("dark"));
+    await page.goto("/");
+    const toggle = page.getByRole("button", { name: "Cambiar a modo claro" });
+    await expect(toggle).toBeVisible({ timeout: 15_000 });
+
+    await toggle.click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    await expect(
+      page.getByRole("button", { name: "Cambiar a modo oscuro" }),
+    ).toBeVisible();
+    await expect(
+      page.locator('meta[name="theme-color"]').first(),
+    ).toHaveAttribute("content", "#faf7ff");
+
+    // El sistema sigue en oscuro, pero manda la elección guardada
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    expect(await backgroundOf(page)).toBe("rgb(250, 247, 255)");
   });
 });
 

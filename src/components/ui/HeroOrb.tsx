@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTheme } from "../../hooks/useTheme";
 import * as THREE from "three";
 import { onVisibilityChange } from "../../utils/visibility";
 
@@ -95,6 +96,7 @@ void main() {
 const FRAGMENT = /* glsl */ `
 uniform float uTime;
 uniform vec3 uLight;
+uniform float uLightMode;
 varying vec3 vNormal;
 varying vec3 vViewDir;
 varying float vNoise;
@@ -125,6 +127,13 @@ void main() {
   float sheen = pow(max(dot(n, halfVector), 0.0), 24.0);
 
   vec3 color = lit + irid * fresnel * 1.9 + vec3(0.7, 0.5, 1.0) * sheen * 0.22;
+
+  // Modo claro: perla lavanda con el mismo borde iridiscente. Se mezcla en
+  // vez de sumar (sumar color sobre un centro claro lo quemaba a blanco).
+  vec3 pearl = vec3(0.95, 0.91, 1.0) - vec3(0.14, 0.16, 0.05) * (1.0 - diffuse);
+  vec3 lightColor = mix(pearl, irid, clamp(fresnel * 1.6, 0.0, 1.0))
+    + vec3(1.0) * sheen * 0.3;
+  color = mix(color, lightColor, uLightMode);
   gl_FragColor = vec4(color, 0.96);
 }
 `;
@@ -136,6 +145,16 @@ interface HeroOrbProps {
 
 export default function HeroOrb({ onReady }: HeroOrbProps) {
   const mountRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
+  // El bucle lee el tema de esta ref; al cambiar se redibuja una vez por si
+  // la animación está pausada (fuera de pantalla o movimiento reducido)
+  const lightModeRef = useRef(theme === "light" ? 1 : 0);
+  const redrawRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    lightModeRef.current = theme === "light" ? 1 : 0;
+    redrawRef.current?.();
+  }, [theme]);
 
   useEffect(() => {
     const mount = mountRef.current;
@@ -165,6 +184,7 @@ export default function HeroOrb({ onReady }: HeroOrbProps) {
       uTime: { value: 0 },
       uAgitation: { value: 0 },
       uLight: { value: new THREE.Vector3(-0.6, 0.7, 1) },
+      uLightMode: { value: lightModeRef.current },
     };
     const isSmall = mount.clientWidth < 400;
     const orb = new THREE.Mesh(
@@ -215,6 +235,7 @@ export default function HeroOrb({ onReady }: HeroOrbProps) {
     let elapsed = 0;
     const render = () => {
       uniforms.uTime.value = elapsed;
+      uniforms.uLightMode.value = lightModeRef.current;
       current.x += (target.x - current.x) * 0.05;
       current.y += (target.y - current.y) * 0.05;
       current.near += (target.near - current.near) * 0.04;
@@ -256,6 +277,7 @@ export default function HeroOrb({ onReady }: HeroOrbProps) {
         elapsed = 2;
         render();
         mount.classList.add("is-ready");
+        redrawRef.current = render;
         readyTimer = window.setTimeout(() => onReady?.(), 800);
 
         // Solo se anima mientras el hero está en pantalla
@@ -274,6 +296,7 @@ export default function HeroOrb({ onReady }: HeroOrbProps) {
 
     return () => {
       disposed = true;
+      redrawRef.current = null;
       window.clearTimeout(readyTimer);
       cancelAnimationFrame(frame);
       stopWatching();

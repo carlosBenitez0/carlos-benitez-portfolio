@@ -90,7 +90,7 @@ export const BgDotGradient = ({
     gray: "#4a505c",
     accent: "#00ff9d",
     white: "#ffffff",
-    black: "#000000",
+    black: "var(--dot-black)",
     red: "#ff0000",
     green: "#00ff00",
     blue: "#0000ff",
@@ -126,12 +126,13 @@ export const BgDotGradient = ({
   const gradientStyle = {
     backgroundImage: `linear-gradient(to ${direction}, ${gradientColors})`,
     filter: `blur(${blurValues[blur]})`,
-    opacity,
-  };
+    // La opacidad la aplica .bg-dot, que la atenúa en modo claro
+    "--dot-opacity": opacity,
+  } as React.CSSProperties;
 
   return (
     <div
-      className={`absolute z-[-1] rounded-full ${sizeClasses[size]} ${className}`}
+      className={`bg-dot absolute z-[-1] rounded-full ${sizeClasses[size]} ${className}`}
       style={{
         ...gradientStyle,
         top: position?.top ? `${position.top}px` : undefined,

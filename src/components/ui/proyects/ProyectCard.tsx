@@ -83,26 +83,32 @@ export const ProyectCard = ({
         }}
       >
         <span
-          className={`absolute z-10 flex items-center justify-center rounded-bl-xl border-cbpbg-400 bg-cbpbg-900 ${isMobile ? "top-[-2px] right-[-2px] border-b-2 border-l-2 px-2 py-1 text-[10px]" : "top-[-4px] right-[-4px] border-b-4 border-l-4 px-3 py-2 text-sm"} before:absolute before:right-0 before:bottom-[-7px] before:h-[7px] before:w-[7px] before:rounded-tr-xl before:bg-transparent before:shadow-[2px_-2px_rgba(5,0,16,1)] before:content-[''] after:absolute after:top-[0px] after:left-[-7px] after:h-[7px] after:w-[7px] after:rounded-tr-xl after:bg-transparent after:shadow-[2px_-2px_rgba(5,0,16,1)] after:content-['']`}
+          className={`absolute z-10 flex items-center justify-center rounded-bl-xl border-cbpbg-400 bg-cbpbg-900 ${isMobile ? "top-[-2px] right-[-2px] border-b-2 border-l-2 px-2 py-1 text-[10px]" : "top-[-4px] right-[-4px] border-b-4 border-l-4 px-3 py-2 text-sm"} before:absolute before:right-0 before:bottom-[-7px] before:h-[7px] before:w-[7px] before:rounded-tr-xl before:bg-transparent before:shadow-[2px_-2px_var(--color-cbpbg-900)] before:content-[''] after:absolute after:top-[0px] after:left-[-7px] after:h-[7px] after:w-[7px] after:rounded-tr-xl after:bg-transparent after:shadow-[2px_-2px_var(--color-cbpbg-900)] after:content-['']`}
         >
           <ShinyText
             text={state}
             disabled={false}
             speed={3}
-            color={state === "Terminado" ? "#b5f2b5a5" : "#feb555a5"}
+            color={
+              state === "Terminado" ? "var(--state-done)" : "var(--state-wip)"
+            }
           />
         </span>
       </a>{" "}
       <div
         ref={cardTextRef}
-        className={`grid-area-text relative z-10 flex flex-col rounded-b-xl text-left ${isMobile ? "p-3" : "p-4"} before:pointer-events-none before:absolute before:inset-0 before:rounded-b-xl before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.1)_0%,transparent_20%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1]`}
+        className={`grid-area-text relative z-10 flex flex-col rounded-b-xl text-left ${isMobile ? "p-3" : "p-4"} before:pointer-events-none before:absolute before:inset-0 before:rounded-b-xl before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),var(--hover-glow)_0%,transparent_20%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1]`}
       >
         <div
           className={`flex justify-between gap-2 ${isMobile ? "items-start" : "items-center"}`}
         >
           <div className={isMobile ? "line-clamp-2 min-w-0" : ""}>
             <AnimatedGradientText
-              colors={["#9d4eddff", "#e0aaffff", "#9d4eddff"]}
+              colors={[
+                "var(--color-cbpviolet-400)",
+                "var(--color-cbpviolet-200)",
+                "var(--color-cbpviolet-400)",
+              ]}
               classNames={
                 isMobile
                   ? ["text-base", "font-bold", "leading-tight"]

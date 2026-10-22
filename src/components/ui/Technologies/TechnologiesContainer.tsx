@@ -50,7 +50,7 @@ export const TechnologiesContainer = ({
   return (
     <div
       ref={techContainerRef}
-      className={`${!isMobile ? (title === "tools" ? "col-span-2" : title === "learning" || title === "backend" ? "col-span-1" : "col-span-2") : ""} ${title === "frontend" && !isMobile ? "col-span-2" : ""} fx-trigger border-4 border-white/5 p-4 backdrop-blur-2xl before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),rgba(255,255,255,0.15)_0%,transparent_20%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1] ${title === "tools" || title === "backend" ? "technologies-container-right" : "technologies-container-left"}`}
+      className={`${!isMobile ? (title === "tools" ? "col-span-2" : title === "learning" || title === "backend" ? "col-span-1" : "col-span-2") : ""} ${title === "frontend" && !isMobile ? "col-span-2" : ""} fx-trigger border-4 border-ink/5 p-4 backdrop-blur-2xl before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),var(--hover-glow-strong)_0%,transparent_20%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1] ${title === "tools" || title === "backend" ? "technologies-container-right" : "technologies-container-left"}`}
     >
       {title === "frontend" ? (
         <BsBorderStyle className="fx-icon fx-stretch h-8 w-8 text-cbpviolet-200" />
@@ -81,6 +81,7 @@ export const TechnologiesContainer = ({
               name={technology.name}
               logo={technology.logo}
               url={technology.url}
+              invertInLight={technology.invertInLight}
             />
           );
         })}

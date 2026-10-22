@@ -88,7 +88,7 @@ export const AISection = () => {
 
         {/* Sección de estudios actuales */}
         <div className="mt-20">
-          <h3 className="mb-8 flex items-center justify-center text-2xl font-bold text-white">
+          <h3 className="mb-8 flex items-center justify-center text-2xl font-bold text-ink">
             <span className="text-cbpgray-300">Áreas de estudio actuales</span>
           </h3>
 
@@ -102,7 +102,7 @@ export const AISection = () => {
                   <div className="fx-icon fx-tilt rounded-lg bg-cbpviolet-500/10 p-2 text-cbpviolet-400 md:mr-3">
                     {area.icono}
                   </div>
-                  <h4 className="text-sm leading-tight font-semibold text-white md:text-lg">
+                  <h4 className="text-sm leading-tight font-semibold text-ink md:text-lg">
                     {area.nombre}
                   </h4>
                 </div>

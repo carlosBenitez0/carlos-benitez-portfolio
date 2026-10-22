@@ -98,6 +98,8 @@ export const technologies = {
       name: "Prisma",
       logo: "/tech/prisma.svg",
       url: "https://www.prisma.io/",
+      // Logo claro (pensado para fondo oscuro): se invierte en modo claro
+      invertInLight: true,
     },
     {
       name: "Supabase",
@@ -152,6 +154,7 @@ export const technologies = {
       name: "Wispr Flow",
       logo: "/tech/wispr-flow.svg",
       url: "https://wisprflow.ai/",
+      invertInLight: true,
     },
     {
       name: "n8n",
