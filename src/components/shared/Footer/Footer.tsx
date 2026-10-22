@@ -29,11 +29,7 @@ export const Footer = () => (
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-4">
           {/* Decorativo: el nombre ya aparece en texto justo al lado */}
-          <img
-            src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751309549/cb-logo2_kowmru.png"
-            alt=""
-            className="cb-logo w-14"
-          />
+          <img src="/images/logo-cb.webp" alt="" className="cb-logo w-14" />
           <div className="flex flex-col">
             <p className="text-lg font-semibold text-cbpviolet-100">
               Carlos Benítez

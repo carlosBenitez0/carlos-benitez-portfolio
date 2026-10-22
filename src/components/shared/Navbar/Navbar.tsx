@@ -246,7 +246,7 @@ export const Navbar = () => {
     >
       <figure>
         <img
-          src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751309549/cb-logo2_kowmru.png"
+          src="/images/logo-cb.webp"
           alt="Carlos Benítez"
           className={`cb-logo ${isMobile ? "w-10 max-w-10" : "w-12 min-w-12"}`}
         />

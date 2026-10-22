@@ -63,31 +63,20 @@ export const MyPicture = () => {
         ease: "power3.out",
       },
     );
+    // La foto aparece justo cuando la burbuja termina de entrar (no antes):
+    // un fundido corto desde un poco más pequeña y desenfocada
+    tl.addLabel("bubbleIn");
     tl.fromTo(
       picture,
-      {
-        opacity: 0,
-        y: isMobile ? 50 : 100,
-        scale: 0,
-        filter: "blur(8px)",
-      },
+      { opacity: 0, scale: 0.85, filter: "blur(8px)" },
       {
         opacity: 1,
-        y: 0,
         scale: 1,
-        duration: 1.2,
-        ease: "power3.out",
-      },
-      "<0.25",
-    );
-    tl.to(
-      picture,
-      {
         filter: "blur(0px)",
-        duration: 1,
+        duration: 0.7,
         ease: "power3.out",
       },
-      "<0.2",
+      "bubbleIn",
     );
     // Al terminar se quita el filter: aunque valga blur(0px), obliga a pintar
     // la esfera y la foto en una capa aparte y se ven menos nítidas.
@@ -152,7 +141,8 @@ export const MyPicture = () => {
           ease: "power1.out",
           onStart: reduceMotion ? undefined : () => orbit(dot, index),
         },
-        index === 0 ? "<0.2" : "<0.08",
+        // Las manchas no esperan a la foto: salen mientras la burbuja termina
+        index === 0 ? "bubbleIn+=0.45" : "<0.08",
       );
     });
 
@@ -216,21 +206,18 @@ export const MyPicture = () => {
       orbitTweens.push(orbitTween);
     };
 
-    // Profundidad: con el ratón, la foto se desplaza más que la burbuja (parece
-    // flotar delante). En 2D y en píxeles enteros: girar en 3D o mover a
-    // medio píxel obliga a reescalar la imagen y la foto pierde nitidez.
+    // Profundidad: con el ratón, la burbuja y la foto se desplazan juntas (la
+    // foto va dentro de la burbuja). En 2D y en píxeles enteros: girar en 3D
+    // o mover a medio píxel obliga a reescalar la imagen y pierde nitidez.
     // Se usa la propiedad CSS "translate", que se suma a los transform de GSAP
     // de la entrada sin pisarlos.
     const bubbleEl = bubble as HTMLElement | null;
     const pictureEl = picture as HTMLElement | null;
     const depth = { x: 0, y: 0 };
     const applyDepth = () => {
-      if (bubbleEl) {
-        bubbleEl.style.translate = `${Math.round(depth.x * 8)}px ${Math.round(depth.y * 8)}px`;
-      }
-      if (pictureEl) {
-        pictureEl.style.translate = `${Math.round(depth.x * 18)}px ${Math.round(depth.y * 14)}px`;
-      }
+      const offset = `${Math.round(depth.x * 8)}px ${Math.round(depth.y * 8)}px`;
+      if (bubbleEl) bubbleEl.style.translate = offset;
+      if (pictureEl) pictureEl.style.translate = offset;
     };
     const depthX = gsap.quickTo(depth, "x", {
       duration: 0.9,
@@ -344,10 +331,13 @@ export const MyPicture = () => {
         )}
       </div>
       <figure
-        className={`my-picture absolute object-cover ${isMobile ? "top-[-120px] w-[150px]" : "top-[-180px] w-[225px]"}`}
+        // Centrada sobre la burbuja: mismo centro que bubbleBox (en escritorio,
+        // left 75px + 150px de radio - 140px de media foto). Empieza invisible:
+        // la entrada de GSAP la muestra cuando la burbuja termina de aparecer.
+        className={`my-picture absolute object-cover opacity-0 ${isMobile ? "top-[-93px] w-[185px]" : "top-[-140px] left-[85px] w-[280px]"}`}
       >
         <img
-          src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751572816/carlos-benitez-foto_mamqno.png"
+          src="/images/carlos-benitez.webp"
           alt="Carlos Benitez"
           className="mask-radial-from-50% mask-radial-to-70% mask-radial-at-center"
         />

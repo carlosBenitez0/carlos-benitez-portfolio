@@ -64,7 +64,7 @@ export const useTechnologies = () => {
       name: "Zustand",
       icon: (
         <img
-          src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751564282/zustand-logo-removebg-preview_bbzpat.png"
+          src="/tech/zustand.webp"
           alt="zustand"
           className="h-[17px] w-[17px]"
         />
@@ -75,11 +75,7 @@ export const useTechnologies = () => {
     {
       name: "Motion",
       icon: (
-        <img
-          src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751562961/logo-motion_lelpra.png"
-          alt="motion"
-          className="h-[9px] w-[17px]"
-        />
+        <img src="/tech/motion.svg" alt="motion" className="h-[9px] w-[17px]" />
       ),
       color: "#FFF42B",
       url: "https://motion.dev/",
@@ -149,7 +145,7 @@ export const useTechnologies = () => {
       name: "Pokeapi",
       icon: (
         <img
-          src="https://res.cloudinary.com/dc69f3e0o/image/upload/v1751661655/pokeapi-logo_gcsoac.webp"
+          src="/tech/pokeapi.svg"
           alt="pokeapi"
           className="h-[9px] w-[17px]"
         />

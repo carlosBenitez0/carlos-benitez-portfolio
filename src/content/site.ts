@@ -11,8 +11,7 @@ export const profile = {
   jobTitle: "Desarrollador Web",
   headline: "Ingeniero en Sistemas y Computación | Desarrollador Web",
   location: "El Salvador",
-  photo:
-    "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751572816/carlos-benitez-foto_mamqno.png",
+  photo: "/images/carlos-benitez.webp",
   summary:
     "Desarrollador web de El Salvador, especializado en aplicaciones web modernas y en desarrollo agéntico con IA: Claude Code, Codex, MCP y verificación con tests automáticos.",
   intro:
@@ -39,8 +38,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     name: "IBG Arcade",
-    image:
-      "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751660477/ibgarcade_yywgwl.webp",
+    image: "/projects/ibg-arcade.webp",
     description:
       "Sitio web cristiano con tres juegos: el clásico tres en raya y dos juegos de preguntas.",
     technologies: ["React", "CSS", "TypeScript", "Motion", "bolt.new"],
@@ -50,8 +48,7 @@ export const projects: Project[] = [
   },
   {
     name: "TechZone",
-    image:
-      "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751660476/techzone_rxdiy0.webp",
+    image: "/projects/techzone.webp",
     description:
       "Tienda en línea de tecnología con diseño moderno y panel de administración.",
     technologies: ["Next.js", "CSS", "GSAP", "TypeScript", "Zustand"],
@@ -61,8 +58,7 @@ export const projects: Project[] = [
   },
   {
     name: "Pokédex",
-    image:
-      "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751662453/352_1x_shots_so_clxxz8.png",
+    image: "/projects/pokedex.webp",
     description: "Pokédex web que consume la PokeAPI.",
     technologies: ["React", "Tailwind CSS", "TypeScript", "Axios", "Pokeapi"],
     state: "En desarrollo",
@@ -71,8 +67,7 @@ export const projects: Project[] = [
   },
   {
     name: "Portafolio Académico",
-    image:
-      "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752342229/porfatolio-catedra_whfj1g.webp",
+    image: "/projects/portafolio-academico.webp",
     description:
       "Proyecto académico que sintetiza once semanas de contenido sobre la administración estratégica de recursos empresariales y tecnológicos.",
     technologies: ["HTML", "CSS", "JavaScript"],
@@ -82,8 +77,7 @@ export const projects: Project[] = [
   },
   {
     name: "To-Do con Firebase",
-    image:
-      "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751730507/to-do-firebase_o2u85j.webp",
+    image: "/projects/todo-firebase.webp",
     description:
       "Gestor de tareas con estilo neumórfico y almacenamiento en Firebase.",
     technologies: ["React", "Tailwind CSS", "TypeScript", "Motion", "Firebase"],
@@ -93,8 +87,7 @@ export const projects: Project[] = [
   },
   {
     name: "Clon de YouTube",
-    image:
-      "https://res.cloudinary.com/dc69f3e0o/image/upload/v1751649922/youtube_asp8lp.webp",
+    image: "/projects/clon-youtube.webp",
     description:
       "Réplica de la página de inicio de YouTube; la versión responsive está en desarrollo.",
     technologies: ["HTML", "CSS"],

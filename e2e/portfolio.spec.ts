@@ -346,9 +346,7 @@ test.describe("SEO", () => {
       await page.locator('link[rel="canonical"]').getAttribute("href"),
     ).toBe(SITE);
     expect(await meta('meta[property="og:url"]')).toBe(SITE);
-    expect(await meta('meta[property="og:image"]')).toMatch(
-      /^https:\/\/res\.cloudinary\.com\/.+w_1200,h_630/,
-    );
+    expect(await meta('meta[property="og:image"]')).toBe(`${SITE}og-image.jpg`);
     expect(await meta('meta[name="twitter:card"]')).toBe("summary_large_image");
     expect(await page.locator("html").getAttribute("lang")).toBe("es");
   });

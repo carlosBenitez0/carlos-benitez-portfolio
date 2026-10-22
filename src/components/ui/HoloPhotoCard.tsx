@@ -5,8 +5,7 @@ import { PiChalkboardTeacher, PiStudent } from "react-icons/pi";
 import { FaRobot } from "react-icons/fa";
 import { prefersReducedMotion } from "../../utils/visibility";
 
-const PHOTO =
-  "https://res.cloudinary.com/dc69f3e0o/image/upload/v1752513118/320_1x_shots_so_sf9nou.png";
+const PHOTO = "/images/carlos-benitez-card.webp";
 
 const STACK = ["React", "Next.js", "Python", "FastAPI"];
 
