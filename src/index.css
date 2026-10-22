@@ -68,12 +68,13 @@
 :root[data-theme="light"] {
   color-scheme: light;
 
-  --color-cbpbg-900: #faf7ff;
-  --color-cbpbg-800: #f5effe;
-  --color-cbpbg-700: #efe6fd;
+  --color-cbpbg-900: #f4effc;
+  --color-cbpbg-800: #faf7ff;
+  /* Superficies (tarjetas): blancas para que destaquen sobre el fondo */
+  --color-cbpbg-700: #ffffff;
   --color-cbpbg-600: #e9ddfb;
   --color-cbpbg-500: #e3d4fa;
-  --color-cbpbg-400: #dccaf8;
+  --color-cbpbg-400: #e3d6f7;
   --color-cbpbg-300: #d5c0f5;
   --color-cbpbg-200: #cdb5f2;
   --color-cbpbg-100: #c5aaee;
@@ -132,6 +133,43 @@
 
 [data-theme="light"] .tech-label {
   color: color-mix(in oklab, var(--tech) 50%, black);
+}
+
+/* Donde se puede, en vez de mezclar con negro (que ensucia el color) se fija
+   solo la luminosidad: el tono y la intensidad de la marca se conservan */
+@supports (color: oklch(from red l c h)) {
+  [data-theme="light"] .tech-label {
+    color: oklch(from var(--tech) min(l, 0.5) c h);
+  }
+}
+
+/* El fondo de la etiqueta (inline, con el color de marca al 6%) se queda
+   corto sobre blanco: en claro se refuerza. !important porque el inline
+   lo fija el componente para el modo oscuro. */
+[data-theme="light"] .tech-label {
+  background-color: color-mix(
+    in oklab,
+    var(--tech) 14%,
+    transparent
+  ) !important;
+}
+
+/* Tarjetas en modo claro: blancas, con borde fino y una sombra corta y suave
+   (el fondo, los bordes y las tarjetas lavanda se confundían entre sí) */
+[data-theme="light"] .project-card {
+  border-width: 1px;
+  box-shadow:
+    0 1px 2px rgb(60 9 108 / 0.06),
+    0 4px 12px -6px rgb(60 9 108 / 0.12);
+}
+
+[data-theme="light"]
+  :is(.technologies-container-left, .technologies-container-right) {
+  /* Semitransparente: deja ver las manchas de color del fondo */
+  background: rgb(255 255 255 / 0.5);
+  border-width: 1px;
+  border-color: var(--color-cbpbg-400);
+  box-shadow: 0 4px 12px -8px rgb(60 9 108 / 0.12);
 }
 
 @keyframes shine {
@@ -308,7 +346,8 @@
     .contact-bird,
     .bird-bob,
     .bird-wing-inner,
-    .bird-wing-outer
+    .bird-wing-outer,
+    .project-frame
   ) {
   animation-play-state: paused;
 }
@@ -1651,6 +1690,107 @@
   }
 }
 
+/* ============== Marco de las capturas de proyectos ==============
+   .project-frame: el borde. Es un degradado cónico con los colores de la
+   captura (--frame-c1..3, ver useImagePalette) que gira al animar el ángulo.
+   .project-frame-glass: vidrio esmerilado encima; deja ver el borde solo en
+   el padding del marco y tiñe el interior con el degradado difuminado.
+   .project-frame-shot: la captura, con sombra para que parezca flotar. */
+@property --frame-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes frame-spin {
+  to {
+    --frame-angle: 360deg;
+  }
+}
+
+.project-frame {
+  --frame-c1: #9d4edd;
+  --frame-c2: #e0aaff;
+  --frame-c3: #5a189a;
+  background: conic-gradient(
+    from var(--frame-angle),
+    var(--frame-c1),
+    var(--frame-c2),
+    var(--frame-c3),
+    var(--frame-c1)
+  );
+  box-shadow: 0 0 22px -8px color-mix(in srgb, var(--frame-c1) 60%, transparent);
+  animation: frame-spin 6s linear infinite;
+  transition: box-shadow 0.3s ease;
+}
+
+.project-frame:is(:hover, :focus-visible) {
+  box-shadow: 0 0 30px -4px color-mix(in srgb, var(--frame-c1) 75%, transparent);
+}
+
+.project-frame-glass {
+  background: rgb(14 8 30 / 0.78);
+  backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08);
+}
+
+.project-frame-shot {
+  box-shadow:
+    0 12px 24px -10px rgb(0 0 0 / 0.75),
+    0 0 18px -6px color-mix(in srgb, var(--frame-c2) 45%, transparent);
+  transition: transform 0.3s ease;
+}
+
+.project-frame:is(:hover, :focus-visible) .project-frame-shot {
+  transform: translateY(-2px);
+}
+
+.project-state {
+  background: rgb(10 6 22 / 0.68);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  color: #ffffff;
+}
+
+/* En claro, un resplandor de color alrededor del marco se ve sucio: solo
+   una sombra corta */
+[data-theme="light"] .project-frame,
+[data-theme="light"] .project-frame:is(:hover, :focus-visible) {
+  box-shadow: 0 2px 8px -4px
+    color-mix(in srgb, var(--frame-c1) 45%, transparent);
+}
+
+[data-theme="light"] .project-frame-glass {
+  background: rgb(255 255 255 / 0.62);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.7);
+}
+
+[data-theme="light"] .project-frame-shot {
+  box-shadow:
+    0 12px 24px -10px rgb(60 9 108 / 0.35),
+    0 0 18px -6px color-mix(in srgb, var(--frame-c2) 45%, transparent);
+}
+
+[data-theme="light"] .project-state {
+  background: rgb(255 255 255 / 0.8);
+  border-color: rgb(60 9 108 / 0.12);
+  color: var(--color-ink);
+}
+
+/* Va aquí y no en la lista general de "reducir movimiento": esta regla está
+   después de .project-frame y si no, su animation la pisaría */
+@media (prefers-reduced-motion: reduce) {
+  .project-frame {
+    animation: none;
+  }
+  .project-frame-shot {
+    transition: none;
+  }
+  .project-frame:is(:hover, :focus-visible) .project-frame-shot {
+    transform: none;
+  }
+}
+
 /* ================= Modo claro de los efectos en CSS =================
    Mismas piezas que arriba, con sombras y rellenos pensados para fondo
    claro (las sombras negras y los rellenos casi negros no funcionan ahí). */
@@ -1697,7 +1837,7 @@
 
 [data-theme="light"] .bg-dot {
   --dot-black: #e0aaff;
-  opacity: calc(var(--dot-opacity) * 0.6);
+  opacity: calc(var(--dot-opacity) * 0.85);
 }
 
 [data-theme="light"] .glass-sphere {

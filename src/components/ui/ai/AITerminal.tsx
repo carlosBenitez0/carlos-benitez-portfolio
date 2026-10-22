@@ -308,7 +308,7 @@ export const AITerminal = () => {
   return (
     <div
       ref={containerRef}
-      className="overflow-hidden rounded-xl border border-cbpgray-700/50 bg-cbpgray-900/80 shadow-[0_0_60px_-20px] shadow-cbpviolet-500/40"
+      className="overflow-hidden rounded-xl border border-cbpgray-700/50 bg-cbpgray-900/80 shadow-[0_0_60px_-20px] shadow-cbpviolet-500/40 light:shadow-[0_4px_16px_-8px] light:shadow-cbpviolet-200/15"
     >
       {/* Barra de la ventana */}
       <div

@@ -251,7 +251,7 @@ export const ContactContainer = () => {
       <form
         onSubmit={handleSubmit}
         onFocus={prepareContact}
-        className={`z-50 grid grid-cols-2 gap-6 rounded-xl ${isMobile ? "px-5 pb-5" : "p-8"} [&>div]:flex [&>div]:w-full [&>div]:items-center [&>div]:pl-2 [&>div,&>span>textarea]:rounded-lg [&>div,&>span>textarea]:border [&>div,&>span>textarea]:border-ink/15 [&>div,&>span>textarea]:shadow-[inset_0px_0px_20px_var(--hover-glow)] light:[&>div,&>span>textarea]:border-ink/25 light:[&>div,&>span>textarea]:bg-cbpgray-950/40 [&>div>.form-icon]:text-ink/50 light:[&>div>.form-icon]:text-ink/65 [&>div>input]:p-3 [&>div>input,&>span>textarea]:w-full [&>div>input,&>span>textarea]:bg-transparent [&>div>input,&>span>textarea]:outline-none [&>div>input,&>span>textarea]:placeholder:text-ink/50 [&>div>input,&>span>textarea]:autofill:bg-transparent light:[&>div>input,&>span>textarea]:placeholder:text-ink/65 ${userData.name !== "" ? "[&>div:nth-child(1)>input,&>div:nth-child(1)>.form-icon]:text-ink/90" : ""} ${userData.email !== "" ? "[&>div:nth-child(2)>input,&>div:nth-child(2)>.form-icon]:text-ink/90" : ""} ${userData.subject !== "" ? "[&>div:nth-child(3)>input,&>div:nth-child(3)>.form-icon]:text-ink/90" : ""} ${userData.message !== "" ? "[&>div:nth-child(4)>textarea]:text-ink/90" : ""} ${userData.name !== "" ? "[&>div:nth-child(1)]:border-ink/25" : ""} ${userData.email !== "" ? "[&>div:nth-child(2)]:border-ink/25" : ""} ${userData.subject !== "" ? "[&>div:nth-child(3)]:border-ink/25" : ""} ${userData.message !== "" ? "[&>span>textarea]:border-ink/25" : ""} ${isMobile ? "row-start-2 row-end-3" : ""}`}
+        className={`z-50 grid grid-cols-2 gap-6 rounded-xl ${isMobile ? "px-5 pb-5" : "p-8"} [&>div]:flex [&>div]:w-full [&>div]:items-center [&>div]:pl-2 [&>div,&>span>textarea]:rounded-lg [&>div,&>span>textarea]:border [&>div,&>span>textarea]:border-ink/15 [&>div,&>span>textarea]:shadow-[inset_0px_0px_20px_var(--hover-glow)] light:[&>div,&>span>textarea]:border-ink/25 light:[&>div,&>span>textarea]:bg-white/75 light:[&>div,&>span>textarea]:shadow-[0_1px_2px_rgb(60_9_108/0.08)] [&>div>.form-icon]:text-ink/50 light:[&>div>.form-icon]:text-ink/65 [&>div>input]:p-3 [&>div>input,&>span>textarea]:w-full [&>div>input,&>span>textarea]:bg-transparent [&>div>input,&>span>textarea]:outline-none [&>div>input,&>span>textarea]:placeholder:text-ink/50 [&>div>input,&>span>textarea]:autofill:bg-transparent light:[&>div>input,&>span>textarea]:placeholder:text-ink/65 light:[&>span>textarea]:bg-white/75! ${userData.name !== "" ? "[&>div:nth-child(1)>input,&>div:nth-child(1)>.form-icon]:text-ink/90" : ""} ${userData.email !== "" ? "[&>div:nth-child(2)>input,&>div:nth-child(2)>.form-icon]:text-ink/90" : ""} ${userData.subject !== "" ? "[&>div:nth-child(3)>input,&>div:nth-child(3)>.form-icon]:text-ink/90" : ""} ${userData.message !== "" ? "[&>div:nth-child(4)>textarea]:text-ink/90" : ""} ${userData.name !== "" ? "[&>div:nth-child(1)]:border-ink/25" : ""} ${userData.email !== "" ? "[&>div:nth-child(2)]:border-ink/25" : ""} ${userData.subject !== "" ? "[&>div:nth-child(3)]:border-ink/25" : ""} ${userData.message !== "" ? "[&>span>textarea]:border-ink/25" : ""} ${isMobile ? "row-start-2 row-end-3" : ""}`}
       >
         <div className={`fx-focus ${isMobile ? "col-span-2" : ""}`}>
           <FaRegUser className="form-icon fx-icon fx-pop min-h-4 min-w-4" />
@@ -374,7 +374,7 @@ export const ContactContainer = () => {
         <button
           type="submit"
           disabled={loading}
-          className="fx-trigger col-span-2 flex w-fit cursor-pointer items-center justify-center gap-2 rounded-md border border-cbpbg-50 bg-cbpbg-500/50 px-4 py-2 shadow-[inset_0px_0px_10px_var(--hover-glow)] transition duration-300 hover:bg-cbpbg-500/75 disabled:cursor-wait"
+          className="fx-trigger col-span-2 flex w-fit cursor-pointer items-center justify-center gap-2 rounded-md border border-cbpbg-50 bg-cbpbg-500/50 px-4 py-2 shadow-[inset_0px_0px_10px_var(--hover-glow)] transition duration-300 hover:bg-cbpbg-500/75 disabled:cursor-wait light:border-cbpbg-400 light:bg-white/80 light:shadow-[0_1px_3px_rgb(60_9_108/0.12)] light:hover:bg-white"
         >
           {sended ? (
             <>
@@ -449,7 +449,7 @@ export const ContactContainer = () => {
           </div>
           <div className="absolute bottom-0 left-0 h-26 w-10"></div>
           <div
-            className={`${isMobile ? "absolute top-0 right-0 h-24 w-24" : "absolute top-8 right-8 h-20 w-20"} rounded-full bg-gradient-to-bl from-cbpviolet-700 to-cbpbg-900 shadow-[inset_0px_5px_10px_var(--hover-glow),0px_0px_10px_var(--hover-glow),0px_0px_20px_var(--hover-glow),0px_0px_30px_var(--hover-glow)]`}
+            className={`${isMobile ? "absolute top-0 right-0 h-24 w-24" : "absolute top-8 right-8 h-20 w-20"} rounded-full bg-gradient-to-bl from-cbpviolet-700 to-cbpbg-900 shadow-[inset_0px_5px_10px_var(--hover-glow),0px_0px_10px_var(--hover-glow),0px_0px_20px_var(--hover-glow),0px_0px_30px_var(--hover-glow)] light:shadow-[0_2px_8px_-2px_rgb(90_24_154/0.25)]`}
           ></div>
         </div>
       </div>

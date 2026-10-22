@@ -199,7 +199,7 @@ test.describe("página 404", () => {
       await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
       await expect(page.locator("body")).toHaveCSS(
         "background-color",
-        "rgb(250, 247, 255)",
+        "rgb(244, 239, 252)",
       );
     });
   });

@@ -59,7 +59,7 @@ describe("useTheme", () => {
 
     const { result } = renderHook(() => useTheme());
     act(() => result.current.setTheme("light"));
-    expect(meta.content).toBe("#faf7ff");
+    expect(meta.content).toBe("#f4effc");
     expect(meta.hasAttribute("media")).toBe(false);
   });
 });

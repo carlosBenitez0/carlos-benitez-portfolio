@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTechnologies } from "../../../utils/useTechnologies";
 import AnimatedGradientText from "../AnimatedGradientText";
-import ShinyText from "../ShinyText";
 import { TechnologyLabel } from "./TechnologyLabel";
 import type { Technology } from "../../../utils/useTechnologies";
 import { FaGithub } from "react-icons/fa";
 import { useIsMobile } from "../../../hooks/useIsMobile";
+import { useImagePalette } from "../../../hooks/useImagePalette";
 
 interface ProyectCardProps {
   name: string;
@@ -30,6 +30,7 @@ export const ProyectCard = ({
   const cardTextRef = useRef<HTMLDivElement>(null);
   // const proyectCardRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useIsMobile();
+  const { palette, onLoad: onImageLoad } = useImagePalette(image);
 
   // Memoizar las tecnologías filtradas para evitar re-renderizados innecesarios
   const technologiesFiltered = useMemo(() => {
@@ -67,34 +68,59 @@ export const ProyectCard = ({
   return (
     <div
       // ref={proyectCardRef}
-      className={`proyect-card-anim grid-areas-[image_text] relative grid h-full border-cbpbg-400 bg-cbpbg-700 text-center ${isMobile ? "grid-rows-[110px_1fr] rounded-xl border-2" : "grid-rows-[150px_1fr] rounded-2xl rounded-t-2xl border-4"}`}
+      className={`proyect-card-anim project-card grid-areas-[image_text] relative grid h-full grid-rows-[auto_1fr] border-cbpbg-400 bg-cbpbg-700 text-center ${isMobile ? "rounded-xl border-2" : "rounded-2xl border-4"}`}
     >
-      {/* after:content-[''] after:absolute after:-inset-2
-     after:rounded-2xl after:z-[-1] after:blur-xs after:animate-gradient-rgb after:bg-cbpviolet-300/10 after:bg-[linear-gradient(45deg,#ff0000_0%,#00ff00_17%,#0000ff_33%,#ff00ff_50%,#00ffff_67%,#ffff00_83%,#ff0000_100%)] */}
-      {/* linear-gradient(to bottom, rgb(17, 0, 32, 0.2) 0%,  rgba(17, 0, 32, 0.5) 70%, rgba(17, 0, 32, 1) 100%), */}
+      {/* Marco: borde con degradado animado en los colores de la captura
+          (.project-frame), vidrio esmerilado encima y la captura con sombra */}
       <a
         href={url}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Ver el proyecto ${name} (${state})`}
-        className={`grid-area-image relative z-10 bg-center ${isMobile ? "rounded-t-[10px] bg-cover" : "rounded-t-xl bg-[length:100%_150%]"}`}
-        style={{
-          backgroundImage: `url(${image})`,
-        }}
+        className={`grid-area-image project-frame relative z-10 block ${isMobile ? "m-1.5 rounded-[10px] p-[3px]" : "m-3 rounded-2xl p-[5px]"}`}
+        style={
+          {
+            "--frame-c1": palette[0],
+            "--frame-c2": palette[1],
+            "--frame-c3": palette[2],
+          } as React.CSSProperties
+        }
       >
         <span
-          className={`absolute z-10 flex items-center justify-center rounded-bl-xl border-cbpbg-400 bg-cbpbg-900 ${isMobile ? "top-[-2px] right-[-2px] border-b-2 border-l-2 px-2 py-1 text-[10px]" : "top-[-4px] right-[-4px] border-b-4 border-l-4 px-3 py-2 text-sm"} before:absolute before:right-0 before:bottom-[-7px] before:h-[7px] before:w-[7px] before:rounded-tr-xl before:bg-transparent before:shadow-[2px_-2px_var(--color-cbpbg-900)] before:content-[''] after:absolute after:top-[0px] after:left-[-7px] after:h-[7px] after:w-[7px] after:rounded-tr-xl after:bg-transparent after:shadow-[2px_-2px_var(--color-cbpbg-900)] after:content-['']`}
+          className={`project-frame-glass block ${isMobile ? "rounded-[7px] p-1" : "rounded-[11px] p-2"}`}
         >
-          <ShinyText
-            text={state}
-            disabled={false}
-            speed={3}
-            color={
-              state === "Terminado" ? "var(--state-done)" : "var(--state-wip)"
-            }
-          />
+          <span
+            className={`project-frame-shot relative block overflow-hidden ${isMobile ? "rounded-[5px]" : "rounded-lg"}`}
+          >
+            {/* Decorativa: el enlace ya tiene nombre (aria-label) */}
+            <img
+              src={image}
+              alt=""
+              width={800}
+              height={500}
+              loading="lazy"
+              decoding="async"
+              onLoad={onImageLoad}
+              className="block aspect-[16/10] w-full object-cover object-top"
+            />
+            <span
+              className={`project-state absolute flex items-center gap-1.5 rounded-full font-medium ${isMobile ? "top-1 right-1 px-1.5 py-0.5 text-[9px]" : "top-2 right-2 px-2.5 py-1 text-xs"}`}
+            >
+              <span
+                aria-hidden="true"
+                className="h-1.5 w-1.5 rounded-full"
+                style={{
+                  backgroundColor:
+                    state === "Terminado"
+                      ? "var(--state-done)"
+                      : "var(--state-wip)",
+                }}
+              />
+              {state}
+            </span>
+          </span>
         </span>
-      </a>{" "}
+      </a>
       <div
         ref={cardTextRef}
         className={`grid-area-text relative z-10 flex flex-col rounded-b-xl text-left ${isMobile ? "p-3" : "p-4"} before:pointer-events-none before:absolute before:inset-0 before:rounded-b-xl before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),var(--hover-glow)_0%,transparent_20%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1]`}

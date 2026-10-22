@@ -7,7 +7,7 @@ export type Theme = "light" | "dark";
 export const THEME_STORAGE_KEY = "theme";
 export const THEME_COLORS: Record<Theme, string> = {
   dark: "#050010",
-  light: "#faf7ff",
+  light: "#f4effc",
 };
 
 const systemLightQuery =
