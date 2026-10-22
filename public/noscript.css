@@ -1,0 +1,49 @@
+/* Solo se carga sin JavaScript (<noscript> en index.html): muestra el
+   contenido estático de #root como una página simple y legible. Usa
+   #root para ganarle a la regla de index.css, que se carga después. */
+body {
+  margin: 0;
+  background: #050010;
+}
+#root .static-content {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  color: #e5e7eb;
+  font-family: "Poppins", system-ui, sans-serif;
+  line-height: 1.6;
+}
+#root .static-content a {
+  color: #e0aaff;
+}
+#root .static-content h1,
+#root .static-content h2,
+#root .static-content h3 {
+  color: #fff;
+  font-weight: 600;
+  margin: 1.5em 0 0.5em;
+}
+#root .static-content h1 {
+  font-size: 2.25rem;
+  margin-top: 0;
+}
+#root .static-content h2 {
+  font-size: 1.5rem;
+}
+#root .static-content h3 {
+  font-size: 1.15rem;
+}
+#root .static-content p,
+#root .static-content li {
+  margin-bottom: 0.75em;
+}
+#root .static-content ul {
+  list-style: disc;
+  padding-left: 1.25em;
+}

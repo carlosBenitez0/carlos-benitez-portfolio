@@ -1,4 +1,19 @@
+# Todo el sitio es público, también para los rastreadores de IA: el objetivo
+# es que buscadores y LLMs puedan leerlo.
+# Resumen para LLMs (llmstxt.org): https://carlos-benitez-portfolio.vercel.app/llms.txt
+
 User-agent: *
+Allow: /
+
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://carlos-benitez-portfolio.vercel.app/sitemap.xml

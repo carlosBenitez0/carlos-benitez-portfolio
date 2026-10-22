@@ -1,4 +1,5 @@
 import { FaGithub, FaRegUser } from "react-icons/fa";
+import { links as siteLinks } from "../../../content/site";
 import { MdOutlineEmail } from "react-icons/md";
 import { MdOutlineSubject } from "react-icons/md";
 import { IoMdSend } from "react-icons/io";
@@ -419,7 +420,7 @@ export const ContactContainer = () => {
             </div>
             <div className="flex items-center gap-3">
               <a
-                href="https://www.linkedin.com/in/carlos-benitez-profile/"
+                href={siteLinks.linkedin}
                 className="blur-text-git fx-trigger text-[34px] text-cbpgray-300/70 hover:text-cbpgray-300"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -428,7 +429,7 @@ export const ContactContainer = () => {
                 <CiLinkedin className="fx-icon fx-pop" />
               </a>
               <a
-                href="https://github.com/carlosBenitez0"
+                href={siteLinks.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="blur-text-git fx-trigger text-[28px] text-cbpgray-300/70 hover:text-cbpgray-300"
@@ -438,7 +439,7 @@ export const ContactContainer = () => {
               </a>
 
               <a
-                href="/ES - Carlos Francisco Benítez Quintanilla - CV.pdf"
+                href={siteLinks.cv}
                 download
                 className="blur-text-git flex items-center gap-2 rounded-full border border-cbpgray-300/70 px-3 py-[2px] text-[20px] text-cbpgray-300/70 hover:border-cbpgray-300 hover:text-cbpgray-300"
               >

@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 interface SiteAnalyticsProps {
   // Vercel define VITE_VERCEL_ENV al compilar ("production" o "preview").
@@ -6,9 +7,16 @@ interface SiteAnalyticsProps {
   vercelEnv?: string;
 }
 
-// Vercel Web Analytics: visitas sin cookies ni datos personales. El script
-// se sirve desde el mismo dominio (/_vercel/insights), así que entra en la
-// CSP sin cambios.
+// Vercel Web Analytics (visitas, sin cookies ni datos personales) y Speed
+// Insights (Core Web Vitals de visitantes reales). Los scripts se sirven
+// desde el mismo dominio (/_vercel/insights y /_vercel/speed-insights), así
+// que entran en la CSP sin cambios.
 export const SiteAnalytics = ({
   vercelEnv = import.meta.env.VITE_VERCEL_ENV,
-}: SiteAnalyticsProps) => (vercelEnv ? <Analytics /> : null);
+}: SiteAnalyticsProps) =>
+  vercelEnv ? (
+    <>
+      <Analytics />
+      <SpeedInsights />
+    </>
+  ) : null;

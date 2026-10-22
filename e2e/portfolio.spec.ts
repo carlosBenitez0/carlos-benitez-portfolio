@@ -304,8 +304,13 @@ test.describe("SEO", () => {
     const meta = (selector: string) =>
       page.locator(selector).getAttribute("content");
 
-    await expect(page).toHaveTitle("Carlos Benítez | Desarrollador Web");
+    await expect(page).toHaveTitle(
+      "Carlos Benítez | Desarrollador Web y Desarrollo Agéntico con IA",
+    );
     expect(await meta('meta[name="description"]')).toBeTruthy();
+    expect(await meta('meta[name="robots"]')).toContain("index, follow");
+    // Google la ignora y Bing la toma como señal de spam
+    await expect(page.locator('meta[name="keywords"]')).toHaveCount(0);
     expect(
       await page.locator('link[rel="canonical"]').getAttribute("href"),
     ).toBe(SITE);
@@ -325,6 +330,48 @@ test.describe("SEO", () => {
     const sitemap = await request.get("/sitemap.xml");
     expect(sitemap.ok()).toBe(true);
     expect(await sitemap.text()).toContain(`<loc>${SITE}</loc>`);
+  });
+
+  test("sirve /llms.txt e /index.md para agentes LLM", async ({ request }) => {
+    const llms = await request.get("/llms.txt");
+    expect(llms.ok()).toBe(true);
+    expect(llms.headers()["content-type"]).toBe("text/plain; charset=utf-8");
+    expect(await llms.text()).toMatch(/^# Carlos Benítez\n\n> /);
+
+    const md = await request.get("/index.md");
+    expect(md.ok()).toBe(true);
+    expect(md.headers()["content-type"]).toBe("text/markdown; charset=utf-8");
+    expect(await md.text()).toContain("## Proyectos");
+
+    // Descubribilidad (spec v2): cabecera Link y <link> en el HTML
+    const home = await request.get("/");
+    expect(home.headers()["link"]).toContain('</llms.txt>; rel="describedby"');
+    expect(home.headers()["link"]).toContain('</index.md>; rel="alternate"');
+  });
+});
+
+test.describe("sin JavaScript", () => {
+  test.use({ javaScriptEnabled: false });
+
+  test("buscadores y agentes ven el contenido y los datos estructurados", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      "Carlos Benítez",
+    );
+    await expect(page.getByRole("link", { name: "IBG Arcade" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Sobre mí" })).toBeVisible();
+
+    const jsonLd = await page
+      .locator('script[type="application/ld+json"]')
+      .textContent();
+    expect(JSON.parse(jsonLd!)["@graph"]).toContainEqual(
+      expect.objectContaining({ "@type": "Person", name: "Carlos Benítez" }),
+    );
+    await expect(
+      page.locator('link[rel="alternate"][type="text/markdown"]'),
+    ).toHaveAttribute("href", "/index.md");
   });
 });
 
