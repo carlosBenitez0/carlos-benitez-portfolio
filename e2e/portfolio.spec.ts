@@ -146,9 +146,16 @@ test.describe("animaciones fuera de pantalla", () => {
     await expect(wave).toHaveCSS("animation-play-state", "paused");
 
     await scrollToSection(page, "contact");
-    await expect(wave).toHaveCSS("animation-play-state", "running");
-    const [before, after] = await transformsOver(page, ".contact-wave-a", 400);
-    expect(after).not.toBe(before);
+    await expect(wave).toHaveCSS("animation-play-state", "running", {
+      timeout: 10_000,
+    });
+    // Con la máquina cargada los frames se espacian: esperar a que se mueva
+    const start = await wave.evaluate((el) => getComputedStyle(el).transform);
+    await expect
+      .poll(() => wave.evaluate((el) => getComputedStyle(el).transform), {
+        timeout: 10_000,
+      })
+      .not.toBe(start);
   });
 
   test("las manchas del hero se congelan cuando el hero no se ve", async ({
@@ -201,5 +208,79 @@ test.describe("reducir movimiento", () => {
       "1",
       { timeout: 3_000 },
     );
+  });
+});
+
+test.describe("esquema de color del sistema", () => {
+  // El sitio es siempre oscuro: el modo claro del sistema no debe cambiar
+  // ningún color de texto.
+  test("el modo claro del sistema no altera los textos", async ({
+    browser,
+  }) => {
+    const colorsIn = async (colorScheme: "light" | "dark") => {
+      const page = await browser.newPage({ colorScheme });
+      await page.goto("/", { waitUntil: "domcontentloaded" });
+      const colors = await page.evaluate(() =>
+        [...document.querySelectorAll("p, span, h1, h2, h3, h4, a, li")].map(
+          (el) => getComputedStyle(el).color,
+        ),
+      );
+      await page.close();
+      return colors;
+    };
+    expect(await colorsIn("light")).toEqual(await colorsIn("dark"));
+  });
+});
+
+test.describe("textos", () => {
+  test("sin erratas conocidas ni descripciones incorrectas", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.getByRole("button", { name: "Mostrar información" }).click();
+    const text = await page.locator("body").innerText();
+
+    for (const wrong of [
+      "FORMANDOME",
+      "technologías",
+      "clickea",
+      "Comportamiento Predictivo",
+    ]) {
+      expect(text).not.toContain(wrong);
+    }
+    expect(text).toContain("FORMÁNDOME");
+    expect(text).toContain("Model Context Protocol");
+  });
+});
+
+test.describe("SEO", () => {
+  const SITE = "https://carlos-benitez-portfolio.vercel.app/";
+
+  test("tiene metadatos para buscadores y redes sociales", async ({ page }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const meta = (selector: string) =>
+      page.locator(selector).getAttribute("content");
+
+    await expect(page).toHaveTitle("Carlos Benítez | Desarrollador Web");
+    expect(await meta('meta[name="description"]')).toBeTruthy();
+    expect(
+      await page.locator('link[rel="canonical"]').getAttribute("href"),
+    ).toBe(SITE);
+    expect(await meta('meta[property="og:url"]')).toBe(SITE);
+    expect(await meta('meta[property="og:image"]')).toMatch(
+      /^https:\/\/res\.cloudinary\.com\/.+w_1200,h_630/,
+    );
+    expect(await meta('meta[name="twitter:card"]')).toBe("summary_large_image");
+    expect(await page.locator("html").getAttribute("lang")).toBe("es");
+  });
+
+  test("sirve robots.txt y sitemap.xml", async ({ request }) => {
+    const robots = await request.get("/robots.txt");
+    expect(robots.ok()).toBe(true);
+    expect(await robots.text()).toContain(`Sitemap: ${SITE}sitemap.xml`);
+
+    const sitemap = await request.get("/sitemap.xml");
+    expect(sitemap.ok()).toBe(true);
+    expect(await sitemap.text()).toContain(`<loc>${SITE}</loc>`);
   });
 });

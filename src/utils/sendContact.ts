@@ -1,4 +1,3 @@
-import emailjs from "@emailjs/browser";
 import type { ContactData } from "./contactForm";
 
 // La publicKey de EmailJS es pública por diseño (viaja al navegador); la
@@ -17,10 +16,16 @@ const toTemplateParams = (data: ContactData) => ({
   message: data.message.trim(),
 });
 
+// EmailJS no está en el bundle inicial. Se empieza a descargar cuando el
+// visitante enfoca el formulario, así al enviar ya está listo.
+const loadEmailJs = () => import("@emailjs/browser");
+export const preloadEmailJs = () => void loadEmailJs();
+
 // Resuelve cuando el mensaje principal se envió; rechaza si falló. La
 // respuesta automática es secundaria: se manda solo si el principal salió y
 // su fallo no afecta lo que ve el visitante.
 export const sendContactMessage = async (data: ContactData) => {
+  const { default: emailjs } = await loadEmailJs();
   const params = toTemplateParams(data);
   const options = { publicKey: PUBLIC_KEY };
 

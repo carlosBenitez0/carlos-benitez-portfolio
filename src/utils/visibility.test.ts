@@ -11,7 +11,8 @@ import {
   prefersReducedMotion,
 } from "./visibility";
 
-const makeElement = () => document.body.appendChild(document.createElement("div"));
+const makeElement = () =>
+  document.body.appendChild(document.createElement("div"));
 
 afterEach(() => {
   document.body.innerHTML = "";
@@ -22,7 +23,9 @@ describe("onVisibilityChange", () => {
     const before = FakeIntersectionObserver.instances.length;
     const offA = onVisibilityChange(makeElement(), () => {});
     const offB = onVisibilityChange(makeElement(), () => {});
-    expect(FakeIntersectionObserver.instances.length - before).toBeLessThanOrEqual(1);
+    expect(
+      FakeIntersectionObserver.instances.length - before,
+    ).toBeLessThanOrEqual(1);
     offA();
     offB();
   });

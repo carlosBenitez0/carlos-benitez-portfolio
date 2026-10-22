@@ -6,11 +6,16 @@ import { AIToolCard } from "./AIToolCard";
 import { AITerminal } from "./AITerminal";
 // Importación de iconos de la biblioteca react-icons
 import { FaRobot, FaTerminal, FaCode, FaBrain } from "react-icons/fa";
-import { SiGithub, SiOpenai, SiGoogle, SiClaude } from "react-icons/si";
+import {
+  SiGithub,
+  SiOpenai,
+  SiGoogle,
+  SiClaude,
+  SiCodeium,
+} from "react-icons/si";
+import { LuBrainCircuit } from "react-icons/lu";
 import { BiLogoVisualStudio } from "react-icons/bi";
 import { FaBolt } from "react-icons/fa6";
-// Importación de hooks de React
-import { useEffect, useRef } from "react";
 
 /**
  * Componente AISection
@@ -20,34 +25,6 @@ import { useEffect, useRef } from "react";
  * que muestra ejemplos de uso de IA.
  */
 export const AISection = () => {
-  // Referencia para el Intersection Observer
-  const sectionRef = useRef<HTMLElement>(null);
-
-  // Efecto para el Intersection Observer
-  useEffect(() => {
-    const currentRef = sectionRef.current;
-    const observer = new IntersectionObserver(
-      () => {
-        // Aquí puedes agregar lógica cuando la sección entre/salga de la vista
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.1,
-      },
-    );
-
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
-
   // Datos de las herramientas de IA que se mostrarán en las tarjetas
   const herramientas = [
     {
@@ -96,7 +73,7 @@ export const AISection = () => {
     },
     {
       nombre: "DeepSeek",
-      icono: <BiLogoVisualStudio className="text-2xl" />,
+      icono: <LuBrainCircuit className="text-2xl" />,
       descripcion:
         "Modelo de IA avanzado para comprensión y generación de código con gran contexto.",
       experiencia: "6+ meses",
@@ -108,7 +85,7 @@ export const AISection = () => {
     },
     {
       nombre: "Windsurf",
-      icono: <SiOpenai className="text-2xl" />,
+      icono: <SiCodeium className="text-2xl" />,
       descripcion:
         "Asistente de desarrollo de IA que entiende el contexto de tu código y flujo de trabajo.",
       experiencia: "1+ año",
@@ -159,46 +136,42 @@ export const AISection = () => {
   const areasDeEstudio = [
     {
       nombre: "Prompt Engineering",
-      icono: <FaTerminal className="text-cbpviolet" />,
+      icono: <FaTerminal />,
       descripcion: "Diseño de prompts efectivos para modelos de IA",
     },
     {
       nombre: "Context Engineering",
-      icono: <FaCode className="text-cbpviolet" />,
+      icono: <FaCode />,
       descripcion: "Optimización del contexto para mejorar respuestas de IA",
     },
     {
       nombre: "Vibecoding",
-      icono: <FaRobot className="text-cbpviolet" />,
+      icono: <FaRobot />,
       descripcion: "Técnicas de programación guiadas por IA",
     },
     {
       nombre: "MCP",
-      icono: <FaBrain className="text-cbpviolet" />,
-      descripcion: "Modelos de Comportamiento Predictivo en desarrollo",
+      icono: <FaBrain />,
+      descripcion:
+        "Model Context Protocol: conectar modelos de IA con herramientas y datos",
     },
   ];
 
   return (
-    <section
-      id="ai"
-      data-pause-offscreen
-      className="py-8 bg-cbpgray-900"
-      ref={sectionRef}
-    >
+    <section id="ai" data-pause-offscreen className="bg-cbpgray-900 py-8">
       <div className="container mx-auto px-8">
         {/* Título principal de la sección */}
         <SectionTitle title="Inteligencia Artificial" icon={<FaRobot />} />
 
         {/* Descripción de la sección */}
-        <p className="text-cbpgray-300  mb-12">
+        <p className="mb-12 text-cbpgray-300">
           Utilizo herramientas de IA avanzadas para mejorar la calidad y
           eficiencia del desarrollo de software. Estas son algunas de las
           tecnologías que integro en mi flujo de trabajo diario.
         </p>
 
         {/* Grid de herramientas de IA */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+        <div className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-2">
           {herramientas.map((herramienta, index) => (
             <AIToolCard
               key={herramienta.nombre}
@@ -218,18 +191,18 @@ export const AISection = () => {
 
         {/* Sección de estudios actuales */}
         <div className="mt-20">
-          <h3 className="text-2xl font-bold text-white mb-8 flex items-center justify-center">
+          <h3 className="mb-8 flex items-center justify-center text-2xl font-bold text-white">
             <span className="text-cbpgray-300">Áreas de Estudio Actuales</span>
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {areasDeEstudio.map((area) => (
               <div
                 key={area.nombre}
-                className="bg-cbpgray-800/50 rounded-lg p-5 border border-cbpgray-700/50 hover:border-cbpviolet/30 transition-colors"
+                className="rounded-lg border border-cbpgray-700/50 bg-cbpgray-800/50 p-5 transition-colors hover:border-cbpviolet-500/30"
               >
-                <div className="flex items-center mb-3">
-                  <div className="p-2 rounded-lg bg-cbpviolet/10 mr-3 text-cbpviolet-400">
+                <div className="mb-3 flex items-center">
+                  <div className="mr-3 rounded-lg bg-cbpviolet-500/10 p-2 text-cbpviolet-400">
                     {area.icono}
                   </div>
                   <h4 className="text-lg font-semibold text-white">

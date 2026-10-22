@@ -64,7 +64,10 @@ test.describe("CSP en uso real", () => {
       .getByLabel("Mensaje", { exact: true })
       .fill("Hola, me interesa tu trabajo.");
     await page.getByRole("button", { name: /enviar/i }).click();
-    await expect(page.getByRole("status")).toBeVisible();
+    // El spinner de "Enviando" también es role=status: esperar el texto de éxito
+    await expect(page.getByRole("status")).toContainText("te dejé un mensaje", {
+      timeout: 10_000,
+    });
 
     expect(await getViolations()).toEqual([]);
     expect(errors).toEqual([]);
