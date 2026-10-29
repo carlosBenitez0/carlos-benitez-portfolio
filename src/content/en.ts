@@ -23,7 +23,6 @@ const profile: Content["profile"] = {
   headline: "Systems and Computer Engineer | Web Developer",
   summary:
     "Web developer from El Salvador, focused on modern web applications and agentic development with AI: Claude Code, Codex, MCP and verification through automated tests.",
-  availability: "Open to new opportunities",
   intro:
     "I build robust **web solutions,** blending **efficient code** with **intuitive** and **creative design.** I believe programming goes beyond logic: it's a space to **innovate** and solve problems with **clever solutions.**",
 };

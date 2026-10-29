@@ -131,18 +131,6 @@ export const Header = () => {
         <div
           className={`col-span-1 flex flex-col justify-center ${isMobile ? "row-start-2 row-end-3" : ""}`}
         >
-          {/* En móvil no cabe sobre la foto sin taparse */}
-          {!isMobile && (
-            <p
-              className={`appear-text mb-4 flex w-fit items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300 light:border-emerald-700/30 light:bg-emerald-600/10 light:text-emerald-800`}
-            >
-              <span
-                aria-hidden="true"
-                className="h-2 w-2 animate-pulse rounded-full bg-emerald-400 motion-reduce:animate-none light:bg-emerald-600"
-              />
-              {profile.availability}
-            </p>
-          )}
           <h1
             className={`appear-text relative mb-2 ${isMobile ? "text-[36px]" : "text-[44px]"}`}
           >

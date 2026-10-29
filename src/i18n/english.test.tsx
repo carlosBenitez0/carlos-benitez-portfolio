@@ -23,7 +23,6 @@ describe("página en inglés (/en/)", () => {
     expect(
       screen.getByRole("link", { name: "See case studies" }),
     ).toHaveAttribute("href", "#cases");
-    expect(screen.getByText("Open to new opportunities")).toBeInTheDocument();
   });
 
   it("las tarjetas usan la etiqueta de estado y las fechas en inglés", async () => {
