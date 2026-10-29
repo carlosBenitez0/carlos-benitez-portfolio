@@ -88,7 +88,10 @@ export const CaseStudies = () => {
               >
                 {t.cases.read}
                 <span className="sr-only">: {caseStudy.title}</span>
-                <HiOutlineArrowRight aria-hidden="true" className="fx-icon" />
+                <HiOutlineArrowRight
+                  aria-hidden="true"
+                  className="fx-icon fx-nudge"
+                />
               </button>
             </div>
           </article>

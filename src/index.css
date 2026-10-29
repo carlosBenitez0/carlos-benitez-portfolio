@@ -961,8 +961,8 @@
    dispara desde el elemento interactivo que lo contiene (.fx-trigger: hover
    o foco con teclado; .fx-focus: un campo de formulario enfocado) y, en el
    navbar, cuando su sección pasa a estar activa (aria-current).
-   Son animaciones de una sola pasada (≤0,8s), salvo .fx-rise, que repite
-   mientras dura el hover. */
+   Son animaciones de una sola pasada (≤0,8s), salvo .fx-rise y .fx-nudge,
+   que repiten mientras dura el hover. */
 @layer components {
   .fx-icon {
     --fx-glow: rgb(185 110 223 / 0.75);
@@ -1027,6 +1027,10 @@
   }
   .fx-rise {
     --fx-anim: fx-rise 0.8s ease-in-out infinite;
+  }
+  /* Flechas de "ir a": empujan hacia adelante */
+  .fx-nudge {
+    --fx-anim: fx-nudge 0.8s ease-in-out infinite;
   }
 
   /* Personalidades que se mantienen mientras dura el hover */
@@ -1236,6 +1240,16 @@
   }
   75% {
     transform: translateY(-2px);
+  }
+}
+
+@keyframes fx-nudge {
+  0%,
+  100% {
+    transform: none;
+  }
+  50% {
+    transform: translateX(4px);
   }
 }
 

@@ -167,7 +167,10 @@ export const Header = () => {
               className={`fx-trigger flex items-center gap-2 rounded-full bg-cbpviolet-500 font-semibold ${isMobile ? "px-4 py-2 text-xs" : "px-5 py-2.5 text-sm"} text-white shadow-[0_0_20px_var(--hover-glow)] transition-colors hover:bg-cbpviolet-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400`}
             >
               {t.header.seeCases}
-              <HiOutlineArrowRight aria-hidden="true" className="fx-icon" />
+              <HiOutlineArrowRight
+                aria-hidden="true"
+                className="fx-icon fx-nudge"
+              />
             </a>
             <a
               href={links.cv}
