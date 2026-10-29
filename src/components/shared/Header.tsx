@@ -6,14 +6,19 @@ import ShinyText from "../ui/ShinyText";
 import AnimatedGradientText from "../ui/AnimatedGradientText";
 import HighlightText from "../ui/HighlightText";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { HiOutlineArrowRight } from "react-icons/hi2";
+import { PiReadCvLogoLight } from "react-icons/pi";
+import { links, profile } from "../../content/site";
 import {
   pauseTweensWhileOffscreen,
   prefersReducedMotion,
 } from "../../utils/visibility";
 
-const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
+// Desplazamiento suave a una sección (#id) sin tocar la URL
+const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>) => {
   e.preventDefault();
-  document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+  const id = e.currentTarget.getAttribute("href")!.slice(1);
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 };
 
 export const Header = () => {
@@ -124,6 +129,18 @@ export const Header = () => {
         <div
           className={`col-span-1 flex flex-col justify-center ${isMobile ? "row-start-2 row-end-3" : ""}`}
         >
+          {/* En móvil no cabe sobre la foto sin taparse */}
+          {!isMobile && (
+            <p
+              className={`appear-text mb-4 flex w-fit items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300 light:border-emerald-700/30 light:bg-emerald-600/10 light:text-emerald-800`}
+            >
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 animate-pulse rounded-full bg-emerald-400 motion-reduce:animate-none light:bg-emerald-600"
+              />
+              {profile.availability}
+            </p>
+          )}
           <h1
             className={`appear-text relative mb-2 ${isMobile ? "text-[36px]" : "text-[44px]"}`}
           >
@@ -176,6 +193,29 @@ export const Header = () => {
               </HighlightText>
             </div>
           )}
+          <div
+            className={`appear-text z-10 flex flex-wrap items-center ${isMobile ? "justify-center gap-2" : "mt-8 gap-3"}`}
+          >
+            <a
+              href="#cases"
+              onClick={scrollToSection}
+              className={`fx-trigger flex items-center gap-2 rounded-full bg-cbpviolet-500 font-semibold ${isMobile ? "px-4 py-2 text-xs" : "px-5 py-2.5 text-sm"} text-white shadow-[0_0_20px_var(--hover-glow)] transition-colors hover:bg-cbpviolet-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400`}
+            >
+              Ver casos de estudio
+              <HiOutlineArrowRight aria-hidden="true" className="fx-icon" />
+            </a>
+            <a
+              href={links.cv}
+              download
+              className={`fx-trigger flex items-center gap-2 rounded-full border border-cbpviolet-400/50 font-medium ${isMobile ? "px-3 py-2 text-xs" : "px-4 py-2.5 text-sm"} text-cbpgray-200 transition-colors hover:border-cbpviolet-300 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400`}
+            >
+              <PiReadCvLogoLight
+                aria-hidden="true"
+                className="fx-icon fx-flip text-lg"
+              />
+              Descargar CV
+            </a>
+          </div>
         </div>
         <div className="col-span-1">
           <MyPicture />
@@ -187,7 +227,7 @@ export const Header = () => {
         href="#projects"
         aria-label="Ir a la sección de proyectos"
         title="Ver proyectos"
-        onClick={scrollToProjects}
+        onClick={scrollToSection}
         className={`absolute left-1/2 -translate-x-1/2 cursor-pointer rounded-full p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400 ${isMobile ? "bottom-14" : "bottom-20"}`}
       >
         <IoIosArrowDown

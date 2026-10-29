@@ -14,6 +14,8 @@ export const profile = {
   photo: "/images/carlos-benitez.webp",
   summary:
     "Desarrollador web de El Salvador, especializado en aplicaciones web modernas y en desarrollo agéntico con IA: Claude Code, Codex, MCP y verificación con tests automáticos.",
+  // Insignia del hero
+  availability: "Abierto a nuevas oportunidades",
   intro:
     "Construyo soluciones web robustas, fusionando código eficiente con diseño intuitivo y creativo. Creo que la programación va más allá de la lógica: es un espacio para innovar y resolver problemas con soluciones ingeniosas.",
 };

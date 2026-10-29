@@ -259,6 +259,7 @@ export const buildStaticHtml = () =>
     "<header>",
     `<h1>${escapeHtml(profile.name)}</h1>`,
     `<p>${escapeHtml(profile.headline)} · ${escapeHtml(profile.location)}</p>`,
+    `<p>${escapeHtml(profile.availability)}</p>`,
     `<p>${escapeHtml(profile.intro)}</p>`,
     "</header>",
     "<main>",
