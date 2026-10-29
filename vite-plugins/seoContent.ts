@@ -3,6 +3,7 @@ import {
   SITE_URL,
   about,
   ai,
+  caseStudies,
   experience,
   links,
   profile,
@@ -42,6 +43,23 @@ const jobTitle = (job: (typeof experience)[number]) =>
     .filter(Boolean)
     .join(" · ");
 
+type Case = (typeof caseStudies)[number];
+
+const caseUrl = (c: Case) => `${SITE_URL}#caso-${c.slug}`;
+
+// Apartados con contenido, en texto plano (sin las marcas **)
+const caseSections = (c: Case) =>
+  [
+    ["Qué construí", c.contributions],
+    ["Decisiones técnicas", c.decisions],
+    ["Resultados", c.results],
+  ]
+    .filter(([, items]) => items.length > 0)
+    .map(([title, items]) => ({
+      title: title as string,
+      items: (items as string[]).map(plainText),
+    }));
+
 const projectNotes = (project: (typeof projects)[number]) =>
   [
     project.description,
@@ -69,6 +87,10 @@ export const buildLlmsTxt = () =>
     `- [GitHub](${links.github}): código de sus proyectos`,
     `- [Experiencia](${SITE_URL}#experience): ${experience.map((job) => `${job.role} (${job.company})`).join("; ")}`,
     "",
+    "## Casos de estudio",
+    "",
+    ...caseStudies.map((c) => `- [${c.title}](${caseUrl(c)}): ${c.summary}`),
+    "",
     "## Proyectos",
     "",
     ...projects.map((p) => `- [${p.name}](${p.url}): ${projectNotes(p)}`),
@@ -92,6 +114,25 @@ export const buildIndexMd = () =>
     "## Sobre mí",
     "",
     ...about.paragraphs.flatMap((p) => [p, ""]),
+    "## Casos de estudio",
+    "",
+    ...caseStudies.flatMap((c) => [
+      `### [${c.title}](${caseUrl(c)})`,
+      "",
+      `${c.context} Rol: ${c.role}.`,
+      "",
+      `**El problema:** ${c.problem}`,
+      "",
+      `**Cómo funciona:** ${c.flow.join(" → ")}`,
+      "",
+      ...caseSections(c).flatMap((section) => [
+        `**${section.title}:**`,
+        "",
+        ...section.items.map((item) => `- ${item}`),
+        "",
+      ]),
+      ...(c.link ? [`${c.link.label}: ${c.link.url}`, ""] : []),
+    ]),
     "## Proyectos",
     "",
     ...projects.flatMap((p) => [
@@ -221,7 +262,22 @@ export const buildStaticHtml = () =>
     `<p>${escapeHtml(profile.intro)}</p>`,
     "</header>",
     "<main>",
-    '<section id="projects"><h2>Proyectos</h2><ul>',
+    '<section id="projects"><h2>Proyectos</h2>',
+    "<h3>Casos de estudio</h3>",
+    ...caseStudies.map((c) =>
+      [
+        `<h3>${escapeHtml(c.title)}</h3>`,
+        `<p>${escapeHtml(`${c.context} Rol: ${c.role}.`)}</p>`,
+        `<p>${escapeHtml(c.problem)}</p>`,
+        ...caseSections(c).map(
+          (section) =>
+            `<p><strong>${escapeHtml(section.title)}</strong></p><ul>${section.items
+              .map((item) => `<li>${escapeHtml(item)}</li>`)
+              .join("")}</ul>`,
+        ),
+      ].join(""),
+    ),
+    "<h3>Otros proyectos</h3><ul>",
     ...projects.map(
       (p) => `<li>${link(p.url, p.name)}: ${escapeHtml(projectNotes(p))}</li>`,
     ),

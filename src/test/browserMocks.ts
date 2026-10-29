@@ -130,3 +130,17 @@ export const resetBrowserMocks = () => {
   // Los observers no se borran: utils/visibility guarda el suyo a nivel de
   // módulo y debe seguir recibiendo eventos entre tests.
 };
+
+// --- <dialog> ---------------------------------------------------------------
+// jsdom no implementa showModal/close: bastan el atributo open y el evento
+// close, que es lo que usan los componentes.
+export const installDialog = () => {
+  HTMLDialogElement.prototype.showModal = function (this: HTMLDialogElement) {
+    this.setAttribute("open", "");
+  };
+  HTMLDialogElement.prototype.close = function (this: HTMLDialogElement) {
+    if (!this.hasAttribute("open")) return;
+    this.removeAttribute("open");
+    this.dispatchEvent(new Event("close"));
+  };
+};

@@ -14,6 +14,7 @@ import { BgDotGradient } from "./components/ui/BgDotGradient";
 import { ContactContainer } from "./components/ui/contact/ContactContainer";
 import { AISection } from "./components/ui/ai/AISection";
 import { AboutText } from "./components/ui/AboutText";
+import { CaseStudies } from "./components/ui/cases/CaseStudies";
 import { ExperienceTimeline } from "./components/ui/experience/ExperienceTimeline";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { HoloPhotoCard } from "./components/ui/HoloPhotoCard";
@@ -135,6 +136,16 @@ function App() {
               title="Proyectos"
               icon={<IoCodeWorkingOutline className="fx-icon fx-stretch" />}
             />
+            {/* Casos de estudio primero: el trabajo con más peso */}
+            <div id="cases" className="mb-12 scroll-mt-28">
+              <h3 className="mb-4 text-xl font-semibold text-cbpgray-200">
+                Casos de estudio
+              </h3>
+              <CaseStudies />
+            </div>
+            <h3 className="mb-4 text-xl font-semibold text-cbpgray-200">
+              Otros proyectos
+            </h3>
             <div className="cardsContainer grid w-full grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3">
               {proyects.map((proyect, index) => (
                 <div key={proyect.name + index} className="relative">

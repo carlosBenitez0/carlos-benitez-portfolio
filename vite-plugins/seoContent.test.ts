@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   SITE_URL,
   about,
+  caseStudies,
   experience,
   links,
   projects,
@@ -60,6 +61,10 @@ describe("index.md", () => {
       expect(md).toContain(`### [${project.name}](${project.url})`);
     }
     expect(md).toContain("- Fecha: sep – oct 2024 · retomado jul 2025");
+    for (const caseStudy of caseStudies) {
+      expect(md).toContain(caseStudy.problem);
+      expect(md).toContain(`#caso-${caseStudy.slug})`);
+    }
     for (const job of experience) {
       expect(md).toContain(`### ${job.role} · ${job.company}`);
     }

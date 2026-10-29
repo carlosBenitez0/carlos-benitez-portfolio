@@ -92,6 +92,118 @@ export const projects: Project[] = [
   },
 ];
 
+// Casos de estudio: el trabajo con más peso, contado como problema, aporte,
+// decisiones y resultados. `flow` son los pasos del diagrama del caso. Los
+// apartados vacíos no se muestran. Mismo formato **resaltado** que
+// `experience`.
+export interface CaseStudy {
+  slug: string;
+  title: string;
+  summary: string;
+  context: string;
+  role: string;
+  problem: string;
+  contributions: string[];
+  decisions: string[];
+  results: string[];
+  flow: string[];
+  technologies: string[];
+  link?: { label: string; url: string };
+}
+
+export const caseStudies: CaseStudy[] = [
+  {
+    slug: "creditos-automotrices",
+    title: "Motor de créditos automotrices",
+    summary:
+      "Cálculo y validación de créditos automotrices, con análisis de riesgo apoyado en IA.",
+    context:
+      "Proyecto desarrollado en una empresa de desarrollo de software para el financiamiento de vehículos.",
+    role: "Desarrollador Full Stack",
+    problem:
+      "Cada solicitud de crédito debía calcularse y validarse de forma consistente, y la evaluación de riesgo necesitaba apoyo para decidir con más información.",
+    contributions: [
+      "Motor de **cálculo** de créditos automotrices",
+      "**Validación** de las solicitudes antes de evaluarlas",
+      "**Análisis de riesgo apoyado en IA** como parte de la evaluación",
+    ],
+    decisions: [],
+    results: [],
+    flow: [
+      "Solicitud",
+      "Validación",
+      "Cálculo",
+      "Análisis de riesgo (IA)",
+      "Resultado",
+    ],
+    technologies: [],
+  },
+  {
+    slug: "subastas-tiempo-real",
+    title: "E-commerce con subastas en tiempo real",
+    summary:
+      "Tienda en línea con subastas: ofertas concurrentes, cierres automáticos y checkout con geolocalización.",
+    context: "Proyecto desarrollado en una empresa de desarrollo de software.",
+    role: "Desarrollador Full Stack",
+    problem:
+      "Varias personas pueden ofertar por el mismo artículo a la vez: cada oferta debe registrarse en orden, la subasta debe cerrarse sola al vencer y el ganador debe poder pagar y recibir su compra.",
+    contributions: [
+      "Manejo de **ofertas concurrentes** en tiempo real",
+      "**Cierre automático** de las subastas",
+      "**Checkout con geolocalización** para la entrega",
+    ],
+    decisions: [],
+    results: [],
+    flow: [
+      "Ofertas en tiempo real",
+      "Cierre automático",
+      "Ganador",
+      "Checkout con geolocalización",
+    ],
+    technologies: [],
+  },
+  {
+    slug: "portafolio-agentico",
+    title: "Este portafolio, con desarrollo agéntico",
+    summary:
+      "Un sitio con mucha animación que sigue siendo rápido, accesible e indexable, construido junto a agentes de IA y verificado en cada cambio.",
+    context:
+      "Mi portafolio personal: React, TypeScript, Vite, Tailwind CSS v4, GSAP y Three.js, desplegado en Vercel.",
+    role: "Diseño, desarrollo y mantenimiento",
+    problem:
+      "Programar con agentes de IA es rápido, pero sin contexto ni verificación los cambios rompen cosas sin que nadie lo note. Además, un sitio tan animado corre el riesgo de ser lento, inaccesible o invisible para buscadores.",
+    contributions: [
+      "Trabajo con **Claude Code** guiado por reglas, memoria y **skills propias**: planificar, una rama por tarea, commits convencionales y una guía de prueba manual",
+      "Conexión del agente a herramientas con **MCP**",
+      "Una sola fuente de contenido que en el build genera el **HTML estático**, el JSON-LD, **/llms.txt**, /index.md y el sitemap",
+    ],
+    decisions: [
+      "**Tests como red de seguridad del agente:** cada cambio pasa por Vitest y Playwright antes del commit y otra vez en CI",
+      "**Accesibilidad medida, no supuesta:** auditorías con axe dentro de los tests E2E",
+      "**Animaciones que no cuestan:** se pausan fuera de pantalla y respetan reducir movimiento",
+      "**Seguridad por defecto:** Content Security Policy estricta y cabeceras HTTP de seguridad",
+    ],
+    results: [
+      "Más de **200 tests** automáticos en cada commit",
+      "Contenido completo **indexable sin JavaScript**, también para modelos de IA",
+      "**Modo claro y oscuro**, y accesibilidad verificada con axe",
+    ],
+    flow: [
+      "Plan",
+      "Agente + skills y MCP",
+      "Código",
+      "Tests (Vitest, Playwright, axe)",
+      "CI",
+      "Vercel",
+    ],
+    technologies: ["React", "TypeScript", "Tailwind CSS", "GSAP", "Vercel"],
+    link: {
+      label: "Ver el código en GitHub",
+      url: "https://github.com/carlosBenitez0/carlos-benitez-portfolio",
+    },
+  },
+];
+
 // Texto plano de "Sobre mí". En App.tsx el mismo texto lleva componentes
 // intercalados (ShinyText, TechnologyLabel); App.test.tsx comprueba que no se
 // desincronicen.
