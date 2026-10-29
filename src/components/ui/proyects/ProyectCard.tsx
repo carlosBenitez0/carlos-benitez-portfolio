@@ -117,7 +117,9 @@ export const ProyectCard = ({
                   backgroundColor:
                     state === "Terminado"
                       ? "var(--state-done)"
-                      : "var(--state-wip)",
+                      : state === "En pausa"
+                        ? "var(--state-paused)"
+                        : "var(--state-wip)",
                 }}
               />
               {state}

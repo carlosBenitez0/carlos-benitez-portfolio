@@ -68,7 +68,7 @@ export const AboutText = () => {
         <ShinyText text="contexto adecuado" /> (reglas, memoria y skills), los
         conecto a herramientas con <ShinyText text="MCP" /> y verifico cada
         cambio con <ShinyText text="tests automáticos." /> Así optimicé este
-        portafolio, que hoy cuenta con más de 150 tests.
+        portafolio, que hoy cuenta con más de 200 tests.
       </p>
       <div className="anim-about-text space-y-3">
         <p className="font-medium">Logros destacados</p>

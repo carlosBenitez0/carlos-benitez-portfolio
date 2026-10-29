@@ -38,7 +38,8 @@ export interface Project {
   image: string;
   description: string;
   technologies: string[];
-  state: "Terminado" | "En desarrollo";
+  // "En pausa": sin terminar y sin trabajo activo.
+  state: "Terminado" | "En desarrollo" | "En pausa";
   url: string;
   gitHub: string;
   date?: ProjectDate;
@@ -51,7 +52,7 @@ export const projects: Project[] = [
     description:
       "Tienda en línea de tecnología con diseño moderno y panel de administración.",
     technologies: ["Next.js", "CSS", "GSAP", "TypeScript", "Zustand"],
-    state: "En desarrollo",
+    state: "En pausa",
     url: "https://techzone-zeta.vercel.app/",
     gitHub: "https://github.com/carlosBenitez0/techzone",
     date: { start: "2025-06", end: "2025-08" },
@@ -68,33 +69,11 @@ export const projects: Project[] = [
     date: { start: "2025-06" },
   },
   {
-    name: "To-Do con Firebase",
-    image: "/projects/todo-firebase.webp",
-    description:
-      "Gestor de tareas con estilo neumórfico y almacenamiento en Firebase.",
-    technologies: ["React", "Tailwind CSS", "TypeScript", "Motion", "Firebase"],
-    state: "Terminado",
-    url: "https://to-do-react-firebase-ten.vercel.app/",
-    gitHub: "https://github.com/carlosBenitez0/to-do-react-firebase",
-    date: { start: "2024-10" },
-  },
-  {
-    name: "Clon de YouTube",
-    image: "/projects/clon-youtube.webp",
-    description:
-      "Réplica de la página de inicio de YouTube; la versión responsive está en desarrollo.",
-    technologies: ["HTML", "CSS"],
-    state: "En desarrollo",
-    url: "https://clon-yt-one.vercel.app/",
-    gitHub: "https://github.com/carlosBenitez0/clon-yt",
-    date: { start: "2024-09", end: "2024-10" },
-  },
-  {
     name: "Pokédex",
     image: "/projects/pokedex.webp",
     description: "Pokédex web que consume la PokeAPI.",
     technologies: ["React", "Tailwind CSS", "TypeScript", "Axios", "Pokeapi"],
-    state: "En desarrollo",
+    state: "En pausa",
     url: "https://pok-dex-yx1k.vercel.app/",
     gitHub: "https://github.com/carlosBenitez0/pok-dex",
     date: { start: "2024-09", end: "2024-10", resumed: "2025-07" },
@@ -118,7 +97,7 @@ export const about = {
   paragraphs: [
     "Soy Carlos Benítez, desarrollador web con formación en Ingeniería de Sistemas y Computación. Me centro en construir aplicaciones web modernas que combinan un diseño cuidado con una arquitectura sólida.",
     "Mi experiencia abarca desde el desarrollo de interfaces dinámicas con React / Next.js hasta la construcción de APIs eficientes con Python / FastAPI. Me interesa especialmente la integración entre frontend y backend para ofrecer experiencias fluidas.",
-    "Hoy gran parte de mi trabajo es desarrollo agéntico: programo junto a agentes de IA y elijo la herramienta adecuada para cada tarea. Con harness engineering les doy el contexto adecuado (reglas, memoria y skills), los conecto a herramientas con MCP y verifico cada cambio con tests automáticos. Así optimicé este portafolio, que hoy cuenta con más de 150 tests.",
+    "Hoy gran parte de mi trabajo es desarrollo agéntico: programo junto a agentes de IA y elijo la herramienta adecuada para cada tarea. Con harness engineering les doy el contexto adecuado (reglas, memoria y skills), los conecto a herramientas con MCP y verifico cada cambio con tests automáticos. Así optimicé este portafolio, que hoy cuenta con más de 200 tests.",
   ],
   achievements: [
     "Motor de cálculo y validación de créditos automotrices, con análisis de riesgo apoyado en IA",

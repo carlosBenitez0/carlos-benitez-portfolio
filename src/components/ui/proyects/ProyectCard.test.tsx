@@ -72,4 +72,22 @@ describe("ProyectCard", () => {
     rerender(<ProyectCard {...props} />);
     expect(container.querySelector("time")).toBeNull();
   });
+
+  it("distingue un proyecto en pausa con su propio color", () => {
+    const { container } = render(
+      <ProyectCard
+        name="Pokédex"
+        image="/projects/pokedex.webp"
+        description="Aplicación de Pokédex"
+        technologies={["React"]}
+        state="En pausa"
+        url="https://pok-dex.example.com"
+        gitHub="https://github.com/carlosBenitez0/pokedex"
+      />,
+    );
+
+    expect(screen.getByText("En pausa")).toBeInTheDocument();
+    const dot = container.querySelector<HTMLElement>(".project-state > span");
+    expect(dot?.style.backgroundColor).toBe("var(--state-paused)");
+  });
 });

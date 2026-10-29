@@ -63,6 +63,7 @@
   --highlight-glow: #9d4edd;
   --state-done: #b5f2b5a5;
   --state-wip: #feb555a5;
+  --state-paused: #b8b8c8a5;
 }
 
 :root[data-theme="light"] {
@@ -113,6 +114,7 @@
   --highlight-glow: rgb(157 78 221 / 0.35);
   --state-done: #1d7a3e;
   --state-wip: #a3570a;
+  --state-paused: #5e5e70;
 }
 
 /* Píldoras del navbar. Colores en rgb (no color-mix) para que GSAP pueda
