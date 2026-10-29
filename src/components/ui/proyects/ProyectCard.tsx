@@ -150,15 +150,18 @@ export const ProyectCard = ({
               {name}
             </AnimatedGradientText>
           </div>
-          <a
-            href={gitHub}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Código de ${name} en GitHub`}
-            className={`fx-trigger flex shrink-0 items-center gap-2 rounded-md border text-cbpgray-200/50 transition-colors hover:border-cbpviolet-300 hover:text-cbpgray-200/80 ${isMobile ? "p-1.5 text-sm" : "p-2"}`}
-          >
-            <FaGithub className="fx-icon fx-spin" />
-          </a>
+          {/* Sin repo público (gitHub vacío) no hay botón */}
+          {gitHub && (
+            <a
+              href={gitHub}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Código de ${name} en GitHub`}
+              className={`fx-trigger flex shrink-0 items-center gap-2 rounded-md border text-cbpgray-200/50 transition-colors hover:border-cbpviolet-300 hover:text-cbpgray-200/80 ${isMobile ? "p-1.5 text-sm" : "p-2"}`}
+            >
+              <FaGithub className="fx-icon fx-spin" />
+            </a>
+          )}
         </div>
         {date && (
           <time

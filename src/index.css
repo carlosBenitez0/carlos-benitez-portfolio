@@ -276,10 +276,12 @@
   }
 }
 
+/* Termina cuando poco más de la mitad de la tarjeta entró en pantalla: con
+   "cover 30%" las tarjetas altas seguían a medio animar ya bien visibles. */
 .proyect-card-anim {
   animation: anim-card linear both;
   animation-timeline: view();
-  animation-range: entry 10% cover 30%;
+  animation-range: entry 0% entry 60%;
 }
 
 @keyframes anim-card {

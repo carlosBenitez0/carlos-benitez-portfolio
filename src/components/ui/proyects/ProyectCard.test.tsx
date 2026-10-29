@@ -73,6 +73,24 @@ describe("ProyectCard", () => {
     expect(container.querySelector("time")).toBeNull();
   });
 
+  it("no muestra el botón de GitHub si el proyecto no tiene repo", () => {
+    render(
+      <ProyectCard
+        name="Portafolio Académico"
+        image="/projects/portafolio-academico.webp"
+        description="Proyecto académico"
+        technologies={["HTML"]}
+        state="Terminado"
+        url="https://academico.example.com"
+        gitHub=""
+      />,
+    );
+
+    expect(
+      screen.queryByRole("link", { name: /en GitHub/ }),
+    ).not.toBeInTheDocument();
+  });
+
   it("distingue un proyecto en pausa con su propio color", () => {
     const { container } = render(
       <ProyectCard
