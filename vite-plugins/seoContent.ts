@@ -9,6 +9,7 @@ import {
   technologies,
   technologyCategories,
 } from "../src/content/site";
+import { formatProjectDate } from "../src/utils/projectDate";
 
 // Genera en el build, a partir de src/content/site.ts:
 // - HTML semántico dentro de #root, para buscadores y agentes que no ejecutan
@@ -37,6 +38,7 @@ const technologyGroups = () =>
 const projectNotes = (project: (typeof projects)[number]) =>
   [
     project.description,
+    project.date && `Fecha: ${formatProjectDate(project.date)}.`,
     `Estado: ${project.state}.`,
     `Tecnologías: ${project.technologies.join(", ")}.`,
     project.gitHub && `Código: ${project.gitHub}`,
@@ -93,6 +95,7 @@ export const buildIndexMd = () =>
       "",
       p.description,
       "",
+      ...(p.date ? [`- Fecha: ${formatProjectDate(p.date)}`] : []),
       `- Estado: ${p.state}`,
       `- Tecnologías: ${p.technologies.join(", ")}`,
       ...(p.gitHub ? [`- Código: ${p.gitHub}`] : []),

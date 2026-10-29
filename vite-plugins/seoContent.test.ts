@@ -53,6 +53,7 @@ describe("index.md", () => {
     for (const project of projects) {
       expect(md).toContain(`### [${project.name}](${project.url})`);
     }
+    expect(md).toContain("- Fecha: sep – oct 2024 · retomado jul 2025");
     expect(md).toContain("## Tecnologías");
     expect(md).toContain("## Inteligencia artificial");
     expect(md).toContain(links.linkedin);

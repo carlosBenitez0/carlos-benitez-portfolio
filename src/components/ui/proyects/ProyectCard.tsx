@@ -6,6 +6,8 @@ import type { Technology } from "../../../utils/useTechnologies";
 import { FaGithub } from "react-icons/fa";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import { useImagePalette } from "../../../hooks/useImagePalette";
+import type { ProjectDate } from "../../../content/site";
+import { formatProjectDate } from "../../../utils/projectDate";
 
 interface ProyectCardProps {
   name: string;
@@ -15,6 +17,7 @@ interface ProyectCardProps {
   state: string;
   url: string;
   gitHub: string;
+  date?: ProjectDate;
 }
 
 export const ProyectCard = ({
@@ -25,6 +28,7 @@ export const ProyectCard = ({
   state,
   url,
   gitHub,
+  date,
 }: ProyectCardProps) => {
   const technologiesList = useTechnologies();
   const cardTextRef = useRef<HTMLDivElement>(null);
@@ -154,6 +158,14 @@ export const ProyectCard = ({
             <FaGithub className="fx-icon fx-spin" />
           </a>
         </div>
+        {date && (
+          <time
+            dateTime={date.start}
+            className={`mt-1 block text-cbpgray-200/60 ${isMobile ? "text-[10px]" : "text-xs"}`}
+          >
+            {formatProjectDate(date)}
+          </time>
+        )}
 
         <p
           className={`mt-2 text-cbpgray-200 ${isMobile ? "line-clamp-3 text-xs leading-snug" : "text-sm"}`}

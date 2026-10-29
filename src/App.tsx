@@ -144,6 +144,7 @@ function App() {
                     state={proyect.state}
                     url={proyect.url}
                     gitHub={proyect.gitHub}
+                    date={proyect.date}
                   />
                 </div>
               ))}

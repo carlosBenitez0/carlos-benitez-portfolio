@@ -49,4 +49,27 @@ describe("ProyectCard", () => {
     );
     expect(screen.getByText("En desarrollo")).toBeInTheDocument();
   });
+
+  it("muestra cuándo se hizo el proyecto, solo si tiene fecha", () => {
+    const props = {
+      name: "TechZone",
+      image: "/projects/techzone.webp",
+      description: "Tienda en línea",
+      technologies: ["React"],
+      state: "En desarrollo",
+      url: "https://techzone.example.com",
+      gitHub: "https://github.com/carlosBenitez0/techzone",
+    };
+    const { container, rerender } = render(
+      <ProyectCard {...props} date={{ start: "2025-06", end: "2025-08" }} />,
+    );
+
+    expect(screen.getByText("jun – ago 2025")).toHaveAttribute(
+      "dateTime",
+      "2025-06",
+    );
+
+    rerender(<ProyectCard {...props} />);
+    expect(container.querySelector("time")).toBeNull();
+  });
 });

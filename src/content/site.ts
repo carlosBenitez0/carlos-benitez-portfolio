@@ -25,6 +25,14 @@ export const links = {
   repo: "https://github.com/carlosBenitez0/carlos-benitez-portfolio",
 };
 
+// Meses en formato "AAAA-MM", según el historial de commits del repo.
+// `resumed`: cuándo se retomó tras una pausa larga.
+export interface ProjectDate {
+  start: string;
+  end?: string;
+  resumed?: string;
+}
+
 export interface Project {
   name: string;
   image: string;
@@ -33,19 +41,10 @@ export interface Project {
   state: "Terminado" | "En desarrollo";
   url: string;
   gitHub: string;
+  date?: ProjectDate;
 }
 
 export const projects: Project[] = [
-  {
-    name: "IBG Arcade",
-    image: "/projects/ibg-arcade.webp",
-    description:
-      "Sitio web cristiano con tres juegos: el clásico tres en raya y dos juegos de preguntas.",
-    technologies: ["React", "CSS", "TypeScript", "Motion", "bolt.new"],
-    state: "Terminado",
-    url: "https://ibg-arcade.vercel.app/",
-    gitHub: "https://github.com/carlosBenitez0/IBGArcade",
-  },
   {
     name: "TechZone",
     image: "/projects/techzone.webp",
@@ -55,25 +54,18 @@ export const projects: Project[] = [
     state: "En desarrollo",
     url: "https://techzone-zeta.vercel.app/",
     gitHub: "https://github.com/carlosBenitez0/techzone",
+    date: { start: "2025-06", end: "2025-08" },
   },
   {
-    name: "Pokédex",
-    image: "/projects/pokedex.webp",
-    description: "Pokédex web que consume la PokeAPI.",
-    technologies: ["React", "Tailwind CSS", "TypeScript", "Axios", "Pokeapi"],
-    state: "En desarrollo",
-    url: "https://pok-dex-yx1k.vercel.app/",
-    gitHub: "https://github.com/carlosBenitez0/pok-dex",
-  },
-  {
-    name: "Portafolio Académico",
-    image: "/projects/portafolio-academico.webp",
+    name: "IBG Arcade",
+    image: "/projects/ibg-arcade.webp",
     description:
-      "Proyecto académico que sintetiza once semanas de contenido sobre la administración estratégica de recursos empresariales y tecnológicos.",
-    technologies: ["HTML", "CSS", "JavaScript"],
+      "Sitio web cristiano con tres juegos: el clásico tres en raya y dos juegos de preguntas.",
+    technologies: ["React", "CSS", "TypeScript", "Motion", "bolt.new"],
     state: "Terminado",
-    url: "https://rad-conkies-95b333.netlify.app/",
-    gitHub: "",
+    url: "https://ibg-arcade.vercel.app/",
+    gitHub: "https://github.com/carlosBenitez0/IBGArcade",
+    date: { start: "2025-06" },
   },
   {
     name: "To-Do con Firebase",
@@ -84,6 +76,7 @@ export const projects: Project[] = [
     state: "Terminado",
     url: "https://to-do-react-firebase-ten.vercel.app/",
     gitHub: "https://github.com/carlosBenitez0/to-do-react-firebase",
+    date: { start: "2024-10" },
   },
   {
     name: "Clon de YouTube",
@@ -94,6 +87,27 @@ export const projects: Project[] = [
     state: "En desarrollo",
     url: "https://clon-yt-one.vercel.app/",
     gitHub: "https://github.com/carlosBenitez0/clon-yt",
+    date: { start: "2024-09", end: "2024-10" },
+  },
+  {
+    name: "Pokédex",
+    image: "/projects/pokedex.webp",
+    description: "Pokédex web que consume la PokeAPI.",
+    technologies: ["React", "Tailwind CSS", "TypeScript", "Axios", "Pokeapi"],
+    state: "En desarrollo",
+    url: "https://pok-dex-yx1k.vercel.app/",
+    gitHub: "https://github.com/carlosBenitez0/pok-dex",
+    date: { start: "2024-09", end: "2024-10", resumed: "2025-07" },
+  },
+  {
+    name: "Portafolio Académico",
+    image: "/projects/portafolio-academico.webp",
+    description:
+      "Proyecto académico que sintetiza once semanas de contenido sobre la administración estratégica de recursos empresariales y tecnológicos.",
+    technologies: ["HTML", "CSS", "JavaScript"],
+    state: "Terminado",
+    url: "https://rad-conkies-95b333.netlify.app/",
+    gitHub: "",
   },
 ];
 
