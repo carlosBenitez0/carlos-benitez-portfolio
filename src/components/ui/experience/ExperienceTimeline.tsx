@@ -26,7 +26,7 @@ export const ExperienceTimeline = () => {
           <article
             className={`project-card rounded-2xl border-2 border-cbpbg-400 bg-cbpbg-700 ${isMobile ? "p-4" : "p-6"}`}
           >
-            <header className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
               <h3 className="text-lg font-bold text-cbpviolet-300 light:text-cbpviolet-500">
                 {job.role}
               </h3>
@@ -38,7 +38,7 @@ export const ExperienceTimeline = () => {
                   {formatProjectDate(job.date)}
                 </time>
               )}
-            </header>
+            </div>
             <p className="text-sm font-medium text-cbpgray-300">
               {job.company}
             </p>

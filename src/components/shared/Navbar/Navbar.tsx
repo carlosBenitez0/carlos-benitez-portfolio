@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { links as siteLinks } from "../../../content/site";
-import { RiHomeLine } from "react-icons/ri";
 import { IoCodeWorkingOutline } from "react-icons/io5";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { IoCodeSlashOutline } from "react-icons/io5";
@@ -25,12 +24,6 @@ export const Navbar = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useIsMobile();
   const links = [
-    {
-      label: "start",
-      href: "#start",
-      icon: <RiHomeLine className="fx-icon fx-hop" />,
-      text: "Inicio",
-    },
     {
       label: "projects",
       href: "#projects",
@@ -260,13 +253,27 @@ export const Navbar = () => {
       ref={navbarRef}
       className={`fixed inset-x-[var(--scrollbar-gutter,0px)] top-0 z-40 mx-auto flex items-center ${isMobile ? "justify-between p-4" : "max-w-[950px] justify-between"}`}
     >
-      <figure>
+      {/* El logo lleva al inicio: así el menú no necesita un link "Inicio" y
+          cabe con todas las secciones */}
+      <a
+        href="#start"
+        aria-label="Ir al inicio"
+        title="Inicio"
+        onClick={(e) => {
+          e.preventDefault();
+          setOptionSelected("start");
+          document
+            .getElementById("start")
+            ?.scrollIntoView({ behavior: "smooth" });
+        }}
+        className="shrink-0 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400"
+      >
         <img
           src="/images/logo-cb.webp"
-          alt="Carlos Benítez"
+          alt=""
           className={`cb-logo ${isMobile ? "w-10 max-w-10" : "w-12 min-w-12"}`}
         />
-      </figure>
+      </a>
       {/* En móvil, poco relleno lateral: así las dos píldoras no se tocan en
           pantallas angostas (375px) */}
       <nav className={`nav-padding ${isMobile ? "px-1.5 py-5" : "p-5"}`}>
