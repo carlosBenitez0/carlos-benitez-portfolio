@@ -19,6 +19,7 @@ import {
 } from "./brandIcons";
 import type { ReactNode } from "react";
 import { ai } from "../../../content/site";
+import { t } from "../../../i18n/ui";
 
 const toolIcons: Record<string, ReactNode> = {
   "Claude Code": <ClaudeCodeIcon className="text-2xl" />,
@@ -29,12 +30,13 @@ const toolIcons: Record<string, ReactNode> = {
   Gemini: <GeminiIcon className="text-2xl" />,
 };
 
-const studyAreaIcons: Record<string, ReactNode> = {
-  "Agentes de IA": <LuBot />,
-  "Context Engineering": <FaCode />,
-  MCP: <FaBrain />,
-  "Evals y verificación": <FaVialCircleCheck />,
-};
+// En el orden de ai.studyAreas (los nombres cambian con el idioma)
+const studyAreaIcons: ReactNode[] = [
+  <LuBot />,
+  <FaCode />,
+  <FaBrain />,
+  <FaVialCircleCheck />,
+];
 
 /**
  * Componente AISection
@@ -44,14 +46,14 @@ const studyAreaIcons: Record<string, ReactNode> = {
  * que muestra ejemplos de uso de IA.
  */
 export const AISection = () => {
-  // Los textos viven en src/content/site.ts; aquí solo se les pone el icono
+  // Los textos viven en src/content; aquí solo se les pone el icono
   const herramientas = ai.tools.map((tool) => ({
     ...tool,
     icono: toolIcons[tool.nombre],
   }));
-  const areasDeEstudio = ai.studyAreas.map((area) => ({
+  const areasDeEstudio = ai.studyAreas.map((area, index) => ({
     ...area,
-    icono: studyAreaIcons[area.nombre],
+    icono: studyAreaIcons[index],
   }));
 
   return (
@@ -59,7 +61,7 @@ export const AISection = () => {
       <div className="container mx-auto px-4 md:px-8">
         {/* Título principal de la sección */}
         <SectionTitle
-          title="Inteligencia artificial"
+          title={t.sections.ai}
           icon={<FaRobot className="fx-icon fx-beep" />}
           // Las tarjetas aparecen con su propia animación al entrar en
           // pantalla: el encabezado va sin revelado para no desfasarse
@@ -92,7 +94,7 @@ export const AISection = () => {
         {/* Sección de estudios actuales */}
         <div className="mt-20">
           <h3 className="mb-8 flex items-center justify-center text-2xl font-bold text-ink">
-            <span className="text-cbpgray-300">Áreas de estudio actuales</span>
+            <span className="text-cbpgray-300">{t.ai.studyAreas}</span>
           </h3>
 
           <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">

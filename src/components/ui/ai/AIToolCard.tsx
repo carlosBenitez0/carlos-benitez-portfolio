@@ -1,6 +1,7 @@
 // Importación de iconos de react-icons
 import { FaCheck } from "react-icons/fa6";
 import { useRevealOnce } from "../../../hooks/useRevealOnce";
+import { t } from "../../../i18n/ui";
 
 /**
  * Interfaz que define las propiedades que recibe el componente AIToolCard
@@ -76,7 +77,7 @@ export const AIToolCard = ({
           {beneficios.length > 0 && (
             <div className="mt-auto hidden md:block">
               <h5 className="mb-2 text-xs font-medium text-cbpgray-400">
-                Beneficios:
+                {t.ai.benefits}
               </h5>
               <ul className="space-y-1.5">
                 {beneficios.map((beneficio, index) => (

@@ -44,6 +44,15 @@
       ]
     },
     {
+      "source": "/en/",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "</en/llms.txt>; rel=\"describedby\", </en/index.md>; rel=\"alternate\"; type=\"text/markdown\""
+        }
+      ]
+    },
+    {
       "source": "/llms.txt",
       "headers": [
         {
@@ -53,7 +62,25 @@
       ]
     },
     {
+      "source": "/en/llms.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    },
+    {
       "source": "/index.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/en/index.md",
       "headers": [
         {
           "key": "Content-Type",

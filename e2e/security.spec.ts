@@ -242,7 +242,7 @@ test.describe("casos de estudio", () => {
 
       await page.keyboard.press("Escape");
       await expect(dialog).toBeHidden();
-      expect(new URL(page.url()).hash).toBe("");
+      await expect.poll(() => new URL(page.url()).hash).toBe("");
     });
   }
 });

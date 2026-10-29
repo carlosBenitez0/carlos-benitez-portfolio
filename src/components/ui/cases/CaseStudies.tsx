@@ -4,6 +4,7 @@ import { caseStudies } from "../../../content/site";
 import { useTechnologies } from "../../../utils/useTechnologies";
 import { TechnologyLabel } from "../proyects/TechnologyLabel";
 import { CaseStudyDialog } from "./CaseStudyDialog";
+import { t } from "../../../i18n/ui";
 
 const HASH_PREFIX = "#caso-";
 
@@ -85,7 +86,7 @@ export const CaseStudies = () => {
                 aria-haspopup="dialog"
                 className="fx-trigger flex cursor-pointer items-center gap-2 rounded-md border border-cbpviolet-500/50 px-3 py-1.5 text-sm font-medium text-cbpviolet-300 transition-colors hover:border-cbpviolet-300 hover:bg-cbpviolet-500/10 light:text-cbpviolet-500"
               >
-                Leer el caso
+                {t.cases.read}
                 <span className="sr-only">: {caseStudy.title}</span>
                 <HiOutlineArrowRight aria-hidden="true" className="fx-icon" />
               </button>

@@ -1,18 +1,20 @@
 import { describe, expect, it } from "vitest";
-import { plainText, splitRichText } from "./richText";
+import { parseRichText, plainText } from "./richText";
 
 describe("richText", () => {
-  it("separa los resaltados en las posiciones impares", () => {
-    expect(splitRichText("Hola **mundo** y **más**")).toEqual([
-      "Hola ",
-      "mundo",
-      " y ",
-      "más",
-      "",
+  it("separa texto, resaltados y tecnologías en orden", () => {
+    expect(parseRichText("Hola **mundo** con [[React]].")).toEqual([
+      { type: "text", value: "Hola " },
+      { type: "highlight", value: "mundo" },
+      { type: "text", value: " con " },
+      { type: "technology", value: "React" },
+      { type: "text", value: "." },
     ]);
   });
 
   it("quita las marcas para el texto plano", () => {
-    expect(plainText("**AWS S3** para acelerar")).toBe("AWS S3 para acelerar");
+    expect(plainText("**AWS S3** con [[Python]] / [[FastAPI]]")).toBe(
+      "AWS S3 con Python / FastAPI",
+    );
   });
 });

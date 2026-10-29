@@ -5,6 +5,7 @@ import { TechnologyLabel } from "../proyects/TechnologyLabel";
 import { useTechnologies } from "../../../utils/useTechnologies";
 import { Technology } from "../Technologies/Technology";
 import { technologies as technologiesData } from "../../../utils/technologies";
+import { t } from "../../../i18n/ui";
 
 export const TechTooltip = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -43,7 +44,7 @@ export const TechTooltip = () => {
                 className="flex cursor-pointer items-center justify-center rounded-full border-2 border-cbpviolet-500 bg-cbpviolet-500 shadow-[0_0_20px_rgba(139,92,246,1)] transition-all duration-300 hover:border-cbpviolet-600 hover:bg-cbpviolet-600 light:shadow-[0_4px_12px_-4px_rgba(90,24,154,0.45)]"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
-                aria-label="Mostrar información"
+                aria-label={t.tooltip.show}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
@@ -64,7 +65,7 @@ export const TechTooltip = () => {
                 <button
                   onClick={handleClose}
                   className="fx-trigger absolute top-3 right-3 cursor-pointer text-cbpgray-400 transition-colors hover:text-ink"
-                  aria-label="Cerrar"
+                  aria-label={t.tooltip.close}
                 >
                   <FaTimes className="fx-icon fx-turn" />
                 </button>
@@ -74,19 +75,16 @@ export const TechTooltip = () => {
                     <FaInfoCircle className="rounded-full text-xl text-cbpviolet-300 shadow-[0_0_20px_rgba(139,92,246,1)]" />
                   </div>
                   <h3 className="bg-gradient-to-r from-cbpviolet-300 to-cbpviolet-400 bg-clip-text text-center text-lg font-semibold text-transparent">
-                    ¡Tecnologías interactivas!
+                    {t.tooltip.title}
                   </h3>
                 </div>
 
                 <p className="mb-4 text-center text-sm text-cbpgray-300">
-                  Si desconoces alguna tecnología, puedes hacer clic en ella
-                  para ver su documentación oficial.
+                  {t.tooltip.text}
                 </p>
 
                 <div className="flex flex-col items-center justify-center gap-4 text-sm text-cbpgray-200">
-                  <span>
-                    Ejemplos de tecnologías en las que puedes hacer clic:
-                  </span>
+                  <span>{t.tooltip.examples}</span>
                   <div className="flex items-center gap-8">
                     <TechnologyLabel
                       name={technologies[0].name}

@@ -5,6 +5,7 @@ import type { CaseStudy } from "../../../content/site";
 import { useTechnologies } from "../../../utils/useTechnologies";
 import { RichText } from "../RichText";
 import { TechnologyLabel } from "../proyects/TechnologyLabel";
+import { t } from "../../../i18n/ui";
 
 interface CaseStudyDialogProps {
   caseStudy: CaseStudy | null;
@@ -73,7 +74,7 @@ export const CaseStudyDialog = ({
             </h2>
             <button
               type="button"
-              aria-label="Cerrar"
+              aria-label={t.cases.close}
               onClick={() => dialogRef.current?.close()}
               className="shrink-0 cursor-pointer rounded-md border border-cbpbg-400 p-1.5 text-xl text-cbpgray-200 transition-colors hover:border-cbpviolet-300 hover:text-ink focus-visible:outline-2 focus-visible:outline-cbpviolet-400"
             >
@@ -87,14 +88,14 @@ export const CaseStudyDialog = ({
 
           <section className="mt-6">
             <h3 className="mb-2 font-semibold text-cbpviolet-300 light:text-cbpviolet-500">
-              El problema
+              {t.cases.problem}
             </h3>
             <p className="text-sm text-cbpgray-200">{caseStudy.problem}</p>
           </section>
 
           <section className="mt-6">
             <h3 className="mb-3 font-semibold text-cbpviolet-300 light:text-cbpviolet-500">
-              Cómo funciona
+              {t.cases.flow}
             </h3>
             <ol className="flex flex-wrap items-center gap-2 text-xs">
               {caseStudy.flow.map((step, index) => (
@@ -112,9 +113,12 @@ export const CaseStudyDialog = ({
             </ol>
           </section>
 
-          <BulletList title="Qué construí" items={caseStudy.contributions} />
-          <BulletList title="Decisiones técnicas" items={caseStudy.decisions} />
-          <BulletList title="Resultados" items={caseStudy.results} />
+          <BulletList
+            title={t.cases.contributions}
+            items={caseStudy.contributions}
+          />
+          <BulletList title={t.cases.decisions} items={caseStudy.decisions} />
+          <BulletList title={t.cases.results} items={caseStudy.results} />
 
           {caseStudy.technologies.length > 0 && (
             <div className="mt-6 flex flex-wrap gap-2">

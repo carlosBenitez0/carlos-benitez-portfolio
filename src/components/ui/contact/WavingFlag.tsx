@@ -4,6 +4,7 @@ import {
   prefersReducedMotion,
 } from "../../../utils/visibility";
 import { FLAG_SHAPES, WAVE, shapePathData } from "./flagGeometry";
+import { t } from "../../../i18n/ui";
 
 // Bandera de El Salvador en trazo neón que ondea con el viento. Las líneas se
 // recalculan en cada cuadro deformando la geometría real (flagGeometry.ts),
@@ -58,7 +59,7 @@ export const WavingFlag = () => {
       ref={rootRef}
       className="waving-flag"
       role="img"
-      aria-label="Bandera de El Salvador"
+      aria-label={t.contact.flag}
     >
       <svg viewBox="-8 -12 216 154" className="h-full w-full overflow-visible">
         <defs>

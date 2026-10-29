@@ -9,6 +9,8 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 import { HiOutlineArrowRight } from "react-icons/hi2";
 import { PiReadCvLogoLight } from "react-icons/pi";
 import { links, profile } from "../../content/site";
+import { t } from "../../i18n/ui";
+import { RichText } from "../ui/RichText";
 import {
   pauseTweensWhileOffscreen,
   prefersReducedMotion,
@@ -144,53 +146,28 @@ export const Header = () => {
           <h1
             className={`appear-text relative mb-2 ${isMobile ? "text-[36px]" : "text-[44px]"}`}
           >
-            Hola,{" "}
+            {t.header.greeting}{" "}
             <AnimatedGradientText
               colors={["#b388ff", "#7c4dff", "#651fff", "#9c64ff", "#d500f9"]}
             >
-              <ShinyText text="soy Carlos" disabled={false} speed={3} />
+              <ShinyText text={t.header.name} disabled={false} speed={3} />
             </AnimatedGradientText>
           </h1>
           <h2 className={`appear-text relative mb-8 text-[16px] text-balance`}>
-            <ShinyText
-              text="Ingeniero en Sistemas y Computación | Desarrollador Web"
-              disabled={false}
-              speed={3}
-            />
+            <ShinyText text={profile.headline} disabled={false} speed={3} />
           </h2>
           {!isMobile && (
             <div
               className={`appear-text z-10 font-poppins text-lg leading-relaxed text-balance text-cbpgray-200 ${!isMobile && "text-[16px]"}`}
             >
-              Construyo{" "}
-              <HighlightText shadowOpacity={1}>
-                <ShinyText text="soluciones web" disabled={false} speed={3} />
-              </HighlightText>{" "}
-              robustas, fusionando{" "}
-              <HighlightText shadowOpacity={1}>
-                <ShinyText text="código eficiente" disabled={false} speed={3} />
-              </HighlightText>{" "}
-              con{" "}
-              <HighlightText shadowOpacity={1}>
-                <ShinyText text="diseño intuitivo" disabled={false} speed={3} />
-              </HighlightText>{" "}
-              y{" "}
-              <HighlightText shadowOpacity={1}>
-                <ShinyText text="creativo." disabled={false} speed={3} />
-              </HighlightText>{" "}
-              Creo que la programación va más allá de la lógica: es un espacio
-              para{" "}
-              <HighlightText shadowOpacity={1}>
-                <ShinyText text="innovar" disabled={false} speed={3} />
-              </HighlightText>{" "}
-              y resolver problemas con{" "}
-              <HighlightText shadowOpacity={1}>
-                <ShinyText
-                  text="soluciones ingeniosas."
-                  disabled={false}
-                  speed={3}
-                />
-              </HighlightText>
+              <RichText
+                text={profile.intro}
+                renderHighlight={(text) => (
+                  <HighlightText shadowOpacity={1}>
+                    <ShinyText text={text} disabled={false} speed={3} />
+                  </HighlightText>
+                )}
+              />
             </div>
           )}
           <div
@@ -201,7 +178,7 @@ export const Header = () => {
               onClick={scrollToSection}
               className={`fx-trigger flex items-center gap-2 rounded-full bg-cbpviolet-500 font-semibold ${isMobile ? "px-4 py-2 text-xs" : "px-5 py-2.5 text-sm"} text-white shadow-[0_0_20px_var(--hover-glow)] transition-colors hover:bg-cbpviolet-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400`}
             >
-              Ver casos de estudio
+              {t.header.seeCases}
               <HiOutlineArrowRight aria-hidden="true" className="fx-icon" />
             </a>
             <a
@@ -213,7 +190,7 @@ export const Header = () => {
                 aria-hidden="true"
                 className="fx-icon fx-flip text-lg"
               />
-              Descargar CV
+              {t.header.downloadCv}
             </a>
           </div>
         </div>
@@ -225,8 +202,8 @@ export const Header = () => {
       <a
         ref={arrowRef}
         href="#projects"
-        aria-label="Ir a la sección de proyectos"
-        title="Ver proyectos"
+        aria-label={t.header.toProjects}
+        title={t.header.toProjectsTitle}
         onClick={scrollToSection}
         className={`absolute left-1/2 -translate-x-1/2 cursor-pointer rounded-full p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400 ${isMobile ? "bottom-14" : "bottom-20"}`}
       >

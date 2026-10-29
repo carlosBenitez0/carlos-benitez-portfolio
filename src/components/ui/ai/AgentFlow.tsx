@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { prefersReducedMotion } from "../../../utils/visibility";
+import { t } from "../../../i18n/ui";
 
 // Diagrama de flujo de la orquestación. Se lee en el mismo orden que los
 // pasos del panel: Tarea → Orquestador → subagentes (con su herramienta) →
@@ -45,10 +46,10 @@ const NARROW: Layout = {
 
 const AGENTS = [
   { name: "Frontend", tool: "Figma" },
-  { name: "Backend", tool: "Base de datos" },
-  { name: "QA", tool: "Navegador" },
+  { name: "Backend", tool: t.ai.database },
+  { name: "QA", tool: t.ai.browser },
 ];
-const CHECKS = ["Tests", "Typecheck", "Lint", "Revisión"];
+const CHECKS = ["Tests", "Typecheck", "Lint", t.ai.review];
 
 // Tiempos dentro de cada fase (segundos)
 const PACKET_DURATION = 1.1;
@@ -234,7 +235,7 @@ export const AgentFlow = ({
             y={task.cy + 4}
             textAnchor="middle"
           >
-            Tarea
+            {t.ai.task}
           </text>
         </g>
 
@@ -254,7 +255,7 @@ export const AgentFlow = ({
             y={top(orch) + (vertical ? 24 : 26)}
             textAnchor="middle"
           >
-            Orquestador
+            {t.ai.orchestrator}
           </text>
           {!vertical && (
             <text
@@ -263,7 +264,7 @@ export const AgentFlow = ({
               y={top(orch) + 42}
               textAnchor="middle"
             >
-              Planifica y reparte
+              {t.ai.plans}
             </text>
           )}
           {AGENTS.map((_, i) => (
@@ -394,7 +395,7 @@ export const AgentFlow = ({
             y={top(verify) + 22}
             textAnchor="middle"
           >
-            Verificación
+            {t.ai.verification}
           </text>
           {CHECKS.map((check, i) => {
             // Ancho: una columna. Estrecho: cuadrícula de 2 × 2
@@ -457,7 +458,7 @@ export const AgentFlow = ({
                 y={result.cy - 2}
                 textAnchor="middle"
               >
-                Cambio verificado
+                {t.ai.verifiedChange}
               </text>
               <text
                 className="caption"
@@ -465,7 +466,7 @@ export const AgentFlow = ({
                 y={result.cy + 15}
                 textAnchor="middle"
               >
-                Listo para revisión
+                {t.ai.readyForReview}
               </text>
             </>
           ) : (
@@ -476,7 +477,7 @@ export const AgentFlow = ({
                 y={result.cy - 4}
                 textAnchor="middle"
               >
-                Cambio
+                {t.ai.change}
               </text>
               <text
                 className="title"
@@ -484,7 +485,7 @@ export const AgentFlow = ({
                 y={result.cy + 12}
                 textAnchor="middle"
               >
-                verificado
+                {t.ai.verified}
               </text>
             </>
           )}

@@ -10,7 +10,7 @@ describe("ProyectCard", () => {
         image="https://res.cloudinary.com/x.png"
         description="Aplicación de Pokédex"
         technologies={["React"]}
-        state="Terminado"
+        state="done"
         url="https://pok-dex.example.com"
         gitHub="https://github.com/carlosBenitez0/pokedex"
       />,
@@ -31,7 +31,7 @@ describe("ProyectCard", () => {
         image="/projects/pokedex.webp"
         description="Aplicación de Pokédex"
         technologies={["React"]}
-        state="En desarrollo"
+        state="wip"
         url="https://pok-dex.example.com"
         gitHub="https://github.com/carlosBenitez0/pokedex"
       />,
@@ -56,7 +56,7 @@ describe("ProyectCard", () => {
       image: "/projects/techzone.webp",
       description: "Tienda en línea",
       technologies: ["React"],
-      state: "En desarrollo",
+      state: "wip" as const,
       url: "https://techzone.example.com",
       gitHub: "https://github.com/carlosBenitez0/techzone",
     };
@@ -80,7 +80,7 @@ describe("ProyectCard", () => {
         image="/projects/portafolio-academico.webp"
         description="Proyecto académico"
         technologies={["HTML"]}
-        state="Terminado"
+        state="done"
         url="https://academico.example.com"
         gitHub=""
       />,
@@ -98,7 +98,7 @@ describe("ProyectCard", () => {
         image="/projects/pokedex.webp"
         description="Aplicación de Pokédex"
         technologies={["React"]}
-        state="En pausa"
+        state="paused"
         url="https://pok-dex.example.com"
         gitHub="https://github.com/carlosBenitez0/pokedex"
       />,

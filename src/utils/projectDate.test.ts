@@ -36,6 +36,20 @@ describe("formatProjectDate", () => {
   });
 });
 
+describe("formatProjectDate en inglés", () => {
+  it("usa los meses y las palabras en inglés", () => {
+    expect(
+      formatProjectDate(
+        { start: "2024-09", end: "2024-10", resumed: "2025-07" },
+        "en",
+      ),
+    ).toBe("Sep – Oct 2024 · resumed Jul 2025");
+    expect(formatProjectDate({ start: "2025-06", current: true }, "en")).toBe(
+      "Jun 2025 – present",
+    );
+  });
+});
+
 describe("orden de los proyectos", () => {
   it("va del más reciente al más antiguo, con los que no tienen fecha al final", () => {
     const starts = projects.map((p) => p.date?.start ?? "");

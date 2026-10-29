@@ -4,6 +4,7 @@ import { Navbar } from "./components/shared/Navbar/Navbar";
 import { ProyectCard } from "./components/ui/proyects/ProyectCard";
 import { SectionTitle } from "./components/ui/SectionTitle";
 import { useProyects } from "./utils/useProyects";
+import { t } from "./i18n/ui";
 import { IoCodeWorkingOutline } from "react-icons/io5";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { IoCodeSlashOutline } from "react-icons/io5";
@@ -133,18 +134,18 @@ function App() {
             className={`mt-30 mb-20 ${isMobile ? "px-4 py-4" : ""}`}
           >
             <SectionTitle
-              title="Proyectos"
+              title={t.sections.projects}
               icon={<IoCodeWorkingOutline className="fx-icon fx-stretch" />}
             />
             {/* Casos de estudio primero: el trabajo con más peso */}
             <div id="cases" className="mb-12 scroll-mt-28">
               <h3 className="mb-4 text-xl font-semibold text-cbpgray-200">
-                Casos de estudio
+                {t.sections.cases}
               </h3>
               <CaseStudies />
             </div>
             <h3 className="mb-4 text-xl font-semibold text-cbpgray-200">
-              Otros proyectos
+              {t.sections.otherProjects}
             </h3>
             <div className="cardsContainer grid w-full grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3">
               {proyects.map((proyect, index) => (
@@ -169,7 +170,7 @@ function App() {
             className={`mt-30 mb-20 ${isMobile ? "px-4 py-4" : ""}`}
           >
             <SectionTitle
-              title="Experiencia"
+              title={t.sections.experience}
               icon={<MdOutlineWorkOutline className="fx-icon fx-swing" />}
             />
             <ExperienceTimeline />
@@ -180,7 +181,7 @@ function App() {
             className={`mt-30 mb-20 ${isMobile ? "p-4" : ""}`}
           >
             <SectionTitle
-              title="Sobre mí"
+              title={t.sections.about}
               icon={
                 <IoIosInformationCircleOutline className="fx-icon fx-swing" />
               }
@@ -242,7 +243,7 @@ function App() {
             </div>
 
             <SectionTitle
-              title="Tecnologías"
+              title={t.sections.technologies}
               icon={<IoCodeSlashOutline className="fx-icon fx-glitch" />}
             />
             <div
@@ -266,7 +267,7 @@ function App() {
             className={`mt-30 mb-20 ${isMobile ? "p-4" : ""}`}
           >
             <SectionTitle
-              title="Contáctame"
+              title={t.sections.contact}
               icon={
                 <MdOutlineConnectWithoutContact className="fx-icon fx-ring" />
               }

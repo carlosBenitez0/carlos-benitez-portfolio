@@ -1,3 +1,5 @@
+import { t } from "../../../i18n/ui";
+
 export const Spinner = () => {
   return (
     <div
@@ -5,7 +7,7 @@ export const Spinner = () => {
       role="status"
     >
       <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !border-0 !p-0 !whitespace-nowrap ![clip:rect(0,0,0,0)]">
-        Enviando…
+        {t.contact.sendingStatus}
       </span>
     </div>
   );
