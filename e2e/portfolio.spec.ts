@@ -81,7 +81,13 @@ test.describe("navbar", () => {
         const bar = document.querySelector("nav")!.parentElement!;
         const items = [...bar.children].map((c) => c.getBoundingClientRect());
         return {
-          fits: items.every((r) => r.left >= 0 && r.right <= innerWidth + 0.5),
+          // Dentro de la pantalla y del ancho máximo del contenido (950px)
+          fits: items.every(
+            (r) =>
+              r.left >= 0 &&
+              r.right <= innerWidth + 0.5 &&
+              r.right <= bar.getBoundingClientRect().right + 0.5,
+          ),
           singleLine: [...document.querySelectorAll("nav ul a")].every(
             (a) => a.getBoundingClientRect().height < 26,
           ),
