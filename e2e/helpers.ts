@@ -1,6 +1,13 @@
 import type { Page, Request, Route } from "@playwright/test";
 
-export const SECTIONS = ["projects", "about", "technologies", "ai", "contact"];
+export const SECTIONS = [
+  "projects",
+  "experience",
+  "about",
+  "technologies",
+  "ai",
+  "contact",
+];
 
 // Errores de recursos externos (Cloudinary, Google Fonts) no dependen del
 // código: solo cuentan los errores de la propia página.

@@ -3,6 +3,7 @@ import {
   SITE_URL,
   about,
   ai,
+  experience,
   links,
   profile,
   projects,
@@ -10,6 +11,7 @@ import {
   technologyCategories,
 } from "../src/content/site";
 import { formatProjectDate } from "../src/utils/projectDate";
+import { plainText } from "../src/utils/richText";
 
 // Genera en el build, a partir de src/content/site.ts:
 // - HTML semántico dentro de #root, para buscadores y agentes que no ejecutan
@@ -34,6 +36,11 @@ const technologyGroups = () =>
     title: technologyCategories[key] ?? key,
     items,
   }));
+
+const jobTitle = (job: (typeof experience)[number]) =>
+  [`${job.role} · ${job.company}`, job.date && formatProjectDate(job.date)]
+    .filter(Boolean)
+    .join(" · ");
 
 const projectNotes = (project: (typeof projects)[number]) =>
   [
@@ -60,6 +67,7 @@ export const buildLlmsTxt = () =>
     `- [Currículum (PDF)](${cvUrl}): experiencia, formación y habilidades`,
     `- [LinkedIn](${links.linkedin}): perfil profesional`,
     `- [GitHub](${links.github}): código de sus proyectos`,
+    `- [Experiencia](${SITE_URL}#experience): ${experience.map((job) => `${job.role} (${job.company})`).join("; ")}`,
     "",
     "## Proyectos",
     "",
@@ -84,10 +92,6 @@ export const buildIndexMd = () =>
     "## Sobre mí",
     "",
     ...about.paragraphs.flatMap((p) => [p, ""]),
-    "### Logros destacados",
-    "",
-    ...about.achievements.map((a) => `- ${a}`),
-    "",
     "## Proyectos",
     "",
     ...projects.flatMap((p) => [
@@ -99,6 +103,17 @@ export const buildIndexMd = () =>
       `- Estado: ${p.state}`,
       `- Tecnologías: ${p.technologies.join(", ")}`,
       ...(p.gitHub ? [`- Código: ${p.gitHub}`] : []),
+      "",
+    ]),
+    "## Experiencia",
+    "",
+    ...experience.flatMap((job) => [
+      `### ${jobTitle(job)}`,
+      "",
+      job.summary,
+      "",
+      ...job.highlights.map((h) => `- ${plainText(h)}`),
+      `- Tecnologías: ${job.technologies.join(", ")}`,
       "",
     ]),
     "## Tecnologías",
@@ -211,11 +226,17 @@ export const buildStaticHtml = () =>
       (p) => `<li>${link(p.url, p.name)}: ${escapeHtml(projectNotes(p))}</li>`,
     ),
     "</ul></section>",
+    '<section id="experience"><h2>Experiencia</h2>',
+    ...experience.map(
+      (job) =>
+        `<h3>${escapeHtml(jobTitle(job))}</h3><p>${escapeHtml(job.summary)}</p><ul>${job.highlights
+          .map((h) => `<li>${escapeHtml(plainText(h))}</li>`)
+          .join("")}</ul>`,
+    ),
+    "</section>",
     '<section id="about"><h2>Sobre mí</h2>',
     ...about.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`),
-    "<h3>Logros destacados</h3><ul>",
-    ...about.achievements.map((a) => `<li>${escapeHtml(a)}</li>`),
-    "</ul></section>",
+    "</section>",
     '<section id="technologies"><h2>Tecnologías</h2>',
     ...technologyGroups().map(
       (g) =>

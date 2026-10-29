@@ -26,11 +26,13 @@ export const links = {
 };
 
 // Meses en formato "AAAA-MM", según el historial de commits del repo.
-// `resumed`: cuándo se retomó tras una pausa larga.
+// `resumed`: cuándo se retomó tras una pausa larga. `current`: sigue en
+// curso ("– actualidad").
 export interface ProjectDate {
   start: string;
   end?: string;
   resumed?: string;
+  current?: boolean;
 }
 
 export interface Project {
@@ -99,15 +101,50 @@ export const about = {
     "Mi experiencia abarca desde el desarrollo de interfaces dinámicas con React / Next.js hasta la construcción de APIs eficientes con Python / FastAPI. Me interesa especialmente la integración entre frontend y backend para ofrecer experiencias fluidas.",
     "Hoy gran parte de mi trabajo es desarrollo agéntico: programo junto a agentes de IA y elijo la herramienta adecuada para cada tarea. Con harness engineering les doy el contexto adecuado (reglas, memoria y skills), los conecto a herramientas con MCP y verifico cada cambio con tests automáticos. Así optimicé este portafolio, que hoy cuenta con más de 200 tests.",
   ],
-  achievements: [
-    "Motor de cálculo y validación de créditos automotrices, con análisis de riesgo apoyado en IA",
-    "E-commerce con subastas en tiempo real: ofertas concurrentes, cierres automáticos y checkout con geolocalización",
-    "Automatización de facturas y liquidaciones con Python, eliminando procesos manuales",
-    "Conversión automática de imágenes a WebP y carga en AWS S3 para acelerar la carga del sitio",
-    "Desarrollo agéntico con distintos agentes de IA, apoyado en MCP, subagentes y skills a medida",
-    "Tutor de desarrollo web en la UNAB: JavaScript, C#, HTML/CSS y MySQL",
-  ],
 };
+
+// Trayectoria, de la más reciente a la más antigua. En `highlights`, el
+// texto entre **dobles asteriscos** se resalta con ShinyText (RichText); el
+// HTML estático, /llms.txt e /index.md lo usan sin los asteriscos.
+export interface Experience {
+  role: string;
+  company: string;
+  date?: ProjectDate;
+  summary: string;
+  highlights: string[];
+  technologies: string[];
+}
+
+export const experience: Experience[] = [
+  {
+    role: "Desarrollador Full Stack",
+    company: "Empresa de desarrollo de software",
+    summary:
+      "Desarrollo de aplicaciones web de principio a fin: interfaces, APIs, integraciones y automatización de procesos.",
+    highlights: [
+      "Motor de cálculo y validación de **créditos automotrices,** con análisis de riesgo apoyado en IA",
+      "**E-commerce con subastas en tiempo real:** ofertas concurrentes, cierres automáticos y checkout con geolocalización",
+      "**Automatización** de facturas y liquidaciones con Python, eliminando procesos manuales",
+      "Conversión automática de imágenes a WebP y carga en **AWS S3** para acelerar la carga del sitio",
+    ],
+    technologies: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Python",
+      "FastAPI",
+      "AWS",
+    ],
+  },
+  {
+    role: "Tutor de desarrollo web",
+    company: "UNAB",
+    summary:
+      "Acompañamiento a estudiantes en sus primeros pasos con la programación y el desarrollo web.",
+    highlights: ["Tutorías de **JavaScript, C#, HTML/CSS y MySQL**"],
+    technologies: ["JavaScript", "HTML", "CSS", "MySQL"],
+  },
+];
 
 export const technologyCategories: Record<string, string> = {
   frontend: "Frontend",

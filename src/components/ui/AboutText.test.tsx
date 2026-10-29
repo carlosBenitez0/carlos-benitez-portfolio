@@ -12,7 +12,7 @@ describe("AboutText", () => {
     const { container } = render(<AboutText />);
     const rendered = normalize(container.textContent ?? "");
 
-    for (const text of [...about.paragraphs, ...about.achievements]) {
+    for (const text of about.paragraphs) {
       expect(rendered).toContain(normalize(text));
     }
   });

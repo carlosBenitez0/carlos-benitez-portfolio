@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { SITE_URL, about, links, projects } from "../src/content/site";
+import {
+  SITE_URL,
+  about,
+  experience,
+  links,
+  projects,
+} from "../src/content/site";
 import {
   buildIndexMd,
   buildJsonLd,
@@ -47,13 +53,18 @@ describe("index.md", () => {
   const md = buildIndexMd();
 
   it("incluye todo el contenido de la página", () => {
-    for (const text of [...about.paragraphs, ...about.achievements]) {
+    for (const text of about.paragraphs) {
       expect(md).toContain(text);
     }
     for (const project of projects) {
       expect(md).toContain(`### [${project.name}](${project.url})`);
     }
     expect(md).toContain("- Fecha: sep – oct 2024 · retomado jul 2025");
+    for (const job of experience) {
+      expect(md).toContain(`### ${job.role} · ${job.company}`);
+    }
+    // Los resaltados (**...**) llegan sin asteriscos
+    expect(md).not.toContain("**créditos");
     expect(md).toContain("## Tecnologías");
     expect(md).toContain("## Inteligencia artificial");
     expect(md).toContain(links.linkedin);
@@ -65,7 +76,14 @@ describe("HTML estático de #root", () => {
 
   it("tiene un solo h1 y una sección por bloque del sitio", () => {
     expect(html.match(/<h1>/g)).toHaveLength(1);
-    for (const id of ["projects", "about", "technologies", "ai", "contact"]) {
+    for (const id of [
+      "projects",
+      "experience",
+      "about",
+      "technologies",
+      "ai",
+      "contact",
+    ]) {
       expect(html).toContain(`<section id="${id}">`);
     }
   });

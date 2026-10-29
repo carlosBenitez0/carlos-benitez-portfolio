@@ -19,6 +19,12 @@ describe("formatProjectDate", () => {
     );
   });
 
+  it("marca lo que sigue en curso", () => {
+    expect(formatProjectDate({ start: "2025-06", current: true })).toBe(
+      "jun 2025 – actualidad",
+    );
+  });
+
   it("indica cuándo se retomó un proyecto pausado", () => {
     expect(
       formatProjectDate({

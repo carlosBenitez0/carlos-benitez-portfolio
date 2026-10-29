@@ -4,7 +4,10 @@ import { RiHomeLine } from "react-icons/ri";
 import { IoCodeWorkingOutline } from "react-icons/io5";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { IoCodeSlashOutline } from "react-icons/io5";
-import { MdOutlineConnectWithoutContact } from "react-icons/md";
+import {
+  MdOutlineConnectWithoutContact,
+  MdOutlineWorkOutline,
+} from "react-icons/md";
 import { CiLinkedin } from "react-icons/ci";
 import { FaGithub } from "react-icons/fa";
 import { PiReadCvLogoLight } from "react-icons/pi";
@@ -33,6 +36,12 @@ export const Navbar = () => {
       href: "#projects",
       icon: <IoCodeWorkingOutline className="fx-icon fx-stretch" />,
       text: "Proyectos",
+    },
+    {
+      label: "experience",
+      href: "#experience",
+      icon: <MdOutlineWorkOutline className="fx-icon fx-swing" />,
+      text: "Experiencia",
     },
     {
       label: "about",
@@ -104,7 +113,14 @@ export const Navbar = () => {
   // scroll (la página se desplaza con el contenedor raíz de App, no con
   // window, y ese contenedor puede no tener aún sus estilos al montar).
   useEffect(() => {
-    const sections = ["projects", "about", "technologies", "ai", "contact"];
+    const sections = [
+      "projects",
+      "experience",
+      "about",
+      "technologies",
+      "ai",
+      "contact",
+    ];
     let frame = 0;
 
     const update = () => {

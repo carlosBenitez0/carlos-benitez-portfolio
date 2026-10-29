@@ -14,6 +14,8 @@ import { BgDotGradient } from "./components/ui/BgDotGradient";
 import { ContactContainer } from "./components/ui/contact/ContactContainer";
 import { AISection } from "./components/ui/ai/AISection";
 import { AboutText } from "./components/ui/AboutText";
+import { ExperienceTimeline } from "./components/ui/experience/ExperienceTimeline";
+import { MdOutlineWorkOutline } from "react-icons/md";
 import { HoloPhotoCard } from "./components/ui/HoloPhotoCard";
 import { Suspense, useEffect, useRef } from "react";
 import gsap from "gsap";
@@ -149,6 +151,17 @@ function App() {
                 </div>
               ))}
             </div>
+          </section>
+          <section
+            id="experience"
+            data-pause-offscreen
+            className={`mt-30 mb-20 ${isMobile ? "px-4 py-4" : ""}`}
+          >
+            <SectionTitle
+              title="Experiencia"
+              icon={<MdOutlineWorkOutline className="fx-icon fx-swing" />}
+            />
+            <ExperienceTimeline />
           </section>
           <section
             id="about"

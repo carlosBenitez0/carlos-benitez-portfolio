@@ -1,4 +1,3 @@
-import { FaCheck } from "react-icons/fa6";
 import ShinyText from "./ShinyText";
 import { TechnologyLabel } from "./proyects/TechnologyLabel";
 import { useTechnologies } from "../../utils/useTechnologies";
@@ -70,55 +69,6 @@ export const AboutText = () => {
         cambio con <ShinyText text="tests automáticos." /> Así optimicé este
         portafolio, que hoy cuenta con más de 200 tests.
       </p>
-      <div className="anim-about-text space-y-3">
-        <p className="font-medium">Logros destacados</p>
-        <ul className="list-none space-y-2">
-          <li className="anim-achievement-text fx-trigger flex items-start">
-            <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
-            <span>
-              Motor de cálculo y validación de{" "}
-              <ShinyText text="créditos automotrices," /> con análisis de riesgo
-              apoyado en IA
-            </span>
-          </li>
-          <li className="anim-achievement-text fx-trigger flex items-start">
-            <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
-            <span>
-              <ShinyText text="E-commerce con subastas en tiempo real:" />{" "}
-              ofertas concurrentes, cierres automáticos y checkout con
-              geolocalización
-            </span>
-          </li>
-          <li className="anim-achievement-text fx-trigger flex items-start">
-            <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
-            <span>
-              <ShinyText text="Automatización" /> de facturas y liquidaciones
-              con Python, eliminando procesos manuales
-            </span>
-          </li>
-          <li className="anim-achievement-text fx-trigger flex items-start">
-            <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
-            <span>
-              Conversión automática de imágenes a WebP y carga en{" "}
-              <ShinyText text="AWS S3" /> para acelerar la carga del sitio
-            </span>
-          </li>
-          <li className="anim-achievement-text fx-trigger flex items-start">
-            <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
-            <span>
-              <ShinyText text="Desarrollo agéntico" /> con distintos agentes de
-              IA, apoyado en MCP, subagentes y skills a medida
-            </span>
-          </li>
-          <li className="anim-achievement-text fx-trigger flex items-start">
-            <FaCheck className="fx-icon fx-check mt-1 mr-2 text-cbpviolet-500" />
-            <span>
-              <ShinyText text="Tutor de desarrollo web" /> en la UNAB:
-              JavaScript, C#, HTML/CSS y MySQL
-            </span>
-          </li>
-        </ul>
-      </div>
     </>
   );
 };

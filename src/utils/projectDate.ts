@@ -26,11 +26,18 @@ const monthYear = (value: string) => {
   return `${month} ${year}`;
 };
 
-// "oct 2024", "sep – oct 2024", "sep 2024 – jul 2025" y, si se retomó tras
-// una pausa larga, "sep – oct 2024 · retomado jul 2025".
-export const formatProjectDate = ({ start, end, resumed }: ProjectDate) => {
+// "oct 2024", "sep – oct 2024", "sep 2024 – jul 2025", "jun 2025 – actualidad"
+// y, si se retomó tras una pausa larga, "sep – oct 2024 · retomado jul 2025".
+export const formatProjectDate = ({
+  start,
+  end,
+  resumed,
+  current,
+}: ProjectDate) => {
   let label = monthYear(start);
-  if (end && end !== start) {
+  if (current) {
+    label = `${label} – actualidad`;
+  } else if (end && end !== start) {
     const from = parse(start);
     label =
       from.year === parse(end).year
