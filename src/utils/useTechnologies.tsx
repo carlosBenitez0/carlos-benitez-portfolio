@@ -17,15 +17,18 @@ import {
   SiHubspot,
   SiOpenai,
   SiPostgresql,
+  SiResend,
   SiPrisma,
   SiSlack,
   SiStackblitz,
   SiStorybook,
   SiPhp,
   SiThreedotjs,
+  SiUpstash,
   SiVercel,
   SiVite,
   SiVitest,
+  SiZod,
 } from "react-icons/si";
 import { TbMasksTheater } from "react-icons/tb";
 import { FaAws } from "react-icons/fa";
@@ -243,6 +246,24 @@ export const useTechnologies = () => {
       icon: <SiGooglegemini />,
       color: "#8E75F2",
       url: "https://ai.google.dev/",
+    },
+    {
+      name: "Zod",
+      icon: <SiZod />,
+      color: "#3E67B1",
+      url: "https://zod.dev/",
+    },
+    {
+      name: "Resend",
+      icon: <SiResend />,
+      color: "#dddddd",
+      url: "https://resend.com/",
+    },
+    {
+      name: "Upstash",
+      icon: <SiUpstash />,
+      color: "#00E9A3",
+      url: "https://upstash.com/",
     },
     {
       name: "OpenAI",
