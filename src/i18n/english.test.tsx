@@ -12,7 +12,9 @@ afterEach(() => {
   vi.resetModules();
 });
 
-describe("página en inglés (/en/)", () => {
+// Cada test vuelve a importar el árbol de módulos (GSAP, Three...): con la
+// máquina cargada, el primero supera los 5 s por defecto.
+describe("página en inglés (/en/)", { timeout: 20_000 }, () => {
   it("el hero y el contenido salen en inglés", async () => {
     const { Header } = await import("../components/shared/Header");
     render(<Header />);

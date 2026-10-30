@@ -47,45 +47,69 @@ const projects = translate(es.projects, "name", {
 });
 
 const caseStudies = translate(es.caseStudies, "slug", {
-  "creditos-automotrices": {
-    title: "Auto credit engine",
+  "financiamiento-automotriz": {
+    title: "AI-powered auto loan calculator",
     summary:
-      "Calculation and validation of auto loans, with AI-assisted risk analysis.",
-    context: "Built at a software development company for vehicle financing.",
+      "Auto financing: it calculates the offer and the loan for each application from the vehicle's market value and the allowed rates, and uses AI to write a customer profile.",
+    context:
+      "Vehicle financing platform built with CodeIgniter 4 (PHP) and MySQL.",
     role: "Full Stack Developer",
     problem:
-      "Every credit application had to be calculated and validated consistently, and the risk assessment needed support to make better-informed decisions.",
+      "Every application arrives with documents and every lender has its own terms. All of that had to become a consistent offer and loan, within legal limits, plus a summary of the customer for the decision maker.",
     contributions: [
-      "Auto loan **calculation** engine",
-      "**Validation** of applications before they are assessed",
-      "**AI-assisted risk analysis** as part of the assessment",
+      "**Loan calculator:** offer based on the vehicle's market value, amount to finance with its associated costs and a monthly payment with the amortization formula",
+      "**Configurable legal rates** by vehicle year, refreshed automatically",
+      "**Per-lender settings** in the lender and admin views",
+      "**AI customer narrative** from their documents, with an editable prompt and PDF download",
+      "**AI document analysis** (OpenAI and Gemini) with an OCR fallback",
+      "**Tabbed interface** with validations, approval states and contextual help for uploading each document",
+    ],
+    decisions: [
+      "**Configurable rules, not hard-coded:** rates, terms and prompts are adjusted from the admin panel",
+      "**The calculator doesn't guess:** if information is missing, it says what's missing instead of calculating with partial data",
+      "**More than one way to read a document:** if one method fails, another takes over",
+    ],
+    results: [
+      "From application to decision in one flow: **documents, valuation, loan and a PDF narrative**",
     ],
     flow: [
-      "Application",
-      "Validation",
-      "Calculation",
-      "Risk analysis (AI)",
-      "Result",
+      "Documents",
+      "AI reading",
+      "Market value",
+      "Allowed rate",
+      "Offer and payment",
+      "PDF narrative",
     ],
   },
-  "subastas-tiempo-real": {
-    title: "E-commerce with real-time auctions",
+  "marketplace-subastas": {
+    title: "Marketplace with auctions",
     summary:
-      "Online store with auctions: concurrent bids, automatic closing and geolocated checkout.",
-    context: "Built at a software development company.",
+      "Buy-and-sell marketplace with auctions: safe concurrent bids, automatic closing, card payments and delivery pinned on a map.",
+    context: "Marketplace with a Next.js frontend and a FastAPI API on MySQL.",
     role: "Full Stack Developer",
     problem:
-      "Many people can bid on the same item at once: every bid must be recorded in order, the auction must close by itself when it expires, and the winner must be able to pay and receive the purchase.",
+      "Many people can bid on the same item at once: every bid must be validated without colliding with another, the auction must open and close by itself, and the winner must be able to pay without double charges and receive the purchase where they asked.",
     contributions: [
-      "Handling **concurrent bids** in real time",
-      "**Automatic closing** of auctions",
-      "**Geolocated checkout** for delivery",
+      "**Concurrent bids** with database row locking, validated inside a transaction",
+      "**Scheduled jobs** that open and close auctions, pick the winner and keep orders up to date",
+      "**Card payments** integrated with a payment gateway, with an audit log",
+      "**Map-based checkout:** the buyer pins the delivery point and the address fills itself in",
+      "Transactional emails, notifications, JWT and Google sign-in, ratings and an admin dashboard",
+    ],
+    decisions: [
+      "**The database orders the bids:** row locking handles concurrency with no extra services",
+      "**Closing doesn't depend on visits:** it happens on time even if nobody is on the page",
+      "**Idempotent payments:** a retry never creates a second charge",
+    ],
+    results: [
+      "The whole flow on one platform: **list, bid, win, pay and receive**",
     ],
     flow: [
-      "Real-time bids",
+      "Bid",
       "Automatic closing",
-      "Winner",
-      "Geolocated checkout",
+      "Winner and email",
+      "Card payment",
+      "Delivery on the map",
     ],
   },
   "portafolio-agentico": {
@@ -136,24 +160,53 @@ const about: Content["about"] = {
   ],
 };
 
-const experience = translate(es.experience, "role", {
-  "Desarrollador Full Stack": {
-    role: "Full Stack Developer",
-    company: "Software development company",
+const experience = translate(es.experience, "company", {
+  "Uassist.me": {
+    role: "Full Stack Web Developer",
     summary:
-      "End-to-end web application development: interfaces, APIs, integrations and process automation.",
+      "Building and maintaining web applications and sites: new features, integrations and AI-powered process automation.",
     highlights: [
-      "Calculation and validation engine for **auto loans,** with AI-assisted risk analysis",
-      "**E-commerce with real-time auctions:** concurrent bids, automatic closing and geolocated checkout",
-      "**Automation** of invoices and settlements with Python, removing manual work",
-      "Automatic image conversion to WebP and upload to **AWS S3** to speed up page loads",
+      "**Process automation** with **n8n** workflows and AI models",
+      "Integrating forms with **CRM** and **analytics**",
+      "Web **SEO** and **performance** optimization",
     ],
   },
-  "Tutor de desarrollo web": {
-    role: "Web development tutor",
+  "Web Informática S.A. de C.V.": {
+    role: "Full Stack Web Developer",
     summary:
-      "Supporting students through their first steps in programming and web development.",
-    highlights: ["Tutoring in **JavaScript, C#, HTML/CSS and MySQL**"],
+      "Full stack development of client platforms: interfaces, APIs, payments and AI service integration.",
+    highlights: [
+      "**Auto loan calculator:** offer and payment from the vehicle's market value, AI document analysis and a PDF customer narrative",
+      "**Marketplace with auctions:** safe concurrent bids, automatic closing, card payments and delivery pinned on a map",
+      "**Interfaces for complex financial data:** tabbed workflows, approval states and tooltips that guide document uploads",
+      "Turning clients' **business rules** into clear admin tools",
+    ],
+  },
+  "DYGAV · Digitalización y Gestión de Alquileres Vacacionales": {
+    role: "Full Stack Web Developer (internship)",
+    company: "DYGAV · Vacation rental digitalization and management",
+    summary: "Process automation and frontend for a vacation rental platform.",
+    highlights: [
+      "**Automation** of invoices and settlements with Python scripts from raw data, removing manual work",
+      "Automatic image conversion to **WebP** and upload to **AWS S3** to lighten the site",
+      "**Figma** prototypes turned into Next.js and TypeScript interfaces",
+      "**Messaging** automation through APIs",
+    ],
+  },
+  "La Nevería": {
+    role: "Frontend Developer (freelance)",
+    summary: "Inventory and sales management system.",
+    highlights: [
+      "**UX/UI** design of the inventory and sales interface, built to record every transaction quickly",
+    ],
+  },
+  "Programa Estudiante Tutor · UNAB": {
+    role: "Web development tutor",
+    company: "Student Tutor Program · UNAB",
+    summary: "Mentoring students at Universidad Doctor Andrés Bello.",
+    highlights: [
+      "Tutoring in **JavaScript, C#, HTML/CSS and MySQL**: programming logic, page layout and relational database design",
+    ],
   },
 });
 

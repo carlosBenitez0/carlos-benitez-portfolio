@@ -33,7 +33,7 @@ export const ExperienceTimeline = () => {
               {job.date && (
                 <time
                   dateTime={job.date.start}
-                  className="text-xs text-cbpgray-200/60"
+                  className="text-xs text-cbpgray-400"
                 >
                   {formatProjectDate(job.date)}
                 </time>
@@ -56,22 +56,24 @@ export const ExperienceTimeline = () => {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {technologies
-                .filter((technology) =>
-                  job.technologies.includes(technology.name),
-                )
-                .map((technology) => (
-                  <TechnologyLabel
-                    key={technology.name}
-                    name={technology.name}
-                    icon={technology.icon}
-                    color={technology.color}
-                    url={technology.url}
-                    compact={isMobile}
-                  />
-                ))}
-            </div>
+            {job.technologies.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {technologies
+                  .filter((technology) =>
+                    job.technologies.includes(technology.name),
+                  )
+                  .map((technology) => (
+                    <TechnologyLabel
+                      key={technology.name}
+                      name={technology.name}
+                      icon={technology.icon}
+                      color={technology.color}
+                      url={technology.url}
+                      compact={isMobile}
+                    />
+                  ))}
+              </div>
+            )}
           </article>
         </li>
       ))}

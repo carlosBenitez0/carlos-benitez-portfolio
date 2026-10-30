@@ -61,6 +61,27 @@ export const technologies = {
       logo: "/tech/react-bits.webp",
       url: "https://reactbits.dev/",
     },
+    {
+      name: "Flutter",
+      logo: "/tech/flutter.svg",
+      url: "https://flutter.dev/",
+    },
+    {
+      name: "Dart",
+      logo: "/tech/dart.svg",
+      url: "https://dart.dev/",
+    },
+    {
+      name: "Vite",
+      logo: "/tech/vite.svg",
+      url: "https://vite.dev/",
+    },
+    {
+      name: "Three.js",
+      logo: "/tech/threejs.svg",
+      invertInLight: true,
+      url: "https://threejs.org/",
+    },
   ],
   backend: [
     {
@@ -106,6 +127,11 @@ export const technologies = {
       name: "Supabase",
       logo: "/tech/supabase.svg",
       url: "https://supabase.com/",
+    },
+    {
+      name: "CodeIgniter",
+      logo: "/tech/codeigniter.svg",
+      url: "https://codeigniter.com/",
     },
   ],
   learning: [
@@ -219,6 +245,31 @@ export const technologies = {
       name: "Responsively",
       logo: "/tech/responsively.webp",
       url: "https://responsively.app/",
+    },
+    {
+      name: "HubSpot",
+      logo: "/tech/hubspot.svg",
+      url: "https://www.hubspot.com/",
+    },
+    {
+      name: "Storybook",
+      logo: "/tech/storybook.svg",
+      url: "https://storybook.js.org/",
+    },
+    {
+      name: "Vitest",
+      logo: "/tech/vitest.svg",
+      url: "https://vitest.dev/",
+    },
+    {
+      name: "Playwright",
+      logo: "/tech/playwright.svg",
+      url: "https://playwright.dev/",
+    },
+    {
+      name: "pnpm",
+      logo: "/tech/pnpm.svg",
+      url: "https://pnpm.io/",
     },
   ],
 };

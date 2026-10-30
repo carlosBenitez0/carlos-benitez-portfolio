@@ -76,7 +76,7 @@ export const AIToolCard = ({
           {/* En móvil (2 columnas) se ocultan para que las cards no se alarguen */}
           {beneficios.length > 0 && (
             <div className="mt-auto hidden md:block">
-              <h5 className="mb-2 text-xs font-medium text-cbpgray-400">
+              <h5 className="mb-2 text-xs font-medium text-cbpgray-300">
                 {t.ai.benefits}
               </h5>
               <ul className="space-y-1.5">
