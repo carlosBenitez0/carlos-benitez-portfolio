@@ -17,14 +17,14 @@ describe("CaseStudies", () => {
       ).toBeInTheDocument();
     }
     expect(
-      screen.getAllByRole("button", { name: /Leer el caso/ }),
+      screen.getAllByRole("button", { name: /Ver detalles/ }),
     ).toHaveLength(caseStudies.length);
   });
 
   it("abre el caso en un diálogo con nombre y lo refleja en la URL", () => {
     render(<CaseStudies />);
     fireEvent.click(
-      screen.getByRole("button", { name: `Leer el caso: ${first.title}` }),
+      screen.getByRole("button", { name: `Ver detalles: ${first.title}` }),
     );
 
     const dialog = screen.getByRole("dialog", { name: first.title });
@@ -37,7 +37,7 @@ describe("CaseStudies", () => {
   it("al cerrar quita el caso de la URL", () => {
     render(<CaseStudies />);
     fireEvent.click(
-      screen.getByRole("button", { name: `Leer el caso: ${first.title}` }),
+      screen.getByRole("button", { name: `Ver detalles: ${first.title}` }),
     );
     fireEvent.click(screen.getByRole("button", { name: "Cerrar" }));
 

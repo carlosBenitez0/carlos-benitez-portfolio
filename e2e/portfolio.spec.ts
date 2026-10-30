@@ -625,7 +625,7 @@ test.describe("idiomas", () => {
       expect(response.status(), path).toBe(200);
     }
     expect(await (await request.get("/en/llms.txt")).text()).toContain(
-      "## Case studies",
+      "## Featured work",
     );
   });
 });

@@ -27,14 +27,14 @@ const es = {
   header: {
     greeting: "Hola,",
     name: "soy Carlos",
-    seeCases: "Ver casos de estudio",
+    seeCases: "Ver proyectos destacados",
     downloadCv: "Descargar CV",
     toProjects: "Ir a la sección de proyectos",
     toProjectsTitle: "Ver proyectos",
   },
   sections: {
     projects: "Proyectos",
-    cases: "Casos de estudio",
+    cases: "Proyectos destacados",
     otherProjects: "Otros proyectos",
     experience: "Experiencia",
     about: "Sobre mí",
@@ -48,7 +48,7 @@ const es = {
     code: (name: string) => `Código de ${name} en GitHub`,
   },
   cases: {
-    read: "Leer el caso",
+    read: "Ver detalles",
     close: "Cerrar",
     problem: "El problema",
     flow: "Cómo funciona",
@@ -212,14 +212,14 @@ const en: UiText = {
   header: {
     greeting: "Hi,",
     name: "I'm Carlos",
-    seeCases: "See case studies",
+    seeCases: "See featured work",
     downloadCv: "Download CV",
     toProjects: "Go to the projects section",
     toProjectsTitle: "See projects",
   },
   sections: {
     projects: "Projects",
-    cases: "Case studies",
+    cases: "Featured work",
     otherProjects: "Other projects",
     experience: "Experience",
     about: "About me",
@@ -234,7 +234,7 @@ const en: UiText = {
     code: (name: string) => `${name} source code on GitHub`,
   },
   cases: {
-    read: "Read the case",
+    read: "View details",
     close: "Close",
     problem: "The problem",
     flow: "How it works",

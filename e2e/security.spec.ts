@@ -217,7 +217,7 @@ test.describe("página 404", () => {
   });
 });
 
-test.describe("casos de estudio", () => {
+test.describe("proyectos destacados", () => {
   for (const scheme of ["dark", "light"] as const) {
     test(`el diálogo se abre, es accesible y se cierra con Esc (${scheme})`, async ({
       page,

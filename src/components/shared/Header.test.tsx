@@ -5,11 +5,11 @@ import { setViewportWidth } from "../../test/browserMocks";
 import { Header } from "./Header";
 
 describe("Header", () => {
-  it("lleva a los casos de estudio y descarga el CV", () => {
+  it("lleva a los proyectos destacados y descarga el CV", () => {
     render(<Header />);
 
     expect(
-      screen.getByRole("link", { name: "Ver casos de estudio" }),
+      screen.getByRole("link", { name: "Ver proyectos destacados" }),
     ).toHaveAttribute("href", "#cases");
     const cv = screen.getByRole("link", { name: "Descargar CV" });
     expect(cv).toHaveAttribute("href", links.cv);
@@ -21,7 +21,7 @@ describe("Header", () => {
     render(<Header />);
 
     expect(
-      screen.getByRole("link", { name: "Ver casos de estudio" }),
+      screen.getByRole("link", { name: "Ver proyectos destacados" }),
     ).toBeInTheDocument();
   });
 });

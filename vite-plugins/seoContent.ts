@@ -36,7 +36,7 @@ const LABELS = {
     profile: "Perfil",
     markdown: "Portafolio completo en Markdown",
     markdownNote:
-      "sobre mí, experiencia, casos de estudio, proyectos, tecnologías, uso de IA y contacto",
+      "sobre mí, experiencia, proyectos destacados, otros proyectos, tecnologías, uso de IA y contacto",
     cvNote: "experiencia, formación y habilidades",
     linkedinNote: "perfil profesional",
     githubNote: "código de sus proyectos",
@@ -58,7 +58,7 @@ const LABELS = {
     profile: "Profile",
     markdown: "Full portfolio in Markdown",
     markdownNote:
-      "about, experience, case studies, projects, technologies, AI usage and contact",
+      "about, experience, featured work, other projects, technologies, AI usage and contact",
     cvNote: "experience, education and skills (in Spanish)",
     linkedinNote: "professional profile",
     githubNote: "source code of his projects",

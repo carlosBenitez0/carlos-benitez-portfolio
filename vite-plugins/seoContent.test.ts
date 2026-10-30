@@ -136,7 +136,7 @@ describe("versión en inglés", () => {
     const llms = buildLlmsTxt("en");
     const md = buildIndexMd("en");
     expect(llms).toContain(`(${SITE_URL}en/index.md)`);
-    expect(llms).toContain("## Case studies");
+    expect(llms).toContain("## Featured work");
     for (const caseStudy of content.en.caseStudies) {
       expect(llms).toContain(`(${SITE_URL}en/#caso-${caseStudy.slug})`);
     }

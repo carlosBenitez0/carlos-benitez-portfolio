@@ -23,7 +23,7 @@ describe("página en inglés (/en/)", { timeout: 20_000 }, () => {
       "Hi, I'm Carlos",
     );
     expect(
-      screen.getByRole("link", { name: "See case studies" }),
+      screen.getByRole("link", { name: "See featured work" }),
     ).toHaveAttribute("href", "#cases");
   });
 

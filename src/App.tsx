@@ -137,7 +137,7 @@ function App() {
               title={t.sections.projects}
               icon={<IoCodeWorkingOutline className="fx-icon fx-stretch" />}
             />
-            {/* Casos de estudio primero: el trabajo con más peso */}
+            {/* Proyectos destacados primero: el trabajo con más peso */}
             <div id="cases" className="mb-12 scroll-mt-28">
               <h3 className="mb-4 text-xl font-semibold text-cbpgray-200">
                 {t.sections.cases}

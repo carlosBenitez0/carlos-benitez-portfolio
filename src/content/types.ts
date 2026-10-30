@@ -35,7 +35,7 @@ export interface Experience {
   technologies: string[];
 }
 
-// Casos de estudio: el trabajo con más peso, contado como problema, aporte,
+// Proyectos destacados (casos de estudio): el trabajo con más peso, contado como problema, aporte,
 // decisiones y resultados. `flow` son los pasos del diagrama del caso. Los
 // apartados vacíos no se muestran. Mismo formato **resaltado** que
 // `experience`.
