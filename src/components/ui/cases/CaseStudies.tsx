@@ -50,7 +50,8 @@ export const CaseStudies = () => {
 
   return (
     <>
-      <div className="grid gap-3 md:grid-cols-3 md:gap-6">
+      {/* Dos columnas: con cuatro proyectos queda una cuadrícula pareja */}
+      <div className="grid gap-3 md:grid-cols-2 md:gap-6">
         {caseStudies.map((caseStudy) => (
           <article
             key={caseStudy.slug}

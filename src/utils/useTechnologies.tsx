@@ -13,6 +13,7 @@ import {
   SiFastapi,
   SiFigma,
   SiFlutter,
+  SiGooglegemini,
   SiHubspot,
   SiOpenai,
   SiPostgresql,
@@ -236,6 +237,12 @@ export const useTechnologies = () => {
       icon: <SiHubspot />,
       color: "#FF7A59",
       url: "https://www.hubspot.com/",
+    },
+    {
+      name: "Gemini",
+      icon: <SiGooglegemini />,
+      color: "#8E75F2",
+      url: "https://ai.google.dev/",
     },
     {
       name: "OpenAI",

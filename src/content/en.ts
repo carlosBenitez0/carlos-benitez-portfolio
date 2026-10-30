@@ -28,6 +28,10 @@ const profile: Content["profile"] = {
 };
 
 const projects = translate(es.projects, "name", {
+  Yamgurumi: {
+    description:
+      "Live amigurumi store with its own AI assistant, WhatsApp ordering and an admin panel.",
+  },
   TechZone: {
     description:
       "Online tech store with a modern design and an admin dashboard.",
@@ -47,6 +51,48 @@ const projects = translate(es.projects, "name", {
 });
 
 const caseStudies = translate(es.caseStudies, "slug", {
+  yamgurumi: {
+    title: "Yamgurumi: a store with an AI assistant",
+    summary:
+      "A store for handmade amigurumi, live on its own domain: catalog, WhatsApp ordering, customer accounts, a full admin panel and its own AI assistant that recommends products.",
+    context:
+      "Built end to end for a craft workshop in El Salvador with Next.js 16, React 19, PostgreSQL and Prisma on Vercel. It's live and in active development.",
+    role: "Design, development and deployment",
+    problem:
+      "A solo artisan needed to sell online with no payment gateway and no support team: show the catalog, take orders and custom requests, answer questions at any hour and run everything from one place.",
+    contributions: [
+      "**Its own AI assistant:** a streaming chat on **Gemini 3.5 Flash-Lite** that answers from the store's real catalog and policies, recommends products as cards and hands the conversation to WhatsApp when a person is needed",
+      "**Admin panel:** products, categories, orders, custom requests, coupons, reviews, users, newsletter, CSV-exportable reports, an audit log and a review of chat conversations",
+      "**Checkout without a gateway:** bag, prices and coupons computed on the server, and orders confirmed over WhatsApp with bank transfer payment",
+      "**Customer accounts:** sign-up with email verification, password recovery, favorites, notifications, order tracking and customer levels",
+      "**3D hero** with React Three Fiber and GSAP animations",
+    ],
+    decisions: [
+      "**The AI only knows what's public:** the server builds the context from the catalog and the store's public data; the model has no tools and no database access",
+      "**Swappable provider:** the chat uses the OpenAI-compatible API, so the model (Gemini, Groq, Claude…) changes with environment variables alone",
+      "**AI with limits:** per-visitor, burst and store-wide daily limits, an origin check and a response timeout",
+      "**Privacy:** visitors are told before the conversation is saved, and it deletes itself after 90 days",
+      "**The server decides:** prices in cents, stock and atomically redeemed coupons, and sessions checked against the database on every request",
+      "**Safe images:** validated by content and re-encoded without EXIF metadata",
+    ],
+    results: [
+      "**Live** on its own domain: yamgurumi.com",
+      "Over **260 unit tests** plus Playwright **E2E** tests in CI",
+      "Help at any hour, with a handoff to a person over WhatsApp",
+    ],
+    flow: [
+      "Customer",
+      "AI chat",
+      "Recommendation",
+      "Bag",
+      "WhatsApp order",
+      "Admin panel",
+    ],
+    link: {
+      label: "Visit yamgurumi.com",
+      url: "https://yamgurumi.com/",
+    },
+  },
   "financiamiento-automotriz": {
     title: "AI-powered auto loan calculator",
     summary:

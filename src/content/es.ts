@@ -17,6 +17,24 @@ const profile = {
 
 const projects: Project[] = [
   {
+    name: "Yamgurumi",
+    image: "/projects/yamgurumi.webp",
+    description:
+      "Tienda de amigurumis en producción, con asistente de IA propio, pedidos por WhatsApp y panel de administración.",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "Prisma",
+      "Gemini",
+    ],
+    state: "wip",
+    url: "https://yamgurumi.com/",
+    gitHub: "",
+    date: { start: "2026-07", current: true },
+  },
+  {
     name: "TechZone",
     image: "/projects/techzone.webp",
     description:
@@ -61,6 +79,64 @@ const projects: Project[] = [
 ];
 
 const caseStudies: CaseStudy[] = [
+  {
+    slug: "yamgurumi",
+    title: "Yamgurumi: tienda con asistente de IA",
+    summary:
+      "Tienda de amigurumis hechos a mano, en producción con dominio propio: catálogo, pedidos por WhatsApp, cuentas de cliente, un panel de administración completo y un asistente de IA propio que recomienda productos.",
+    context:
+      "Desarrollada de punta a punta para un taller artesanal de El Salvador, con Next.js 16, React 19, PostgreSQL y Prisma sobre Vercel. Está en producción y en desarrollo activo.",
+    role: "Diseño, desarrollo y despliegue",
+    problem:
+      "Una artesana que trabaja sola necesitaba vender en línea sin pasarela de pagos ni equipo de soporte: mostrar el catálogo, recibir pedidos y encargos, responder dudas a cualquier hora y administrar todo desde un solo lugar.",
+    contributions: [
+      "**Asistente de IA propio:** chat en streaming con **Gemini 3.5 Flash-Lite** que responde con el catálogo y las políticas reales de la tienda, recomienda productos con tarjetas y pasa la conversación a WhatsApp cuando hace falta una persona",
+      "**Panel de administración:** productos, categorías, pedidos, encargos personalizados, cupones, reseñas, usuarios, newsletter, reportes exportables a CSV, auditoría y revisión de las conversaciones del chat",
+      "**Compra sin pasarela:** bolsa, precios y cupones calculados en el servidor, y pedido confirmado por WhatsApp con pago por transferencia",
+      "**Cuenta de cliente:** registro con verificación por correo, recuperación de contraseña, favoritos, notificaciones, seguimiento de pedidos y niveles de cliente",
+      "**Portada en 3D** con React Three Fiber y animaciones con GSAP",
+    ],
+    decisions: [
+      "**La IA solo conoce lo público:** el servidor arma el contexto con el catálogo y los datos públicos de la tienda; el modelo no tiene herramientas ni acceso a la base de datos",
+      "**Proveedor intercambiable:** el chat usa la API compatible con OpenAI, así que se cambia de modelo (Gemini, Groq, Claude…) solo con variables de entorno",
+      "**IA con límites:** límites por visitante, en ráfaga y diarios para toda la tienda, comprobación de origen y tiempo máximo de respuesta",
+      "**Privacidad:** se avisa antes de guardar la conversación y se borra sola a los 90 días",
+      "**El servidor decide:** precios en centavos, stock y cupones canjeados de forma atómica, y sesiones validadas contra la base de datos en cada petición",
+      "**Imágenes seguras:** validadas por su contenido y re-codificadas sin metadatos EXIF",
+    ],
+    results: [
+      "**En producción** con dominio propio: yamgurumi.com",
+      "Más de **260 tests unitarios** y pruebas **E2E** con Playwright en CI",
+      "Atención a cualquier hora, con traspaso a una persona por WhatsApp",
+    ],
+    flow: [
+      "Cliente",
+      "Chat con IA",
+      "Recomendación",
+      "Bolsa",
+      "Pedido por WhatsApp",
+      "Panel de administración",
+    ],
+    technologies: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "Prisma",
+      "Gemini",
+      "Three.js",
+      "GSAP",
+      "Zustand",
+      "Vitest",
+      "Playwright",
+      "Vercel",
+    ],
+    link: {
+      label: "Visitar yamgurumi.com",
+      url: "https://yamgurumi.com/",
+    },
+  },
   {
     slug: "financiamiento-automotriz",
     title: "Calculadora de préstamos automotrices con IA",
