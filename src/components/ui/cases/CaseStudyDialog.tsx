@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { FaCheck, FaGithub } from "react-icons/fa6";
+import { FaArrowUpRightFromSquare, FaCheck, FaGithub } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import type { CaseStudy } from "../../../content/site";
 import { useTechnologies } from "../../../utils/useTechnologies";
@@ -145,7 +145,15 @@ export const CaseStudyDialog = ({
               rel="noopener noreferrer"
               className="fx-trigger mt-6 inline-flex items-center gap-2 rounded-md border border-cbpbg-400 px-4 py-2 text-sm transition-colors hover:border-cbpviolet-300"
             >
-              <FaGithub aria-hidden="true" className="fx-icon fx-spin" />
+              {/* GitHub solo si el enlace va al repo; si no, es un sitio web */}
+              {new URL(caseStudy.link.url).hostname === "github.com" ? (
+                <FaGithub aria-hidden="true" className="fx-icon fx-spin" />
+              ) : (
+                <FaArrowUpRightFromSquare
+                  aria-hidden="true"
+                  className="fx-icon fx-nudge"
+                />
+              )}
               {caseStudy.link.label}
             </a>
           )}

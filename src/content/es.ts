@@ -116,7 +116,7 @@ const caseStudies: CaseStudy[] = [
       "**En producción** con dominio propio: yamgurumi.com",
       "Atención **a cualquier hora** con un asistente propio, y paso a una persona por WhatsApp cuando hace falta",
       "La dueña lleva **ventas, inventario, clientes y contenido** desde un solo panel",
-      "Más de **260 tests unitarios** y pruebas **E2E** con Playwright en CI, sobre una base de datos recién migrada",
+      "Más de **260 tests unitarios** y pruebas **E2E** con Playwright en CI",
     ],
     flow: [
       "Cliente",

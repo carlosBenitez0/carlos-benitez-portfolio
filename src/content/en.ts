@@ -87,7 +87,7 @@ const caseStudies = translate(es.caseStudies, "slug", {
       "**Live** on its own domain: yamgurumi.com",
       "Help **at any hour** from its own assistant, with a handoff to a person over WhatsApp when needed",
       "The owner runs **sales, inventory, customers and content** from one panel",
-      "Over **260 unit tests** plus Playwright **E2E** tests in CI, against a freshly migrated database",
+      "Over **260 unit tests** plus Playwright **E2E** tests in CI",
     ],
     flow: [
       "Customer",
