@@ -1,6 +1,7 @@
 import { IoIosArrowUp } from "react-icons/io";
 import ShinyText from "../../ui/ShinyText";
 import { technologies } from "../../../utils/technologies";
+import { t } from "../../../i18n/ui";
 
 // Tecnologías con las que está hecha esta página, en el orden en que se muestran
 const SITE_STACK = [
@@ -34,21 +35,19 @@ export const Footer = () => (
             <p className="text-lg font-semibold text-cbpviolet-100">
               Carlos Benítez
             </p>
-            <span className="text-sm text-cbpgray-400">Desarrollador web</span>
+            <span className="text-sm text-cbpgray-400">{t.footer.role}</span>
           </div>
         </div>
 
         <blockquote className="max-w-md text-base leading-relaxed text-cbpgray-300 italic">
-          “La innovación es el <ShinyText text="IDE" /> del progreso; la
-          creatividad, su <ShinyText text="lenguaje de programación" />
+          {t.footer.quoteStart} <ShinyText text={t.footer.quoteIde} />{" "}
+          {t.footer.quoteMiddle} <ShinyText text={t.footer.quoteLanguage} />
           .”
         </blockquote>
       </div>
 
       <div>
-        <p className="mb-6 text-sm text-cbpgray-400">
-          Esta página está hecha con
-        </p>
+        <p className="mb-6 text-sm text-cbpgray-400">{t.footer.builtWith}</p>
         <ul className="grid grid-cols-4 gap-x-3 gap-y-7">
           {siteTechnologies.map((technology) => (
             <li key={technology.name}>
@@ -75,14 +74,16 @@ export const Footer = () => (
     </div>
 
     <div className="flex flex-col items-center justify-between gap-4 border-t border-cbpgray-800/60 py-6 text-xs text-cbpgray-400 sm:flex-row">
-      <p>© {new Date().getFullYear()} Carlos Benítez · Hecho en El Salvador</p>
+      <p>
+        © {new Date().getFullYear()} Carlos Benítez · {t.footer.madeIn}
+      </p>
       <button
         type="button"
         onClick={scrollToTop}
         className="fx-trigger flex cursor-pointer items-center gap-1.5 rounded-full border border-cbpgray-800 px-3 py-1.5 transition-colors hover:border-cbpviolet-400 hover:text-cbpgray-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-300"
       >
         <IoIosArrowUp aria-hidden="true" className="fx-icon fx-rise" />
-        Volver arriba
+        {t.footer.backToTop}
       </button>
     </div>
   </footer>

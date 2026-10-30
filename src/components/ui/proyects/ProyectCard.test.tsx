@@ -10,7 +10,7 @@ describe("ProyectCard", () => {
         image="https://res.cloudinary.com/x.png"
         description="Aplicación de Pokédex"
         technologies={["React"]}
-        state="Terminado"
+        state="done"
         url="https://pok-dex.example.com"
         gitHub="https://github.com/carlosBenitez0/pokedex"
       />,
@@ -31,7 +31,7 @@ describe("ProyectCard", () => {
         image="/projects/pokedex.webp"
         description="Aplicación de Pokédex"
         technologies={["React"]}
-        state="En desarrollo"
+        state="wip"
         url="https://pok-dex.example.com"
         gitHub="https://github.com/carlosBenitez0/pokedex"
       />,
@@ -48,5 +48,64 @@ describe("ProyectCard", () => {
       "#9d4edd",
     );
     expect(screen.getByText("En desarrollo")).toBeInTheDocument();
+  });
+
+  it("muestra cuándo se hizo el proyecto, solo si tiene fecha", () => {
+    const props = {
+      name: "TechZone",
+      image: "/projects/techzone.webp",
+      description: "Tienda en línea",
+      technologies: ["React"],
+      state: "wip" as const,
+      url: "https://techzone.example.com",
+      gitHub: "https://github.com/carlosBenitez0/techzone",
+    };
+    const { container, rerender } = render(
+      <ProyectCard {...props} date={{ start: "2025-06", end: "2025-08" }} />,
+    );
+
+    expect(screen.getByText("jun – ago 2025")).toHaveAttribute(
+      "dateTime",
+      "2025-06",
+    );
+
+    rerender(<ProyectCard {...props} />);
+    expect(container.querySelector("time")).toBeNull();
+  });
+
+  it("no muestra el botón de GitHub si el proyecto no tiene repo", () => {
+    render(
+      <ProyectCard
+        name="Portafolio Académico"
+        image="/projects/portafolio-academico.webp"
+        description="Proyecto académico"
+        technologies={["HTML"]}
+        state="done"
+        url="https://academico.example.com"
+        gitHub=""
+      />,
+    );
+
+    expect(
+      screen.queryByRole("link", { name: /en GitHub/ }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("distingue un proyecto en pausa con su propio color", () => {
+    const { container } = render(
+      <ProyectCard
+        name="Pokédex"
+        image="/projects/pokedex.webp"
+        description="Aplicación de Pokédex"
+        technologies={["React"]}
+        state="paused"
+        url="https://pok-dex.example.com"
+        gitHub="https://github.com/carlosBenitez0/pokedex"
+      />,
+    );
+
+    expect(screen.getByText("En pausa")).toBeInTheDocument();
+    const dot = container.querySelector<HTMLElement>(".project-state > span");
+    expect(dot?.style.backgroundColor).toBe("var(--state-paused)");
   });
 });

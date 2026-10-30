@@ -66,8 +66,12 @@ test.describe("navbar", () => {
 
   test("cabe en pantalla y cada link ocupa una sola línea", async ({
     page,
+    isMobile,
   }) => {
-    for (const width of [768, 1000, 1024, 1366]) {
+    // Anchos de teléfono solo en el proyecto móvil: en Chrome de escritorio la
+    // barra de scroll ocupa ancho real (en un teléfono flota)
+    const widths = [768, 1000, 1024, 1366];
+    for (const width of isMobile ? [360, 375, ...widths] : widths) {
       await page.setViewportSize({ width, height: 700 });
       await page.goto("/", { waitUntil: "domcontentloaded" });
       await expect(page.locator('nav a[aria-label="Contáctame"]')).toBeVisible({
@@ -77,7 +81,13 @@ test.describe("navbar", () => {
         const bar = document.querySelector("nav")!.parentElement!;
         const items = [...bar.children].map((c) => c.getBoundingClientRect());
         return {
-          fits: items.every((r) => r.left >= 0 && r.right <= innerWidth + 0.5),
+          // Dentro de la pantalla y del ancho máximo del contenido (950px)
+          fits: items.every(
+            (r) =>
+              r.left >= 0 &&
+              r.right <= innerWidth + 0.5 &&
+              r.right <= bar.getBoundingClientRect().right + 0.5,
+          ),
           singleLine: [...document.querySelectorAll("nav ul a")].every(
             (a) => a.getBoundingClientRect().height < 26,
           ),
@@ -567,5 +577,55 @@ test.describe("footer", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeInViewport({
       timeout: 5_000,
     });
+  });
+});
+
+test.describe("idiomas", () => {
+  test("la versión en inglés se sirve con su HTML y cambia de idioma conservando la sección", async ({
+    page,
+  }) => {
+    const errors = collectPageErrors(page);
+    await page.goto("/en/");
+
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page).toHaveTitle(/Web Developer/);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(
+      "I'm Carlos",
+    );
+    await expect(
+      page.getByRole("heading", { name: "Experience", level: 2 }),
+    ).toBeAttached();
+
+    await scrollToSection(page, "experience");
+    await page.evaluate(() => history.replaceState(null, "", "#experience"));
+    const toSpanish = page.getByRole("link", {
+      name: "Ver esta página en español",
+    });
+    await expect(toSpanish).toBeVisible({ timeout: 15_000 });
+    await toSpanish.click();
+
+    await expect(page).toHaveURL(/\/#experience$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "es");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(
+      "soy Carlos",
+    );
+    expect(errors).toEqual([]);
+  });
+
+  test("los archivos para agentes existen en los dos idiomas", async ({
+    request,
+  }) => {
+    for (const path of [
+      "/llms.txt",
+      "/en/llms.txt",
+      "/index.md",
+      "/en/index.md",
+    ]) {
+      const response = await request.get(path);
+      expect(response.status(), path).toBe(200);
+    }
+    expect(await (await request.get("/en/llms.txt")).text()).toContain(
+      "## Featured work",
+    );
   });
 });

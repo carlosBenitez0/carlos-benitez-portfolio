@@ -5,7 +5,33 @@ import { SiTailwindcss } from "react-icons/si";
 import { SiJavascript } from "react-icons/si";
 import { SiTypescript } from "react-icons/si";
 import { FaPython } from "react-icons/fa";
-import { SiFastapi } from "react-icons/si";
+import {
+  SiChartdotjs,
+  SiCodeigniter,
+  SiDart,
+  SiDocker,
+  SiFastapi,
+  SiFigma,
+  SiFlutter,
+  SiGooglegemini,
+  SiHubspot,
+  SiOpenai,
+  SiPostgresql,
+  SiResend,
+  SiPrisma,
+  SiSlack,
+  SiStackblitz,
+  SiStorybook,
+  SiPhp,
+  SiThreedotjs,
+  SiUpstash,
+  SiVercel,
+  SiVite,
+  SiVitest,
+  SiZod,
+} from "react-icons/si";
+import { TbMasksTheater } from "react-icons/tb";
+import { FaAws } from "react-icons/fa";
 import { SiMysql } from "react-icons/si";
 import { SiFirebase } from "react-icons/si";
 
@@ -122,6 +148,158 @@ export const useTechnologies = () => {
       icon: <SiFastapi />,
       color: "#4CD4BE",
       url: "https://fastapi.tiangolo.com/",
+    },
+    {
+      name: "PHP",
+      icon: <SiPhp />,
+      color: "#8892BF",
+      url: "https://www.php.net/",
+    },
+    {
+      name: "CodeIgniter",
+      icon: <SiCodeigniter />,
+      color: "#F05A3E",
+      url: "https://codeigniter.com/",
+    },
+    {
+      name: "Vite",
+      icon: <SiVite />,
+      color: "#BD34FE",
+      url: "https://vite.dev/",
+    },
+    {
+      name: "Three.js",
+      icon: <SiThreedotjs />,
+      color: "#dddddd",
+      url: "https://threejs.org/",
+    },
+    {
+      name: "Vitest",
+      icon: <SiVitest />,
+      color: "#ACD157",
+      url: "https://vitest.dev/",
+    },
+    {
+      // Sin logo en react-icons: las máscaras de teatro de su marca
+      name: "Playwright",
+      icon: <TbMasksTheater />,
+      color: "#45BA4B",
+      url: "https://playwright.dev/",
+    },
+    {
+      // bolt.new es de StackBlitz y usa su rayo
+      name: "bolt.new",
+      icon: <SiStackblitz />,
+      color: "#1389FD",
+      url: "https://bolt.new/",
+    },
+    {
+      name: "Figma",
+      icon: <SiFigma />,
+      color: "#F24E1E",
+      url: "https://www.figma.com/",
+    },
+    {
+      name: "Flutter",
+      icon: <SiFlutter />,
+      color: "#47C5FB",
+      url: "https://flutter.dev/",
+    },
+    {
+      name: "Dart",
+      icon: <SiDart />,
+      color: "#40C4FF",
+      url: "https://dart.dev/",
+    },
+    {
+      name: "PostgreSQL",
+      icon: <SiPostgresql />,
+      color: "#699ECA",
+      url: "https://www.postgresql.org/",
+    },
+    {
+      name: "Prisma",
+      icon: <SiPrisma />,
+      color: "#dddddd",
+      url: "https://www.prisma.io/",
+    },
+    {
+      name: "Docker",
+      icon: <SiDocker />,
+      color: "#2496ED",
+      url: "https://www.docker.com/",
+    },
+    {
+      name: "n8n",
+      icon: <img src="/tech/n8n.svg" alt="" className="h-[14px] w-[14px]" />,
+      color: "#EA4B71",
+      url: "https://n8n.io/",
+    },
+    {
+      name: "HubSpot",
+      icon: <SiHubspot />,
+      color: "#FF7A59",
+      url: "https://www.hubspot.com/",
+    },
+    {
+      name: "Gemini",
+      icon: <SiGooglegemini />,
+      color: "#8E75F2",
+      url: "https://ai.google.dev/",
+    },
+    {
+      name: "Zod",
+      icon: <SiZod />,
+      color: "#3E67B1",
+      url: "https://zod.dev/",
+    },
+    {
+      name: "Resend",
+      icon: <SiResend />,
+      color: "#dddddd",
+      url: "https://resend.com/",
+    },
+    {
+      name: "Upstash",
+      icon: <SiUpstash />,
+      color: "#00E9A3",
+      url: "https://upstash.com/",
+    },
+    {
+      name: "OpenAI",
+      icon: <SiOpenai />,
+      color: "#dddddd",
+      url: "https://platform.openai.com/",
+    },
+    {
+      name: "Slack",
+      icon: <SiSlack />,
+      color: "#E01E5A",
+      url: "https://slack.com/",
+    },
+    {
+      name: "Storybook",
+      icon: <SiStorybook />,
+      color: "#FF4785",
+      url: "https://storybook.js.org/",
+    },
+    {
+      name: "Chart.js",
+      icon: <SiChartdotjs />,
+      color: "#FF6384",
+      url: "https://www.chartjs.org/",
+    },
+    {
+      name: "AWS",
+      icon: <FaAws />,
+      color: "#FF9900",
+      url: "https://aws.amazon.com/",
+    },
+    {
+      name: "Vercel",
+      icon: <SiVercel />,
+      color: "#dddddd",
+      url: "https://vercel.com/",
     },
     {
       name: "MySQL",

@@ -6,15 +6,19 @@ import type { Technology } from "../../../utils/useTechnologies";
 import { FaGithub } from "react-icons/fa";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import { useImagePalette } from "../../../hooks/useImagePalette";
+import type { Project, ProjectDate } from "../../../content/site";
+import { formatProjectDate } from "../../../utils/projectDate";
+import { t } from "../../../i18n/ui";
 
 interface ProyectCardProps {
   name: string;
   image: string;
   description: string;
   technologies: string[];
-  state: string;
+  state: Project["state"];
   url: string;
   gitHub: string;
+  date?: ProjectDate;
 }
 
 export const ProyectCard = ({
@@ -25,8 +29,10 @@ export const ProyectCard = ({
   state,
   url,
   gitHub,
+  date,
 }: ProyectCardProps) => {
   const technologiesList = useTechnologies();
+  const stateLabel = t.projects.state[state];
   const cardTextRef = useRef<HTMLDivElement>(null);
   // const proyectCardRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useIsMobile();
@@ -76,7 +82,7 @@ export const ProyectCard = ({
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`Ver el proyecto ${name} (${state})`}
+        aria-label={t.projects.open(name, stateLabel)}
         className={`grid-area-image project-frame relative z-10 block ${isMobile ? "m-1.5 rounded-[10px] p-[3px]" : "m-3 rounded-2xl p-[5px]"}`}
         style={
           {
@@ -109,14 +115,10 @@ export const ProyectCard = ({
               <span
                 aria-hidden="true"
                 className="h-1.5 w-1.5 rounded-full"
-                style={{
-                  backgroundColor:
-                    state === "Terminado"
-                      ? "var(--state-done)"
-                      : "var(--state-wip)",
-                }}
+                // --state-done, --state-wip o --state-paused (index.css)
+                style={{ backgroundColor: `var(--state-${state})` }}
               />
-              {state}
+              {stateLabel}
             </span>
           </span>
         </span>
@@ -144,16 +146,27 @@ export const ProyectCard = ({
               {name}
             </AnimatedGradientText>
           </div>
-          <a
-            href={gitHub}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Código de ${name} en GitHub`}
-            className={`fx-trigger flex shrink-0 items-center gap-2 rounded-md border text-cbpgray-200/50 transition-colors hover:border-cbpviolet-300 hover:text-cbpgray-200/80 ${isMobile ? "p-1.5 text-sm" : "p-2"}`}
-          >
-            <FaGithub className="fx-icon fx-spin" />
-          </a>
+          {/* Sin repo público (gitHub vacío) no hay botón */}
+          {gitHub && (
+            <a
+              href={gitHub}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t.projects.code(name)}
+              className={`fx-trigger flex shrink-0 items-center gap-2 rounded-md border text-cbpgray-200/50 transition-colors hover:border-cbpviolet-300 hover:text-cbpgray-200/80 ${isMobile ? "p-1.5 text-sm" : "p-2"}`}
+            >
+              <FaGithub className="fx-icon fx-spin" />
+            </a>
+          )}
         </div>
+        {date && (
+          <time
+            dateTime={date.start}
+            className={`mt-1 block text-cbpgray-200/60 ${isMobile ? "text-[10px]" : "text-xs"}`}
+          >
+            {formatProjectDate(date)}
+          </time>
+        )}
 
         <p
           className={`mt-2 text-cbpgray-200 ${isMobile ? "line-clamp-3 text-xs leading-snug" : "text-sm"}`}

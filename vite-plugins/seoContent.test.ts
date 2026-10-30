@@ -1,6 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { SITE_URL, about, links, projects } from "../src/content/site";
 import {
+  SITE_URL,
+  about,
+  caseStudies,
+  experience,
+  links,
+  projects,
+} from "../src/content/site";
+import { content } from "../src/content/site";
+import { plainText } from "../src/utils/richText";
+import {
+  toEnglishHtml,
   buildIndexMd,
   buildJsonLd,
   buildLlmsTxt,
@@ -47,12 +57,23 @@ describe("index.md", () => {
   const md = buildIndexMd();
 
   it("incluye todo el contenido de la página", () => {
-    for (const text of [...about.paragraphs, ...about.achievements]) {
-      expect(md).toContain(text);
+    for (const text of about.paragraphs) {
+      expect(md).toContain(plainText(text));
     }
+    expect(md).not.toMatch(/\[\[/);
     for (const project of projects) {
       expect(md).toContain(`### [${project.name}](${project.url})`);
     }
+    expect(md).toContain("- Fecha: sep – oct 2024 · retomado jul 2025");
+    for (const caseStudy of caseStudies) {
+      expect(md).toContain(caseStudy.problem);
+      expect(md).toContain(`#caso-${caseStudy.slug})`);
+    }
+    for (const job of experience) {
+      expect(md).toContain(`### ${job.role} · ${job.company}`);
+    }
+    // Los resaltados (**...**) llegan sin asteriscos
+    expect(md).not.toContain("**créditos");
     expect(md).toContain("## Tecnologías");
     expect(md).toContain("## Inteligencia artificial");
     expect(md).toContain(links.linkedin);
@@ -64,7 +85,14 @@ describe("HTML estático de #root", () => {
 
   it("tiene un solo h1 y una sección por bloque del sitio", () => {
     expect(html.match(/<h1>/g)).toHaveLength(1);
-    for (const id of ["projects", "about", "technologies", "ai", "contact"]) {
+    for (const id of [
+      "projects",
+      "experience",
+      "about",
+      "technologies",
+      "ai",
+      "contact",
+    ]) {
       expect(html).toContain(`<section id="${id}">`);
     }
   });
@@ -93,10 +121,66 @@ describe("JSON-LD", () => {
 });
 
 describe("sitemap.xml", () => {
-  it("lista la página y el CV con la fecha del build", () => {
+  it("lista las dos versiones (enlazadas por hreflang) y el CV", () => {
     const xml = buildSitemap("2026-01-02");
     expect(xml).toContain(`<loc>${SITE_URL}</loc>`);
+    expect(xml).toContain(`<loc>${SITE_URL}en/</loc>`);
+    expect(xml).toContain(`hreflang="en" href="${SITE_URL}en/"`);
     expect(xml).toContain("CV.pdf</loc>");
-    expect(xml.match(/<lastmod>2026-01-02<\/lastmod>/g)).toHaveLength(2);
+    expect(xml.match(/<lastmod>2026-01-02<\/lastmod>/g)).toHaveLength(3);
+  });
+});
+
+describe("versión en inglés", () => {
+  it("llms.txt e index.md usan el contenido y las URLs en inglés", () => {
+    const llms = buildLlmsTxt("en");
+    const md = buildIndexMd("en");
+    expect(llms).toContain(`(${SITE_URL}en/index.md)`);
+    expect(llms).toContain("## Featured work");
+    for (const caseStudy of content.en.caseStudies) {
+      expect(llms).toContain(`(${SITE_URL}en/#caso-${caseStudy.slug})`);
+    }
+    expect(md).toContain("## About me");
+    expect(md).toContain("Sep – Oct 2024 · resumed Jul 2025");
+    expect(md).toContain("- Status: On hold");
+    expect(md).not.toContain("Estado:");
+  });
+
+  it("el HTML estático y el JSON-LD están en inglés", () => {
+    const html = buildStaticHtml("en");
+    expect(html).toContain("<h2>Experience</h2>");
+    expect(html).not.toContain("Sobre mí");
+    expect(JSON.parse(buildJsonLd("en"))["@graph"][0].inLanguage).toBe("en");
+  });
+
+  it("toEnglishHtml cambia idioma, metadatos y contenido de index.html", () => {
+    const esHtml = [
+      '<html lang="es"><head>',
+      "<title>\n  Viejo\n</title>",
+      '<meta name="description" content="es" />',
+      ...[
+        "og:title",
+        "og:description",
+        "og:url",
+        "og:locale",
+        "og:image:alt",
+      ].map((key) => `<meta\n  property="${key}"\n  content="es"\n/>`),
+      ...["twitter:title", "twitter:description", "twitter:image:alt"].map(
+        (key) => `<meta name="${key}" content="es" />`,
+      ),
+      `<link rel="canonical" href="${SITE_URL}" />`,
+      `<script type="application/ld+json">${buildJsonLd("es")}</script>`,
+      '<link rel="alternate" type="text/markdown" href="/index.md">',
+      '<link rel="describedby" href="/llms.txt">',
+      `</head><body><div id="root">${buildStaticHtml("es")}</div></body></html>`,
+    ].join("\n");
+
+    const html = toEnglishHtml(esHtml);
+    expect(html).toContain('<html lang="en">');
+    expect(html).toContain(`<link rel="canonical" href="${SITE_URL}en/" />`);
+    expect(html).toContain('href="/en/index.md"');
+    expect(html).toContain(buildStaticHtml("en"));
+    expect(html).toMatch(/property="og:locale"\s+content="en_US"/);
+    expect(html).not.toMatch(/content="es"/);
   });
 });

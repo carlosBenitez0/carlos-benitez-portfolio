@@ -1,167 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaRedo, FaTerminal } from "react-icons/fa";
 import { useRevealOnce } from "../../../hooks/useRevealOnce";
+import { locale } from "../../../i18n/locale";
+import { t } from "../../../i18n/ui";
+import { terminalSessions, type Line, type LineKind } from "./terminalSessions";
 
-type LineKind = "user" | "think" | "tool" | "out" | "add" | "todo" | "ok";
-
-type Line = { kind: LineKind; text: string };
-
-type Session = {
-  label: string;
-  // Etiqueta visible en móvil (el nombre completo queda en aria-label)
-  short: string;
-  lines: Line[];
-  stats: string[];
-};
-
-const line =
-  (kind: LineKind) =>
-  (text: string): Line => ({ kind, text });
-const user = line("user");
-const think = line("think");
-const tool = line("tool");
-const out = line("out");
-const add = line("add");
-const todo = line("todo");
-const ok = line("ok");
-
-// Recreaciones de sesiones reales con agentes: no son prompts de chat, sino
-// trabajo completo de principio a fin (plan, código, pruebas y commit).
-const sessions: Session[] = [
-  {
-    label: "Feature con TDD",
-    short: "TDD",
-    lines: [
-      user(
-        [
-          "Tarea: cierre automático de subastas vencidas.",
-          "Criterios de aceptación:",
-          "- Al vencer el plazo, cerrar la subasta y notificar al ganador por correo.",
-          "- Sin ofertas, registrarla como «no vendida».",
-          "Enfoque: TDD. La suite completa debe permanecer en verde.",
-        ].join("\n"),
-      ),
-      think("Reviso el modelo de subastas y el servicio de notificaciones."),
-      tool("Read(app/auctions/models.py, app/notifications/service.py)"),
-      out("2 archivos · 214 líneas"),
-      think("Plan:"),
-      todo("Tests de los criterios de aceptación"),
-      todo("Scheduler de subastas vencidas"),
-      todo("Cierre, notificación y caso sin ofertas"),
-      tool("Write(tests/auctions/test_close_expired.py)"),
-      add("def test_notifies_winner_when_auction_expires(): ..."),
-      add("def test_marks_unsold_when_there_are_no_bids(): ..."),
-      add("def test_ignores_auctions_still_open(): ..."),
-      tool("Bash(pytest tests/auctions -q)"),
-      out("3 failed: los tests definen el comportamiento antes del código"),
-      tool("Write(app/auctions/scheduler.py)"),
-      add("@scheduler.every(seconds=30)"),
-      add("async def close_expired_auctions(db: Session):"),
-      add("    for auction in expired_auctions(db):"),
-      add("        if not auction.bids:"),
-      add("            mark_unsold(auction)"),
-      add("            continue"),
-      add("        await close_and_notify(auction, auction.highest_bid())"),
-      tool("Bash(pytest -q)"),
-      ok("48 passed: los 3 nuevos y toda la suite existente"),
-      tool('Bash(git commit -m "feat(auctions): close expired auctions")'),
-      ok("Criterios cumplidos y cubiertos por tests."),
-    ],
-    stats: ["2 archivos", "3 tests nuevos", "48 tests ✓"],
-  },
-  {
-    label: "Subagentes en paralelo",
-    short: "Subagentes",
-    lines: [
-      user(
-        [
-          "Tarea: revisión previa al release del módulo de pagos.",
-          "Alcance: rendimiento, accesibilidad (WCAG 2.2 AA) y seguridad (OWASP Top 10).",
-          "Entregable: reporte con hallazgos priorizados por severidad.",
-        ].join("\n"),
-      ),
-      think("Son revisiones independientes: asigno un subagente a cada área."),
-      tool("Agent(rendimiento) · Agent(accesibilidad) · Agent(seguridad)"),
-      out("rendimiento    ▰▰▰▰▰▰▰▰▰▰  listo"),
-      out("accesibilidad  ▰▰▰▰▰▰▰▰▰▰  listo"),
-      out("seguridad      ▰▰▰▰▰▰▰▰▰▰  listo"),
-      think("Consolido los resultados:"),
-      ok("Rendimiento: consultas indexadas y respuestas paginadas"),
-      ok(
-        "Accesibilidad: formularios con etiquetas, foco visible y errores anunciados",
-      ),
-      ok("Seguridad: validación de entrada, rate limiting y cabeceras seguras"),
-      think("Sin bloqueantes. Documento el reporte y dos mejoras opcionales."),
-      tool("Write(docs/release-review.md)"),
-      add("## Estado: listo para release"),
-      add("- Opcional: caché de tasas de cambio (TTL 5 min)"),
-      add("- Opcional: prueba de carga del checkout en staging"),
-      ok("Reporte entregado al equipo."),
-    ],
-    stats: ["3 subagentes", "0 bloqueantes", "Reporte listo"],
-  },
-  {
-    label: "MCP: Figma y base de datos",
-    short: "MCP",
-    lines: [
-      user(
-        [
-          "Tarea: implementar la vista «Solicitud de crédito».",
-          "Fuentes: frame de Figma y esquema de la tabla solicitudes.",
-          "Requisito: la validación del cliente debe replicar las reglas de la API.",
-        ].join("\n"),
-      ),
-      think("Obtengo el diseño y el esquema directamente de sus fuentes."),
-      tool('figma · get_design("Solicitud de crédito")'),
-      out("12 componentes · 3 estados: vacío, validando, aprobado"),
-      tool("mysql · describe_table(solicitudes)"),
-      out("monto DECIMAL · plazo_meses INT · ingresos DECIMAL · estado ENUM"),
-      think(
-        "Tipo el formulario a partir del esquema y reutilizo las reglas de la API.",
-      ),
-      tool("Write(CreditForm.tsx, useCreditValidation.ts)"),
-      add("const cuota = calcularCuota(monto, tasa, plazoMeses);"),
-      add(
-        'if (cuota > ingresos * 0.4) return error("La cuota supera el 40 % de tus ingresos");',
-      ),
-      tool('playwright · screenshot("/credito")'),
-      ok("La pantalla coincide con el diseño en escritorio y móvil"),
-      tool("Bash(npm test)"),
-      ok("Validaciones cubiertas: monto, plazo y capacidad de pago"),
-    ],
-    stats: ["3 servidores MCP", "Figma → código", "Esquema real"],
-  },
-  {
-    label: "Harness engineering",
-    short: "Harness",
-    lines: [
-      user(
-        [
-          "Tarea: configurar el repositorio para desarrollo agéntico.",
-          "Entregables:",
-          "- Reglas del proyecto en CLAUDE.md",
-          "- Skill para el flujo de tareas",
-          "- Hook de pre-commit con lint y tests",
-        ].join("\n"),
-      ),
-      think("Parto de las convenciones, los scripts y la CI que ya existen."),
-      tool("Read(package.json, .github/workflows/ci.yml, README.md)"),
-      out("Vitest · Playwright · ESLint · commits convencionales"),
-      tool("Write(CLAUDE.md)"),
-      add("- Commits convencionales, uno por tarea"),
-      add("- Todo cambio pasa lint y tests antes del commit"),
-      add("- Verificar en el navegador los cambios de interfaz"),
-      tool("Write(.claude/skills/start-task/SKILL.md)"),
-      out("Flujo: planear → rama nueva → commit por tarea → guía de prueba"),
-      tool("Write(.husky/pre-commit)"),
-      add("npm run lint && npm test"),
-      tool('Bash(git commit -m "chore: agent workflow setup")'),
-      out("pre-commit: lint ✓ · tests ✓"),
-      ok("Reglas, skill y hook activos para todo el equipo."),
-    ],
-    stats: ["Contexto", "Skills", "Hooks", "Verificación"],
-  },
-];
+const sessions = terminalSessions[locale];
 
 // Pausa (ms) después de mostrar cada tipo de línea
 const pauseAfter: Record<LineKind, number> = {
@@ -324,9 +168,7 @@ export const AITerminal = () => {
           <FaTerminal className="shrink-0 text-cbpviolet-400" />
           <span className="truncate text-sm font-medium text-cbpgray-200">
             <span className="sm:hidden">Sesión en vivo</span>
-            <span className="hidden sm:inline">
-              Agente de IA · sesión en vivo
-            </span>
+            <span className="hidden sm:inline">{t.ai.terminalTitle}</span>
           </span>
         </div>
         <div className="flex items-center gap-3">
@@ -336,12 +178,12 @@ export const AITerminal = () => {
               e.stopPropagation();
               replay();
             }}
-            aria-label="Repetir"
+            aria-label={t.ai.replay}
             className="fx-trigger flex cursor-pointer items-center gap-1.5 text-xs text-cbpgray-400 transition-colors hover:text-cbpviolet-300"
           >
             <FaRedo className="fx-icon fx-spin h-3 w-3" />
             {/* En móvil solo el icono: la barra no daba para todo */}
-            <span className="hidden sm:inline">Repetir</span>
+            <span className="hidden sm:inline">{t.ai.replay}</span>
           </button>
           {/* Botón real para teclado y lectores; el clic en toda la barra
                 sigue funcionando con el mouse */}
@@ -349,7 +191,7 @@ export const AITerminal = () => {
             type="button"
             aria-expanded={isOpen}
             aria-controls="ai-terminal-body"
-            aria-label={isOpen ? "Ocultar terminal" : "Mostrar terminal"}
+            aria-label={isOpen ? t.ai.hideTerminal : t.ai.showTerminal}
             onClick={(e) => {
               e.stopPropagation();
               setIsOpen(!isOpen);
@@ -375,7 +217,7 @@ export const AITerminal = () => {
           <div className="relative after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:w-8 after:bg-gradient-to-l after:from-cbpgray-900 after:to-transparent sm:after:hidden">
             <div
               role="tablist"
-              aria-label="Sesiones de ejemplo con agentes de IA"
+              aria-label={t.ai.sessions}
               className="cbp-scrollbar flex gap-1 overflow-x-auto border-b border-cbpgray-700/50 px-2 pt-2"
             >
               {sessions.map((item, index) => (
@@ -438,7 +280,7 @@ export const AITerminal = () => {
             {finished &&
               session.stats.map((stat) => <span key={stat}>{stat}</span>)}
             <span className="ml-auto hidden text-cbpgray-400 sm:inline">
-              Recreación de flujos reales
+              {t.ai.recreation}
             </span>
           </div>
         </div>

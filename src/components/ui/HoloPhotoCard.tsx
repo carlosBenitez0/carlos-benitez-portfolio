@@ -4,6 +4,7 @@ import { IoLocationOutline, IoSyncOutline } from "react-icons/io5";
 import { PiChalkboardTeacher, PiStudent } from "react-icons/pi";
 import { FaRobot } from "react-icons/fa";
 import { prefersReducedMotion } from "../../utils/visibility";
+import { t } from "../../i18n/ui";
 
 const PHOTO = "/images/carlos-benitez-card.webp";
 
@@ -78,7 +79,7 @@ export const HoloPhotoCard = ({ className = "" }: HoloPhotoCardProps) => {
             <div className="holo-face" aria-hidden={flipped}>
               <img
                 src={PHOTO}
-                alt="Foto de Carlos Benítez"
+                alt={t.holo.photoAlt}
                 className="holo-develop h-full w-full scale-110 object-cover"
               />
               <span className="holo-sweep" />
@@ -92,7 +93,7 @@ export const HoloPhotoCard = ({ className = "" }: HoloPhotoCardProps) => {
               aria-hidden={!flipped}
             >
               <div className="flex items-center justify-between text-[10px] tracking-[0.25em] text-cbpviolet-200/70 uppercase">
-                <span>Ficha técnica</span>
+                <span>{t.holo.sheet}</span>
                 <span className="rounded-full border border-cbpviolet-300/30 px-2 py-0.5 tracking-[0.15em]">
                   Full stack
                 </span>
@@ -100,7 +101,7 @@ export const HoloPhotoCard = ({ className = "" }: HoloPhotoCardProps) => {
               <p className="mt-2 text-xl font-bold text-cbpviolet-100">
                 Carlos Benítez
               </p>
-              <p className="text-xs text-cbpgray-300">Desarrollador web</p>
+              <p className="text-xs text-cbpgray-300">{t.holo.role}</p>
 
               <ul className="mt-3 space-y-1.5 text-[12px] text-cbpgray-200 lg:text-[13px]">
                 <li className="flex items-center gap-2">
@@ -109,15 +110,15 @@ export const HoloPhotoCard = ({ className = "" }: HoloPhotoCardProps) => {
                 </li>
                 <li className="flex items-center gap-2">
                   <PiStudent className="shrink-0 text-cbpviolet-300" />
-                  Ing. en Sistemas y Computación
+                  {t.holo.degree}
                 </li>
                 <li className="flex items-center gap-2">
                   <FaRobot className="shrink-0 text-cbpviolet-300" />
-                  Desarrollo agéntico
+                  {t.holo.agentic}
                 </li>
                 <li className="flex items-center gap-2">
                   <PiChalkboardTeacher className="shrink-0 text-cbpviolet-300" />
-                  Tutor de desarrollo web
+                  {t.holo.tutor}
                 </li>
               </ul>
 
@@ -142,11 +143,7 @@ export const HoloPhotoCard = ({ className = "" }: HoloPhotoCardProps) => {
           type="button"
           onClick={() => setFlipped((value) => !value)}
           aria-pressed={flipped}
-          aria-label={
-            flipped
-              ? "Volver a la foto"
-              : "Voltear la tarjeta y ver la ficha técnica"
-          }
+          aria-label={flipped ? t.holo.back : t.holo.flip}
           className="absolute inset-0 z-10 cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cbpviolet-300"
         />
       </div>
@@ -158,7 +155,7 @@ export const HoloPhotoCard = ({ className = "" }: HoloPhotoCardProps) => {
         <IoSyncOutline
           className={`transition-transform duration-700 ${flipped ? "rotate-180" : ""}`}
         />
-        {flipped ? "Toca para volver" : "Toca para voltear"}
+        {flipped ? t.holo.hintBack : t.holo.hintFlip}
       </p>
     </div>
   );

@@ -6,6 +6,7 @@ import { LuSquareDashedBottomCode } from "react-icons/lu"; //back
 import { PiStudent } from "react-icons/pi"; //study
 import { VscTools } from "react-icons/vsc"; //tools
 import { useIsMobile } from "../../../hooks/useIsMobile";
+import { t } from "../../../i18n/ui";
 
 interface TechnologiesContainerProps {
   title: string;
@@ -63,11 +64,8 @@ export const TechnologiesContainer = ({
       )}
       <div>
         <h2 className="mb-8 bg-gradient-to-r from-cbpviolet-400 to-cbpviolet-100 bg-clip-text text-center text-2xl text-transparent">
-          {title === "tools"
-            ? "HERRAMIENTAS"
-            : title === "learning"
-              ? "FORMÁNDOME"
-              : title.toUpperCase()}
+          {t.technologies[title as keyof typeof t.technologies] ??
+            title.toUpperCase()}
         </h2>
       </div>
 

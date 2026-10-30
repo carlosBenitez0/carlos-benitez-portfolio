@@ -1,5 +1,6 @@
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 import { useTheme } from "../../../hooks/useTheme";
+import { t } from "../../../i18n/ui";
 
 interface ThemeToggleProps {
   className?: string;
@@ -8,7 +9,7 @@ interface ThemeToggleProps {
 export const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
   const { theme, toggleTheme } = useTheme();
   const isLight = theme === "light";
-  const label = isLight ? "Cambiar a modo oscuro" : "Cambiar a modo claro";
+  const label = isLight ? t.nav.toDark : t.nav.toLight;
 
   return (
     <button

@@ -32,39 +32,77 @@ export const isValidEmail = (email: string) => {
   );
 };
 
+// Mensajes de error en cada idioma. El servidor valida en español; el
+// navegador, en el idioma de la página.
+type Lang = "es" | "en";
+
+const MESSAGES = {
+  es: {
+    nameEmpty: "Escribe tu nombre",
+    nameShort: "El nombre debe tener al menos 3 caracteres",
+    emailEmpty: "Escribe tu email",
+    emailInvalid: "Introduce un email válido",
+    subjectEmpty: "Escribe el asunto",
+    subjectShort: "El asunto debe tener al menos 3 caracteres",
+    messageEmpty: "Escribe tu mensaje",
+    messageShort: "El mensaje debe tener al menos 10 caracteres",
+    labels: {
+      name: "El nombre",
+      email: "El email",
+      subject: "El asunto",
+      message: "El mensaje",
+    },
+    tooLong: (label: string, max: number) =>
+      `${label} no puede superar ${max} caracteres`,
+    tooManyLinks: (max: number) =>
+      `El mensaje no puede tener más de ${max} enlaces`,
+  },
+  en: {
+    nameEmpty: "Enter your name",
+    nameShort: "The name must be at least 3 characters long",
+    emailEmpty: "Enter your email",
+    emailInvalid: "Enter a valid email",
+    subjectEmpty: "Enter the subject",
+    subjectShort: "The subject must be at least 3 characters long",
+    messageEmpty: "Enter your message",
+    messageShort: "The message must be at least 10 characters long",
+    labels: {
+      name: "The name",
+      email: "The email",
+      subject: "The subject",
+      message: "The message",
+    },
+    tooLong: (label: string, max: number) =>
+      `${label} can't be longer than ${max} characters`,
+    tooManyLinks: (max: number) =>
+      `The message can't have more than ${max} links`,
+  },
+} satisfies Record<Lang, unknown>;
+
 // Devuelve el primer error en el orden en que aparecen los campos, o null.
-export const validateContact = (data: ContactData): ContactError | null => {
+export const validateContact = (
+  data: ContactData,
+  lang: Lang = "es",
+): ContactError | null => {
+  const m = MESSAGES[lang];
   const name = data.name.trim();
   const email = data.email.trim();
   const subject = data.subject.trim();
   const message = data.message.trim();
 
-  if (name === "") return { name: "name", error: "Escribe tu nombre" };
-  if (name.length < 3)
-    return {
-      name: "name",
-      error: "El nombre debe tener al menos 3 caracteres",
-    };
+  if (name === "") return { name: "name", error: m.nameEmpty };
+  if (name.length < 3) return { name: "name", error: m.nameShort };
 
-  if (email === "") return { name: "email", error: "Escribe tu email" };
-  if (!isValidEmail(email))
-    return { name: "email", error: "Introduce un email válido" };
+  if (email === "") return { name: "email", error: m.emailEmpty };
+  if (!isValidEmail(email)) return { name: "email", error: m.emailInvalid };
 
-  if (subject === "") return { name: "subject", error: "Escribe el asunto" };
-  if (subject.length < 3)
-    return {
-      name: "subject",
-      error: "El asunto debe tener al menos 3 caracteres",
-    };
+  if (subject === "") return { name: "subject", error: m.subjectEmpty };
+  if (subject.length < 3) return { name: "subject", error: m.subjectShort };
 
-  if (message === "") return { name: "message", error: "Escribe tu mensaje" };
-  if (message.length < 10)
-    return {
-      name: "message",
-      error: "El mensaje debe tener al menos 10 caracteres",
-    };
+  if (message === "") return { name: "message", error: m.messageEmpty };
+  if (message.length < 10) return { name: "message", error: m.messageShort };
 
-  return validateLengths(data) ?? validateLinks(message);
+  return validateLengths(data, lang) ?? validateLinks(message, lang);
 };
 
 // --- Anti-abuso -------------------------------------------------------------
@@ -76,19 +114,16 @@ export const MAX_LENGTHS: Record<ContactField, number> = {
   message: 2000,
 };
 
-const FIELD_LABELS: Record<ContactField, string> = {
-  name: "El nombre",
-  email: "El email",
-  subject: "El asunto",
-  message: "El mensaje",
-};
-
-const validateLengths = (data: ContactData): ContactError | null => {
+const validateLengths = (
+  data: ContactData,
+  lang: Lang,
+): ContactError | null => {
+  const m = MESSAGES[lang];
   for (const field of Object.keys(MAX_LENGTHS) as ContactField[]) {
     if (data[field].trim().length > MAX_LENGTHS[field]) {
       return {
         name: field,
-        error: `${FIELD_LABELS[field]} no puede superar ${MAX_LENGTHS[field]} caracteres`,
+        error: m.tooLong(m.labels[field], MAX_LENGTHS[field]),
       };
     }
   }
@@ -102,12 +137,9 @@ const LINK_PATTERN = /\b(?:https?:\/\/|www\.)\S+/gi;
 export const countLinks = (text: string) =>
   text.match(LINK_PATTERN)?.length ?? 0;
 
-const validateLinks = (message: string): ContactError | null =>
+const validateLinks = (message: string, lang: Lang): ContactError | null =>
   countLinks(message) > MAX_LINKS
-    ? {
-        name: "message",
-        error: `El mensaje no puede tener más de ${MAX_LINKS} enlaces`,
-      }
+    ? { name: "message", error: MESSAGES[lang].tooManyLinks(MAX_LINKS) }
     : null;
 
 // Tiempo mínimo entre pedir el token del formulario y enviar: una persona

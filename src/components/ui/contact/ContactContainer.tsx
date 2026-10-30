@@ -33,27 +33,31 @@ import {
   prepareContact,
   sendContactMessage,
 } from "../../../utils/sendContact";
-
-const SEND_FAILED =
-  "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.";
+import { locale } from "../../../i18n/locale";
+import { t } from "../../../i18n/ui";
 
 // Traduce la respuesta del servidor al error que ve el visitante
-const describeSendError = (error: unknown) => {
+const describeSendError = (error: unknown, data: ContactData) => {
   if (!(error instanceof ContactRequestError)) {
-    return { name: "formError", error: SEND_FAILED };
+    return { name: "formError", error: t.contact.failed };
   }
   const { detail } = error;
   if (detail.kind === "invalid") {
-    return { name: detail.field, error: detail.message };
+    // El servidor responde en español: en inglés se usa el mensaje local
+    const local = validateContact(data, locale);
+    return {
+      name: detail.field,
+      error: local?.name === detail.field ? local.error : detail.message,
+    };
   }
   if (detail.kind === "rate_limited") {
     const minutes = Math.ceil(detail.retryAfter / 60);
     return {
       name: "formError",
-      error: `Demasiados envíos seguidos. Inténtalo de nuevo en ${minutes} min`,
+      error: t.contact.rateLimited(minutes),
     };
   }
-  return { name: "formError", error: SEND_FAILED };
+  return { name: "formError", error: t.contact.failed };
 };
 
 export const ContactContainer = () => {
@@ -90,7 +94,7 @@ export const ContactContainer = () => {
     setError({ name: "", error: "" });
 
     // Validaciones
-    const validationError = validateContact(userData);
+    const validationError = validateContact(userData, locale);
     if (validationError) {
       setError(validationError);
       return;
@@ -100,7 +104,7 @@ export const ContactContainer = () => {
     if (cooldown > 0) {
       setError({
         name: "formError",
-        error: `Espera ${Math.ceil(cooldown / 1000)} s antes de enviar otro mensaje`,
+        error: t.contact.cooldown(Math.ceil(cooldown / 1000)),
       });
       return;
     }
@@ -122,7 +126,7 @@ export const ContactContainer = () => {
         message: "",
       });
     } catch (sendError) {
-      setError(describeSendError(sendError));
+      setError(describeSendError(sendError, userData));
     } finally {
       setLoading(false);
     }
@@ -256,12 +260,12 @@ export const ContactContainer = () => {
         <div className={`fx-focus ${isMobile ? "col-span-2" : ""}`}>
           <FaRegUser className="form-icon fx-icon fx-pop min-h-4 min-w-4" />
           <label htmlFor="contact-name" className="sr-only">
-            Nombre
+            {t.contact.name}
           </label>
           <input
             type="text"
             value={userData.name}
-            placeholder="Nombre"
+            placeholder={t.contact.name}
             autoComplete="off"
             name="name"
             id="contact-name"
@@ -297,12 +301,12 @@ export const ContactContainer = () => {
         <div className="fx-focus col-span-2">
           <MdOutlineSubject className="form-icon fx-icon fx-pop min-h-4 min-w-4" />
           <label htmlFor="contact-subject" className="sr-only">
-            Asunto
+            {t.contact.subject}
           </label>
           <input
             type="text"
             value={userData.subject}
-            placeholder="Asunto"
+            placeholder={t.contact.subject}
             autoComplete="off"
             name="subject"
             id="contact-subject"
@@ -316,12 +320,12 @@ export const ContactContainer = () => {
         </div>
         <span className="col-span-2">
           <label htmlFor="contact-message" className="sr-only">
-            Mensaje
+            {t.contact.message}
           </label>
           <textarea
             className="mb-2 h-30 resize-none p-2"
             value={userData.message}
-            placeholder="Mensaje"
+            placeholder={t.contact.message}
             autoComplete="off"
             name="message"
             id="contact-message"
@@ -349,9 +353,7 @@ export const ContactContainer = () => {
               id="contact-error"
             />
           )}
-          {sended && (
-            <SendedComponent message="Revisa tu correo, te dejé un mensaje 😁✌️" />
-          )}
+          {sended && <SendedComponent message={t.contact.sentMessage} />}
         </span>
         {/* Honeypot: fuera de pantalla (no display:none, que algunos bots
             detectan), fuera del orden de tabulación y oculto a lectores. */}
@@ -360,7 +362,7 @@ export const ContactContainer = () => {
           className="absolute -left-[9999px] h-px w-px overflow-hidden"
         >
           <label>
-            Empresa
+            {t.contact.company}
             <input
               type="text"
               name="company"
@@ -378,17 +380,17 @@ export const ContactContainer = () => {
         >
           {sended ? (
             <>
-              Enviado correctamente
+              {t.contact.sent}
               <FaCheckCircle />
             </>
           ) : loading ? (
             <>
-              Enviando
+              {t.contact.sending}
               <Spinner />
             </>
           ) : (
             <>
-              Enviar
+              {t.contact.send}
               <IoMdSend className="fx-icon fx-launch" />
             </>
           )}
@@ -412,7 +414,7 @@ export const ContactContainer = () => {
                 </p>
               </div>
               <span className="text-md">
-                <ShinyText text={'"Desde el corazón de Centroamérica"'} />
+                <ShinyText text={t.contact.tagline} />
               </span>
               <div className="mb-2">
                 <WavingFlag />
@@ -424,7 +426,7 @@ export const ContactContainer = () => {
                 className="blur-text-git fx-trigger text-[34px] text-cbpgray-300/70 hover:text-cbpgray-300"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Linkedin"
+                aria-label={t.nav.linkedin}
               >
                 <CiLinkedin className="fx-icon fx-pop" />
               </a>
@@ -433,7 +435,7 @@ export const ContactContainer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="blur-text-git fx-trigger text-[28px] text-cbpgray-300/70 hover:text-cbpgray-300"
-                aria-label="Github"
+                aria-label={t.nav.github}
               >
                 <FaGithub className="fx-icon fx-spin" />
               </a>

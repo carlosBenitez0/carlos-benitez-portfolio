@@ -4,6 +4,7 @@ import { Navbar } from "./components/shared/Navbar/Navbar";
 import { ProyectCard } from "./components/ui/proyects/ProyectCard";
 import { SectionTitle } from "./components/ui/SectionTitle";
 import { useProyects } from "./utils/useProyects";
+import { t } from "./i18n/ui";
 import { IoCodeWorkingOutline } from "react-icons/io5";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { IoCodeSlashOutline } from "react-icons/io5";
@@ -14,6 +15,9 @@ import { BgDotGradient } from "./components/ui/BgDotGradient";
 import { ContactContainer } from "./components/ui/contact/ContactContainer";
 import { AISection } from "./components/ui/ai/AISection";
 import { AboutText } from "./components/ui/AboutText";
+import { CaseStudies } from "./components/ui/cases/CaseStudies";
+import { ExperienceTimeline } from "./components/ui/experience/ExperienceTimeline";
+import { MdOutlineWorkOutline } from "react-icons/md";
 import { HoloPhotoCard } from "./components/ui/HoloPhotoCard";
 import { Suspense, useEffect, useRef } from "react";
 import gsap from "gsap";
@@ -130,9 +134,19 @@ function App() {
             className={`mt-30 mb-20 ${isMobile ? "px-4 py-4" : ""}`}
           >
             <SectionTitle
-              title="Proyectos"
+              title={t.sections.projects}
               icon={<IoCodeWorkingOutline className="fx-icon fx-stretch" />}
             />
+            {/* Proyectos destacados primero: el trabajo con más peso */}
+            <div id="cases" className="mb-12 scroll-mt-28">
+              <h3 className="mb-4 text-xl font-semibold text-cbpgray-200">
+                {t.sections.cases}
+              </h3>
+              <CaseStudies />
+            </div>
+            <h3 className="mb-4 text-xl font-semibold text-cbpgray-200">
+              {t.sections.otherProjects}
+            </h3>
             <div className="cardsContainer grid w-full grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3">
               {proyects.map((proyect, index) => (
                 <div key={proyect.name + index} className="relative">
@@ -144,10 +158,22 @@ function App() {
                     state={proyect.state}
                     url={proyect.url}
                     gitHub={proyect.gitHub}
+                    date={proyect.date}
                   />
                 </div>
               ))}
             </div>
+          </section>
+          <section
+            id="experience"
+            data-pause-offscreen
+            className={`mt-30 mb-20 ${isMobile ? "px-4 py-4" : ""}`}
+          >
+            <SectionTitle
+              title={t.sections.experience}
+              icon={<MdOutlineWorkOutline className="fx-icon fx-swing" />}
+            />
+            <ExperienceTimeline />
           </section>
           <section
             id="about"
@@ -155,7 +181,7 @@ function App() {
             className={`mt-30 mb-20 ${isMobile ? "p-4" : ""}`}
           >
             <SectionTitle
-              title="Sobre mí"
+              title={t.sections.about}
               icon={
                 <IoIosInformationCircleOutline className="fx-icon fx-swing" />
               }
@@ -217,7 +243,7 @@ function App() {
             </div>
 
             <SectionTitle
-              title="Tecnologías"
+              title={t.sections.technologies}
               icon={<IoCodeSlashOutline className="fx-icon fx-glitch" />}
             />
             <div
@@ -241,7 +267,7 @@ function App() {
             className={`mt-30 mb-20 ${isMobile ? "p-4" : ""}`}
           >
             <SectionTitle
-              title="Contáctame"
+              title={t.sections.contact}
               icon={
                 <MdOutlineConnectWithoutContact className="fx-icon fx-ring" />
               }

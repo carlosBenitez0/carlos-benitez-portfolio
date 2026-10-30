@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { links as siteLinks } from "../../../content/site";
-import { RiHomeLine } from "react-icons/ri";
 import { IoCodeWorkingOutline } from "react-icons/io5";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { IoCodeSlashOutline } from "react-icons/io5";
-import { MdOutlineConnectWithoutContact } from "react-icons/md";
+import {
+  MdOutlineConnectWithoutContact,
+  MdOutlineWorkOutline,
+} from "react-icons/md";
 import { CiLinkedin } from "react-icons/ci";
 import { FaGithub } from "react-icons/fa";
 import { PiReadCvLogoLight } from "react-icons/pi";
@@ -13,6 +15,8 @@ import { NavbarLink } from "./NavbarLink";
 import gsap from "gsap";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import { getTheme } from "../../../hooks/useTheme";
+import { t } from "../../../i18n/ui";
+import { LanguageSwitch } from "./LanguageSwitch";
 import { ThemeToggle } from "./ThemeToggle";
 
 export const Navbar = () => {
@@ -23,40 +27,40 @@ export const Navbar = () => {
   const { isMobile } = useIsMobile();
   const links = [
     {
-      label: "start",
-      href: "#start",
-      icon: <RiHomeLine className="fx-icon fx-hop" />,
-      text: "Inicio",
-    },
-    {
       label: "projects",
       href: "#projects",
       icon: <IoCodeWorkingOutline className="fx-icon fx-stretch" />,
-      text: "Proyectos",
+      text: t.nav.projects,
+    },
+    {
+      label: "experience",
+      href: "#experience",
+      icon: <MdOutlineWorkOutline className="fx-icon fx-swing" />,
+      text: t.nav.experience,
     },
     {
       label: "about",
       href: "#about",
       icon: <IoIosInformationCircleOutline className="fx-icon fx-swing" />,
-      text: "Sobre mí",
+      text: t.nav.about,
     },
     {
       label: "technologies",
       href: "#technologies",
       icon: <IoCodeSlashOutline className="fx-icon fx-glitch" />,
-      text: "Tecnologías",
+      text: t.nav.technologies,
     },
     {
       label: "ai",
       href: "#ai",
       icon: <FaRobot className="fx-icon fx-beep text-lg" />,
-      text: "IA",
+      text: t.nav.ai,
     },
     {
       label: "contact",
       href: "#contact",
       icon: <MdOutlineConnectWithoutContact className="fx-icon fx-ring" />,
-      text: "Contáctame",
+      text: t.nav.contact,
     },
   ];
 
@@ -104,7 +108,14 @@ export const Navbar = () => {
   // scroll (la página se desplaza con el contenedor raíz de App, no con
   // window, y ese contenedor puede no tener aún sus estilos al montar).
   useEffect(() => {
-    const sections = ["projects", "about", "technologies", "ai", "contact"];
+    const sections = [
+      "projects",
+      "experience",
+      "about",
+      "technologies",
+      "ai",
+      "contact",
+    ];
     let frame = 0;
 
     const update = () => {
@@ -244,23 +255,37 @@ export const Navbar = () => {
       ref={navbarRef}
       className={`fixed inset-x-[var(--scrollbar-gutter,0px)] top-0 z-40 mx-auto flex items-center ${isMobile ? "justify-between p-4" : "max-w-[950px] justify-between"}`}
     >
-      <figure>
+      {/* El logo lleva al inicio: así el menú no necesita un link "Inicio" y
+          cabe con todas las secciones */}
+      <a
+        href="#start"
+        aria-label={t.nav.home}
+        title={t.nav.homeTitle}
+        onClick={(e) => {
+          e.preventDefault();
+          setOptionSelected("start");
+          document
+            .getElementById("start")
+            ?.scrollIntoView({ behavior: "smooth" });
+        }}
+        className="shrink-0 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400"
+      >
         <img
           src="/images/logo-cb.webp"
-          alt="Carlos Benítez"
+          alt=""
           className={`cb-logo ${isMobile ? "w-10 max-w-10" : "w-12 min-w-12"}`}
         />
-      </figure>
+      </a>
       {/* En móvil, poco relleno lateral: así las dos píldoras no se tocan en
           pantallas angostas (375px) */}
-      <nav className={`nav-padding ${isMobile ? "px-1.5 py-5" : "p-5"}`}>
+      <nav className={`nav-padding ${isMobile ? "px-1.5 py-5" : "px-3 py-5"}`}>
         <ul
           ref={menuRef}
           style={{
             height: isMobile ? 40 : 50,
             paddingBlock: isMobile ? 6 : 16,
           }}
-          className={`fade-in-menu navbar-pill relative flex items-center justify-center rounded-full border border-ink/7 backdrop-blur-sm ${isMobile ? "gap-2 px-3 py-0" : "gap-4 px-6 py-4"} ${!isMobile ? "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-full before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),var(--hover-glow)_0%,transparent_10%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1]" : ""}`}
+          className={`fade-in-menu navbar-pill relative flex items-center justify-center rounded-full border border-ink/7 backdrop-blur-sm ${isMobile ? "gap-2 px-3 py-0" : "gap-3 px-4 py-4"} ${!isMobile ? "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-full before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),var(--hover-glow)_0%,transparent_10%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-[1]" : ""}`}
         >
           {links.map((link) => (
             <li key={link.label}>
@@ -279,14 +304,14 @@ export const Navbar = () => {
       <div
         ref={socialMenuRef}
         style={{ height: isMobile ? 40 : 50, paddingBlock: isMobile ? 6 : 16 }}
-        className={`fade-in-menu navbar-pill relative flex items-center rounded-full border border-ink/7 backdrop-blur-sm ${isMobile ? "justify-center gap-1 px-2" : "gap-3 px-4 py-4"} ${!isMobile ? "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-full before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),var(--hover-glow)_0%,transparent_10%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-100" : ""}`}
+        className={`fade-in-menu navbar-pill relative flex items-center rounded-full border border-ink/7 backdrop-blur-sm ${isMobile ? "justify-center gap-1 px-2" : "gap-2.5 px-3.5 py-4"} ${!isMobile ? "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-full before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,100px)_var(--mouse-y,100px),var(--hover-glow)_0%,transparent_10%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:before:opacity-100" : ""}`}
       >
         <a
           href={siteLinks.linkedin}
           className={`blur-text-git fx-trigger text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[22px]" : "text-[22px]"}`}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Linkedin"
+          aria-label={t.nav.linkedin}
         >
           <CiLinkedin className="fx-icon fx-pop" />
         </a>
@@ -295,19 +320,24 @@ export const Navbar = () => {
           target="_blank"
           rel="noopener noreferrer"
           className={`blur-text-git fx-trigger text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[18px]" : "text-[19px]"}`}
-          aria-label="Github"
+          aria-label={t.nav.github}
         >
           <FaGithub className="fx-icon fx-spin" />
         </a>
-        <a
-          href={siteLinks.cv}
-          download
-          className={`blur-text-git fx-trigger text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300 ${isMobile ? "text-[20px]" : "text-[22px]"}`}
-          aria-label="Curriculum vitae"
-        >
-          <PiReadCvLogoLight className="fx-icon fx-flip" />
-        </a>
+        {/* En móvil no cabe junto al selector de idioma; el CV sigue en el
+            botón del hero y en Contacto */}
+        {!isMobile && (
+          <a
+            href={siteLinks.cv}
+            download
+            className="blur-text-git fx-trigger text-[22px] text-cbpgray-300/70 transition-transform duration-300 hover:-translate-y-1 hover:text-cbpgray-300"
+            aria-label={t.nav.cv}
+          >
+            <PiReadCvLogoLight className="fx-icon fx-flip" />
+          </a>
+        )}
         <ThemeToggle className={isMobile ? "text-[19px]" : "text-[20px]"} />
+        <LanguageSwitch />
       </div>
     </div>
   );
