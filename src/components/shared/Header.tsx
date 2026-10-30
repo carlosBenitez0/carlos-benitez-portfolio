@@ -129,7 +129,7 @@ export const Header = () => {
         className={`mx-auto grid w-full gap-6 text-ink lg:max-w-[950px] ${isMobile ? "relative top-15 h-[calc(20vh)] grid-cols-1 grid-rows-2 text-center" : "h-[calc(100vh-80px)] grid-cols-2 grid-rows-1 pb-16"}`}
       >
         <div
-          className={`col-span-1 flex flex-col justify-center ${isMobile ? "row-start-2 row-end-3" : ""}`}
+          className={`col-span-1 flex flex-col ${isMobile ? "row-start-2 row-end-3 justify-start px-4" : "justify-center"}`}
         >
           <h1
             className={`appear-text relative mb-2 ${isMobile ? "text-[36px]" : "text-[44px]"}`}
@@ -164,7 +164,7 @@ export const Header = () => {
             <a
               href="#cases"
               onClick={scrollToSection}
-              className={`fx-trigger flex items-center gap-2 rounded-full bg-cbpviolet-500 font-semibold ${isMobile ? "px-4 py-2 text-xs" : "px-5 py-2.5 text-sm"} text-white shadow-[0_0_20px_var(--hover-glow)] transition-colors hover:bg-cbpviolet-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400`}
+              className={`fx-trigger flex items-center gap-2 rounded-full bg-cbpviolet-500 font-semibold ${isMobile ? "h-10 px-4 text-xs" : "h-11 px-5 text-sm"} text-white shadow-[0_0_20px_var(--hover-glow)] transition-colors hover:bg-cbpviolet-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400`}
             >
               {t.header.seeCases}
               <HiOutlineArrowRight
@@ -175,7 +175,7 @@ export const Header = () => {
             <a
               href={links.cv}
               download
-              className={`fx-trigger flex items-center gap-2 rounded-full border border-cbpviolet-400/50 font-medium ${isMobile ? "px-3 py-2 text-xs" : "px-4 py-2.5 text-sm"} text-cbpgray-200 transition-colors hover:border-cbpviolet-300 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400`}
+              className={`fx-trigger flex items-center gap-2 rounded-full border border-cbpviolet-400/50 font-medium ${isMobile ? "h-10 px-3 text-xs" : "h-11 px-4 text-sm"} text-cbpgray-200 transition-colors hover:border-cbpviolet-300 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400`}
             >
               <PiReadCvLogoLight
                 aria-hidden="true"
@@ -190,13 +190,15 @@ export const Header = () => {
         </div>
       </div>
 
+      {/* En móvil sobra: el botón principal ya baja a los proyectos, y en
+          pantallas bajas chocaba con los botones */}
       <a
         ref={arrowRef}
         href="#projects"
         aria-label={t.header.toProjects}
         title={t.header.toProjectsTitle}
         onClick={scrollToSection}
-        className={`absolute left-1/2 -translate-x-1/2 cursor-pointer rounded-full p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400 ${isMobile ? "bottom-14" : "bottom-20"}`}
+        className={`absolute left-1/2 -translate-x-1/2 cursor-pointer rounded-full p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cbpviolet-400 ${isMobile ? "hidden" : "bottom-20"}`}
       >
         <IoIosArrowDown
           aria-hidden="true"
