@@ -51,7 +51,7 @@ const projects: Project[] = [
     description:
       "Sitio web cristiano con tres juegos: el clásico tres en raya y dos juegos de preguntas.",
     technologies: ["React", "CSS", "TypeScript", "Motion", "bolt.new"],
-    state: "done",
+    state: "wip",
     url: "https://ibg-arcade.vercel.app/",
     gitHub: "https://github.com/carlosBenitez0/IBGArcade",
     date: { start: "2025-05", end: "2025-07" },
@@ -61,7 +61,7 @@ const projects: Project[] = [
     image: "/projects/pokedex.webp",
     description: "Pokédex web que consume la PokeAPI.",
     technologies: ["React", "Tailwind CSS", "TypeScript", "Axios", "Pokeapi"],
-    state: "paused",
+    state: "wip",
     url: "https://pok-dex-yx1k.vercel.app/",
     gitHub: "https://github.com/carlosBenitez0/pok-dex",
     date: { start: "2024-09", end: "2024-10", resumed: "2025-07" },
