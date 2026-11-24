@@ -65,7 +65,7 @@ export const AISection = () => {
           icon={<FaRobot className="fx-icon fx-beep" />}
           // Las tarjetas aparecen con su propia animación al entrar en
           // pantalla: el encabezado va sin revelado para no desfasarse
-          revealOnScroll={false}
+          reveal="none"
         />
 
         {/* Descripción de la sección */}

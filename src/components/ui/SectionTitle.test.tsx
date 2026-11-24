@@ -11,12 +11,19 @@ describe("SectionTitle", () => {
   });
 
   it("sin revelado cuando la sección anima su contenido por su cuenta", () => {
-    render(
-      <SectionTitle title="Inteligencia artificial" revealOnScroll={false} />,
-    );
+    render(<SectionTitle title="Inteligencia artificial" reveal="none" />);
     expect(
       screen.getByRole("heading", { name: "Inteligencia artificial" })
         .parentElement,
     ).not.toHaveClass("anim-about-text");
+  });
+
+  it("puede subir sin desenfoque, al ritmo de las tarjetas", () => {
+    render(<SectionTitle title="Proyectos" reveal="rise" />);
+    const wrapper = screen.getByRole("heading", {
+      name: "Proyectos",
+    }).parentElement;
+    expect(wrapper).toHaveClass("anim-rise");
+    expect(wrapper).not.toHaveClass("anim-about-text");
   });
 });

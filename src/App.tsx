@@ -136,16 +136,16 @@ function App() {
             <SectionTitle
               title={t.sections.projects}
               icon={<IoCodeWorkingOutline className="fx-icon fx-stretch" />}
-              revealOnScroll={false}
+              reveal="rise"
             />
             {/* Proyectos destacados primero: el trabajo con más peso */}
             <div id="cases" className="mb-12 scroll-mt-28">
-              <h3 className="mb-4 text-xl font-semibold text-cbpgray-200">
+              <h3 className="anim-rise mb-4 text-xl font-semibold text-cbpgray-200">
                 {t.sections.cases}
               </h3>
               <CaseStudies />
             </div>
-            <h3 className="mb-4 text-xl font-semibold text-cbpgray-200">
+            <h3 className="anim-rise mb-4 text-xl font-semibold text-cbpgray-200">
               {t.sections.otherProjects}
             </h3>
             <div className="cardsContainer grid w-full grid-cols-2 gap-3 md:gap-6 lg:grid-cols-3">
